@@ -1,0 +1,28 @@
+https://wiki.archlinux.org/index.php/MongoDB
+
+Installing MongoDB
+
+Install mongodb
+# pacman -S mongodb
+Start MongoDB
+# systemctl start mongodb
+(Optional) Add MongoDB to the list of daemons that start on system startup
+# systemctl enable mongodb
+Access the database shell
+
+To access the Database shell you have type in your terminal
+$ mongo
+Troubleshooting
+
+MongoDB won't start
+Check that there is at least 3GB space available for its journal files, otherwise mongodb can fail to start (without issuing a message to the user).
+$ df -h /var/lib/mongodb/
+Check if the lock file exists
+# ls  -lisa /var/lib/mongodb
+If it does, stop the mongodb service, and delete the file. Then start the service again.
+# rm /var/lib/mongodb/mongod.lock
+If it still won't start, run a repair on the database, specifying the dbpath (/var/lib/mongodb/ is the default --dbpath in Arch Linux)
+# mongod --dbpath /var/lib/mongodb/ --repair
+After running the repair as root, the files got chowned to root, whilst Arch Linux runs it under a different user. You then need to chown back the files. Further reference
+# chown -R mongodb: /var/{log,lib}/mongodb/
+Check that the boost-libs package is up to date. MongoDB requires a specific version, however, the package does not restrict the version of this dependency.

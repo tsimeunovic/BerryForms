@@ -1,0 +1,6 @@
+<span class="systemSymbol {{SymbolModel.Type}}"
+      data-ng-show="SymbolModel.Type" data-ng-switch data-on="SymbolModel.Type">
+        <span data-ng-switch-when="Color" data-ng-style="{'background-color': SymbolModel.Name}"></span>
+        <span data-ng-switch-when="Icon" class="glyphicon glyphicon-{{SymbolModel.Name}}"></span>
+        <span data-ng-switch-default></span>
+</span>

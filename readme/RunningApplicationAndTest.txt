@@ -1,0 +1,16 @@
+Running application
+    - Make sure all node and bower dependencies are installed
+    - Run 'node BerryForms.js' in console
+
+
+Running tests
+    - Make sure 'karma-cli' package is installed as global package ('sudo npm install -g karma-cli' if not)
+
+    Running unit tests
+        - Run 'karma run karma.conf.js'
+
+    Running e2e tests
+        - Make sure 'karma-cli' package is installed as global package ('sudo npm install -g karma-cli' if not)
+        - Setup database (delete) by running 'node ./test/e2e/before-scenarios/setupDatabase.js'
+        - Run application for e2e tests by 'node BerryForms.js configuration=e2e_Tests database=e2e_BerryForms'
+        - Run 'karma run karma-e2e.conf.js'

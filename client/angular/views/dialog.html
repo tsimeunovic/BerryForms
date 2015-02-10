@@ -1,0 +1,11 @@
+<div class="dialog">
+    <div class="dialogHeader">{{Dialog.Header}}</div>
+    <div class="dialogText">{{Dialog.Text}}</div>
+    <div class="dialogButtons">
+        <button data-ng-repeat="button in Dialog.Buttons"
+                class="btn btn-sm btn-{{button.ButtonType}}"
+                data-ng-click="ResultDialog(button.Value)">
+            {{button.Text}}
+        </button>
+    </div>
+</div>

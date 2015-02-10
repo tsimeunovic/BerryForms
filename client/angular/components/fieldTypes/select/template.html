@@ -1,0 +1,22 @@
+<div class="btn-group btn-block" data-ng-class="{'error': !IsValid, 'open': IsOpened}">
+    <div>
+        <button type="button" class="btn btn-default btn-sm form-control errorElement">
+            <span data-system-symbol="{{Entity.Data[field.FieldSystemName] && Entity.Data[field.FieldSystemName].Value}}"></span>
+            {{ (Entity.Data[field.FieldSystemName] && Entity.Data[field.FieldSystemName].Text) ||
+            (field.DefaultValue && field.DefaultValue.Text) ||
+            Resources.PleaseSelect}}
+        </button>
+    </div>
+    <button type="button" class="btn btn-default btn-sm dropdown-toggle errorElement" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only"></span>
+    </button>
+    <ul class="dropdown-menu" data-role="menu">
+        <li data-ng-repeat="option in field.Values" data-value="{{option.Value}}">
+            <a data-ng-click="SelectOption($event,option)">
+                <span data-system-symbol="{{option.Value}}"></span>
+                {{option.Text}}
+            </a>
+        </li>
+    </ul>
+</div>

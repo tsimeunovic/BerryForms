@@ -1,0 +1,25 @@
+<div data-role="menu">
+    <div class="leftMenuEntitiesList">
+        <div class="glyphicon glyphicon-asterisk menuicon">
+            <a href="#/schema/entity"></a>
+        </div>
+    </div>
+
+    <div class="leftMenuEntitiesList"
+         data-left-menu-autosize
+         data-icon-size="36"
+         data-expand-icon-size="36"
+         data-icon-count="Entities.length">
+
+        <div data-ng-repeat="entity in Entities"
+             class="menuicon entityicon glyphicon glyphicon-{{entity.IconClassName}}"
+             data-ng-style="{'background-color':entity.IconColorHex}"
+             title="{{entity.EntityName}}">
+            <a href="#/entity/{{entity.EntitySystemName}}"></a>
+        </div>
+
+        <button class="menuEntityExpand">
+            <div class="threeDots"></div>
+        </button>
+    </div>
+</div>

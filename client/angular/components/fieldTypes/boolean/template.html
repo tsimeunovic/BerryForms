@@ -1,0 +1,11 @@
+<div class="btn-group btn-group-justified" data-ng-class="{'error': !IsValid}">
+    <a data-role="button" class="btn btn-default errorElement" data-value="Yes"
+       data-ng-click="Entity.Data[field.FieldSystemName] = true"
+       data-ng-class="{'btn-warning': Entity.Data[field.FieldSystemName]==true}">{{Resources.Yes}}</a>
+    <a data-role="button" class="btn btn-default errorElement" data-value="Nothing"
+       data-ng-click="Entity.Data[field.FieldSystemName] = null"
+       data-ng-class="{'btn-warning': Entity.Data[field.FieldSystemName]==null, 'hidden': !field.ThreeState}">{{Resources.Nothing}}</a>
+    <a data-role="button" class="btn btn-default errorElement" data-value="No"
+       data-ng-click="Entity.Data[field.FieldSystemName] = false"
+       data-ng-class="{'btn-warning': Entity.Data[field.FieldSystemName]==false}">{{Resources.No}}</a>
+</div>

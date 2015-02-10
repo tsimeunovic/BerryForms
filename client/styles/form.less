@@ -1,0 +1,301 @@
+@import "configuration";
+
+div.entityForm {
+    padding-top: 4px;
+
+    div.entityField {
+        position: relative;
+        line-height: 0;
+        padding: @menuWidthCollapsed * 0.05;
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        span.entityFieldLabel {
+            font-size: 1.2em;
+            line-height: 1.44em;
+            float: left;
+            margin-top: 5px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        span.entityFieldLabel,
+        span.entityFieldInput {
+            @inputFontSize: 0.75em;
+            display: inline-block;
+            width: 50%;
+            min-width: 150px;
+
+            &.entityFieldLabel {
+                padding-right: 5px;
+            }
+
+            //General
+            div.fieldComponent {
+                position: relative;
+            }
+
+            //Textbox
+            input[type="text"] {
+                font-size: @inputFontSize;
+                line-height: 100%;
+                padding: 4.5px 9px;
+            }
+
+            textarea {
+                font-size: @inputFontSize;
+                resize: vertical;
+            }
+
+            //Select
+            div.btn-group.btn-block {
+                div:nth-child(1) {
+                    position: absolute;
+                    right: 39px;
+                    left: 0;
+                    text-align: left;
+
+                    button {
+                        border-radius: 4px 0 0 4px;
+                    }
+                }
+
+                button.btn.btn-sm {
+                    font-size: @inputFontSize;
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+
+                    &:nth-child(2) {
+                        width: 40px;
+                        padding-top: 10px;
+                        height: 34px;
+                        float: right;
+                    }
+                }
+
+                ul.dropdown-menu {
+                    margin-top: 0;
+                    font-size: @inputFontSize;
+                    line-height: 100%;
+                    right: 0;
+                    max-height: 215px;
+                    overflow: scroll;
+                    overflow-x: hidden;
+                    padding-top: 0;
+                    padding-bottom: 0;
+
+                    li a {
+                        line-height: 1.5;
+                        padding: 6px 10px;
+                    }
+                }
+            }
+
+            //Button groups
+            div.input-group-top {
+                > :nth-child(1) {
+                    border-radius: 4px 0 0 0;
+                }
+                > :nth-last-child(1) {
+                    > button {
+                        border-radius: 0 4px 0 0;
+                    }
+                }
+            }
+
+            //Boolean
+            div.fieldBoolean {
+                a:nth-child(n+2) {
+                    border-left: none;
+                }
+            }
+
+            //Date
+            div.input-group {
+                span.input-group-btn button {
+                    width: 40px;
+                    padding-top: 8px;
+                    height: 34px;
+                }
+            }
+
+            div.fieldDate {
+                ul.dropdown-menu {
+                    min-width: 100%;
+                    margin-top: 0;
+                    padding: 5px;
+
+                    *:focus {
+                        outline: none;
+                    }
+
+                    thead {
+                        tr:nth-child(2) {
+                            height: 22px;
+                        }
+                    }
+                }
+            }
+
+            //List
+            div.fieldList {
+                div.input-group {
+                    button {
+                        //Table layout fix
+                        right: -1px;
+                        border-left-style: none;
+                    }
+                }
+            }
+
+            //"Checkbox"
+            div.btn-group.btn-group-justified {
+                display: inline-block;
+
+                a.btn {
+                    font-size: @inputFontSize;
+                    line-height: 100%;
+                    height: 34px;
+                }
+            }
+
+            //"Multiline"
+            ul.dropdown-menu.multichoice-items {
+                font-size: @inputFontSize;
+                width: 100%;
+                display: block;
+                position: relative;
+                z-index: 0;
+                box-shadow: none;
+                background-color: @grayBackgroundColor;
+
+                margin: 0;
+                border-top: none;
+                border-radius: 0 0 4px 4px;
+
+                li {
+                    line-height: 1em;
+                    padding: 3px 20px;
+                    position: relative;
+
+                    button.close {
+                        position: absolute;
+                        left: 3px;
+                        top: -4px;
+                        height: 100%;
+                    }
+                }
+            }
+
+            //Relationship control
+            ul.search-result-menu {
+                //Same values as for dropdown-menu
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                float: left;
+                min-width: 160px;
+                padding: 0;
+                margin: 0;
+                text-align: left;
+                list-style: none;
+                background-color: #FFF;
+                -webkit-background-clip: padding-box;
+                background-clip: padding-box;
+                border: 1px solid #CCC;
+                border-radius: 4px;
+                -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
+                font-size: 0.75em;
+                line-height: 100%;
+                right: 0;
+                overflow: scroll;
+                overflow-x: hidden;
+
+                li {
+                    a {
+                        display: block;
+                        clear: both;
+                        font-weight: 400;
+                        color: #333;
+                        white-space: nowrap;
+
+                        line-height: 1.5;
+                        padding: 6px 10px;
+                        text-decoration: none;
+                    }
+
+                    &.search-result-item.selectable {
+                        cursor: pointer;
+
+                        a:hover,
+                        a:focus {
+                            color: #262626;
+                            text-decoration: none;
+                            background-color: #F5F5F5;
+                        }
+                    }
+
+                    &.search-result-item.more-results {
+                        cursor: default;
+                        font-size: 0.8em;
+
+                        a {
+                            color: #888;
+                            padding-top: 2px;
+                            padding-bottom: 2px;
+                        }
+                    }
+                }
+            }
+
+            button.selectedItem {
+                padding: 0 !important;
+                text-align: left;
+
+                a,
+                a:link,
+                a:focus,
+                a:active,
+                a:hover {
+                    display: block;
+                    line-height: 32px;
+                    height: 100%;
+                    padding: 0 10px;
+                    color: #333;
+                    text-decoration: none;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    div.separator {
+        height: 0;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+        margin: 18.5px 5px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px 0;
+    }
+}
+
+div.verticalFull div.entityForm {
+    div.entityField {
+        float: left;
+        width: 50%;
+        display: inline-block;
+        position: relative;
+        padding: @menuWidthCollapsed * 0.05;
+    }
+}

@@ -1,0 +1,228 @@
+@import "configuration";
+@import "mixins";
+
+//Fonts
+@font-face {
+    font-family: 'JosefinSansBold';
+    src: url('../fonts/JosefinSans-Bold.ttf');
+}
+
+//General
+html, body {
+    font-family: @baseFontFamily;
+    font-size: 1em;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    position: relative;
+}
+
+body {
+    background-color: @baseBackgroundColor;
+}
+
+h1, h2, h3 {
+    font-family: @baseFontFamily;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+
+    span.glyphicon {
+        font-size: 0.6em;
+        top: 3px;
+        opacity: 0.6;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
+        &:nth-child(n+1) {
+            margin-left: 5px;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.error {
+    .errorElement {
+        border-color: @errorColor;
+
+        &:focus {
+            @shadowColor: rgba(0, 0, 0, 0.075);
+            @glowColor: hsla(hue(@errorColor), saturation(@errorColor), lightness(@errorColor), 0.6);
+            border-color: @errorColor;
+            box-shadow: inset 0 1px 1px @shadowColor, 0 0 8px @glowColor;
+        }
+    }
+}
+
+.empty {
+    //Adding between 2 divs prevents margin collapse
+    height: 1px;
+}
+
+.clearFloat {
+    clear: both;
+}
+
+//Layout
+div.mainContent {
+    min-height: @applicationMinimumHeight;
+    min-width: @applicationMinimumWidth;
+    position: relative;
+    z-index: 99;
+    margin-left: @menuWidthCollapsed * 1.1 + 5px;
+
+    > div {
+        min-height: 100%;
+
+        > div {
+            padding: @menuWidthCollapsed * 0.35 @menuWidthCollapsed * 0.25;
+        }
+    }
+
+    div.verticalHalf {
+        float: left;
+        width: 50%;
+
+        &:nth-child(1) {
+        }
+
+        &:nth-child(2) {
+            > div {
+                padding-right: 0;
+                padding-bottom: 5px;
+            }
+        }
+    }
+
+    div.verticalFull {
+        width: 100%;
+
+        > div {
+            padding-bottom: 0;
+        }
+    }
+}
+
+//Symbols
+span.systemSymbol {
+    @symbolSize: 16px;
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-right: 0.5 * @symbolSize;
+    width: @symbolSize;
+    height: @symbolSize;
+    border-radius: @symbolSize / 8;
+    border: 1px solid #000;
+
+    span {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+    }
+
+    &.Color {
+        background-color: @contrastingColor;
+    }
+
+    &.Icon {
+        span {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+        }
+    }
+}
+
+//Loading
+div.loadingOverlay {
+    //This style is inlined to index.html to improve user experience for slow devices
+    .overlay(9990);
+
+    &:after {
+        @loadingCircleSize: 100px;
+
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 9999;
+
+        margin-left: -@loadingCircleSize/2;
+        margin-top: -@loadingCircleSize/2;
+        width: @loadingCircleSize;
+        height: @loadingCircleSize;
+
+        background: url(data:image/png;base64,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) no-repeat center center transparent;
+
+        .rotate(2s);
+    }
+}
+
+//Dialog
+div.dialogOverlay {
+    @dialogWidth: 350px;
+    @dialogHeight: 160px;
+
+    &:before {
+        .overlay(9900);
+        content: '';
+    }
+
+    > div.dialog {
+        position: fixed;
+        z-index: 9910;
+
+        width: @dialogWidth;
+        min-height: @dialogHeight;
+        border-radius: 8px;
+        border: 1px solid @contrastingDarkColor;
+        background-color: @baseBackgroundColor;
+        box-shadow: 0 0 @menuWidthCollapsed / 3 #000;
+        overflow: hidden;
+
+        left: 50%;
+        top: 50%;
+        margin-left: -@dialogWidth/2;
+        margin-top: -@dialogHeight/2;
+
+        div.dialogHeader {
+            height: @dialogHeight / 5;
+            border-bottom: 1px solid @contrastingDarkColor;
+            line-height: @dialogHeight / 5;
+            background-color: @menuColor;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        div.dialogText {
+            padding: 20px;
+            text-align: center;
+        }
+
+        div.dialogButtons {
+            width: 100%;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+
+            > button {
+                width: 80px;
+
+                &:nth-child(n+2) {
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}

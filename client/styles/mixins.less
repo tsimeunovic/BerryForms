@@ -1,0 +1,152 @@
+.rotate(@angle) {
+    transform: rotate(@angle);
+    -webkit-transform: rotate(@angle);
+    -moz-transform: rotate(@angle);
+    -o-transform: rotate(@angle);
+}
+
+.circle(@size, @color) {
+    width: 0;
+    height: 0;
+    border-radius: @size/2;
+    border: @size/2 solid @color;
+}
+
+.borderRadius(@tl, @tr, @br, @bl) {
+    -webkit-border-radius: @tl @tr @br @bl;
+    -moz-border-radius: @tl @tr @br @bl;
+    border-radius: @tl @tr @br @bl;
+}
+
+.threeDots(@size, @color) {
+    .circle(@size, @color);
+
+    &:before {
+        .circle(@size, @color);
+        float: left;
+        content: '';
+
+        position: relative;
+        left: @size;
+        top: -@size * 0.5;
+    }
+
+    &:after {
+        .circle(@size, @color);
+        float: right;
+        content: '';
+
+        position: relative;
+        left: -@size;
+        top: -@size * 1.5;
+    }
+}
+
+.pencil(@size, @color) {
+    position: relative;
+    display: inline-block;
+    height: @size;
+    width: @size * 0.375;
+    background: @color;
+    .rotate(60deg);
+
+    &:after {
+        content: '';
+        height: @size * 0.25;
+        width: @size * 0.375;
+        position: absolute;
+        top: -@size * 0.35;
+        left: 0;
+        background: @color;
+        .borderRadius(@size * 0.125, @size * 0.125, 0, 0);
+    }
+
+    &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border: 0.2 * @size solid transparent;
+        border-top-color: @color;
+        position: absolute;
+        bottom: -@size  * 0.5;
+    }
+}
+
+.cross(@size,@color) {
+    position: relative;
+    display: inline-block;
+    width: @size;
+    height: @size/5;
+    background: @color;
+    .rotate(-45deg);
+
+    &:after {
+        content: '';
+        width: @size;
+        height: @size/5;
+        background: @color;
+        position: absolute;
+        top: 0;
+        left: 0;
+        .rotate(90deg);
+    }
+}
+
+.drop(@size, @color) {
+    width: @size;
+    height: @size / 3;
+    border: @size / 6 solid @color;
+    border-top: none;
+    position: absolute;
+    bottom: @size / 3;
+    left: @size * 0.1875;
+
+    &:after {
+        width: 0;
+        height: 0;
+        content: '';
+        position: absolute;
+        border: solid transparent @size / 3;
+        border-top-color: @color;
+        left: @size / 64;
+        top: -@size * 0.1562;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        width: @size * 0.3125;
+        height: @size * 0.375;
+        background: @color;
+        top: -@size / 2;
+        left: @size * 0.203125;
+    }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1)
+    }
+    50% {
+        -webkit-transform: rotate(180deg) scale(1.25)
+    }
+    100% {
+        -webkit-transform: rotate(360deg) scale(1)
+    }
+}
+
+.rotate(@time) {
+    -webkit-animation: spin @time linear infinite;
+}
+
+.overlay(@z-index) {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: @z-index;
+
+    background-color: #fff;
+    opacity: 0.75;
+}

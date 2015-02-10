@@ -1,0 +1,35 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Tool specific and temporary files #
+#####################################
+.idea
+.tmp
+
+# Project specific files #
+##########################
+definitely/*
+!definitely/readme.txt
+bower_components/
+node_modules/
+temp/
+deploy/
+
+# Application build #
+#####################
+#dist/
+
+# Generated files #
+###################
+BerryForms.js
+BerryForms.js.map
+
+
+

@@ -1,0 +1,19 @@
+//To work on
+//Features:
+
+//Bug fixes:
+
+//Improvements:
+
+//Technical depths:
+Get rid of scope by using aliases
+Replace hard-coded dependencies with angular constants (http://twofuckingdevelopers.com/2014/06/angularjs-best-practices-001-constants/)
+
+//Future feature:
+User, Login screen, Roles and permissions
+Soft delete of entities and schemas
+Settings page
+Dashboard
+Entity create and modify date in filter
+Aggregate functions (sum, average, -custom-fn-, etc ...) to summarize list results
+Additional field types (number) of sub-types (email, phone number, etc ...)

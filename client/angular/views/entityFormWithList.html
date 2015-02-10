@@ -1,0 +1,18 @@
+<!-- Form -->
+<div data-ng-if="!Metadata" data-ng-controller="EntityFormController"
+     class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
+
+<div data-ng-if="Metadata && Create" data-ng-controller="EntityMetadataFormController"
+     class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
+
+<div data-ng-if="Metadata && !Create" data-ng-controller="FieldMetadataFormController"
+     class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
+
+<!-- List -->
+<div data-ng-if="!Metadata" data-ng-controller="EntityListController"
+    class="verticalHalf" data-ng-include="'angular/views/entityList.html'"></div>
+
+<div data-ng-if="Metadata" data-ng-controller="FieldMetadataListController"
+     class="verticalHalf" data-ng-include="'angular/views/entityList.html'"></div>
+
+<div class="clearFloat"></div>

@@ -1,0 +1,100 @@
+'use strict';
+
+//Application routes
+module Config {
+    export class Router {
+
+        public static injection():any[] {
+            return [
+                '$routeProvider',
+                Router.InitializeRoutes
+            ];
+        }
+
+        public static InitializeRoutes($routeProvider:any):void {
+            Router.InitializeMetadataRoutes($routeProvider);
+            Router.InitializeEntityRoutes($routeProvider);
+            Router.InitializeOtherRoutes($routeProvider);
+        }
+
+        private static InitializeMetadataRoutes($routeProvider:any):any {
+            return $routeProvider
+                .when('/schema/entity/:_entityName', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: true,
+                        create: false
+                    }
+                })
+                .when('/schema/entity', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: true,
+                        create: true
+                    }
+                });
+        }
+
+        private static InitializeEntityRoutes($routeProvider:any):any {
+            return $routeProvider
+                .when('/entity/:_entityName/filteredlist/page/:_pageNumber', {
+                    templateUrl: 'angular/views/entityListWithFilter.html',
+                    controller: 'EntityListWithFilterController',
+                    data: {
+                        metadata: false,
+                        create: false
+                    }
+                })
+                .when('/entity/:_entityName/filteredlist', {
+                    templateUrl: 'angular/views/entityListWithFilter.html',
+                    controller: 'EntityListWithFilterController',
+                    data: {
+                        metadata: false,
+                        create: false
+                    }
+                })
+                .when('/entity/:_entityName/page/:_pageNumber/id/:_entityId', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: false,
+                        create: false
+                    }
+                })
+                .when('/entity/:_entityName/page/:_pageNumber', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: false,
+                        create: true
+                    }
+                })
+                .when('/entity/:_entityName/id/:_entityId', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: false,
+                        create: false
+                    }
+                })
+                .when('/entity/:_entityName', {
+                    templateUrl: 'angular/views/entityFormWithList.html',
+                    controller: 'EntityFormWithListController',
+                    data: {
+                        metadata: false,
+                        create: true
+                    }
+                });
+        }
+
+        private static InitializeOtherRoutes($routeProvider:any):void {
+            $routeProvider
+                //Default
+                .otherwise({
+                    redirectTo: '/schema/entity'
+                });
+        }
+    }
+}

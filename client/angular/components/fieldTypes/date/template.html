@@ -1,0 +1,13 @@
+<div class="input-group" data-ng-class="{'error': !IsValid}">
+    <input type="text" class="form-control errorElement"
+           data-datepicker-popup="{{field.Configuration.DatepickerFormat}}"
+           data-ng-model="LocalDate"
+           data-is-open="Opened" min="field.MinDate" max="field.MaxDate"
+           data-datepicker-options="{{field.Configuration.DatepickerOptions}}"
+           data-date-disabled="IsDisabled(date, mode)" data-close-text="Close"/>
+    <span class="input-group-btn">
+        <button class="btn btn-default btn-sm errorElement" data-ng-click="Open($event)">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </button>
+    </span>
+</div>

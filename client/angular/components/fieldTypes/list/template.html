@@ -1,0 +1,16 @@
+<div data-ng-class="{'error': !IsValid}">
+    <div class="input-group input-group-top">
+        <input type="text" class="form-control errorElement" data-ng-model="CurrentValue"/>
+        <span class="input-group-btn">
+            <button class="btn btn-default btn-sm errorElement" data-ng-click="Add($event)">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </span>
+    </div>
+    <ul class="dropdown-menu multichoice-items errorElement">
+        <li data-ng-repeat="value in Entity.Data[field.FieldSystemName]">
+            <button type="button" class="close" data-ng-click="Remove($event,value)">&times;</button>
+            {{value}}
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,119 @@
+@import "configuration";
+@import "mixins";
+
+//Left menu
+div.leftMenu {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: @menuWidthCollapsed;
+    z-index: 2000;
+    background-color: @menuColor;
+    box-shadow: 0 0 @menuWidthCollapsed / 3 #000;
+
+    div.leftMenuEntitiesList {
+        position: absolute;
+        max-width: @menuWidthCollapsed * 0.9;
+        z-index: 250;
+        left: @menuWidthCollapsed * 0.05;
+        margin: 0;
+        font-size: 0;
+        line-height: 0;
+
+        div.glyphicon.menuicon {
+            font-size: @menuWidthCollapsed * 0.6;
+            width: @menuWidthCollapsed * 0.8;
+            height: @menuWidthCollapsed * 0.8;
+
+            top: 0;
+            margin: @menuWidthCollapsed * 0.05;
+            border: @menuWidthCollapsed * 0.05 solid @contrastingDarkColor;
+            padding: @menuWidthCollapsed * 0.05;
+            border-radius: @menuWidthCollapsed * 0.1;
+            color: @contrastingDarkColor;
+            background-color: @contrastingColor;
+
+            cursor: pointer;
+            box-shadow: none;
+            opacity: 0.5;
+
+            &:hover {
+                @iconShadowBase: @menuWidthCollapsed * 0.05;
+                box-shadow: @iconShadowBase @iconShadowBase 6 * @iconShadowBase #444;
+                opacity: 1;
+            }
+
+            &.active {
+                opacity: 1;
+            }
+
+            a {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .menuEntityExpand {
+            display: none;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            position: relative;
+            padding-top: @menuWidthCollapsed * 0.05;
+            padding-left: @menuWidthCollapsed * 0.255;
+            margin-left: @menuWidthCollapsed * 0.125;
+            margin-top: @menuWidthCollapsed * 0.125;
+            width: @menuWidthCollapsed * 0.6;
+            height: @menuWidthCollapsed * 0.2;
+            opacity: 0.5;
+            cursor: pointer;
+
+            div.threeDots {
+                .threeDots(@menuWidthCollapsed * 0.15, @contrastingDarkColor);
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &:nth-child(1) {
+            top: @menuWidthCollapsed * 0.1;
+        }
+
+        &:nth-child(2) {
+            top: @menuWidthCollapsed * 1.9;
+            bottom: @menuWidthCollapsed * 0.1;
+        }
+
+        &.collapsed {
+            .menuEntityExpand {
+                display: inline-block;
+            }
+
+            div.glyphicon.menuicon.collapsed {
+                display: none;
+            }
+        }
+
+        &.expanded {
+            overflow: auto;
+            border-radius: @menuWidthCollapsed * 0.1;
+            box-shadow: 0 0 @menuWidthCollapsed / 3 #000;
+            background-color: darken(@menuColor, 10%);
+            z-index: 1100;
+
+            .menuEntityExpand {
+                display: inline-block;
+            }
+        }
+    }
+
+    &.expanded {
+        width: @menuWidthExpanded;
+    }
+}

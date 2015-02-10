@@ -1,0 +1,188 @@
+@import "configuration";
+@import "mixins";
+
+//Large devices only
+@media screen and (min-width: 800px) {
+    div.verticalFull div.entityForm {
+        div.entityField {
+            width: 45%;
+            &:nth-child(2n) {
+                float: right;
+            }
+        }
+    }
+}
+
+//Medium and small devices
+@media screen and (max-width: 800px) {
+    div.entityForm {
+        div.entityField {
+            span.entityFieldLabel,
+            span.entityFieldInput {
+                width: 100%;
+            }
+        }
+    }
+
+    div.filter {
+        div.filterControls {
+            margin-top: 34px;
+        }
+
+        &.collapsed {
+            div.filterControls {
+                margin-top: 0;
+            }
+        }
+    }
+
+    div.entityDetailedList {
+        div.entityRecord {
+            div.entityField {
+                width: 100%/2;
+            }
+        }
+    }
+}
+
+//Small devices only
+@media screen and (max-width: 600px) {
+    div.leftMenu {
+        float: none;
+        position: absolute;
+        top: 0;
+        min-height: 0;
+        height: @menuWidthCollapsed;
+        width: 100%;
+
+        div.leftMenuEntitiesList {
+            max-width: none;
+            max-height: @menuWidthCollapsed * 0.9;
+            top: @menuWidthCollapsed * 0.05;
+            margin: 0;
+
+            .menuEntityExpand {
+                padding-left: 10px;
+                top: 0;
+                height: @menuWidthCollapsed * 0.25;
+            }
+
+            &:nth-child(1) {
+                top: @menuWidthCollapsed * 0.05;
+                left: @menuWidthCollapsed * 0.1;
+            }
+
+            &:nth-child(2) {
+                top: @menuWidthCollapsed * 0.05;
+                left: 1.9 * @menuWidthCollapsed;
+                right: 0.1 * @menuWidthCollapsed;
+                bottom: auto;
+            }
+        }
+    }
+
+    div.mainContent {
+        min-height: 100%;
+        margin-top: 0;
+        margin-left: 0;
+        padding-top: @menuWidthCollapsed;
+
+        div.verticalHalf {
+            float: none;
+            width: 100%;
+            position: relative;
+
+            &:nth-child(1) {
+                padding-top: @menuWidthCollapsed * 0.25;
+            }
+
+            &:nth-child(2) {
+                background-color: darken(@baseBackgroundColor, 5%);
+                box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 0 0;
+                > div {
+                    padding-bottom: 0;
+                    padding-left: 0;
+                }
+            }
+        }
+
+        div.verticalFull {
+            position: relative;
+        }
+    }
+
+    div.entityForm {
+        //List
+        div.entityField span.entityFieldInput div.fieldList {
+            div.input-group button {
+                right: 0;
+                border-left-style: solid;
+            }
+        }
+    }
+
+    div.entityList {
+        padding-left: 10px;
+        padding-bottom: 5px;
+
+        &.emptyList {
+            position: relative;
+            left: 0;
+        }
+
+        div.entityRecord {
+            padding-left: 85px;
+
+            div.commandZone {
+                width: 75px;
+
+                div.commandEdit {
+                    .pencil(15px, #888);
+                    cursor: pointer;
+                    top: 22px;
+                    left: 26px;
+
+                    &:hover {
+                        .pencil(15px, #444);
+                    }
+                }
+
+                div.commandDelete {
+                    .cross(21px, #888);
+                    cursor: pointer;
+                    top: 16px;
+                    left: 38px;
+
+                    &:hover {
+                        .cross(21px, #444);
+                    }
+                }
+            }
+
+            &.noMove {
+                padding-left: 70px;
+            }
+        }
+    }
+
+    div.entityDetailedList {
+        div.entityRecord {
+            div.entityField {
+                width: 100%;
+            }
+        }
+    }
+
+    div.verticalFull div.entityForm {
+        div.entityField {
+            width: 100%;
+        }
+    }
+
+    div.dialogOverlay {
+        > div.dialog {
+            width: 90%;
+            margin-left: -45%;
+        }
+    }
+}

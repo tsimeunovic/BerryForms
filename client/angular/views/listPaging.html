@@ -1,0 +1,14 @@
+<span>
+    <a class="first" data-ng-click="Paging.GoFirst()" data-ng-show="Paging.CanGoFirst">&lt;&lt;</a>
+    <a class="previous" data-ng-click="Paging.GoPrevious()" data-ng-show="Paging.CanGoPrevious">&lt;</a>
+</span>
+<span>
+    <input type="text" data-ng-model="Paging.SelectedPage"
+           data-ng-class="{current : Paging.SelectedPage==Paging.CurrentPage}"/>
+    /&nbsp;
+    <span class="totalPages">{{Paging.TotalPages}}</span>
+</span>
+<span>
+    <a class="next" data-ng-click="Paging.GoNext()" data-ng-show="Paging.CanGoNext">&gt;</a>
+    <a class="last" data-ng-click="Paging.GoLast()" data-ng-show="Paging.CanGoLast">&gt;&gt;</a>
+</span>

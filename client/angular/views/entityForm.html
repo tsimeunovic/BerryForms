@@ -1,0 +1,36 @@
+<div data-role="form">
+    <!-- Title -->
+    <h1>
+        {{FormHeader}}
+        <span data-ng-repeat="icon in FormHeaderIcons"
+              class="glyphicon glyphicon-{{icon.Icon}}"
+              data-ng-click="icon.Action()"
+              title="{{icon.Tooltip}}"></span>
+    </h1>
+    <div class="empty"></div>
+
+    <div class="entityForm">
+        <!-- Fields -->
+        <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
+            <span class="entityFieldLabel" title="{{field.FieldDescription}}">
+                {{field.FieldName}}
+            </span>
+            <span class="entityFieldInput">
+                <span data-field-component-creator></span>
+            </span>
+        </div>
+
+        <!-- Save button -->
+        <div class="separator"></div>
+        <div class="entityField">
+            <span class="entityFieldLabel"></span>
+            <span class="entityFieldInput">
+                <button class="btn btn-default btn-sm form-control btn-submit"
+                        data-ng-disabled="!Entity || Entity.ErrorFields.length"
+                        data-ng-click="SubmitForm()">
+                    {{SubmitButtonText}}
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

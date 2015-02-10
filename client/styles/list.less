@@ -1,0 +1,221 @@
+@import "configuration";
+@import "mixins";
+
+div.entityList {
+    //Entity record
+    div.entityRecord {
+        position: relative;
+        height: 34px;
+        margin: 4px 0;
+        padding: 6px 10px 6px 60px;
+        background-color: @grayBackgroundColor;
+        border: 1px #888 solid;
+        border-right: none;
+        border-radius: 6px 0 0 6px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        .roundedZone() {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            top: -14px;
+
+            border-radius: 0 30px 30px 0;
+            border: 1px solid transparent;
+        }
+
+        div.dragZone {
+            .roundedZone;
+            left: -10px;
+            background-color: darken(@grayBackgroundColor, 15%);
+            cursor: pointer;
+
+            div.threeDots {
+                .threeDots(6px, #888);
+                .rotate(90deg);
+                position: absolute;
+                top: 26px;
+                left: 14px;
+            }
+
+            &:hover {
+                border-color: #888;
+
+                div.threeDots {
+                    .threeDots(6px, #444);
+                }
+            }
+        }
+
+        div.commandZone {
+            .roundedZone;
+            font-size: 0;
+            width: 40px;
+            left: 5px;
+            background-color: darken(@grayBackgroundColor, 7.5%);
+
+            div.commandEdit {
+                .pencil(10px, #888);
+                cursor: pointer;
+                top: 17px;
+                left: 22px;
+
+                &:hover {
+                    .pencil(10px, #444);
+                }
+            }
+
+            div.commandDelete {
+                .cross(14px, #888);
+                cursor: pointer;
+                top: 26px;
+                left: 14px;
+
+                &:hover {
+                    .cross(14px, #444);
+                }
+            }
+        }
+
+        &.noMove {
+            padding-left: 40px;
+            div.dragZone {
+                display: none;
+            }
+            div.commandZone {
+                left: -15px;
+            }
+        }
+    }
+}
+
+div.entityDetailedList {
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+    //Entity record
+    div.entityRecord {
+        border-bottom: 1px solid lighten(@contrastingDarkColor, 15%);
+        padding: 5px 0;
+        margin: 0 10px;
+        min-height: 30px;
+
+        &:first-child {
+            border-top: 2px solid lighten(@contrastingDarkColor, 15%);
+        }
+        &:last-child {
+            border-bottom: 2px solid lighten(@contrastingDarkColor, 15%);
+        }
+
+        div.entityField {
+            float: left;
+            padding: 0 10px;
+            width: 100%/3;
+        }
+
+        span.entityFieldLabel {
+            font-size: 0.8em;
+        }
+        span.entityFieldValue {
+        }
+    }
+}
+
+span.emptyListMessage {
+    display: block;
+    text-align: center;
+}
+
+//Paging
+div.listPaging {
+    width: 260px;
+    padding: 4px 0;
+    margin: auto;
+
+    > span {
+        display: inline-block;
+        width: 80px;
+        text-align: center;
+
+        &:first-child {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        &:last-child {
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        input {
+            width: 50px;
+            text-align: center;
+            color: #bbb;
+
+            &.current {
+                color: #000;
+            }
+        }
+
+        a,
+        a:link,
+        a:hover,
+        a:visited,
+        a:active {
+            cursor: pointer;
+            color: #888;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #000;
+        }
+
+        a + a {
+            margin-left: 10px;
+        }
+    }
+}
+
+//Filter
+div.filter {
+    @filterRadius: @menuWidthCollapsed * 0.125;
+    .borderRadius(@filterRadius, @filterRadius, @filterRadius, @filterRadius);
+    border: 1px solid lighten(@contrastingDarkColor, 15%);
+    background-color: lighten(@menuColor, 20%);
+    padding: @menuWidthCollapsed * 0.1 @menuWidthCollapsed * 0.25;
+
+    &.collapsed {
+        div.fields {
+            height: 0;
+            overflow: hidden;
+        }
+    }
+
+    div.filterControls {
+        height: 38px;
+        padding: 2px 3px;
+        margin-bottom: 4px;
+
+        > div.control {
+            float: right;
+
+            span.input-group-btn {
+                width: auto;
+
+                button {
+                    padding-top: 10px;
+                    min-width: 40px;
+                    height: 34px;
+                }
+            }
+
+            .active {
+                color: @errorColor;
+            }
+        }
+    }
+}

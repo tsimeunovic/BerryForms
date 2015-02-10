@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Berry Forms</title>
+    <link rel="icon" href="favicon.ico" type="image/x-ico">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    <!-- Css styles -->
+    <!-- build:css styles/app-external-min.css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/angularjs-toaster/toaster.css"/>
+    <link rel="stylesheet" href="../bower_components/ng-sortable/dist/ng-sortable.css"/>
+    <!-- endbuild -->
+
+    <!-- build:css styles/app-min.css -->
+    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="styles/menu.css"/>
+    <link rel="stylesheet" href="styles/form.css"/>
+    <link rel="stylesheet" href="styles/list.css"/>
+    <link rel="stylesheet" href="styles/overrides.css"/>
+    <link rel="stylesheet" href="styles/responsive.css"/>
+    <!-- endbuild -->
+</head>
+<html id="BerryFormsApp">
+<body>
+<!-- Global controllers -->
+<div data-ng-controller="LoadingController" data-ng-show="LoadingInProgress" style="position: fixed;width: 100%;height: 100%;top: 0;left: 0;z-index: 9990;background-color: #fff;opacity: 0.75;">
+    <div style="content: '';position: fixed;top: 50%;left: 50%;z-index: 9999;margin-left: -50px;margin-top: -50px;width: 100px;height: 100px;transform: rotate(2s);-webkit-transform: rotate(2s);-moz-transform: rotate(2s);-o-transform: rotate(2s);-webkit-animation: spin 2s linear infinite;background: url(data:image/png;base64,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) no-repeat center center transparent;"></div>
+</div>
+<div class="dialogOverlay" data-ng-include="'angular/views/dialog.html'" data-ng-controller="DialogController" data-ng-show="Dialog"></div>
+<div class="ng-hide" data-ng-controller="NotificationController"></div>
+<div data-toaster-container></div>
+
+<!-- Left menu -->
+<div class="leftMenu" data-ng-include="'angular/views/leftMenu.html'" data-ng-controller="MenuController"></div>
+
+<!-- Application content -->
+<div class="mainContent" data-ng-view></div>
+
+<!-- Configuration overrides -->
+<script src="../api/configuration"></script>
+
+<!-- Scripts -->
+<!-- build:js scripts/app-external-min.js -->
+<!-- 3rd party components -->
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/angular-ui-bootstrap/src/position/position.js"></script>
+<script src="../bower_components/angular-ui-bootstrap/src/dateparser/dateparser.js"></script>
+<script src="../bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/ng-sortable/dist/ng-sortable.js"></script>
+<script src="../bower_components/angularjs-toaster/toaster.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/app-templates.js -->
+<!-- endbuild -->
+
+<!-- build:js scripts/app-min.js -->
+<!-- Extensions -->
+<script src="extensions/objectExtensions.js"></script>
+<script src="extensions/arrayExtensions.js"></script>
+<script src="extensions/stringExtensions.js"></script>
+<script src="extensions/dateExtensions.js"></script>
+
+<!-- Static -->
+<script src="static/controllerArea.js"></script>
+<script src="static/loadingType.js"></script>
+<script src="static/routeParams.js"></script>
+<script src="static/pluginDataTypes.js"></script>
+<script src="static/pluginOperations.js"></script>
+
+<!-- Config -->
+<script src="config/config.js"></script>
+<script src="config/configHelper.js"></script>
+<script src="config/configLoader.js"></script>
+
+<!-- Localization -->
+<script src="angular/localization/localizationLoader.js"></script>
+
+<!-- Models -->
+<script src="angular/models/fieldMetadataModel.js"></script>
+<script src="angular/models/entityMetadataModel.js"></script>
+<script src="angular/models/entityModel.js"></script>
+<script src="angular/models/pluginContextModel.js"></script>
+
+<!-- Data -->
+<script src="angular/data/createEntityFormFields.js"></script>
+<script src="angular/data/createFieldFormFields.js"></script>
+
+<!-- Directives -->
+<script src="angular/directives/leftMenuAutosize.js"></script>
+<script src="angular/directives/systemSymbolDirective.js"></script>
+<script src="angular/directives/fieldDirectiveBase.js"></script>
+<script src="angular/directives/fieldComponentCreator.js"></script>
+
+<!-- Interface types -->
+<script src="angular/interfaces/services/communication/IMessagingService.js"></script>
+<script src="angular/interfaces/services/communication/IQueueService.js"></script>
+<script src="angular/interfaces/services/interaction/INotificationService.js"></script>
+
+<!-- Services -->
+<script src="angular/services/communication/messagingBaseService.js"></script>
+<script src="angular/services/communication/messagingService.js"></script>
+<script src="angular/services/communication/queueBaseService.js"></script>
+<script src="angular/services/communication/queueService.js"></script>
+<script src="angular/services/system/namingConventionsService.js"></script>
+<script src="angular/services/mapping/objectMapperBaseService.js"></script>
+<script src="angular/services/system/redirectService.js"></script>
+<script src="angular/services/mapping/entityModelMapperService.js"></script>
+<script src="angular/services/mapping/filterConverterService.js"></script>
+<script src="angular/services/localization/localizationService.js"></script>
+<script src="angular/services/repository/entityRepositoryService.js"></script>
+<script src="angular/services/repository/urlLocatorService.js"></script>
+<script src="angular/services/interaction/notificationService.js"></script>
+<script src="angular/services/state/cacheBaseService.js"></script>
+<script src="angular/services/state/entityMetadataListCacheService.js"></script>
+<script src="angular/services/state/entityListCacheService.js"></script>
+<script src="angular/services/state/stateService.js"></script>
+<script src="angular/services/interaction/dialogService.js"></script>
+<script src="angular/services/interaction/domManipulationService.js"></script>
+<script src="angular/services/repository/queryCreatorService.js"></script>
+<script src="angular/services/plugins/pluginsExecutorService.js"></script>
+
+<!-- Components -->
+<script src="angular/components/fieldTypes/fieldTypesRegistry.js"></script>
+<script src="angular/components/plugins/pluginsRegistry.js"></script>
+
+<script src="angular/components/fieldTypes/boolean/booleanFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/boolean/booleanFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/boolean/booleanFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/boolean/booleanFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/boolean/booleanFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/date/dateFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/date/dateFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/date/dateFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/date/dateFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/date/dateFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/list/listFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/list/listFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/list/listFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/list/listFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/list/listFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/select/selectFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/select/selectFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/select/selectFieldOptionMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/select/selectFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/select/selectFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/select/selectFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/text/textFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/text/textFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/text/textFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/text/textFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/text/textFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/textarea/textareaFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/textarea/textareaFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/textarea/textareaFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/textarea/textareaFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/textarea/textareaFieldFilter.js"></script>
+
+<script src="angular/components/fieldTypes/relation/relationFieldComponent.js"></script>
+<script src="angular/components/fieldTypes/relation/relationFieldMetadataModel.js"></script>
+<script src="angular/components/fieldTypes/relation/relationFieldFormFields.js"></script>
+<script src="angular/components/fieldTypes/relation/relationFieldDirective.js"></script>
+<script src="angular/components/fieldTypes/relation/relationFieldFilter.js"></script>
+
+<!-- Controllers -->
+<script src="angular/controllers/base/baseController.js"></script>
+<script src="angular/controllers/base/baseViewController.js"></script>
+<script src="angular/controllers/base/baseListController.js"></script>
+<script src="angular/controllers/global/menuController.js"></script>
+<script src="angular/controllers/global/loadingController.js"></script>
+<script src="angular/controllers/global/dialogController.js"></script>
+<script src="angular/controllers/global/notificationController.js"></script>
+<script src="angular/controllers/combined/entityFormWithListController.js"></script>
+<script src="angular/controllers/form/entityFormController.js"></script>
+<script src="angular/controllers/form/entityMetadataFormController.js"></script>
+<script src="angular/controllers/form/fieldMetadataFormController.js"></script>
+<script src="angular/controllers/list/entityListController.js"></script>
+<script src="angular/controllers/list/entityListWithFilterController.js"></script>
+<script src="angular/controllers/list/fieldMetadataListController.js"></script>
+
+<!-- Main -->
+<script src="angular/router.js"></script>
+<script src="angular/app.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/app-user-plugins.js -->
+<script src="angular/components/plugins/example/pluginExample.js"></script>
+<!-- endbuild -->
+</body>
+</html>
