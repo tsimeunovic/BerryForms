@@ -1,4 +1,4 @@
-# <img alt="Raspberry logo" src="http://placehold.it/16x20"/> Berry Forms
+# <img alt="Raspberry logo" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_logo_bw.png" width="14" height="18"/> Berry Forms
 
 ### Turn your Raspberry Pi into personal xRM server
 
@@ -11,12 +11,12 @@ Berry Forms is lightweight personal xRM application written using [MEAN.IO](http
 First public GitHub release contains just few basic features to make Berry Forms usable for personal usage. Manual setup and/or basic troubleshooting skills are required. User can:
 
 - Define schema for custom entities
-    <p align="center"><img alt="Tablet schema" src="http://placehold.it/842x658"/></p>
-    <p align="center"><img alt="Mobile fields" src="http://placehold.it/270x543"/></p>
+    <p align="center"><img alt="Tablet schema" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_tablet_schema.png"/></p>
+    <p align="center"><img alt="Mobile fields" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_mobile_fields.png"/></p>
 - Create new records
-    <p align="center"><img alt="Desktop list" src="http://placehold.it/844x592"/></p>
+    <p align="center"><img alt="Desktop list" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_desktop_list.png"/></p>
 - Filter records
-    <p align="center"><img alt="Mobile filter" src="http://placehold.it/263x516"/></p>
+    <p align="center"><img alt="Mobile filter" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_mobile_filter.png"/></p>
 - Write plugins that can react to certain application events
 
 Other than that application has built-in support for different languages. It contains 7 types of fields (Boolean, Date, List, Select, Text, Textarea, Relationship) out of the box and can be easily extended to support more.
