@@ -1,10 +1,10 @@
-# <img alt="Raspberry logo" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_logo_bw.png" width="14" height="18"/> Berry Forms
+# <img alt="Raspberry logo" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_logo_bw.png" width="20" height="26"/> Berry Forms
 
 ### Turn your Raspberry Pi into personal xRM server
 
 ## About
 
-Berry Forms is lightweight personal xRM application written using [MEAN.IO](http://mean.io/#!/) and [Typescript](http://www.typescriptlang.org/). It aims to run on any device that can run MongoDB and Node.js (like Raspberry Pi). Client is a small responsive website (~ 170kb on first load) that uses simple rest api to retrieve and persist data.
+Berry Forms is lightweight personal xRM application written using MEAN technologies and [Typescript](http://www.typescriptlang.org/). It aims to run on any device that can run MongoDB and Node.js (like Raspberry Pi). Client is a small responsive website (~ 170kb on first load) that uses simple rest api to retrieve and persist data.
 
 ## Features
 
