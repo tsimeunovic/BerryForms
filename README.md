@@ -1,4 +1,4 @@
-# <img alt="Raspberry logo" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_logo_bw.png" width="20" height="26"/> Berry Forms
+# <img alt="Raspberry logo" src="https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/readme_pictures/md_logo_bw.png" width="20" height="26"/> Berry Forms [![Build Status](https://travis-ci.org/tsimeunovic/BerryForms.svg?branch=master)](https://travis-ci.org/tsimeunovic/BerryForms)
 
 ### Turn your Raspberry Pi into personal xRM server
 
