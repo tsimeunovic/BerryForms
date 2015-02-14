@@ -28,8 +28,5 @@ deploy/
 
 # Generated files #
 ###################
-BerryForms.js
-BerryForms.js.map
-
-
-
+/BerryForms.js
+/BerryForms.js.map
