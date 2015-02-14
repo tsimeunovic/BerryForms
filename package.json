@@ -6,19 +6,19 @@
     "private": true,
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/tsimeunovic/BerryForms"
     },
     "dependencies": {
         "body-parser": "~1.4.3",
-        "bson": "^0.2.18",
-        "compression": "^1.3.0",
+        "bson": "~0.2.18",
+        "compression": "~1.3.0",
         "express": "~4.5.1",
         "mongodb": "~1.4.7"
     },
     "devDependencies": {
         "connect-livereload": "~0.2.0",
         "grunt": "~0.4.1",
-        "grunt-angular-templates": "^0.5.7",
+        "grunt-angular-templates": "~0.5.7",
         "grunt-autoprefixer": "~0.2.0",
         "grunt-concurrent": "~0.3.0",
         "grunt-contrib-clean": "~0.5.0",
@@ -31,26 +31,26 @@
         "grunt-contrib-htmlmin": "~0.1.3",
         "grunt-contrib-imagemin": "~0.2.0",
         "grunt-contrib-jshint": "~0.6.0",
-        "grunt-contrib-less": "^1.0.0",
+        "grunt-contrib-less": "~1.0.0",
         "grunt-contrib-uglify": "~0.2.0",
         "grunt-contrib-watch": "~0.5.2",
         "grunt-google-cdn": "~0.2.0",
-        "grunt-karma": "^0.8.3",
+        "grunt-karma": "~0.8.3",
         "grunt-ngmin": "~0.0.2",
         "grunt-open": "~0.2.0",
         "grunt-rev": "~0.1.0",
         "grunt-svgmin": "~0.2.0",
-        "grunt-typescript": "^0.6.1",
+        "grunt-typescript": "~0.6.1",
         "grunt-usemin": "~0.1.11",
-        "karma": "^0.12.16",
-        "karma-chrome-launcher": "^0.1.7",
-        "karma-firefox-launcher": "^0.1.4",
-        "karma-jasmine": "^0.3.2",
-        "karma-ng-html2js-preprocessor": "^0.1.0",
-        "karma-ng-scenario": "^0.1.0",
+        "karma": "~0.12.16",
+        "karma-chrome-launcher": "~0.1.7",
+        "karma-firefox-launcher": "~0.1.4",
+        "karma-jasmine": "~0.3.2",
+        "karma-ng-html2js-preprocessor": "~0.1.0",
+        "karma-ng-scenario": "~0.1.0",
         "load-grunt-tasks": "~0.1.0",
         "time-grunt": "~0.1.0",
-        "typescript": "^1.4.1"
+        "typescript": "~1.4.1"
     },
     "engines": {
         "node": ">=0.8.0"
