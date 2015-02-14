@@ -3,7 +3,7 @@
     "description": "A lightweight javascript (angular/node/mongodb) based xRM system",
     "author": "Tomislav Simeunovic",
     "version": "0.2.1",
-    "private": true,
+    "private": false,
     "repository": {
         "type": "git",
         "url": "https://github.com/tsimeunovic/BerryForms"
