@@ -310,6 +310,11 @@ module.exports = function (grunt) {
             unit: {
                 configFile: 'karma.conf.js',
                 singleRun: true
+            },
+            unitTravis: {
+                configFile: 'karma.conf.js',
+                browsers: ['Firefox'],
+                singleRun: true
             }
         },
         cdnify: {
@@ -448,6 +453,12 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'jshint',
         'test',
+        'build'
+    ]);
+
+    grunt.registerTask('travis', [
+        'compile',
+        'karma:unitTravis',
         'build'
     ]);
 };
