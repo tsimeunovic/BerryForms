@@ -1,6 +1,6 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/angular/interfaces/services/localization/ILocalizationService.ts" />
-/// <reference path="../../../client/angular/localization/en/Resources.ts" />
+/// <reference path="../../../client/angular/localization/en/resources.ts" />
 /// <reference path="../../../client/angular/interfaces/localization/IResources.ts" />
 
 'use strict';

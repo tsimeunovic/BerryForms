@@ -1,5 +1,5 @@
 /// <reference path="../../../../jasmine.d.ts" />
-/// <reference path="../../../mocks/LocalizationServiceMock.ts" />
+/// <reference path="../../../mocks/localizationServiceMock.ts" />
 /// <reference path="../../../mocks/callbackMock.ts" />
 /// <reference path="../../../mocks/pluginMock.ts" />
 /// <reference path="../../../../../client/angular/services/plugins/pluginsExecutorService.ts" />
