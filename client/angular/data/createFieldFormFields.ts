@@ -1,4 +1,4 @@
-/// <reference path="../Models/entityMetadataModel.ts" />
+/// <reference path="../models/entityMetadataModel.ts" />
 /// <reference path="../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../components/fieldTypes/text/textFieldFormFields.ts" />
 /// <reference path="../components/fieldTypes/textarea/textareaFieldFormFields.ts" />

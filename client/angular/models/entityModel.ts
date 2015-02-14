@@ -1,4 +1,4 @@
-/// <reference path="../Models/entityMetadataModel.ts" />
+/// <reference path="../models/entityMetadataModel.ts" />
 /// <reference path="../../extensions/arrayExtensions.ts" />
 /// <reference path="../../extensions/dateExtensions.ts" />
 

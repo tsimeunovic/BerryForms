@@ -2,7 +2,7 @@
 
 /// <reference path="./booleanFieldMetadataModel.ts" />
 /// <reference path="./../../../data/createFieldFormFields.ts" />
-/// <reference path="../../../Models/entityMetadataModel.ts" />
+/// <reference path="../../../models/entityMetadataModel.ts" />
 /// <reference path="../date/dateFieldMetadataModel.ts" />
 /// <reference path="../list/listFieldMetadataModel.ts" />
 /// <reference path="../select/selectFieldMetadataModel.ts" />
