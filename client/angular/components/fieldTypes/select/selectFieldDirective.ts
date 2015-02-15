@@ -7,15 +7,15 @@ module Directives {
     export class SelectField extends Directives.BaseField {
         public static injection():any[] {
             return [
-                '$timeout',
+                '$document',
                 SelectField.DirectiveOptions
             ];
         }
 
-        private static TimeoutService;
+        private static Document:any;
 
-        public static DirectiveOptions(Timeout:any):any {
-            SelectField.TimeoutService = Timeout;
+        public static DirectiveOptions(Document:any):any {
+            SelectField.Document = Document;
             return BaseField.DirectiveOptions("Select", SelectField.StaticConstructor);
         }
 
@@ -23,15 +23,16 @@ module Directives {
             return new Directives.SelectField();
         }
 
-        private ToggleButton:any;
-
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             super.Link($scope, $linkElement, $linkAttributes);
 
-            //Setup dropdown toggle
-            this.SetupToggle($linkElement);
+            //Find toggle
+            var rootElement = $linkElement;
+            if (rootElement.length > 0) rootElement = rootElement[0];
+            this.ToggleButton = rootElement.querySelector('.dropdown-toggle');
 
             //Add select function to scope
+            this.Scope.IsOpened = false;
             this.Scope.SelectOption = this.SelectOption.bind(this);
 
             //Assert model data
@@ -40,38 +41,30 @@ module Directives {
                 this.Scope.Entity.Data[fieldSystemName] ||
                 this.Scope.field.DefaultValue ||
                 new Models.SelectFieldOptionMetadata('', '');
+
+            //Setup watch
+            this.WatchOpened();
         }
 
-        private SetupToggle(rootElement:any):void {
-            //Custom expand functionality to avoid using bootstrap.js
-            if (rootElement.length > 0) rootElement = rootElement[0];
-            this.ToggleButton = rootElement.querySelector('.dropdown-toggle');
-            this.ToggleButton.setAttribute('tabindex', '0');
-            this.ToggleButton.onclick = this.ToggleDropdown.bind(this);
-            this.ToggleButton.onblur = this.CloseDropdown.bind(this);
-        }
+        private ToggleButton:any;
 
         private SelectOption($event:any, option:string):void {
             this.Scope.Entity.Data[this.Scope.field.FieldSystemName] = option;
             this.Scope.IsOpened = false;
         }
 
-        private ToggleDropdown($event):boolean {
-            this.Scope.IsOpened = !this.Scope.IsOpened;
-            //Fix Firefox and IE different handling of focus and blur
-            if (this.Scope.IsOpened) this.ToggleButton.focus();
-            return this.ApplyOpenedValue();
+        private WatchOpened():void {
+            var _this = this;
+            this.Scope.$watch('IsOpened', function (value) {
+                var bindUnbindMethod:string = value ? 'bind' : 'unbind';
+                SelectField.Document[bindUnbindMethod]('click', _this.DocumentClick.bind(_this));
+            });
         }
 
-        private CloseDropdown($event):boolean {
+        private DocumentClick(event):void {
+            if (!this.Scope.IsOpened || event.target === this.ToggleButton) return;
             this.Scope.IsOpened = false;
-            return this.ApplyOpenedValue();
-        }
-
-        private ApplyOpenedValue():boolean {
-            SelectField.TimeoutService(function () {
-            }, true);
-            return false;
+            this.Scope.$apply(function () {});
         }
     }
 }

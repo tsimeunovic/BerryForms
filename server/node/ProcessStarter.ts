@@ -9,7 +9,7 @@ var ConfigClient:any = require('../config/ClientConfig').Config.ClientConfig;
 export module NodeHelpers {
     export class ProcessStarter {
         public static ApplyProcessParameters(process:any):void {
-            process.argv.forEach(function (val, index, array) {
+            process.argv.forEach(function (val:string, index, array) {
                 var dbConfigKey = 'database=';
                 if (val.indexOf(dbConfigKey) == 0) {
                     var databaseName = val.replace(dbConfigKey, '');

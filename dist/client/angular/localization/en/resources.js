@@ -158,4 +158,3 @@ var Localization;
         _global.Localization.Resources = new Localization.ResourcesEn();
     })();
 })(Localization || (Localization = {}));
-//# sourceMappingURL=Resources.js.map
