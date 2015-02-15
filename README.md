@@ -21,9 +21,9 @@ First public GitHub release contains just few basic features to make Berry Forms
 
 Other than that application has built-in support for different languages. It contains 7 types of fields (Boolean, Date, List, Select, Text, Textarea, Relationship) out of the box and can be easily extended to support more.
 
-## Upcoming features
+## What's upcoming
 
-Features that i would like to add in near future:
+Features that I would like to add in future:
 
 - Login screen. Support for different users and roles
 - Settings page
@@ -31,7 +31,7 @@ Features that i would like to add in near future:
 - Additional field types
 - And a lot more ...
 
-## How to try it
+## How to install
 
 - Make sure you have installed nodejs and mongodb
 - Clone repository or otherwise download source codes
@@ -39,6 +39,14 @@ Features that i would like to add in near future:
 - Run 'grunt compile' or navigate to dist folder
 - Run 'node BerryForms.js'
 - Navigate to 'http://localhost:8080/'
+
+In case you are running arch linux (and have already installed nodejs, mongodb and git), just run:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/scripts/arch/InstallBerryForms.sh | bash
+```
+
+It will get the latest version and setup node daemon. Same command can be used to upgrade application later.
 
 ## How to contribute
 
