@@ -1,6 +1,6 @@
-/// <reference path="../models/entityMetadataModel.ts" />
-/// <reference path="../../extensions/arrayExtensions.ts" />
-/// <reference path="../../extensions/dateExtensions.ts" />
+/// <reference path="entityMetadataModel.ts" />
+/// <reference path="../../../extensions/arrayExtensions.ts" />
+/// <reference path="../../../extensions/dateExtensions.ts" />
 
 'use strict';
 var _global:any = this;

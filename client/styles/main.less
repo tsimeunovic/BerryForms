@@ -146,7 +146,7 @@ span.systemSymbol {
 //Loading
 div.loadingOverlay {
     //This style is inlined to index.html to improve user experience for slow devices
-    .overlay(9990);
+    .overlay(999);
 
     &:after {
         @loadingCircleSize: 100px;
@@ -155,7 +155,7 @@ div.loadingOverlay {
         position: fixed;
         top: 50%;
         left: 50%;
-        z-index: 9999;
+        z-index: 999;
 
         margin-left: -@loadingCircleSize/2;
         margin-top: -@loadingCircleSize/2;
@@ -174,13 +174,13 @@ div.dialogOverlay {
     @dialogHeight: 160px;
 
     &:before {
-        .overlay(9900);
+        .overlay(1110);
         content: '';
     }
 
     > div.dialog {
         position: fixed;
-        z-index: 9910;
+        z-index: 1112;
 
         width: @dialogWidth;
         min-height: @dialogHeight;

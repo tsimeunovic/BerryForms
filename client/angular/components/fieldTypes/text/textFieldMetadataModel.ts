@@ -1,5 +1,5 @@
 /// <reference path="../../../../extensions/stringExtensions.ts" />
-/// <reference path="../../../models/fieldMetadataModel.ts" />
+/// <reference path="../../../models/core/fieldMetadataModel.ts" />
 
 'use strict';
 

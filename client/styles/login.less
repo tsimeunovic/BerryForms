@@ -1,0 +1,44 @@
+@import "configuration";
+@import "mixins";
+
+div.loginOverlay {
+  @dialogWidth: 600px;
+  @dialogHeight: 320px;
+
+  &:before {
+    .overlay(880);
+    content: '';
+  }
+
+  > div.dialog {
+    position: fixed;
+    z-index: 882;
+
+    width: @dialogWidth;
+    min-height: @dialogHeight;
+    border-radius: 8px;
+    border: 1px solid @contrastingDarkColor;
+    background-color: @baseBackgroundColor;
+    box-shadow: 0 0 @menuWidthCollapsed / 3 #000;
+    overflow: hidden;
+
+    left: 50%;
+    top: 50%;
+    margin-left: -@dialogWidth/2;
+    margin-top: -@dialogHeight/2;
+
+    div.dialogHeader {
+      height: @dialogHeight / 5;
+      border-bottom: 1px solid @contrastingDarkColor;
+      line-height: @dialogHeight / 5;
+      background-color: @menuColor;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    div.dialogText {
+      padding: 20px;
+      text-align: center;
+    }
+  }
+}

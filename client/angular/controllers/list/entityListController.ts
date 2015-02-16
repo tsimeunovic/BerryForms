@@ -1,7 +1,7 @@
 /// <reference path="../base/baseListController.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
-/// <reference path="../../models/entityModel.ts" />
+/// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 
 'use strict';

@@ -28,7 +28,7 @@ module Services {
 
             //Return unsubscribe function
             var _this = this;
-            return function () {
+            return function ():void {
                 _this.removeSubscriber(messageName, callbackFunction);
             };
         }

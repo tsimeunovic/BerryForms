@@ -159,5 +159,8 @@ module Localization {
         Warning:string;
         Information:string;
         Success:string;
+
+        //Security
+        UserUnauthenticated:string;
     }
 }

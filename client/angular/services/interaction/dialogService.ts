@@ -32,5 +32,9 @@ module Services {
 
             this.MessagingService.Messages.Dialog.Create.publish(dialogData);
         }
+
+        public RemoveDialog():void {
+            this.MessagingService.Messages.Dialog.Remove.publish();
+        }
     }
 }

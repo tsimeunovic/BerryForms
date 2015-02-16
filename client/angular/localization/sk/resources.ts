@@ -162,6 +162,9 @@ module Localization {
         Warning:string = 'Varovanie';
         Information:string = 'Informácia';
         Success:string = 'Úspech';
+
+        //Security
+        UserUnauthenticated:string;
     }
 
     (function () {

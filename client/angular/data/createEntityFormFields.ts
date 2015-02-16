@@ -1,4 +1,4 @@
-/// <reference path="../models/entityMetadataModel.ts" />
+/// <reference path="../models/core/entityMetadataModel.ts" />
 /// <reference path="../components/fieldTypes/boolean/booleanFieldMetadataModel.ts" />
 /// <reference path="../components/fieldTypes/date/dateFieldMetadataModel.ts" />
 /// <reference path="../components/fieldTypes/list/listFieldMetadataModel.ts" />

@@ -1,4 +1,4 @@
-/// <reference path="../../../models/entityModel.ts" />
+/// <reference path="../../../models/core/entityModel.ts" />
 
 'use strict';
 

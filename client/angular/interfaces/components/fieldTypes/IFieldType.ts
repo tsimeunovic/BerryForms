@@ -1,5 +1,5 @@
-/// <reference path="../../../models/fieldMetadataModel.ts" />
-/// <reference path="../../../models/entityMetadataModel.ts" />
+/// <reference path="../../../models/core/fieldMetadataModel.ts" />
+/// <reference path="../../../models/core/entityMetadataModel.ts" />
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 
 'use strict';

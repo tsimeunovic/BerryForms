@@ -17,5 +17,6 @@ module Static {
         public static FieldListMetadata:string = 'FieldListMetadata';
         public static FieldSchemaData:string = 'FieldSchemaData';
         public static FieldSchemaSubmit:string = 'FieldSchemaSubmit';
+        public static LoggingIn:string = 'LoggingIn';
     }
 }

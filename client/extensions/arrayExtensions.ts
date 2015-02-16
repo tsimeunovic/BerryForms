@@ -72,7 +72,7 @@ Array.prototype.where = function (predicate):any[] {
 };
 
 Array.prototype.single = function (predicate) {
-    var results = this.where(predicate);
+    var results:any[] = this.where(predicate);
     if (results.length == 1) return results[0];
     else return null;
 };

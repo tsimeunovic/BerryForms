@@ -47,6 +47,8 @@ module Services {
             this.SetupCacheEntityListInvalidated();
             this.SetupDialogCreate();
             this.SetupDialogRemove();
+            this.SetupUserLoggedOut();
+            this.SetupUserLoggedIn();
 
             //Register as global object - for plugin listeners
             _global.Instances = _global.Instances || {};
@@ -377,6 +379,38 @@ module Services {
             };
             this.Messages.Dialog.Remove.publish = function () {
                 return _this.notifySubscribers(dialogRemoveEventName, null, requiresRootApply);
+            };
+        }
+
+        private SetupUserLoggedOut() {
+            var _this = this;
+            var userLoggedOutEventName = 'userLoggedOut';
+            var requiresRootApply = false;
+
+            this.Messages.User.LoggedOut.subscribe = function (subscriber) {
+                return _this.addSubscriber(userLoggedOutEventName, subscriber);
+            };
+            this.Messages.User.LoggedOut.unsubscribe = function (subscriber) {
+                return _this.removeSubscriber(userLoggedOutEventName, subscriber);
+            };
+            this.Messages.User.LoggedOut.publish = function () {
+                return _this.notifySubscribers(userLoggedOutEventName, null, requiresRootApply);
+            };
+        }
+
+        private SetupUserLoggedIn() {
+            var _this = this;
+            var userLoggedInEventName = 'userLoggedIn';
+            var requiresRootApply = false;
+
+            this.Messages.User.LoggedIn.subscribe = function (subscriber) {
+                return _this.addSubscriber(userLoggedInEventName, subscriber);
+            };
+            this.Messages.User.LoggedIn.unsubscribe = function (subscriber) {
+                return _this.removeSubscriber(userLoggedInEventName, subscriber);
+            };
+            this.Messages.User.LoggedIn.publish = function (user) {
+                return _this.notifySubscribers(userLoggedInEventName, user, requiresRootApply);
             };
         }
     }

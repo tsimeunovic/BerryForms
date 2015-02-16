@@ -7,6 +7,7 @@ module Services {
         GetEditEntityUrl(entityName:string, entityId:number):string;
 
         //Redirects
+        RedirectToHomeScreen():void;
         RedirectToCreateEntitySchema():void;
         RedirectToEditEntitySchema(entityName:string):void;
         RedirectToCreateEntity(entityName:string):void;

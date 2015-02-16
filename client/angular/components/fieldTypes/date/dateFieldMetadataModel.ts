@@ -1,4 +1,4 @@
-/// <reference path="../../../models/fieldMetadataModel.ts" />
+/// <reference path="../../../models/core/fieldMetadataModel.ts" />
 /// <reference path="../../../../config/config.ts" />
 
 'use strict';

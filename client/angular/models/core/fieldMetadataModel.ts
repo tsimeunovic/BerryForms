@@ -1,5 +1,5 @@
-/// <reference path="../interfaces/services/mapping/IEntityModelMapperService.ts" />
-/// <reference path="../../config/configHelper.ts" />
+/// <reference path="../../interfaces/services/mapping/IEntityModelMapperService.ts" />
+/// <reference path="../../../config/configHelper.ts" />
 
 'use strict';
 

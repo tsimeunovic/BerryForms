@@ -126,6 +126,18 @@ module Services {
                 publish: function ():void { throw new Error(); }
             }
         };
+        public User = {
+            LoggedOut: {
+                subscribe: function (subscriber):()=>void { throw new Error(); },
+                unsubscribe: function (subscriber):void { throw new Error(); },
+                publish: function ():void { throw new Error(); }
+            },
+            LoggedIn: {
+                subscribe: function (subscriber):()=>void { throw new Error(); },
+                unsubscribe: function (subscriber):void { throw new Error(); },
+                publish: function (user):void { throw new Error(); }
+            }
+        }
     }
 
     //Messaging service contract

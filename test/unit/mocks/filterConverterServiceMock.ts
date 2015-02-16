@@ -1,5 +1,5 @@
-///<reference path="../../../client/angular/models/entityModel.ts"/>
-///<reference path="../../../client/angular/models/entityMetadataModel.ts"/>
+///<reference path="../../../client/angular/models/core/entityModel.ts"/>
+///<reference path="../../../client/angular/models/core/entityMetadataModel.ts"/>
 ///<reference path="../../../client/angular/interfaces/services/mapping/IFilterConverterService.ts"/>
 
 'use strict';

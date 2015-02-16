@@ -1,4 +1,4 @@
-/// <reference path="../../../models/pluginContextModel.ts" />
+/// <reference path="../../../models/plugins/pluginContextModel.ts" />
 
 'use strict';
 

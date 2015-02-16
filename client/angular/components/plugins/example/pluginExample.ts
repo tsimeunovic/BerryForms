@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/plugins/IPlugin.ts" />
-/// <reference path="../../../models/entityModel.ts" />
-/// <reference path="../../../models/entityMetadataModel.ts" />
+/// <reference path="../../../models/core/entityModel.ts" />
+/// <reference path="../../../models/core/entityMetadataModel.ts" />
 /// <reference path="../../../../static/pluginOperations.ts" />
 /// <reference path="../../../../static/pluginDataTypes.ts" />
 

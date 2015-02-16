@@ -1,6 +1,6 @@
 /// <reference path="./relationFieldMetadataModel.ts" />
 /// <reference path="./../../../data/createFieldFormFields.ts" />
-/// <reference path="../../../models/entityMetadataModel.ts" />
+/// <reference path="../../../models/core/entityMetadataModel.ts" />
 /// <reference path="../select/selectFieldMetadataModel.ts" />
 /// <reference path="../select/selectFieldOptionMetadataModel.ts" />
 /// <reference path="../../../interfaces/localization/IResources.ts" />

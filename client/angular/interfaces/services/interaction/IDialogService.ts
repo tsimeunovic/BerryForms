@@ -4,5 +4,6 @@
 module Services {
     export interface IDialogService {
         CreateConfirmationDialog(confirmationText:string, callback:(result:boolean)=>void): void;
+        RemoveDialog():void;
     }
 }

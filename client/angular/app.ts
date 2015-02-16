@@ -12,6 +12,7 @@
 /// <reference path="./controllers/global/loadingController.ts" />
 /// <reference path="./controllers/global/dialogController.ts" />
 /// <reference path="./controllers/global/notificationController.ts" />
+/// <reference path="./controllers/login/loginController.ts" />
 /// <reference path="./controllers/combined/entityFormWithListController.ts" />
 /// <reference path="./controllers/form/entityFormController.ts" />
 /// <reference path="./controllers/form/entityMetadataFormController.ts" />
@@ -27,6 +28,7 @@
 /// <reference path="./services/mapping/filterConverterService.ts" />
 /// <reference path="./services/system/redirectService.ts" />
 /// <reference path="./services/localization/localizationService.ts" />
+/// <reference path="./services/repository/httpWrapperService.ts" />
 /// <reference path="./services/repository/entityRepositoryService.ts" />
 /// <reference path="./services/repository/urlLocatorService.ts" />
 /// <reference path="./services/interaction/notificationService.ts" />
@@ -69,6 +71,7 @@ module AngularApplication {
             app.service('FilterConverterService', Services.FilterConverterService.injection());
             app.service('RedirectService', Services.RedirectService.injection());
             app.service('LocalizationService', Services.LocalizationService.injection());
+            app.service('HttpWrapperService', Services.HttpWrapperService.injection());
             app.service('EntityRepositoryService', Services.EntityRepositoryService.injection());
             app.service('UrlLocatorService', Services.UrlLocatorService.injection());
             app.service('NotificationService', Services.NotificationService.injection());
@@ -82,6 +85,7 @@ module AngularApplication {
 
             //Controllers
             app.controller('MenuController', Controllers.MenuController.injection());
+            app.controller('LoginController', Controllers.LoginController.injection());
             app.controller('LoadingController', Controllers.LoadingController.injection());
             app.controller('DialogController', Controllers.DialogController.injection());
             app.controller('NotificationController', Controllers.NotificationController.injection());

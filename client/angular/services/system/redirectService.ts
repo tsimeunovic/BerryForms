@@ -28,6 +28,10 @@ module Services {
             return urlTemplate.format([entityName, entityId.toString()]);
         }
 
+        private GetHomeScreenUrl():string {
+            return '/';
+        }
+
         private GetCreateEntitySchemaUrl():string {
             return '/schema/entity';
         }
@@ -62,6 +66,12 @@ module Services {
         }
 
         //Redirects
+        public RedirectToHomeScreen():void {
+            var url = this.GetHomeScreenUrl();
+            this.ResetLoadingsBeforeRedirect();
+            this.LocationService.path(url);
+        }
+
         public RedirectToCreateEntitySchema():void {
             var url = this.GetCreateEntitySchemaUrl();
             this.ResetLoadingsBeforeRedirect();

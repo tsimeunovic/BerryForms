@@ -1,4 +1,4 @@
-/// <reference path="../models/fieldMetadataModel.ts" />
+/// <reference path="fieldMetadataModel.ts" />
 
 'use strict';
 
@@ -7,6 +7,7 @@ module Models {
     export class EntityMetadata {
         constructor() {
             this.Fields = [];
+            this.Permissions = [];
         }
 
         //Name and description
@@ -15,8 +16,11 @@ module Models {
         public EntitySystemName:string;
         public EntityDescription:string;
 
+        //Created and modified info (set on server)
         public CreatedDate:Date;
+        public CreatedBy:string;
         public ModifiedDate:Date;
+        public ModifiedBy:string;
 
         //Icon
         public IconClassName:string;
@@ -24,5 +28,8 @@ module Models {
 
         //Entity fields
         public Fields:Models.FieldMetadata[];
+
+        //Permissions
+        public Permissions:Models.CascadingPermission[];
     }
 }

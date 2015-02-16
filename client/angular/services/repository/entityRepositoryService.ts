@@ -1,4 +1,4 @@
-/// <reference path="../../models/entityMetadataModel.ts" />
+/// <reference path="../../models/core/entityMetadataModel.ts" />
 /// <reference path="../../interfaces/services/repository/IEntityRepositoryService.ts" />
 /// <reference path="../../interfaces/services/repository/IUrlLocatorService.ts" />
 /// <reference path="../../components/fieldTypes/boolean/booleanFieldMetadataModel.ts" />
@@ -16,7 +16,7 @@ module Services {
     export class EntityRepositoryService implements Services.IEntityRepositoryService {
         public static injection():any[] {
             return [
-                '$http',
+                'HttpWrapperService',
                 'UrlLocatorService',
                 'EntityModelMapperService',
                 'QueryCreatorService',
@@ -25,7 +25,7 @@ module Services {
             ];
         }
 
-        constructor(private Http:any,
+        constructor(private HttpWrapperService:Services.IHttpWrapperService,
                     private UrlLocatorService:Services.IUrlLocatorService,
                     private EntityModelMapperService:Services.IEntityModelMapperService,
                     private QueryCreatorService:Services.IQueryCreatorService,
@@ -35,11 +35,14 @@ module Services {
         public LoadEntityMetadata(entityName:string, callback:(metadata:Models.EntityMetadata, errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForEntityMetadataRetrieve(entityName);
-            this.Http.get(url)
-                .success(function (data) {
+            this.HttpWrapperService.Get(url, 'LoadAllMetadata').then(
+                //Success
+                function (data) {
                     var metadata:Models.EntityMetadata = _this.EntityModelMapperService.DeserializeEntityMetadataModel(data);
                     callback(metadata, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }
@@ -54,11 +57,14 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntityMetadataSave(entityMetadata.EntitySystemName);
-                _this.Http.post(url, pluginContext.Data)
-                    .success(function (data) {
+                _this.HttpWrapperService.Post(url, 'SaveEntityMetadata', pluginContext.Data).then(
+                    //Success
+                    function (data) {
                         var metadata:Models.EntityMetadata = _this.EntityModelMapperService.DeserializeEntityMetadataModel(data);
                         callback(metadata, null);
-                    }).error(function (errorsData) {
+                    },
+                    //Error
+                    function (errorsData) {
                         callback(null, errorsData);
                     });
             });
@@ -67,8 +73,9 @@ module Services {
         public LoadAllEntityMetadata(callback:(entities:Models.EntityMetadata[], errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForEntityMetadataListRetrieve();
-            this.Http.get(url)
-                .success(function (data) {
+            this.HttpWrapperService.Get(url, 'LoadAllMetadata').then(
+                //Success
+                function (data) {
                     var result = [];
                     for (var i = 0; i < data.length; i++) {
                         var metadataJson = data[i];
@@ -76,7 +83,9 @@ module Services {
                         result.push(metadata);
                     }
                     callback(result, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }
@@ -84,11 +93,14 @@ module Services {
         public LoadEntity(entityName:string, entityId:number, callback:(entity:Models.Entity, errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForEntityRetrieve(entityName, entityId);
-            this.Http.get(url)
-                .success(function (data) {
+            this.HttpWrapperService.Get(url, 'LoadEntity').then(
+                //Success
+                function (data) {
                     var entity:Models.Entity = _this.EntityModelMapperService.DeserializeEntityModel(data);
                     callback(entity, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }
@@ -103,11 +115,14 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntitySave(entity.EntitySystemName);
-                _this.Http.post(url, pluginContext.Data)
-                    .success(function (data) {
+                _this.HttpWrapperService.Post(url, 'SaveEntity', pluginContext.Data).then(
+                    //Success
+                    function (data) {
                         var entityModel = _this.EntityModelMapperService.DeserializeEntityModel(data);
                         callback(entityModel, null);
-                    }).error(function (errorsData) {
+                    },
+                    //Error
+                    function (errorsData) {
                         callback(null, errorsData);
                     });
             });
@@ -123,10 +138,13 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntityDelete(entity.EntitySystemName, entity.Id);
-                _this.Http.delete(url)
-                    .success(function () {
+                _this.HttpWrapperService.Delete(url, 'DeleteEntity').then(
+                    //Success
+                    function () {
                         callback(entity, null);
-                    }).error(function (errorsData) {
+                    },
+                    //Error
+                    function (errorsData) {
                         callback(null, errorsData);
                     });
             });
@@ -135,8 +153,9 @@ module Services {
         public LoadAllEntities(entityName:string, callback:(entities:Models.Entity[], errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForEntityListRetrieve(entityName);
-            this.Http.get(url)
-                .success(function (data) {
+            this.HttpWrapperService.Get(url, 'LoadAllEntities').then(
+                //Success
+                function (data) {
                     var result = [];
                     for (var i = 0; i < data.length; i++) {
                         var entityJson = data[i];
@@ -144,7 +163,9 @@ module Services {
                         result.push(entity);
                     }
                     callback(result, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }
@@ -152,8 +173,9 @@ module Services {
         public LoadPagedEntities(entityName:string, pageIndex:number, pageSize:number, callback:(pagedData:any, errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForPagedEntityListRetrieve(entityName, pageIndex, pageSize);
-            this.Http.get(url)
-                .success(function (data) {
+            this.HttpWrapperService.Get(url, 'LoadPagedEntities').then(
+                //Success
+                function (data:any) {
                     //data = { EntitySystemName, Page: { PageNumber, TotalCount, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
                     var result = [];
                     for (var i = 0; i < data.List.length; i++) {
@@ -164,7 +186,9 @@ module Services {
                     //Replace data list with deserialized entities
                     data.List = result;
                     callback(data, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }
@@ -175,8 +199,9 @@ module Services {
             var searchPageSize = Config.Client.SearchListSize / 2; //Can use half size, because search will retrieve next page as well
             var url = this.UrlLocatorService.GetUrlForFilteredListRetrieve(entityMetadata.EntitySystemName, 0, searchPageSize);
 
-            this.Http.post(url, query)
-                .success(function (data) {
+            this.HttpWrapperService.Post(url, 'Search', query).then(
+                //Success
+                function (data) {
                     //data = { EntitySystemName, Query, Page: { PageNumber, TotalCount, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
                     var result = [];
                     for (var i = 0; i < data.List.length; i++) {
@@ -185,7 +210,9 @@ module Services {
                         result.push(entity);
                     }
                     callback(searchExpression, result, data.Page.TotalCount, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(searchExpression, null, null, errorsData);
                 });
         }
@@ -193,8 +220,9 @@ module Services {
         public LoadPagedFilteredResults(entityName:string, query:any, pageIndex:number, pageSize:number, callback:(pagedData:any, errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForFilteredListRetrieve(entityName, pageIndex, pageSize);
-            this.Http.post(url, query)
-                .success(function (data) {
+            this.HttpWrapperService.Post(url, 'Filter', query).then(
+                //Success
+                function (data:any) {
                     //data = { EntitySystemName, Page: { PageNumber, TotalCount, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
                     var result = [];
                     for (var i = 0; i < data.List.length; i++) {
@@ -205,7 +233,9 @@ module Services {
                     //Replace data list with deserialized entities
                     data.List = result;
                     callback(data, null);
-                }).error(function (errorsData) {
+                },
+                //Error
+                function (errorsData) {
                     callback(null, errorsData);
                 });
         }

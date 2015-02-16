@@ -1,5 +1,5 @@
 /// <reference path="../interfaces/directives/IDirective.ts" />
-/// <reference path="../models/fieldMetadataModel.ts" />
+/// <reference path="../models/core/fieldMetadataModel.ts" />
 /// <reference path="../services/localization/localizationService.ts" />
 
 'use strict';

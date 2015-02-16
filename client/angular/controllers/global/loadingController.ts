@@ -12,12 +12,14 @@ module Controllers {
             return [
                 '$scope',
                 'MessagingService',
+                'StateService',
                 LoadingController
             ];
         }
 
         constructor(Scope:any,
-                    private MessagingService:Services.IMessagingService) {
+                    private MessagingService:Services.IMessagingService,
+                    private StateService:Services.IStateService) {
             super(Scope);
             this.Initialize();
         }
@@ -31,6 +33,8 @@ module Controllers {
             this.AddSubscription(this.MessagingService.Messages.Loading.Started.subscribe(this.LoadingStarted.bind(this)));
             this.AddSubscription(this.MessagingService.Messages.Loading.Finished.subscribe(this.LoadingFinished.bind(this)));
             this.AddSubscription(this.MessagingService.Messages.Loading.Reset.subscribe(this.LoadingReset.bind(this)));
+            this.AddSubscription(this.MessagingService.Messages.User.LoggedOut.subscribe(this.SetLoadingState.bind(this)));
+            this.AddSubscription(this.MessagingService.Messages.User.LoggedIn.subscribe(this.SetLoadingState.bind(this)));
         }
 
         private LoadingStarted(task:Static.LoadingType):void {
@@ -53,7 +57,11 @@ module Controllers {
         }
 
         private SetLoadingState():void {
-            this.Scope.LoadingInProgress = this.TasksInProgress.length > 0;
+            var userSession:Models.UserSession = this.StateService.GetCurrentUserSession();
+            var loginActive:boolean = !userSession;
+            var loginTask:boolean = this.TasksInProgress.contains(Static.LoadingType.LoggingIn);
+            var anyTask:boolean = this.TasksInProgress.length > 0;
+            this.Scope.LoadingInProgress = (!loginActive && anyTask) || (loginActive && loginTask);
         }
     }
 }
