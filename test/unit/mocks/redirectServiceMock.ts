@@ -18,6 +18,7 @@ module Mocks {
             spyOn(this, 'RedirectToEditEntity').and.callThrough();
             spyOn(this, 'RedirectToEntityPage').and.callThrough();
             spyOn(this, 'RedirectToFilteredList').and.callThrough();
+            spyOn(this, 'RedirectToHomeScreen').and.callThrough();
         }
 
         //Mock members
@@ -30,5 +31,6 @@ module Mocks {
         public RedirectToEditEntity(entityName:string, entityId:number):void {}
         public RedirectToEntityPage(entityName:string, entityId:number, pageNumber:number):void {}
         public RedirectToFilteredList(entityName:string, filterQs:string, pageNumber:number):void {}
+        public RedirectToHomeScreen():void {}
     }
 }

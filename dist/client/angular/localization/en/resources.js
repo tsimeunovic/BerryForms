@@ -150,6 +150,11 @@ var Localization;
             this.Warning = 'Warning';
             this.Information = 'Information';
             this.Success = 'Success';
+            //Security
+            this.Login = 'Login';
+            this.UserName = 'User name';
+            this.Password = 'Password';
+            this.InvalidUserNameOrPassword = 'Could not login user. Invalid user name or password';
         }
         return ResourcesEn;
     })();

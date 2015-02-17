@@ -11,6 +11,7 @@ module Mocks {
 
         private Setup():void {
             spyOn(this, 'CreateConfirmationDialog').and.callThrough();
+            spyOn(this, 'RemoveDialog').and.callThrough();
         }
 
         private ShouldCancelNextDialog:boolean;
@@ -23,6 +24,9 @@ module Mocks {
             var dialogResult:boolean = !this.ShouldCancelNextDialog;
             this.ShouldCancelNextDialog = false;
             callback(dialogResult);
+        }
+
+        public RemoveDialog():void {
         }
     }
 }

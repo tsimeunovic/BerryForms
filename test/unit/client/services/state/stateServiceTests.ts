@@ -5,12 +5,19 @@
 'use strict';
 
 describe('Service: EntityListCacheService', function () {
-    var systemUnderTest:Services.StateService;
     var callbackMock:Mocks.CallbackMock;
+    var messagingServiceMock:Mocks.MessagingServiceMock;
+    var dialogServiceMock:Mocks.DialogServiceMock;
+    var redirectServiceMock:Mocks.RedirectServiceMock;
+    var systemUnderTest:Services.StateService;
 
     beforeEach(function () {
         callbackMock = new Mocks.CallbackMock();
-        systemUnderTest = new Services.StateService();
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        dialogServiceMock = new Mocks.DialogServiceMock();
+        redirectServiceMock = new Mocks.RedirectServiceMock();
+
+        systemUnderTest = new Services.StateService(messagingServiceMock, dialogServiceMock, redirectServiceMock);
     });
 
     it('should be able to persist edited entity', function(){

@@ -150,6 +150,8 @@ var Localization;
             this.Warning = 'Varovanie';
             this.Information = 'Informácia';
             this.Success = 'Úspech';
+            //Security
+            this.Login = 'Prihlásenie';
         }
         return ResourcesSk;
     })();

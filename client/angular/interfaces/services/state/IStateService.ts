@@ -1,4 +1,5 @@
 /// <reference path="../../../models/core/entityModel.ts" />
+/// <reference path="../../../models/security/userSessionModel.ts" />
 
 'use strict';
 

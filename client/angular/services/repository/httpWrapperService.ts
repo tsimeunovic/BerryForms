@@ -18,33 +18,33 @@ module Services {
         }
 
         public AnonymousGet(url:string, actionName:string):any {
-            return this.DoHttpOperation(false, 'GET', url, actionName, null);
+            return this.DoHttpOperation(false, true, 'GET', url, actionName, null);
         }
 
         public AnonymousPost(url:string, actionName:string, data:any):any {
-            return this.DoHttpOperation(false, 'POST', url, actionName, data);
+            return this.DoHttpOperation(false, true, 'POST', url, actionName, data);
         }
 
         public Get(url:string, actionName:string):any {
-            return this.DoHttpOperation(true, 'GET', url, actionName, null);
+            return this.DoHttpOperation(true, true, 'GET', url, actionName, null);
         }
 
         public Put(url:string, actionName:string, data:any):any {
-            return this.DoHttpOperation(true, 'PUT', url, actionName, data);
+            return this.DoHttpOperation(true, false, 'PUT', url, actionName, data);
         }
 
-        public Post(url:string, actionName:string, data:any):any {
-            return this.DoHttpOperation(true, 'POST', url, actionName, data);
+        public Post(url:string, actionName:string, data:any, isInvariantOperation:boolean = false):any {
+            return this.DoHttpOperation(true, isInvariantOperation, 'POST', url, actionName, data);
         }
 
         public Delete(url:string, actionName:string):any {
-            return this.DoHttpOperation(true, 'DELETE', url, actionName, null);
+            return this.DoHttpOperation(true, false, 'DELETE', url, actionName, null);
         }
 
-        private DoHttpOperation(authenticatedOnly:boolean, method:string, url:string, actionName:string, data:any):any {
+        private DoHttpOperation(authenticatedOnly:boolean, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
             var deferred:any = this.Q.defer();
             var afterLoginRetryFunction = authenticatedOnly ?
-                this.CreateAfterLoginRetryFunctionFor(deferred, method, url, actionName, data) :
+                this.CreateAfterLoginRetryFunctionFor(deferred, isInvariantOperation, method, url, actionName, data) :
                 null;
 
             //Retrieve user
@@ -83,18 +83,18 @@ module Services {
             return request;
         }
 
-        private CreateAfterLoginRetryFunctionFor(originalDeferred:any, method:string, url:string, actionName:string, data:any):any {
+        private CreateAfterLoginRetryFunctionFor(originalDeferred:any, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
             var _this = this;
 
-            //Allow cancellation of any method that modify state via POST, PUT, DELETE
-            var canCancel:boolean = method != 'GET';
+            //Allow cancellation of any method that modify state
+            var canCancel:boolean = !isInvariantOperation;
             var retryFunction = function () {
-                var newPromise = _this.DoHttpOperation(true, method, url, actionName, data);
+                var newPromise = _this.DoHttpOperation(true, isInvariantOperation, method, url, actionName, data);
                 _this.ChainPromises(originalDeferred, newPromise, null);
             };
 
-            var cancelFunction = function() {
-                originalDeferred.reject({Type:'Cancellation'});
+            var cancelFunction = function () {
+                originalDeferred.reject({Type: 'Cancellation'});
             };
 
             return {
@@ -122,7 +122,7 @@ module Services {
             };
 
             //Http promise
-            if(newPromise.success !== undefined) newPromise.success(successCallback).error(errorCallback);
+            if (newPromise.success !== undefined) newPromise.success(successCallback).error(errorCallback);
             //Q promise
             else newPromise.then(successCallback, errorCallback);
         }

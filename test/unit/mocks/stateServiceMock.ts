@@ -12,6 +12,10 @@ module Mocks {
         private Setup():void {
             spyOn(this, 'SetEditedEntity').and.callThrough();
             spyOn(this, 'GetEditedEntity').and.callThrough();
+            spyOn(this, 'SetCurrentUserSession').and.callThrough();
+            spyOn(this, 'GetCurrentUserSession').and.callThrough();
+            spyOn(this, 'UpdateCurrentUserSession').and.callThrough();
+            spyOn(this, 'RegisterPostLoginAction').and.callThrough();
         }
 
         private EditedEntity:Models.Entity;
@@ -22,6 +26,25 @@ module Mocks {
         }
         public GetEditedEntity(entityName:string, entityId:number):Models.Entity {
             return this.EditedEntity;
+        }
+
+        public SetCurrentUserSession(userSession:Models.UserSession):void {
+        }
+
+        public GetCurrentUserSession():Models.UserSession {
+            var session = new Models.UserSession();
+            session.ValidTo = (new Date()).getTime() + 10 * 60 * 1000;
+            var user = new Models.User();
+            user.UserName = 'MockUser';
+            user.IsSuperUser = true;
+            session.User = user;
+            return session;
+        }
+
+        public UpdateCurrentUserSession(validTo:number, token:string):void {
+        }
+
+        public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void):void {
         }
     }
 }

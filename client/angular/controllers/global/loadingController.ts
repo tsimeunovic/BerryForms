@@ -1,5 +1,6 @@
 /// <reference path="./../base/baseController.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
+/// <reference path="../../models/security/userSessionModel.ts" />
 /// <reference path="../../../static/loadingType.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 

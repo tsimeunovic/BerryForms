@@ -20,7 +20,7 @@ export module Security {
             var data:any = request.body;
             var reqUserName:string = data && data.userName;
             var reqPassword:string = data && data.password;
-            var validUser = reqUserName == this.ServerConfig.UserName && reqPassword == this.ServerConfig.Password;
+            var validUser = reqUserName == this.ServerConfig.SuperUserName && reqPassword == this.ServerConfig.SuperUserPassword;
 
             if (validUser) {
                 var tokeValidityMinutes:number = ConfigServer.Config.Server.TokenValidityMinutes;
@@ -28,10 +28,11 @@ export module Security {
                 var validTo:number = nowTime + tokeValidityMinutes * 60000;
                 var token:string = this.GetTokenFor(reqUserName, validTo);
 
-                //TODO: Retrieve user information
+                //TODO: Retrieve user information (join database and super user from config)
                 var session:any = {
                     User: {
-                        UserName: reqUserName
+                        UserName: reqUserName,
+                        IsSuperUser: true
                     },
                     ValidTo: validTo,
                     Token:token
@@ -69,10 +70,11 @@ export module Security {
                 return;
             }
 
-            //TODO: Retrieve user information
+            //TODO: Retrieve user information (join database and super user from config)
             var session:any = {
                 User: {
-                    UserName: userName
+                    UserName: userName,
+                    IsSuperUser: true
                 },
                 ValidTo: validTo,
                 Token:token

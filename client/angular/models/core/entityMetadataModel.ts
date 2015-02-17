@@ -1,4 +1,5 @@
-/// <reference path="fieldMetadataModel.ts" />
+/// <reference path="../core/fieldMetadataModel.ts" />
+/// <reference path="../security/permissionModel.ts" />
 
 'use strict';
 

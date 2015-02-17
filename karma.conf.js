@@ -27,7 +27,7 @@ module.exports = function (config) {
             'client/config/*.js',
             'client/angular/components/fieldTypes/fieldTypesRegistry.js',
             'client/angular/components/plugins/pluginsRegistry.js',
-            'client/angular/models/fieldMetadataModel.js',
+            'client/angular/models/core/fieldMetadataModel.js',
             'client/angular/directives/fieldDirectiveBase.js',
             'client/angular/controllers/base/baseController.js',
             'client/angular/controllers/base/baseViewController.js',

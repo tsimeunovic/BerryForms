@@ -14,6 +14,7 @@ module Models {
         public LastName:string;
 
         //User roles
+        public IsSuperUser:boolean;
         public Roles:Models.SecurityRole[];
 
         //User specific permissions

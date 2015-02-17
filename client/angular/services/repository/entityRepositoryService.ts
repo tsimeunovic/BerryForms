@@ -1,4 +1,5 @@
 /// <reference path="../../models/core/entityMetadataModel.ts" />
+/// <reference path="../../interfaces/services/repository/IHttpWrapperService.ts" />
 /// <reference path="../../interfaces/services/repository/IEntityRepositoryService.ts" />
 /// <reference path="../../interfaces/services/repository/IUrlLocatorService.ts" />
 /// <reference path="../../components/fieldTypes/boolean/booleanFieldMetadataModel.ts" />
@@ -57,7 +58,7 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntityMetadataSave(entityMetadata.EntitySystemName);
-                _this.HttpWrapperService.Post(url, 'SaveEntityMetadata', pluginContext.Data).then(
+                _this.HttpWrapperService.Post(url, 'SaveEntityMetadata', pluginContext.Data, false).then(
                     //Success
                     function (data) {
                         var metadata:Models.EntityMetadata = _this.EntityModelMapperService.DeserializeEntityMetadataModel(data);
@@ -115,7 +116,7 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntitySave(entity.EntitySystemName);
-                _this.HttpWrapperService.Post(url, 'SaveEntity', pluginContext.Data).then(
+                _this.HttpWrapperService.Post(url, 'SaveEntity', pluginContext.Data, false).then(
                     //Success
                     function (data) {
                         var entityModel = _this.EntityModelMapperService.DeserializeEntityModel(data);
@@ -199,7 +200,7 @@ module Services {
             var searchPageSize = Config.Client.SearchListSize / 2; //Can use half size, because search will retrieve next page as well
             var url = this.UrlLocatorService.GetUrlForFilteredListRetrieve(entityMetadata.EntitySystemName, 0, searchPageSize);
 
-            this.HttpWrapperService.Post(url, 'Search', query).then(
+            this.HttpWrapperService.Post(url, 'Search', query, true).then(
                 //Success
                 function (data) {
                     //data = { EntitySystemName, Query, Page: { PageNumber, TotalCount, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
@@ -220,7 +221,7 @@ module Services {
         public LoadPagedFilteredResults(entityName:string, query:any, pageIndex:number, pageSize:number, callback:(pagedData:any, errorsModel:any)=>void):void {
             var _this = this;
             var url = this.UrlLocatorService.GetUrlForFilteredListRetrieve(entityName, pageIndex, pageSize);
-            this.HttpWrapperService.Post(url, 'Filter', query).then(
+            this.HttpWrapperService.Post(url, 'Filter', query, true).then(
                 //Success
                 function (data:any) {
                     //data = { EntitySystemName, Page: { PageNumber, TotalCount, StartIndex, LoadedCount, VersionIdentifier }, List : [] }

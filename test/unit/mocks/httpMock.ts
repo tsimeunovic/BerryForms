@@ -27,7 +27,7 @@ module Mocks {
             });
         }
 
-        private ResponseFor(method:string, url:string):any {
+        protected ResponseFor(method:string, url:string):any {
             var configuredResponsePredicate = function (response) {
                 return response.Method == method && response.Url == url;
             };
@@ -41,6 +41,13 @@ module Mocks {
                 },
                 error: function (errorCallback) {
                     if (!configuredResponse || !configuredResponse.SuccessResponse)
+                        errorCallback(configuredResponse ? configuredResponse.ResponseData : null);
+                    return result;
+                },
+                then: function(successCallback, errorCallback) {
+                    if (configuredResponse && configuredResponse.SuccessResponse)
+                        successCallback(configuredResponse.ResponseData);
+                    else if (!configuredResponse || !configuredResponse.SuccessResponse)
                         errorCallback(configuredResponse ? configuredResponse.ResponseData : null);
                     return result;
                 }

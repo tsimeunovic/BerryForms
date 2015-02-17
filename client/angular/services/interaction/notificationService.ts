@@ -38,7 +38,7 @@ module Services {
                     this.Notify(error.ErrorTypeKey, error.ErrorParameters, Services.NotificationSeverity.Error);
                 }
             }
-            if (errorsModel != null && errorsModel.Type == 'Cancellation') {
+            else if (errorsModel != null && errorsModel.Type == 'Cancellation') {
                 //Do nothing
             }
             else {

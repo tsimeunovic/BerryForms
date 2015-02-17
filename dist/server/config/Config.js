@@ -15,6 +15,12 @@ var Config;
         Server.MongoServerPort = 27017;
         Server.BerryFormsDatabaseName = "BerryForms";
         Server.UseOptimisticConcurrencyUpdate = true;
+        //Security
+        Server.TokenValidityMinutes = 15;
+        Server.PasswordSalt = 'I^F^y_UmK~G^=1i+xPi|t1_lSOiq~+~La=CvE1Yeh4V~izp~4AnEDVixy4R|';
+        Server.TokenSalt = 'RO^zMe1jFN%9L9BgNlP~LJqOvN15ZCAv9lct-+uIgDZWsnaNks0%ZKw3guul';
+        Server.SuperUserName = 'admin';
+        Server.SuperUserPassword = 'admin';
         return Server;
     })();
     Config.Server = Server;

@@ -8,11 +8,13 @@
 describe('Controller: LoadingController', function () {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
+    var stateServiceMock:Mocks.StateServiceMock;
     var systemUnderTest:Controllers.LoadingController;
 
     beforeEach(function () {
         scopeMock = new Mocks.ScopeMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
+        stateServiceMock = new Mocks.StateServiceMock();
         createLoadingController();
     });
 
@@ -20,7 +22,8 @@ describe('Controller: LoadingController', function () {
     var createLoadingController = function () {
         systemUnderTest = new Controllers.LoadingController(
             scopeMock,
-            messagingServiceMock);
+            messagingServiceMock,
+            stateServiceMock);
     };
 
     it('should subscribe to all loading messages', function () {

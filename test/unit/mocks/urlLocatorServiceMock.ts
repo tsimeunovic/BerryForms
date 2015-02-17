@@ -40,5 +40,9 @@ module Mocks {
         public GetUrlForEntityDelete(entityName:string, entityId:number):string {
             return 'EntityDelete/' + entityName + '/' + entityId;
         }
+
+        public GetUrlForLogin():string {
+            return 'Login';
+        }
     }
 }
