@@ -161,6 +161,10 @@ module Localization {
         Success:string;
 
         //Security
+        Login:string;
+        UserName:string;
+        Password:string;
         UserUnauthenticated:string;
+        InvalidUserNameOrPassword:string;
     }
 }

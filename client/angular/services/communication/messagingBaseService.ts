@@ -21,7 +21,7 @@ module Services {
             return subscribersQueue;
         }
 
-        public addSubscriber(messageName, callbackFunction):()=>void {
+        public addSubscriber(messageName:string, callbackFunction:(message:any)=>void):()=>void {
             var subscribers = this.getSubscribers(messageName);
             var elementIndex = subscribers.indexOf(callbackFunction);
             if (elementIndex == -1) subscribers.push(callbackFunction);
@@ -33,7 +33,7 @@ module Services {
             };
         }
 
-        public addOneTimeSubscriber(messageName, callbackFunction):()=>void {
+        public addOneTimeSubscriber(messageName:string, callbackFunction:(message:any)=>void):()=>void {
             var _this = this;
 
             var wrapperFunction = function (message) {
@@ -48,7 +48,7 @@ module Services {
             };
         }
 
-        public removeSubscriber(messageName, callbackFunction):void {
+        public removeSubscriber(messageName:string, callbackFunction:(message:any)=>void):void {
             var subscribers = this.getSubscribers(messageName);
 
             if (typeof callbackFunction == 'undefined') {
@@ -59,15 +59,20 @@ module Services {
             if (elementIndex > -1) subscribers.splice(elementIndex, 1);
         }
 
-        public notifySubscribers(messageName, message, withRootApply = false):void {
-            var _this = this;
-            var subscribersCopy = _this.getSubscribers(messageName).createCopy();
-            subscribersCopy.forEach(function (subscriberCallback) {
-                withRootApply ?
-                    _this.RootScope.$apply(function () {
-                        subscriberCallback(message)
-                    }) : subscriberCallback(message);
-            });
+        public notifySubscribers(messageName:string, message:any, withRootApply = false):void {
+            var subscribersCopy:any[] = this.getSubscribers(messageName).createCopy();
+            for (var i = 0; i < subscribersCopy.length; i++) {
+                var subscriberCallback:(message:any)=>void = subscribersCopy[i];
+                this.invokeSubscriberCallback(subscriberCallback, message, withRootApply)
+            }
+        }
+
+        private invokeSubscriberCallback(subscriberCallback:(message:any)=>void, message:any, withRootApply:boolean):void {
+            withRootApply ?
+                this.RootScope.$apply(function () {
+                    subscriberCallback(message)
+                }) :
+                subscriberCallback(message);
         }
     }
 }

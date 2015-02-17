@@ -2,12 +2,13 @@
 @import "mixins";
 
 div.loginOverlay {
-  @dialogWidth: 600px;
-  @dialogHeight: 320px;
+  @dialogWidth: 540px;
+  @dialogHeight: 250px;
 
   &:before {
     .overlay(880);
     content: '';
+    opacity: 0.9;
   }
 
   > div.dialog {
@@ -28,17 +29,27 @@ div.loginOverlay {
     margin-top: -@dialogHeight/2;
 
     div.dialogHeader {
+      font-size: 1.4em;
       height: @dialogHeight / 5;
       border-bottom: 1px solid @contrastingDarkColor;
       line-height: @dialogHeight / 5;
       background-color: @menuColor;
       vertical-align: middle;
       text-align: center;
+
+      > div.logo {
+        position: absolute;
+        left: 25px;
+        top: 9px;
+        height: 32px;
+        width: 32px;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
     }
 
     div.dialogText {
-      padding: 20px;
-      text-align: center;
+      padding: 25px;
     }
   }
 }

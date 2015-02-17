@@ -1,4 +1,34 @@
-<div class="dialog">
-    <div class="dialogHeader">Login screen</div>
-    <div class="dialogText">Auto-login in 2s ...</div>
+<div class="dialog login" data-ng-if="!LoggedInUser">
+    <div class="dialogHeader">
+        <div class="logo image-berry"></div>
+        {{LoginHeader}}
+    </div>
+    <div class="dialogText">
+        <div class="entityForm" data-role="login">
+            <div class="fields">
+                <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
+                    <span class="entityFieldLabel" title="{{field.FieldDescription}}">
+                        {{field.FieldName}}
+                    </span>
+                    <span class="entityFieldInput">
+                        <span data-field-component-creator></span>
+                    </span>
+                </div>
+                <div class="clearFloat"></div>
+            </div>
+
+            <!-- Save button -->
+            <div class="separator"></div>
+            <div class="entityField">
+                <span class="entityFieldLabel"></span>
+            <span class="entityFieldInput">
+                 <button class="btn btn-default btn-sm form-control btn-submit"
+                         data-ng-disabled="!Entity || Entity.ErrorFields.length || LoginInProgress"
+                         data-ng-click="Login()">
+                     {{LoginButtonText}}
+                 </button>
+            </span>
+            </div>
+        </div>
+    </div>
 </div>

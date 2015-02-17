@@ -14,5 +14,7 @@ module Services {
         GetUrlForEntityRetrieve(entityName:string, entityId:number):string;
         GetUrlForEntitySave(entityName:string):string;
         GetUrlForEntityDelete(entityName:string, entityId:number):string;
+
+        GetUrlForLogin():string;
     }
 }

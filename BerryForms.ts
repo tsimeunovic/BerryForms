@@ -12,7 +12,7 @@ import Cors = require('./server/node/Cors');
 import Bootstrap = require('./server/node/Bootstrap');
 import ProcessStarted = require('./server/node/ProcessStarter');
 var Express:any = require('express');
-var Compress = require('compression');
+var Compress:any = require('compression');
 var BodyParser:any = require('body-parser');
 
 //Configure server and allow CORS

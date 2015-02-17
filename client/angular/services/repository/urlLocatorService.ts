@@ -65,5 +65,9 @@ module Services {
             var entityIdStr = entityId.toString();
             return (this.ApiBaseUrl + 'entity/{0}/{1}').format([entityName, entityIdStr]);
         }
+
+        public GetUrlForLogin():string {
+            return this.ApiBaseUrl + 'user/login';
+        }
     }
 }

@@ -30,6 +30,7 @@
 /// <reference path="./services/localization/localizationService.ts" />
 /// <reference path="./services/repository/httpWrapperService.ts" />
 /// <reference path="./services/repository/entityRepositoryService.ts" />
+/// <reference path="./services/repository/userRepositoryService.ts" />
 /// <reference path="./services/repository/urlLocatorService.ts" />
 /// <reference path="./services/interaction/notificationService.ts" />
 /// <reference path="./services/state/entityMetadataListCacheService.ts" />
@@ -73,6 +74,7 @@ module AngularApplication {
             app.service('LocalizationService', Services.LocalizationService.injection());
             app.service('HttpWrapperService', Services.HttpWrapperService.injection());
             app.service('EntityRepositoryService', Services.EntityRepositoryService.injection());
+            app.service('UserRepositoryService', Services.UserRepositoryService.injection());
             app.service('UrlLocatorService', Services.UrlLocatorService.injection());
             app.service('NotificationService', Services.NotificationService.injection());
             app.service('EntityMetadataListCacheService', Services.EntityMetadataListCacheService.injection());

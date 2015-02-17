@@ -164,7 +164,11 @@ module Localization {
         Success:string = 'Úspech';
 
         //Security
+        Login:string = 'Prihlásenie';
+        UserName:string;
+        Password:string;
         UserUnauthenticated:string;
+        InvalidUserNameOrPassword:string;
     }
 
     (function () {

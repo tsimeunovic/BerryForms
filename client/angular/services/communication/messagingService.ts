@@ -393,8 +393,8 @@ module Services {
             this.Messages.User.LoggedOut.unsubscribe = function (subscriber) {
                 return _this.removeSubscriber(userLoggedOutEventName, subscriber);
             };
-            this.Messages.User.LoggedOut.publish = function () {
-                return _this.notifySubscribers(userLoggedOutEventName, null, requiresRootApply);
+            this.Messages.User.LoggedOut.publish = function (loggedOutUser) {
+                return _this.notifySubscribers(userLoggedOutEventName, loggedOutUser, requiresRootApply);
             };
         }
 

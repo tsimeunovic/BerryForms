@@ -164,7 +164,11 @@ module Localization {
         Success:string = 'Успјех';
 
         //Security
+        Login:string;
+        UserName:string;
+        Password:string;
         UserUnauthenticated:string;
+        InvalidUserNameOrPassword:string;
     }
 
     (function () {

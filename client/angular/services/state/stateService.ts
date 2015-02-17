@@ -42,10 +42,11 @@ module Services {
         }
 
         public SetCurrentUserSession(userSession:Models.UserSession):void {
+            var previousSession = this.CurrentUserSession;
             this.CurrentUserSession = userSession;
             if (!userSession) {
                 //Invalidation
-                this.MessagingService.Messages.User.LoggedOut.publish();
+                this.MessagingService.Messages.User.LoggedOut.publish(previousSession);
             }
             else {
                 //New login
@@ -67,7 +68,9 @@ module Services {
         }
 
         public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void):void {
+            var currentUserSession = this.CurrentUserSession;
             this.PostLoginActions.add({
+                registeringUser: currentUserSession && currentUserSession.User.UserName,
                 actionName: actionName,
                 canCancel: canCancel,
                 action: action
@@ -76,22 +79,28 @@ module Services {
 
         private PostLoginHandler():void {
             var _this = this;
-            if (this.PostLoginActions.length == 0) return;
-            var postLoginActions:any[] = this.PostLoginActions.createCopy();
-            this.PostLoginActions = [];
+            var currentUserSession = this.CurrentUserSession;
 
-            //Assemble confirmation message
+            var userPostLoginActionPredicate = function (item) {
+                return !item.registeringUser || item.registeringUser == currentUserSession.User.UserName;
+            };
             var cancelableActionPredicate = function(item) {
                 return item.canCancel;
             };
-            var cancelableActions:any[] = postLoginActions.where(cancelableActionPredicate);
+
+            var userPostLoginActions:any[] = this.PostLoginActions.where(userPostLoginActionPredicate);
+            this.PostLoginActions = [];
+            if (userPostLoginActions.length == 0) return;
+
+            //Assemble confirmation message
+            var cancelableActions:any[] = userPostLoginActions.where(cancelableActionPredicate);
             var shouldCreateConfirmationDialog:boolean = cancelableActions && cancelableActions.length > 0;
             var executeActionConfirmationMessage = 'Retry pending actions?'; //TODO:
 
             //Execute actions
-            if (!shouldCreateConfirmationDialog)this.ExecutePostLoginActions(postLoginActions, false);
+            if (!shouldCreateConfirmationDialog)this.ExecutePostLoginActions(userPostLoginActions, false);
             else this.DialogService.CreateConfirmationDialog(executeActionConfirmationMessage, function (result:boolean) {
-                _this.ExecutePostLoginActions(postLoginActions, result);
+                _this.ExecutePostLoginActions(userPostLoginActions, result);
 
                 //Start with new screen
                 if (!result) _this.RedirectService.RedirectToHomeScreen();

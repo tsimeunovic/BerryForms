@@ -13,6 +13,9 @@ module Controllers {
                 'MessagingService',
                 'StateService',
                 'DialogService',
+                'LocalizationService',
+                'UserRepositoryService',
+                'NotificationService',
                 LoginController
             ];
         }
@@ -20,35 +23,46 @@ module Controllers {
         constructor(Scope:any,
                     private MessagingService:Services.IMessagingService,
                     private StateService:Services.IStateService,
-                    private DialogService:Services.IDialogService) {
+                    private DialogService:Services.IDialogService,
+                    private LocalizationService:Services.ILocalizationService,
+                    private UserRepositoryService:Services.IUserRepositoryService,
+                    private NotificationService:Services.INotificationService) {
             super(Scope);
             this.MessagingService.Messages.User.LoggedIn.subscribe(this.LoggedInUserChanged.bind(this));
             this.MessagingService.Messages.User.LoggedOut.subscribe(this.LoggedInUserChanged.bind(this));
-            this.LoggedInUserChanged();
-
-            //Temporary test
-            this.AutoLogin();
+            this.LoggedInUserChanged(null);
         }
 
-        private LoggedInUserChanged():void {
+        private LoggedInUserChanged(userSession:Models.UserSession):void {
             var currentSession = this.StateService.GetCurrentUserSession();
             if (!currentSession) this.DialogService.RemoveDialog();
+            this.InitializeScope(userSession && userSession.User.UserName);
             this.Scope.LoggedInUser = !!currentSession;
         }
 
-        //Temporary test
-        private AutoLogin():void {
-            var _this = this;
-            setTimeout(function () {
-                _this.Scope.$apply(function () {
-                    var mockSession:Models.UserSession = new Models.UserSession();
-                    mockSession.User = new Models.User();
-                    mockSession.User.UserName = 'test';
-                    mockSession.ValidTo = (new Date()).getTime() + 1000 * 60 * 30;
-                    mockSession.Token = '8d00257b-f76d-4c74-9215-7b14df9f4cb5';
-                    _this.StateService.SetCurrentUserSession(mockSession);
-                });
-            }, 2000);
+        private InitializeScope(prefilledUserName:string):void {
+            this.Scope.Login = this.Login.bind(this);
+            this.Scope.LoginInProgress = false;
+            this.Scope.LoginHeader = this.LocalizationService.Resources.Login;
+            this.Scope.LoginButtonText = this.LocalizationService.Resources.Login;
+            this.Scope.EntityMetadata = Data.CreateLoginFormFields.GetData();
+            this.Scope.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
+            if (prefilledUserName) this.Scope.Entity.Data['UserName'] = prefilledUserName;
+        }
+
+        private Login():void {
+            var userName:string = this.Scope.Entity.Data['UserName'];
+            var password:string = this.Scope.Entity.Data['Password'];
+            this.Scope.LoginInProgress = true;
+            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.LoggingIn);
+            this.UserRepositoryService.LoginUser(userName, password, this.LoginCompleted.bind(this));
+        }
+
+        private LoginCompleted(session:Models.UserSession, errorsModel:any):void {
+            this.Scope.LoginInProgress = false;
+            this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.LoggingIn);
+            if (errorsModel == null) this.StateService.SetCurrentUserSession(session);
+            else this.NotificationService.HandleErrorsModel(errorsModel);
         }
     }
 }

@@ -130,7 +130,7 @@ module Services {
             LoggedOut: {
                 subscribe: function (subscriber):()=>void { throw new Error(); },
                 unsubscribe: function (subscriber):void { throw new Error(); },
-                publish: function ():void { throw new Error(); }
+                publish: function (loggedOutUser):void { throw new Error(); }
             },
             LoggedIn: {
                 subscribe: function (subscriber):()=>void { throw new Error(); },

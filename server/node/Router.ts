@@ -2,6 +2,7 @@
 /// <reference path="../config/Config.ts" />
 /// <reference path="../services/IRepositoryFactory.ts" />
 /// <reference path="../data/INodeRepository.ts" />
+/// <reference path="../security/ISecurityService.ts" />
 
 'use strict';
 
@@ -9,17 +10,35 @@
 import ConfigServer = require('../config/Config');
 import ConfigClient = require('../config/ClientConfig');
 import NodeRepository = require('../data/NodeRepository');
+import Security = require('../security/SecurityService');
 
 export module NodeHelpers {
     export class Router {
-        private static ReturnJsonResultOf(req:any, res:any, action:(request:any, callback:(data:any, errors:any)=>void)=>void) {
-            action(req, function (result, errors) {
-                var output = errors ? errors : result;
-                var status = errors ? 500 : 200;
+        private static NodeRepository;
+        private static SecurityService;
 
-                res.status(status);
-                output ? res.jsonp(output) : res.send();
-            });
+        private static ReturnJsonResultOf(req:any, res:any, authenticatedOnly:boolean, action:(request:any, callback:(data:any, errors:any)=>void)=>void) {
+            var actionWrapperFn = function() {
+                action(req, function (result, errors) {
+                    var output = errors ? errors : result;
+                    var status = errors ? 500 : 200;
+
+                    res.status(status);
+                    output ? res.jsonp(output) : res.send();
+                });
+            };
+
+            //Validate user then invoke action method
+            if(authenticatedOnly) {
+                Router.SecurityService.ValidateRequest(req, function(valid:boolean, errors:any){
+                    if(!valid) {
+                        res.status(401);
+                        res.send();
+                    }
+                    else actionWrapperFn();
+                });
+            }
+            else actionWrapperFn();
         }
 
         private static ReturnObjectAssignment(req:any, res:any, objectName:string, action:(request:any, callback:(data:any, errors:any)=>void)=>void) {
@@ -45,38 +64,42 @@ export module NodeHelpers {
         public static InitializeRoutes(app:any):void {
             //Api prefix
             var routeBaseUrl = '/' + ConfigServer.Config.Server.ApiPrefix;
-            var nodeRepository = new NodeRepository.Data.NodeRepository<any>();
             var clientConfig = ConfigClient.Config.ClientConfig;
+            Router.NodeRepository = new NodeRepository.Data.NodeRepository<any>();
+            Router.SecurityService = new Security.Security.SecurityService(Router.NodeRepository);
 
             //Special methods
             app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.GetAllProjected.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAllProjected.bind(Router.NodeRepository));
             });
             app.get(routeBaseUrl + '/configuration', function (req, res) {
                 Router.ReturnObjectAssignment(req, res, 'ConfigurationOverrides', clientConfig.GetClientConfigurationOverrides);
             });
+            app.post(routeBaseUrl + '/user/login', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, false, Router.SecurityService.LoginUser.bind(Router.SecurityService));
+            });
 
             //Generic methods
             app.get(routeBaseUrl + '/:type/:name/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.GetPaged.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetPaged.bind(Router.NodeRepository));
             });
             app.post(routeBaseUrl + '/:type/:name/filtered/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.GetFiltered.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetFiltered.bind(Router.NodeRepository));
             });
             app.get(routeBaseUrl + '/:type/:name', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.GetAll.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAll.bind(Router.NodeRepository));
             });
             app.get(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.GetById.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetById.bind(Router.NodeRepository));
             });
             app.post(routeBaseUrl + '/:type/:name', function (req, res) {
                 var isNewRecord:boolean = req.body.Id == null;
                 isNewRecord ?
-                    Router.ReturnJsonResultOf(req, res, nodeRepository.Create.bind(nodeRepository)) :
-                    Router.ReturnJsonResultOf(req, res, nodeRepository.Update.bind(nodeRepository));
+                    Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Create.bind(Router.NodeRepository)) :
+                    Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Update.bind(Router.NodeRepository));
             });
             app.delete(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, nodeRepository.Delete.bind(nodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Delete.bind(Router.NodeRepository));
             });
         }
     }
