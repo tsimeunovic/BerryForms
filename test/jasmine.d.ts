@@ -1,3 +1,4 @@
+declare var jasmine:any;
 declare var describe:(description:string, func:()=>void)=>void;
 declare var beforeEach:(func:()=>void)=>void;
 declare var afterEach:(func:()=>void)=>void;

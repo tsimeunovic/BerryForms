@@ -55,8 +55,10 @@ module Services {
             }
             else {
                 //Do request
-                var request:any = this.RequestFor(userSession, method, url, data);
-                var httpPromise = this.Http(request);
+                var requestConfig:any = this.CreateRequestConfigFor(userSession);
+                var hasBodyAs2ndParam:boolean = ['POST', 'PUT'].contains(method);
+                var serviceMethod:string = method.toLowerCase();
+                var httpPromise = this.Http[serviceMethod](url, hasBodyAs2ndParam ? data : requestConfig, hasBodyAs2ndParam ? requestConfig : null);
                 this.ChainPromises(deferred, httpPromise, afterLoginRetryFunction);
             }
 
@@ -64,23 +66,15 @@ module Services {
             return deferred.promise;
         }
 
-        private RequestFor(userSession:Models.UserSession, method:string, url:string, data:any):any {
-            var request = {
-                method: method,
-                url: url,
-                data: data,
-                headers: {}
-            };
-
-            if (userSession) {
-                //Add session data headers
-                request.headers = {
+        private CreateRequestConfigFor(userSession:Models.UserSession):any {
+            if(!userSession) return {};
+            else return {
+                headers: {
                     'X-BF-Auth-User': userSession.User.UserName,
                     'X-BF-Auth-Valid-To': userSession.ValidTo,
                     'X-BF-Auth-Token': userSession.Token
                 }
-            }
-            return request;
+            };
         }
 
         private CreateAfterLoginRetryFunctionFor(originalDeferred:any, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
