@@ -93,10 +93,15 @@ module Services {
                 _this.ChainPromises(originalDeferred, newPromise, null);
             };
 
+            var cancelFunction = function() {
+                originalDeferred.reject({Type:'Cancellation'});
+            };
+
             return {
                 actionName: actionName,
                 canCancel: canCancel,
-                retryFunction: retryFunction
+                retryFunction: retryFunction,
+                cancelFunction: canCancel ? cancelFunction : null
             }
         }
 
@@ -124,7 +129,7 @@ module Services {
 
         private HandleUnauthenticatedUser(deferred:any, afterLoginRetryFunction:any):void {
             //Register retry or reject promise
-            if (afterLoginRetryFunction) this.StateService.RegisterPostLoginAction(afterLoginRetryFunction.actionName, afterLoginRetryFunction.canCancel, afterLoginRetryFunction.retryFunction);
+            if (afterLoginRetryFunction) this.StateService.RegisterPostLoginAction(afterLoginRetryFunction.actionName, afterLoginRetryFunction.canCancel, afterLoginRetryFunction.retryFunction, afterLoginRetryFunction.cancelFunction);
             else deferred.reject(null, {Type: 'Client', ErrorTypeKey: 'UserUnauthenticated'});
 
             //Redirect to login

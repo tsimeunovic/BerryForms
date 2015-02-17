@@ -13,6 +13,6 @@ module Services {
         SetCurrentUserSession(userSession:Models.UserSession):void;
         GetCurrentUserSession():Models.UserSession;
         UpdateCurrentUserSession(validTo:number, token:string):void;
-        RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void):void;
+        RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void, cancel:()=>void):void;
     }
 }

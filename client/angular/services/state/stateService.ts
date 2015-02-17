@@ -67,13 +67,14 @@ module Services {
             }
         }
 
-        public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void):void {
+        public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void, cancel:()=>void):void {
             var currentUserSession = this.CurrentUserSession;
             this.PostLoginActions.add({
                 registeringUser: currentUserSession && currentUserSession.User.UserName,
                 actionName: actionName,
                 canCancel: canCancel,
-                action: action
+                action: action,
+                cancel: cancel
             });
         }
 
@@ -95,7 +96,7 @@ module Services {
             //Assemble confirmation message
             var cancelableActions:any[] = userPostLoginActions.where(cancelableActionPredicate);
             var shouldCreateConfirmationDialog:boolean = cancelableActions && cancelableActions.length > 0;
-            var executeActionConfirmationMessage = 'Retry pending actions?'; //TODO:
+            var executeActionConfirmationMessage = 'Retry pending actions?'; //TODO Create message with actions list
 
             //Execute actions
             if (!shouldCreateConfirmationDialog)this.ExecutePostLoginActions(userPostLoginActions, false);
@@ -112,8 +113,10 @@ module Services {
             for (var i = 0; i < postLoginActions.length; i++) {
                 var postLoginAction = postLoginActions[i];
                 var actionFn = postLoginAction.action;
+                var cancelFn = postLoginAction.cancel;
                 var canCancel:boolean = postLoginAction.canCancel;
                 if (!canCancel || executeCancelable) actionFn();
+                else cancelFn();
             }
         }
     }

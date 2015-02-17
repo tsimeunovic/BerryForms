@@ -38,6 +38,9 @@ module Services {
                     this.Notify(error.ErrorTypeKey, error.ErrorParameters, Services.NotificationSeverity.Error);
                 }
             }
+            if (errorsModel != null && errorsModel.Type == 'Cancellation') {
+                //Do nothing
+            }
             else {
                 this.NotifyMessage(this.LocalizationService.Resources.UnknownError, Services.NotificationSeverity.Error);
             }
