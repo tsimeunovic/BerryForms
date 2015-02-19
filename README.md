@@ -25,7 +25,7 @@ Other than that application has built-in support for different languages. It con
 
 Features that I would like to add in future:
 
-- Login screen. Support for different users and roles
+- Multi user application with different roles and permissions
 - Settings page
 - Dashboard with charts, predefined and custom counters
 - Additional field types
@@ -39,11 +39,12 @@ Features that I would like to add in future:
 - Run 'grunt compile' or navigate to dist folder
 - Run 'node BerryForms.js'
 - Navigate to 'http://localhost:8080/'
+- Login using default 'admin', 'admin' credentials
 
 In case you are running arch linux (and have already installed nodejs, mongodb and git), just run:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/tsimeunovic/BerryForms/master/scripts/arch/InstallBerryForms.sh | bash
+wget -qO- http://git.io/AYCe | bash
 ```
 
 It will get the latest version and setup node daemon. Same command can be used to upgrade application later.
