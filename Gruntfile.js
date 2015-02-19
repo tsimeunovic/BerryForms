@@ -1,11 +1,4 @@
 // Generated on 2014-07-09 using generator-angular 0.4.0
-'use strict';
-var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
-
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -34,31 +27,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         yeoman: yeomanConfig,
-        watch: {
-            coffee: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-                tasks: ['coffee:dist']
-            },
-            coffeeTest: {
-                files: ['test/spec/{,*/}*.coffee'],
-                tasks: ['coffee:test']
-            },
-            styles: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-                tasks: ['copy:styles', 'autoprefixer']
-            },
-            livereload: {
-                options: {
-                    livereload: LIVERELOAD_PORT
-                },
-                files: [
-                    '<%= yeoman.app %>/{,*/}*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
-            }
-        },
         autoprefixer: {
             options: ['last 1 version'],
             dist: {
@@ -70,48 +38,6 @@ module.exports = function (grunt) {
                         dest: '.tmp/styles/'
                     }
                 ]
-            }
-        },
-        connect: {
-            options: {
-                port: 9000,
-                // Change this to '0.0.0.0' to access the server from outside.
-                hostname: 'localhost'
-            },
-            livereload: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, yeomanConfig.app)
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test')
-                        ];
-                    }
-                }
-            },
-            dist: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, yeomanConfig.dist)
-                        ];
-                    }
-                }
-            }
-        },
-        open: {
-            server: {
-                url: 'http://localhost:<%= connect.options.port %>'
             }
         },
         clean: {
@@ -134,37 +60,10 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc'
             },
             all: [
-                'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js'
+                'client/{,*/}*.js',
+                'server/{,*/}*.js',
+                'test/{,*/}*.js'
             ]
-        },
-        coffee: {
-            options: {
-                sourceMap: true,
-                sourceRoot: ''
-            },
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= yeoman.app %>/scripts',
-                        src: '{,*/}*.coffee',
-                        dest: '.tmp/scripts',
-                        ext: '.js'
-                    }
-                ]
-            },
-            test: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'test/spec',
-                        src: '{,*/}*.coffee',
-                        dest: '.tmp/spec',
-                        ext: '.js'
-                    }
-                ]
-            }
         },
         rev: {
             dist: {
@@ -290,16 +189,7 @@ module.exports = function (grunt) {
             }
         },
         concurrent: {
-            server: [
-                'coffee:dist',
-                'copy:styles'
-            ],
-            test: [
-                'coffee',
-                'copy:styles'
-            ],
             dist: [
-                'coffee',
                 'copy:styles',
                 'imagemin',
                 'svgmin',
@@ -314,6 +204,10 @@ module.exports = function (grunt) {
             unitTravis: {
                 configFile: 'karma.conf.js',
                 browsers: ['Firefox'],
+                singleRun: true
+            },
+            e2e: {
+                configFile: 'karma-e2e.conf.js',
                 singleRun: true
             }
         },
@@ -406,21 +300,22 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('server', function (target) {
-        if (target === 'dist') {
-            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-        }
+    //Tasks
+    //Lint
+    grunt.registerTask('lint', [
+        'jshint'
+    ]);
 
-        grunt.task.run([
-            'clean:server',
-            'concurrent:server',
-            'autoprefixer',
-            'connect:livereload',
-            'open',
-            'watch'
-        ]);
-    });
+    //Tests
+    grunt.registerTask('unit-test', [
+        'karma:unit'
+    ]);
 
+    grunt.registerTask('e2e-test', [
+        'karma:e2e'
+    ]);
+
+    //Compile (less + typescript)
     grunt.registerTask('compile', [
         'less:client',
         'typescript:client',
@@ -429,11 +324,9 @@ module.exports = function (grunt) {
         'typescript:test'
     ]);
 
-    grunt.registerTask('unit-test', [
-        'karma:unit'
-    ]);
-
+    //Build application (compile, bundle, minify)
     grunt.registerTask('build', [
+        'compile',
         'clean:dist',
         'useminPrepare',
         'concurrent:dist',
@@ -450,15 +343,9 @@ module.exports = function (grunt) {
         'clean:server'
     ]);
 
-    grunt.registerTask('default', [
-        'jshint',
-        'test',
-        'build'
-    ]);
-
+    //Travis build server task
     grunt.registerTask('travis', [
-        'compile',
-        'karma:unitTravis',
-        'build'
+        'build',
+        'karma:unitTravis'
     ]);
 };
