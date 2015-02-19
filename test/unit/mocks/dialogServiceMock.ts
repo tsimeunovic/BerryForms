@@ -20,7 +20,7 @@ module Mocks {
         }
 
         //Mock members
-        public CreateConfirmationDialog(confirmationText:string, callback:(result:boolean)=>void): void {
+        public CreateConfirmationDialog(confirmationText:string[], callback:(result:boolean)=>void): void {
             var dialogResult:boolean = !this.ShouldCancelNextDialog;
             this.ShouldCancelNextDialog = false;
             callback(dialogResult);

@@ -5,7 +5,7 @@
 module PageObjects {
     export class ConfirmDialog {
         constructor() {
-            this.DialogSelector = '.dialog';
+            this.DialogSelector = '.dialog.confirm';
             this.DialogScopeName = 'ConfirmDialog';
         }
 

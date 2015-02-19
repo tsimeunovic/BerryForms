@@ -10,7 +10,7 @@
 
 describe('Feature: Record create', function () {
     beforeEach(function () {
-        PageObjects.EntityRecordForm.NavigateToCreate('first_entity');
+        PageObjects.EntityRecordForm.NavigateToCreateWithLogin('first_entity');
     });
 
     it('should mark required fields as invalid when they are not filled', function () {

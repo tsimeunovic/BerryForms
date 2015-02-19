@@ -33,7 +33,8 @@ module Mocks {
 
         public GetCurrentUserSession():Models.UserSession {
             var session = new Models.UserSession();
-            session.ValidTo = (new Date()).getTime() + 10 * 60 * 1000;
+            session.ValidTo = 1234567890000;
+            session.Token = 'abc-def-ghi';
             var user = new Models.User();
             user.UserName = 'MockUser';
             user.IsSuperUser = true;

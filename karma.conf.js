@@ -51,7 +51,7 @@ module.exports = function (config) {
         exclude: [
             //Load just english resources
             'client/angular/localization/localizationLoader.js',
-            'client/angular/localization/sk/*.js',
+            'client/angular/localization/*[!en]/*.js',
 
             //Do not load configuration overrides
             'client/config/configLoader.js',

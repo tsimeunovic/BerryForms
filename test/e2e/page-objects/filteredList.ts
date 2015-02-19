@@ -73,6 +73,12 @@ module PageObjects {
             PageObjects.Browser.NavigateTo(url);
         }
 
+        public static NavigateToFilteredListWithLogin(entityName:string):void {
+            this.NavigateToFilteredList(entityName);
+            var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
+            loginDialog.LoginAsDefault();
+        }
+
         //Urls
         public static UrlForEntity(entityName:string):string {
             return ('/entity/{0}/filteredlist').format([entityName]);

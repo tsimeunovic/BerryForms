@@ -41,6 +41,7 @@ module Data {
             result.FieldName = Services.LocalizationService.Resources.Password;
             result.FieldDescription = result.FieldName;
             result.Required = true;
+            result.MaskCharacters = true;
             result.RegularExpression = '^[a-zA-Z]\\w{4,12}$';
 
             return result;

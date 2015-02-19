@@ -6,10 +6,10 @@
 
 module PageObjects {
     export class Form {
-        constructor() {
+        constructor(private ScopeSelector:string) {
             this.Controls = [];
-            this.SubmitButton = new PageObjects.Button('div.entityForm button.btn-submit');
-            this.FormFields = using('[data-role="form"]', 'Form').element('.fieldComponent');
+            this.SubmitButton = new PageObjects.Button(this.ScopeSelector + ' div.entityForm button.btn-submit');
+            this.FormFields = using(this.ScopeSelector + ' [data-role="form"]', 'Form').element('.fieldComponent');
         }
 
         private Controls:PageObjects.FormControl[];
@@ -33,7 +33,7 @@ module PageObjects {
 
         public FieldFor(propertyName:string):any {
             var elementSelector = ('[data-id="{0}"]').format([propertyName]);
-            return using('[data-role="form"]', 'Form').element(elementSelector);
+            return using(this.ScopeSelector + ' [data-role="form"]', 'Form').element(elementSelector);
         }
 
         public Submit():void {
@@ -41,7 +41,11 @@ module PageObjects {
         }
 
         public static Current():PageObjects.Form {
-            return new PageObjects.Form();
+            return new PageObjects.Form('');
+        }
+
+        public static In(scopeSelector:string) {
+            return new PageObjects.Form(scopeSelector);
         }
     }
 }

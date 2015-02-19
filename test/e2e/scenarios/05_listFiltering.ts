@@ -7,7 +7,7 @@
 
 describe('Feature: Filtered list', function () {
     beforeEach(function () {
-        PageObjects.FilteredList.NavigateToFilteredList('first_entity');
+        PageObjects.FilteredList.NavigateToFilteredListWithLogin('first_entity');
         var filteredList = PageObjects.FilteredList.Current();
         filteredList.ToggleExpand();
     });

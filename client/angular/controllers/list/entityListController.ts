@@ -136,7 +136,7 @@ module Controllers {
 
         private ListRecordDelete(entity:Models.Entity):void {
             var _this = this;
-            this.DialogService.CreateConfirmationDialog(this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity, function (confirmationResult:boolean) {
+            this.DialogService.CreateConfirmationDialog([this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity], function (confirmationResult:boolean) {
                 if (!confirmationResult) return;
 
                 _this.MessagingService.Messages.Entity.Delete.publish(entity);

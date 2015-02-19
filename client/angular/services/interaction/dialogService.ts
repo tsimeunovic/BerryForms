@@ -19,7 +19,7 @@ module Services {
                     private MessagingService:Services.IMessagingService) {
         }
 
-        public CreateConfirmationDialog(confirmationText:string, callback:(result:boolean)=>void):void {
+        public CreateConfirmationDialog(confirmationText:string[], callback:(result:boolean)=>void):void {
             var dialogData = {
                 Header: this.LocalizationService.Resources.Confirmation,
                 Text: confirmationText,

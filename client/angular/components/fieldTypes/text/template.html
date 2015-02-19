@@ -1,6 +1,11 @@
 <div data-ng-class="{'error': !IsValid}">
     <input type="text"
+           data-ng-if="!field.MaskCharacters"
            class="form-control errorElement"
            data-ng-model="Entity.Data[field.FieldSystemName]"
            data-ng-readonly="field.ReadOnly" />
+    <input type="password"
+           data-ng-if="field.MaskCharacters"
+           class="form-control errorElement"
+           data-ng-model="Entity.Data[field.FieldSystemName]" />
 </div>

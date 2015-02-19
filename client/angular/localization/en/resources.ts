@@ -169,6 +169,14 @@ module Localization {
         Password:string = 'Password';
         UserUnauthenticated:string;
         InvalidUserNameOrPassword:string = 'Could not login user. Invalid user name or password';
+
+        //Actions
+        RetryActionsQuestion:string = 'There were some unsuccessful operations. Do you want to retry them?';
+        CreateEntityMetadata:string = 'Creation of entity type';
+        UpdateEntityMetadata:string = 'Update of entity type';
+        CreateEntity:string = 'Creation of entity';
+        UpdateEntity:string = 'Update of entity';
+        DeleteEntity:string = 'Deletion of entity';
     }
 
     (function () {

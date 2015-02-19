@@ -58,7 +58,8 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntityMetadataSave(entityMetadata.EntitySystemName);
-                _this.HttpWrapperService.Post(url, 'SaveEntityMetadata', pluginContext.Data, false).then(
+                var operationName:string = entityMetadata.CreatedDate ? 'CreateEntityMetadata' : 'UpdateEntityMetadata';
+                _this.HttpWrapperService.Post(url, operationName, pluginContext.Data, false).then(
                     //Success
                     function (data) {
                         var metadata:Models.EntityMetadata = _this.EntityModelMapperService.DeserializeEntityMetadataModel(data);
@@ -116,7 +117,8 @@ module Services {
                 }
 
                 var url = _this.UrlLocatorService.GetUrlForEntitySave(entity.EntitySystemName);
-                _this.HttpWrapperService.Post(url, 'SaveEntity', pluginContext.Data, false).then(
+                var operationName:string = entity.Id ? 'CreateEntity' : 'UpdateEntity';
+                _this.HttpWrapperService.Post(url, operationName, pluginContext.Data, false).then(
                     //Success
                     function (data) {
                         var entityModel = _this.EntityModelMapperService.DeserializeEntityModel(data);

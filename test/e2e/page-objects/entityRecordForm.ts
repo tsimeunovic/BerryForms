@@ -9,6 +9,12 @@ module PageObjects {
             PageObjects.Browser.NavigateTo(url);
         }
 
+        public static NavigateToCreateWithLogin(entityName:string):void {
+            this.NavigateToCreate(entityName);
+            var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
+            loginDialog.LoginAsDefault();
+        }
+
         //Urls
         public static UrlForEntityCreate(entityName:string):string {
             return '/entity/' + entityName

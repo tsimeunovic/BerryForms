@@ -12,13 +12,15 @@ module Services {
                 'MessagingService',
                 'DialogService',
                 'RedirectService',
+                'LocalizationService',
                 StateService
             ];
         }
 
         constructor(private MessagingService:Services.IMessagingService,
                     private DialogService:Services.IDialogService,
-                    private RedirectService:Services.IRedirectService) {
+                    private RedirectService:Services.IRedirectService,
+                    private LocalizationService:Services.ILocalizationService) {
             this.EditedEntity = null;
             this.CurrentUserSession = null;
             this.PostLoginActions = [];
@@ -85,7 +87,7 @@ module Services {
             var userPostLoginActionPredicate = function (item) {
                 return !item.registeringUser || item.registeringUser == currentUserSession.User.UserName;
             };
-            var cancelableActionPredicate = function(item) {
+            var cancelableActionPredicate = function (item) {
                 return item.canCancel;
             };
 
@@ -96,16 +98,29 @@ module Services {
             //Assemble confirmation message
             var cancelableActions:any[] = userPostLoginActions.where(cancelableActionPredicate);
             var shouldCreateConfirmationDialog:boolean = cancelableActions && cancelableActions.length > 0;
-            var executeActionConfirmationMessage = 'Retry pending actions?'; //TODO Create message with actions list
 
             //Execute actions
-            if (!shouldCreateConfirmationDialog)this.ExecutePostLoginActions(userPostLoginActions, false);
-            else this.DialogService.CreateConfirmationDialog(executeActionConfirmationMessage, function (result:boolean) {
-                _this.ExecutePostLoginActions(userPostLoginActions, result);
+            if (!shouldCreateConfirmationDialog) {
+                this.ExecutePostLoginActions(userPostLoginActions, false);
+            }
+            else {
+                var clientReadableActionsList:string[] = this.CreateClientReadableActionsList(cancelableActions);
+                this.DialogService.CreateConfirmationDialog(clientReadableActionsList, function (result:boolean) {
+                    _this.ExecutePostLoginActions(userPostLoginActions, result);
 
-                //Start with new screen
-                if (!result) _this.RedirectService.RedirectToHomeScreen();
-            });
+                    //Start with new screen
+                    if (!result) _this.RedirectService.RedirectToHomeScreen();
+                });
+            }
+        }
+
+        private CreateClientReadableActionsList(cancelableActions:any[]):string[] {
+            var result = [this.LocalizationService.Resources.RetryActionsQuestion];
+            for (var i = 0; i < cancelableActions.length; i++) {
+                var action = cancelableActions[i];
+                result.push(this.LocalizationService.GetResourceByKey(action.actionName, null));
+            }
+            return result;
         }
 
         private ExecutePostLoginActions(postLoginActions:any[], executeCancelable:boolean):void {

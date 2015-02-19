@@ -125,7 +125,7 @@ module Controllers {
 
         private ListRecordDelete(fieldEntity:Models.Entity):void {
             var _this = this;
-            this.DialogService.CreateConfirmationDialog(this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField, function (confirmationResult:boolean) {
+            this.DialogService.CreateConfirmationDialog([this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField], function (confirmationResult:boolean) {
                 if (!confirmationResult) return;
 
                 var entityMetadata:Models.EntityMetadata = _this.Scope.OriginalMetadata;

@@ -11,6 +11,7 @@ module Models {
 
         public RegularExpression:string;
         public MaxLength:number;
+        public MaskCharacters:boolean;
 
         public ValidateValue(value:any):boolean {
             //Required
@@ -31,7 +32,7 @@ module Models {
         }
 
         //Mapping
-        public FieldSpecialProperties:string[] = ['RegularExpression'];
+        public FieldSpecialProperties:string[] = ['RegularExpression', 'MaskCharacters'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
             //Map from entity (when loading from server) to metadata and vice-versa (when saving to server)
             if(this.MaxLength) entity.Data['MaxLength'] = this.MaxLength.toString();

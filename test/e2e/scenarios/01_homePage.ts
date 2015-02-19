@@ -5,15 +5,28 @@
 'use strict';
 
 describe('Feature: Home screen', function () {
-    beforeEach(function () {
-        PageObjects.HomePage.NavigateTo();
-    });
-
-    it('should display form for creating new entity', function () {
+    it('should display login window', function () {
         //Arrange
+        var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
+
         //Act
+        PageObjects.HomePage.NavigateTo();
 
         //Assert
+        expect(loginDialog.VisibleDialogsCount()).toEqual(1);
+        expect(loginDialog.EnabledSubmitButtonsCount()).toEqual(0);
+    });
+
+    it('should display form for creating new entity after login', function () {
+        //Arrange
+        var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
+
+        //Act
+        PageObjects.HomePage.NavigateTo();
+        loginDialog.LoginAsDefault();
+
+        //Assert
+        expect(loginDialog.VisibleDialogsCount()).toEqual(0);
         expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.EntitySchemaForm.CreateEntityUrlPattern);
     });
 });

@@ -169,6 +169,14 @@ module Localization {
         Password:string;
         UserUnauthenticated:string;
         InvalidUserNameOrPassword:string;
+
+        //Actions
+        RetryActionsQuestion:string;
+        CreateEntityMetadata:string;
+        UpdateEntityMetadata:string;
+        CreateEntity:string;
+        UpdateEntity:string;
+        DeleteEntity:string;
     }
 
     (function () {

@@ -9,6 +9,7 @@
 
 describe('Feature: Schema create', function () {
     beforeEach(function () {
+        PageObjects.HomePage.NavigateToWithLogin();
     });
 
     it('should notify user when new schema is successfully created', function () {

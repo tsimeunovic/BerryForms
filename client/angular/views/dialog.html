@@ -1,6 +1,8 @@
 <div class="dialog confirm" data-ng-if="Dialog">
     <div class="dialogHeader">{{Dialog.Header}}</div>
-    <div class="dialogText">{{Dialog.Text}}</div>
+    <div class="dialogText">
+        <p data-ng-repeat="textLine in Dialog.Text">{{textLine}}</p>
+    </div>
     <div class="dialogButtons">
         <button data-ng-repeat="button in Dialog.Buttons"
                 class="btn btn-sm btn-{{button.ButtonType}}"

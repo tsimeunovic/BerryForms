@@ -33,7 +33,7 @@ describe('Service: EntityRepositoryService', function () {
         //Arrange
         var callback:any = callbackMock.callback;
         var returnedMetadata = new Models.EntityMetadata();
-        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', true, returnedMetadata);
+        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', returnedMetadata, 200);
 
         //Act
         systemUnderTest.LoadEntityMetadata('entityName', callback);
@@ -51,7 +51,7 @@ describe('Service: EntityRepositoryService', function () {
         //Arrange
         var callback:any = callbackMock.callback;
         var returnedError = {};
-        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', false, returnedError);
+        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', returnedError, 500);
 
         //Act
         systemUnderTest.LoadEntityMetadata('entityName', callback);
@@ -86,7 +86,7 @@ describe('Service: EntityRepositoryService', function () {
         metadata.EntitySystemName = 'testEntity';
         var returnedModel = new Models.EntityMetadata();
         var postOperationMock:any = httpWrapperServiceMock.Post;
-        httpWrapperServiceMock.AddResponse('post', 'EntityMetadataSave/testEntity', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('post', 'EntityMetadataSave/testEntity', returnedModel, 200);
 
         //Act
         systemUnderTest.SaveEntityMetadata(metadata, callback);
@@ -109,7 +109,7 @@ describe('Service: EntityRepositoryService', function () {
             new Models.EntityMetadata(),
             new Models.EntityMetadata()];
         var getOperationMock:any = httpWrapperServiceMock.Get;
-        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataListRetrieve', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('get', 'EntityMetadataListRetrieve', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadAllEntityMetadata(callback);
@@ -128,7 +128,7 @@ describe('Service: EntityRepositoryService', function () {
         var callback:any = callbackMock.callback;
         var returnedModel = new Models.Entity('TestReturnedEntity');
         var getOperationMock:any = httpWrapperServiceMock.Get;
-        httpWrapperServiceMock.AddResponse('get', 'EntityRetrieve/name/8', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('get', 'EntityRetrieve/name/8', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadEntity('name', 8, callback);
@@ -146,7 +146,7 @@ describe('Service: EntityRepositoryService', function () {
         var entityToSave = new Models.Entity('TestSavingEntity');
         var returnedModel = new Models.Entity('TestReturnedEntity');
         var postOperationMock:any = httpWrapperServiceMock.Post;
-        httpWrapperServiceMock.AddResponse('post', 'EntitySave/TestSavingEntity', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('post', 'EntitySave/TestSavingEntity', returnedModel, 200);
 
         //Act
         systemUnderTest.SaveEntity(entityToSave, callback);
@@ -167,7 +167,7 @@ describe('Service: EntityRepositoryService', function () {
         entityToDelete.Id = 12;
         var returnedModel = new Models.Entity('TestReturnedEntity');
         var deleteOperationMock:any = httpWrapperServiceMock.Delete;
-        httpWrapperServiceMock.AddResponse('delete', 'EntityDelete/TestDeletingEntity/12', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('delete', 'EntityDelete/TestDeletingEntity/12', returnedModel, 200);
 
         //Act
         systemUnderTest.DeleteEntity(entityToDelete, callback);
@@ -190,7 +190,7 @@ describe('Service: EntityRepositoryService', function () {
             new Models.Entity('TestEntityName')
         ];
         var getOperationMock:any = httpWrapperServiceMock.Get;
-        httpWrapperServiceMock.AddResponse('get', 'EntityListRetrieve/TestEntityName', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('get', 'EntityListRetrieve/TestEntityName', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadAllEntities('TestEntityName', callback);
@@ -223,7 +223,7 @@ describe('Service: EntityRepositoryService', function () {
             ]
         };
         var getOperationMock:any = httpWrapperServiceMock.Get;
-        httpWrapperServiceMock.AddResponse('get', 'PagedEntityListRetrieve/TestEntityName/2/10', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('get', 'PagedEntityListRetrieve/TestEntityName/2/10', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadPagedEntities('TestEntityName', 2, 10, callback);
@@ -262,7 +262,7 @@ describe('Service: EntityRepositoryService', function () {
             ]
         };
         var postOperationMock:any = httpWrapperServiceMock.Post;
-        httpWrapperServiceMock.AddResponse('post', 'FilteredListRetrieve/TestSearchEntityMetadata/0/2', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('post', 'FilteredListRetrieve/TestSearchEntityMetadata/0/2', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadSearchResults(searchedEntityMetadata, searchExpression, callback);
@@ -299,7 +299,7 @@ describe('Service: EntityRepositoryService', function () {
             ]
         };
         var postOperationMock:any = httpWrapperServiceMock.Post;
-        httpWrapperServiceMock.AddResponse('post', 'FilteredListRetrieve/TestEntityName/0/8', true, returnedModel);
+        httpWrapperServiceMock.AddResponse('post', 'FilteredListRetrieve/TestEntityName/0/8', returnedModel, 200);
 
         //Act
         systemUnderTest.LoadPagedFilteredResults('TestEntityName', queryObject, 0, 8, callback);

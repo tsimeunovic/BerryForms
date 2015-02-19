@@ -18,11 +18,12 @@ module Mocks {
 
         private Responses:any[];
 
-        public AddResponse(method:string, url:string, successResponse:boolean, responseData:any) {
+        public AddResponse(method:string, url:string, responseData:any, statusCode:number) {
             this.Responses.push({
                 Method: method,
                 Url: url,
-                SuccessResponse: successResponse,
+                SuccessResponse: statusCode < 400,
+                StatusCode: statusCode,
                 ResponseData: responseData
             });
         }
@@ -32,23 +33,24 @@ module Mocks {
                 return response.Method == method && response.Url == url;
             };
             var configuredResponse = this.Responses.single(configuredResponsePredicate);
+            if(configuredResponse) this.Responses.remove(configuredResponse);
 
             var result = {
                 success: function (successCallback) {
                     if (configuredResponse && configuredResponse.SuccessResponse)
-                        successCallback(configuredResponse.ResponseData);
+                        successCallback(configuredResponse.ResponseData, configuredResponse.StatusCode);
                     return result;
                 },
                 error: function (errorCallback) {
                     if (!configuredResponse || !configuredResponse.SuccessResponse)
-                        errorCallback(configuredResponse ? configuredResponse.ResponseData : null);
+                        errorCallback(configuredResponse ? configuredResponse.ResponseData : null, configuredResponse ? configuredResponse.StatusCode : 500);
                     return result;
                 },
                 then: function(successCallback, errorCallback) {
                     if (configuredResponse && configuredResponse.SuccessResponse)
-                        successCallback(configuredResponse.ResponseData);
+                        successCallback(configuredResponse.ResponseData, configuredResponse.StatusCode);
                     else if (!configuredResponse || !configuredResponse.SuccessResponse)
-                        errorCallback(configuredResponse ? configuredResponse.ResponseData : null);
+                        errorCallback(configuredResponse ? configuredResponse.ResponseData : null, configuredResponse ? configuredResponse.StatusCode : 500);
                     return result;
                 }
             };
@@ -56,19 +58,19 @@ module Mocks {
         }
 
         //Mock members
-        public get(url:string):any {
+        public get(url:string, config:any):any {
             return this.ResponseFor('get', url);
         }
 
-        public post(url:string, data:any):any {
+        public post(url:string, data:any, config:any):any {
             return this.ResponseFor('post', url);
         }
 
-        public put(url:string, data:any):any {
+        public put(url:string, data:any, config:any):any {
             return this.ResponseFor('put', url);
         }
 
-        public delete(url:string):any {
+        public delete(url:string, config:any):any {
             return this.ResponseFor('delete', url);
         }
     }

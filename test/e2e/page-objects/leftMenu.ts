@@ -18,7 +18,7 @@ module PageObjects {
         }
 
         public ClickIconNamed(name:string):void {
-            var entityIconSelector = ('[title="{0}"]').format([name]);
+            var entityIconSelector = ('[title="{0}"] a').format([name]);
             element(entityIconSelector).click();
         }
 

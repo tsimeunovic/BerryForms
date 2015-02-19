@@ -21,7 +21,7 @@ describe('Service: DialogService', function () {
 
     it('should publish \'create dialog\' message when \'CreateConfirmationDialog\' method is called', function () {
         //Arrange
-        var dialogText = 'TestDialogText';
+        var dialogText = ['TestDialogText'];
         var createDialogPublishSpy:any = messagingServiceMock.Messages.Dialog.Create.publish;
 
         //Act

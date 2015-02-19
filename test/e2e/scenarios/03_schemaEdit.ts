@@ -13,7 +13,7 @@
 
 describe('Feature: Schema edit', function () {
     beforeEach(function () {
-        PageObjects.EntitySchemaForm.NavigateToEdit('first_entity');
+        PageObjects.EntitySchemaForm.NavigateToEditWithLogin('first_entity');
     });
 
     var fields = [
