@@ -155,6 +155,13 @@ var Localization;
             this.UserName = 'User name';
             this.Password = 'Password';
             this.InvalidUserNameOrPassword = 'Could not login user. Invalid user name or password';
+            //Actions
+            this.RetryActionsQuestion = 'There were some unsuccessful operations. Do you want to retry them?';
+            this.CreateEntityMetadata = 'Creation of entity type';
+            this.UpdateEntityMetadata = 'Update of entity type';
+            this.CreateEntity = 'Creation of entity';
+            this.UpdateEntity = 'Update of entity';
+            this.DeleteEntity = 'Deletion of entity';
         }
         return ResourcesEn;
     })();
