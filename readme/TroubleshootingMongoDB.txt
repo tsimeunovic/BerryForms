@@ -21,6 +21,7 @@ Check if the lock file exists
 # ls  -lisa /var/lib/mongodb
 If it does, stop the mongodb service, and delete the file. Then start the service again.
 # rm /var/lib/mongodb/mongod.lock
+Mongo db path can differ. On Mac OSX its usually /usr/local/var/mongodb/mongod.lock
 If it still won't start, run a repair on the database, specifying the dbpath (/var/lib/mongodb/ is the default --dbpath in Arch Linux)
 # mongod --dbpath /var/lib/mongodb/ --repair
 After running the repair as root, the files got chowned to root, whilst Arch Linux runs it under a different user. You then need to chown back the files. Further reference

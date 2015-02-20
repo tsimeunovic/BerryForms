@@ -62,7 +62,10 @@ module Controllers {
             this.Scope.LoginInProgress = false;
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.LoggingIn);
             if (errorsModel == null) this.StateService.SetCurrentUserSession(session);
-            else this.NotificationService.HandleErrorsModel(errorsModel);
+            else {
+                this.Scope.Entity.Data['Password'] = null;
+                this.NotificationService.HandleErrorsModel(errorsModel);
+            }
         }
     }
 }
