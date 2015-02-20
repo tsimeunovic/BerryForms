@@ -51,7 +51,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should resolve original predicate when post login action is resolved', function () {
+    it('should resolve original promise when post login action is resolved', function () {
         //Arrange
         var postHttpSpy:any = httpMock.post;
         httpMock.AddResponse('post', 'PostUrl', null, 401);
@@ -64,6 +64,7 @@ describe('Service: HttpWrapperService', function () {
         httpMock.AddResponse('post', 'PostUrl', response2Obj, 200);
 
         //Act
+        stateServiceMock.RestoreDefaultUserSession();
         postLoginAction();
 
         //Assert

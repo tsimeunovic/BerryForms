@@ -1,4 +1,5 @@
 /// <reference path="../base/baseController.ts" />
+/// <reference path="../../data/createLoginFormFields.ts" />
 /// <reference path="../../services/state/stateService.ts" />
 /// <reference path="../../services/communication/messagingService.ts" />
 

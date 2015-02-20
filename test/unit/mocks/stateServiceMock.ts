@@ -10,6 +10,16 @@ module Mocks {
         }
 
         private Setup():void {
+            var defaultSession = new Models.UserSession();
+            defaultSession.ValidTo = 1234567890000;
+            defaultSession.Token = 'abc-def-ghi';
+            var defaultUser = new Models.User();
+            defaultUser.UserName = 'MockUser';
+            defaultUser.IsSuperUser = true;
+            defaultSession.User = defaultUser;
+            this.DefaultUserSession = defaultSession;
+            this.UserSession = defaultSession;
+
             spyOn(this, 'SetEditedEntity').and.callThrough();
             spyOn(this, 'GetEditedEntity').and.callThrough();
             spyOn(this, 'SetCurrentUserSession').and.callThrough();
@@ -19,6 +29,8 @@ module Mocks {
         }
 
         private EditedEntity:Models.Entity;
+        private DefaultUserSession:Models.UserSession;
+        private UserSession:Models.UserSession;
 
         //Mock members
         public SetEditedEntity(entity:Models.Entity):void {
@@ -28,18 +40,16 @@ module Mocks {
             return this.EditedEntity;
         }
 
+        public RestoreDefaultUserSession():void {
+            this.UserSession = this.DefaultUserSession;
+        }
+
         public SetCurrentUserSession(userSession:Models.UserSession):void {
+            this.UserSession = userSession;
         }
 
         public GetCurrentUserSession():Models.UserSession {
-            var session = new Models.UserSession();
-            session.ValidTo = 1234567890000;
-            session.Token = 'abc-def-ghi';
-            var user = new Models.User();
-            user.UserName = 'MockUser';
-            user.IsSuperUser = true;
-            session.User = user;
-            return session;
+            return this.UserSession;
         }
 
         public UpdateCurrentUserSession(validTo:number, token:string):void {
