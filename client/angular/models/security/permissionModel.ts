@@ -13,19 +13,19 @@ module Models {
     export class CascadingPermission extends Permission {
         constructor() {
             super();
-            this.AllowGroups = [];
-            this.DenyGroups = [];
+            this.AllowRoles = [];
+            this.DenyRoles = [];
             this.AllowUsers = [];
             this.DenyUsers = [];
         }
 
         //Inherited Allow:boolean is used as default value
 
-        //Groups permission overrides
-        AllowGroups:string[];
-        DenyGroups:string[];
+        //Roles permission overrides (stronger)
+        AllowRoles:string[];
+        DenyRoles:string[];
 
-        //Users permission overrides
+        //Users permission overrides (strongest)
         AllowUsers:string[];
         DenyUsers:string[];
     }

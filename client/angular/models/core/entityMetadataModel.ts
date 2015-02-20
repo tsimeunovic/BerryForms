@@ -1,27 +1,23 @@
+/// <reference path="persistentObject.ts" />
 /// <reference path="../core/fieldMetadataModel.ts" />
 /// <reference path="../security/permissionModel.ts" />
+/// <reference path="../../interfaces/models/IPermissionObject.ts" />
 
 'use strict';
 
 //Model representing entity type
 module Models {
-    export class EntityMetadata {
+    export class EntityMetadata extends PersistentObject implements Models.IPermissionObject {
         constructor() {
+            super();
             this.Fields = [];
             this.Permissions = [];
         }
 
         //Name and description
-        public Id:number; //Set externally
         public EntityName:string;
         public EntitySystemName:string;
         public EntityDescription:string;
-
-        //Created and modified info (set on server)
-        public CreatedDate:Date;
-        public CreatedBy:string;
-        public ModifiedDate:Date;
-        public ModifiedBy:string;
 
         //Icon
         public IconClassName:string;

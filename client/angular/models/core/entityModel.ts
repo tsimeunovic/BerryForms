@@ -1,4 +1,5 @@
 /// <reference path="entityMetadataModel.ts" />
+/// <reference path="persistentObject.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 /// <reference path="../../../extensions/dateExtensions.ts" />
 
@@ -7,8 +8,9 @@ var _global:any = this;
 
 //Model representing entity record
 module Models {
-    export class Entity {
+    export class Entity extends PersistentObject {
         constructor(entitySystemName:string) {
+            super();
             this.EntitySystemName = entitySystemName;
             this.Data = {};
             this.ErrorFields = [];
@@ -16,12 +18,8 @@ module Models {
 
         //Common metadata
         public EntitySystemName:string;
-        public Id:number; //Set externally
 
-        public CreatedDate:number;
-        public ModifiedDate:number;
-
-        //Specific entity data
+        //Specific entity data (schema depends on underlying metadata)
         public Data:any;
 
         //Validation

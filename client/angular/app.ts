@@ -40,6 +40,7 @@
 /// <reference path="./services/interaction/domManipulationService.ts" />
 /// <reference path="./services/repository/queryCreatorService.ts" />
 /// <reference path="./services/plugins/pluginsExecutorService.ts" />
+/// <reference path="./services/security/permissionService.ts" />
 
 /// <reference path="./components/fieldTypes/fieldTypesRegistry.ts" />
 /// <reference path="./components/fieldTypes/boolean/booleanFieldComponent.ts" />
@@ -84,6 +85,7 @@ module AngularApplication {
             app.service('DomManipulationService', Services.DomManipulationService.injection());
             app.service('QueryCreatorService', Services.QueryCreatorService.injection());
             app.service('PluginsExecutorService', Services.PluginsExecutorService.injection());
+            app.service('PermissionService', Services.PermissionService.injection());
 
             //Controllers
             app.controller('MenuController', Controllers.MenuController.injection());

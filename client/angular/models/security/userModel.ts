@@ -6,6 +6,11 @@
 //Represents application user
 module Models {
     export class User {
+        constructor(){
+            this.Roles = [];
+            this.ApplicationPermissions = [];
+        }
+
         //Identifier
         public UserName:string;
 
@@ -21,6 +26,6 @@ module Models {
         public ApplicationPermissions:Models.Permission[];
 
         //User settings
-        //public Setting:any;
+        public Setting:any;
     }
 }
