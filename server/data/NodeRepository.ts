@@ -40,7 +40,8 @@ export module Data {
         private CreateRequestContext(request:any):any {
             return {
                 source: 'client',
-                session: request.session
+                session: request.session,
+                user: request.session ? request.session.User.UserName : null
             }
         }
 

@@ -114,7 +114,9 @@ module Services {
             var result = new Models.Entity(entityJson.EntitySystemName);
             result.Id = entityJson.Id;
             result.CreatedDate = entityJson.CreatedDate;
+            result.CreatedBy = entityJson.CreatedBy;
             result.ModifiedDate = entityJson.ModifiedDate;
+            result.ModifiedBy = entityJson.ModifiedBy;
             result.Data = entityJson.Data;
             return result;
         }

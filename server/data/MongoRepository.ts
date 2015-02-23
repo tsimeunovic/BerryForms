@@ -27,7 +27,7 @@ export module Data {
                     console.log('Error finding record ' + collectionName + ' with id ' + id + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
-                else collection.findOne({'Id': idNum}, function (err, item) {
+                else collection.findOne({'Id': idNum, 'Deleted': false}, function (err, item) {
                     var hasError = err || !item;
                     var logMessage = hasError ?
                     'Error finding record ' + collectionName + ' with id ' + id + '\n' + err :
@@ -53,11 +53,13 @@ export module Data {
             var collectionName = this.CollectionName;
 
             this.DoCollectionOperation(collectionName, function (collection, err) {
+                var collectionQuery = JSON.parse(JSON.stringify(condition));
+                collectionQuery['Deleted'] = false;
                 if (err) {
                     console.log('Error finding records from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
-                else collection.find(condition, projector)
+                else collection.find(collectionQuery, projector)
                     .sort('ModifiedDate', -1)
                     .toArray(function (err, items) {
                         var logMessage = err ?
@@ -85,12 +87,14 @@ export module Data {
             var total = end - start;
 
             this.DoCollectionOperation(collectionName, function (collection, err) {
+                var collectionQuery = JSON.parse(JSON.stringify(query));
+                collectionQuery['Deleted'] = false;
                 if (err) {
                     console.log('Error finding records from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 //Items
-                else collection.find(query)
+                else collection.find(collectionQuery)
                     .sort('ModifiedDate', -1)
                     .skip(start).limit(total)
                     .toArray(function (err, items) {
@@ -158,8 +162,13 @@ export module Data {
 
                 repository.DoCollectionOperation(collectionName, function (collection, err) {
                     var now = (new Date()).getTime();
+
+                    //Set additional properties
                     data['CreatedDate'] = now;
+                    data['CreateBy'] = requestContext.user;
                     data['ModifiedDate'] = now;
+                    data['ModifiedBy'] = requestContext.user;
+                    data["Deleted"] = false;
 
                     if (err) {
                         console.log('Error creating new record with id ' + id + ' in collection ' + collectionName + '\n' + err);
@@ -198,11 +207,19 @@ export module Data {
                 var now = (new Date()).getTime();
                 var modified = data['ModifiedDate'];
                 data['ModifiedDate'] = now;
+                data['ModifiedBy'] = requestContext.user;
 
-                var setter = {$set: {Data: data['Data'], Fields: data['Fields'], ModifiedDate: now}};
+                var setter = {
+                    $set: {
+                        Data: data['Data'],
+                        Fields: data['Fields'],
+                        ModifiedDate: now,
+                        ModifiedBy: requestContext.user
+                    }
+                };
                 var recordQuery = ConfigServer.Config.Server.UseOptimisticConcurrencyUpdate ?
-                {"Id": id, "ModifiedDate": modified} :
-                {"Id": id};
+                {"Id": id, "Deleted": false, "ModifiedDate": modified} :
+                {"Id": id, "Deleted": false};
 
                 if (err) {
                     console.log('Error updating record with id ' + id + ' from ' + collectionName + '\n' + err);
@@ -236,11 +253,21 @@ export module Data {
             var idNum:number = parseInt(idStr);
 
             repository.DoCollectionOperation(collectionName, function (collection, err) {
+                var now = (new Date()).getTime();
+                var setter = {
+                    $set: {
+                        Deleted: true,
+                        ModifiedDate: now,
+                        ModifiedBy: requestContext.user
+                    }
+                };
+                var recordQuery = {"Id": idNum, "Deleted": false};
+
                 if (err) {
                     console.log('Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
-                else collection.remove({"Id": idNum}, function (err) {
+                else collection.update(recordQuery, setter, {w: 1}, function (err, result) {
                     var logMessage = err ?
                     'Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err :
                     'Deleted record with id ' + idStr + ' in collection ' + collectionName;

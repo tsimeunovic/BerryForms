@@ -83,7 +83,10 @@ export module Data {
 
             this.DoCollectionOperation(logCollectionName, function (collection, err) {
                 var logObjectStr:string = JSON.stringify(logObject);
-                if (err) console.log('Could not open collection \'' + logCollectionName + '\'. Unable to log record \'' + logObjectStr + '\'');
+                if (err) {
+                    console.log('Could not write log record \'' + logObjectStr + '\'');
+                    if (callback) callback(err);
+                }
                 else collection.insert(logObject, {w: 1}, function (err, result) {
                     if (err) console.log('Could not write log record \'' + logObjectStr + '\'');
                     if (callback) callback(err);

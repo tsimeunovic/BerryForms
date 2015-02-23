@@ -144,7 +144,9 @@ describe('Service: EntityModelMapperService', function () {
             "IconColorHex": "#hex",
             "Id": "test_metadata",
             "CreatedDate": "2014-12-01T12:00:00.000Z",
+            "CreatedBy": "CreateUser",
             "ModifiedDate": "2014-12-12T12:00:00.000Z",
+            "ModifiedBy": "ModifyUser",
             "CustomProperty": "CustomValue",
             "Fields": [
                 {
@@ -175,7 +177,9 @@ describe('Service: EntityModelMapperService', function () {
         expect(result.IconColorHex).toEqual(json.IconColorHex);
         expect(result.Id).toEqual(json.Id);
         expect(result.CreatedDate).toEqual(json.CreatedDate);
+        expect(result.CreatedBy).toEqual(json.CreatedBy);
         expect(result.ModifiedDate).toEqual(json.ModifiedDate);
+        expect(result.ModifiedBy).toEqual(json.ModifiedBy);
         expect(result['CustomProperty']).toEqual(json.CustomProperty);
 
         expect(result.Fields.length).toEqual(1);
@@ -192,7 +196,9 @@ describe('Service: EntityModelMapperService', function () {
             "ErrorFields": [],
             "Id": 128,
             "CreatedDate": 1417435200000,
+            "CreatedBy": 'CreateUser',
             "ModifiedDate": 1418385600000,
+            "ModifiedBy": 'ModifyUser',
             "EntitySystemName": "test_metadata",
             "Data": {
                 "option": {
@@ -212,7 +218,9 @@ describe('Service: EntityModelMapperService', function () {
         expect(result).not.toEqual(null);
         expect(result.Id).toEqual(json.Id);
         expect(result.CreatedDate).toEqual(json.CreatedDate);
+        expect(result.CreatedBy).toEqual(json.CreatedBy);
         expect(result.ModifiedDate).toEqual(json.ModifiedDate);
+        expect(result.ModifiedBy).toEqual(json.ModifiedBy);
         expect(result.EntitySystemName).toEqual(json.EntitySystemName);
         expect(result.Data).toEqual(json.Data);
     });
@@ -223,7 +231,9 @@ describe('Service: EntityModelMapperService', function () {
         entity.EntitySystemName = 'systemName';
         entity.Id = 12;
         entity.CreatedDate = 1417435200000;
+        entity.CreatedBy = 'CreateUser';
         entity.ModifiedDate = 1418385600000;
+        entity.ModifiedBy = 'ModifyUser';
         entity.Data = {a: 'a'};
 
         //Act
