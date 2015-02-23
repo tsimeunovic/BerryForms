@@ -67,7 +67,7 @@ var Security;
                 Token: token
             };
             //Extend request
-            request.user = session;
+            request.session = session;
             callback(true, null);
         };
         SecurityService.prototype.GetTokenFor = function (userName, validTo) {

@@ -29,64 +29,79 @@ var Data;
             var factory = new ProjectorFactory.Services.ProjectorFactory();
             return factory.CreateProjectorFor(type);
         };
+        NodeRepository.prototype.CreateRequestContext = function (request) {
+            return {
+                source: 'client',
+                session: request.session,
+                user: request.session ? request.session.User.UserName : null
+            };
+        };
         //Special methods
         NodeRepository.prototype.GetAllProjected = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var projector = this.CreateProjectorForRequest(request);
-            repository.FindByConditionAndProject({}, projector, callback);
+            var requestContext = this.CreateRequestContext(request);
+            repository.FindByConditionAndProject({}, projector, requestContext, callback);
         };
         //Generic methods
         //Read
         NodeRepository.prototype.GetAll = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
-            repository.FindByCondition({}, callback);
+            var requestContext = this.CreateRequestContext(request);
+            repository.FindByCondition({}, requestContext, callback);
         };
         NodeRepository.prototype.GetPaged = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
             var size = request.params.size * 1;
-            repository.FindPaged({}, page, size, callback);
+            repository.FindPaged({}, page, size, requestContext, callback);
         };
         NodeRepository.prototype.GetFiltered = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
             var size = request.params.size * 1;
             var query = request.body;
-            repository.FindPaged(query, page, size, callback);
+            repository.FindPaged(query, page, size, requestContext, callback);
         };
         NodeRepository.prototype.GetById = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
-            repository.FindById(id, callback);
+            repository.FindById(id, requestContext, callback);
         };
         //Create
         NodeRepository.prototype.Create = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var data = request.body;
             validator.Validate(data, function (validationErrors) {
                 if (validationErrors && validationErrors.HasErrors())
                     callback(null, validationErrors);
                 else
-                    repository.Create(data, callback);
+                    repository.Create(data, requestContext, callback);
             });
         };
         NodeRepository.prototype.Update = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var data = request.body;
             validator.Validate(data, function (validationErrors) {
                 if (validationErrors && validationErrors.HasErrors())
                     callback(null, validationErrors);
                 else
-                    repository.Update(data, callback);
+                    repository.Update(data, requestContext, callback);
             });
         };
         //Delete
         NodeRepository.prototype.Delete = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
-            repository.Delete(id, callback);
+            repository.Delete(id, requestContext, callback);
         };
         return NodeRepository;
     })();

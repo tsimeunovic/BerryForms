@@ -61,6 +61,31 @@ var Data;
                 }
             ];
         };
+        MongoRepositoryBase.prototype.LogOperationAsync = function (requestContext, collection, id, operation, additionalArgs, callback) {
+            var logCollectionName = ConfigServer.SystemPrefix + 'log';
+            var logObject = {
+                Time: (new Date()).getTime(),
+                User: requestContext.session ? requestContext.session.User.UserName : null,
+                Collection: collection,
+                Id: id,
+                Operation: operation
+            };
+            this.DoCollectionOperation(logCollectionName, function (collection, err) {
+                var logObjectStr = JSON.stringify(logObject);
+                if (err) {
+                    console.log('Could not write log record \'' + logObjectStr + '\'');
+                    if (callback)
+                        callback(err);
+                }
+                else
+                    collection.insert(logObject, { w: 1 }, function (err, result) {
+                        if (err)
+                            console.log('Could not write log record \'' + logObjectStr + '\'');
+                        if (callback)
+                            callback(err);
+                    });
+            });
+        };
         return MongoRepositoryBase;
     })();
     Data.MongoRepositoryBase = MongoRepositoryBase;

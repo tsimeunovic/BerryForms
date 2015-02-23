@@ -21,7 +21,7 @@ var Data;
             _super.call(this, collectionName);
         }
         //Read
-        MongoRepository.prototype.FindById = function (id, callback) {
+        MongoRepository.prototype.FindById = function (id, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
             var idNum = parseInt(id);
@@ -31,7 +31,7 @@ var Data;
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else
-                    collection.findOne({ 'Id': idNum }, function (err, item) {
+                    collection.findOne({ 'Id': idNum, 'Deleted': false }, function (err, item) {
                         var hasError = err || !item;
                         var logMessage = hasError ? 'Error finding record ' + collectionName + ' with id ' + id + '\n' + err : 'Retrieved ' + collectionName + ' with id ' + id;
                         console.log(logMessage);
@@ -43,19 +43,21 @@ var Data;
                     });
             });
         };
-        MongoRepository.prototype.FindByCondition = function (condition, callback) {
-            this.FindByConditionAndProject(condition, {}, callback);
+        MongoRepository.prototype.FindByCondition = function (condition, requestContext, callback) {
+            this.FindByConditionAndProject(condition, {}, requestContext, callback);
         };
-        MongoRepository.prototype.FindByConditionAndProject = function (condition, projector, callback) {
+        MongoRepository.prototype.FindByConditionAndProject = function (condition, projector, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
             this.DoCollectionOperation(collectionName, function (collection, err) {
+                var collectionQuery = JSON.parse(JSON.stringify(condition));
+                collectionQuery['Deleted'] = false;
                 if (err) {
                     console.log('Error finding records from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else
-                    collection.find(condition, projector).sort('ModifiedDate', -1).toArray(function (err, items) {
+                    collection.find(collectionQuery, projector).sort('ModifiedDate', -1).toArray(function (err, items) {
                         var logMessage = err ? 'Error finding records from ' + collectionName + '\n' + err : 'Retrieved ' + (projector ? 'projected ' : '') + collectionName + ' matching condition ' + JSON.stringify(condition) + '. Total records count ' + items.length;
                         console.log(logMessage);
                         var returnedItems = err ? null : items;
@@ -66,7 +68,7 @@ var Data;
                     });
             });
         };
-        MongoRepository.prototype.FindPaged = function (query, page, size, callback) {
+        MongoRepository.prototype.FindPaged = function (query, page, size, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
             // Start ->| ... prev. page ... | ... curr. page ... | ... nex. page ... |<- End
@@ -74,12 +76,14 @@ var Data;
             var end = (page + 2) * size;
             var total = end - start;
             this.DoCollectionOperation(collectionName, function (collection, err) {
+                var collectionQuery = JSON.parse(JSON.stringify(query));
+                collectionQuery['Deleted'] = false;
                 if (err) {
                     console.log('Error finding records from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else
-                    collection.find(query).sort('ModifiedDate', -1).skip(start).limit(total).toArray(function (err, items) {
+                    collection.find(collectionQuery).sort('ModifiedDate', -1).skip(start).limit(total).toArray(function (err, items) {
                         var logMessage = err ? 'Error finding records from ' + collectionName + '\n' + err : 'Retrieved page ' + page + ' from ' + collectionName + ' matching condition ' + JSON.stringify(query) + '. Total records count ' + items.length;
                         console.log(logMessage);
                         if (err || items == null) {
@@ -125,7 +129,7 @@ var Data;
             });
         };
         //Create
-        MongoRepository.prototype.Create = function (data, callback) {
+        MongoRepository.prototype.Create = function (data, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
             var IdentifierRepository = new Repository.Data.IdentifierRepository();
@@ -136,8 +140,12 @@ var Data;
                     data['Id'] = id;
                 repository.DoCollectionOperation(collectionName, function (collection, err) {
                     var now = (new Date()).getTime();
+                    //Set additional properties
                     data['CreatedDate'] = now;
+                    data['CreateBy'] = requestContext.user;
                     data['ModifiedDate'] = now;
+                    data['ModifiedBy'] = requestContext.user;
+                    data["Deleted"] = false;
                     if (err) {
                         console.log('Error creating new record with id ' + id + ' in collection ' + collectionName + '\n' + err);
                         callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
@@ -151,58 +159,82 @@ var Data;
                             var returnedError = err ? ErrorsModel.Model.ClientErrorsModel.CreateWithError('CreateNewError', [collectionName]) : null;
                             repository.CloseClientWithCallback(function () {
                                 callback(returnedItem, returnedError);
+                                if (!err)
+                                    repository.LogOperationAsync(requestContext, collectionName, id, 'create', null, null);
                             });
                         });
                 });
             });
         };
-        MongoRepository.prototype.CreateMultiple = function (data, callback) {
+        MongoRepository.prototype.CreateMultiple = function (data, requestContext, callback) {
             throw new Error();
         };
         //Update
-        MongoRepository.prototype.Update = function (data, callback) {
+        MongoRepository.prototype.Update = function (data, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
             repository.DoCollectionOperation(collectionName, function (collection, err) {
+                var id = data['Id'];
                 var now = (new Date()).getTime();
                 var modified = data['ModifiedDate'];
                 data['ModifiedDate'] = now;
-                var setter = { $set: { Data: data['Data'], Fields: data['Fields'], ModifiedDate: now } };
-                var recordQuery = ConfigServer.Config.Server.UseOptimisticConcurrencyUpdate ? { "Id": data['Id'], "ModifiedDate": modified } : { "Id": data['Id'] };
+                data['ModifiedBy'] = requestContext.user;
+                var setter = {
+                    $set: {
+                        Data: data['Data'],
+                        Fields: data['Fields'],
+                        ModifiedDate: now,
+                        ModifiedBy: requestContext.user
+                    }
+                };
+                var recordQuery = ConfigServer.Config.Server.UseOptimisticConcurrencyUpdate ? { "Id": id, "Deleted": false, "ModifiedDate": modified } : { "Id": id, "Deleted": false };
                 if (err) {
-                    console.log('Error updating record with id ' + data['Id'] + ' from ' + collectionName + '\n' + err);
+                    console.log('Error updating record with id ' + id + ' from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else
                     collection.update(recordQuery, setter, { w: 1 }, function (err, result) {
-                        var logMessage = err ? 'Error updating record with id ' + data['Id'] + ' from ' + collectionName + '\n' + err : (result == 0 ? 'Could not update record with id ' + data['Id'] + ' from ' + collectionName + '. No record found, or concurrency error' : 'Updated record with id ' + data['Id'] + ' in collection ' + collectionName);
+                        var logMessage = err ? 'Error updating record with id ' + id + ' from ' + collectionName + '\n' + err : (result == 0 ? 'Could not update record with id ' + id + ' from ' + collectionName + '. No record found, or concurrency error' : 'Updated record with id ' + id + ' in collection ' + collectionName);
                         console.log(logMessage);
                         var returnedItem = err ? null : data;
                         var returnedError = (err || result == 0) ? ErrorsModel.Model.ClientErrorsModel.CreateWithError('UpdateExistingError', [collectionName]) : null;
                         repository.CloseClientWithCallback(function () {
                             callback(returnedItem, returnedError);
+                            if (!err)
+                                repository.LogOperationAsync(requestContext, collectionName, id, 'update', null, null);
                         });
                     });
             });
         };
         //Delete
-        MongoRepository.prototype.Delete = function (id, callback) {
+        MongoRepository.prototype.Delete = function (idStr, requestContext, callback) {
             var repository = this;
             var collectionName = this.CollectionName;
-            var idNum = parseInt(id);
+            var idNum = parseInt(idStr);
             repository.DoCollectionOperation(collectionName, function (collection, err) {
+                var now = (new Date()).getTime();
+                var setter = {
+                    $set: {
+                        Deleted: true,
+                        ModifiedDate: now,
+                        ModifiedBy: requestContext.user
+                    }
+                };
+                var recordQuery = { "Id": idNum, "Deleted": false };
                 if (err) {
-                    console.log('Error deleting record with id ' + id + ' from ' + collectionName + '\n' + err);
+                    console.log('Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else
-                    collection.remove({ "Id": idNum }, function (err) {
-                        var logMessage = err ? 'Error deleting record with id ' + id + ' from ' + collectionName + '\n' + err : 'Deleted record with id ' + id + ' in collection ' + collectionName;
+                    collection.update(recordQuery, setter, { w: 1 }, function (err, result) {
+                        var logMessage = err ? 'Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err : 'Deleted record with id ' + idStr + ' in collection ' + collectionName;
                         console.log(logMessage);
                         var returnedItem = err ? null : true;
                         var returnedError = err ? ErrorsModel.Model.ClientErrorsModel.CreateWithError('UpdateExistingError', [collectionName]) : null;
                         repository.CloseClientWithCallback(function () {
                             callback(returnedItem, returnedError);
+                            if (!err)
+                                repository.LogOperationAsync(requestContext, collectionName, idNum, 'delete', null, null);
                         });
                     });
             });

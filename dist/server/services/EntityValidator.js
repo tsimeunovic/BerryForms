@@ -34,7 +34,8 @@ var Services;
             //Verify presence of required fields
             var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
             var metadataRepository = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
-            metadataRepository.FindByCondition({ EntitySystemName: entitySystemName }, function (data, errors) {
+            var requestContext = { source: 'system' };
+            metadataRepository.FindByCondition({ EntitySystemName: entitySystemName }, requestContext, function (data, errors) {
                 if (errors) {
                     var invalidSystemNameErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('CouldNotLoadSchemaEntityValidation', null);
                     callback(invalidSystemNameErrorsModel);

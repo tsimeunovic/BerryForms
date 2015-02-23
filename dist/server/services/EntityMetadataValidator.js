@@ -40,7 +40,8 @@ var Services;
                 }
                 //Create
                 var metadataRepository = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
-                metadataRepository.FindByCondition({ EntitySystemName: object.EntitySystemName }, function (data, errors) {
+                var requestContext = { source: 'system' };
+                metadataRepository.FindByCondition({ EntitySystemName: object.EntitySystemName }, requestContext, function (data, errors) {
                     if (errors) {
                         var invalidSystemNameErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('CouldNotVerifySystemNameMetadataValidation', null);
                         callback(invalidSystemNameErrorsModel);

@@ -48,9 +48,6 @@
 //Small devices only
 @media screen and (max-width: 600px) {
   @darkerBackground: darken(@baseBackgroundColor, 5%);
-  html {
-    background-color: @darkerBackground;
-  }
 
   div.leftMenu {
     position: absolute;
@@ -98,10 +95,10 @@
 
       &:nth-child(1) {
         padding-top: @menuWidthCollapsed * 0.25;
+        background-color: @darkerBackground;
       }
 
       &:nth-child(2) {
-        background-color: @darkerBackground;
         box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 0 0;
         > div {
           padding-bottom: 0;
