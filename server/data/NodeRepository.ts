@@ -37,70 +37,85 @@ export module Data {
             return factory.CreateProjectorFor(type);
         }
 
+        private CreateRequestContext(request:any):any {
+            return {
+                source: 'client',
+                session: request.session
+            }
+        }
+
         //Special methods
         public GetAllProjected(request:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
             var projector = this.CreateProjectorForRequest(request);
-            repository.FindByConditionAndProject({}, projector, callback);
+            var requestContext = this.CreateRequestContext(request);
+            repository.FindByConditionAndProject({}, projector, requestContext, callback);
         }
 
         //Generic methods
         //Read
         public GetAll(request:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
-            repository.FindByCondition({}, callback);
+            var requestContext = this.CreateRequestContext(request);
+            repository.FindByCondition({}, requestContext, callback);
         }
 
         public GetPaged(request:any, callback:(pagedData:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
             var size = request.params.size * 1;
-            repository.FindPaged({}, page, size, callback);
+            repository.FindPaged({}, page, size, requestContext, callback);
         }
 
         public GetFiltered(request:any, callback:(filteredData:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
             var size = request.params.size * 1;
             var query = request.body;
 
-            repository.FindPaged(query, page, size, callback);
+            repository.FindPaged(query, page, size, requestContext, callback);
         }
 
         public GetById(request:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
-            repository.FindById(id, callback);
+            repository.FindById(id, requestContext, callback);
         }
 
         //Create
         public Create(request:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var data = request.body;
 
             validator.Validate(data, function (validationErrors:ErrorsModel.Model.ClientErrorsModel) {
                 if (validationErrors && validationErrors.HasErrors()) callback(null, validationErrors);
-                else repository.Create(data, callback);
+                else repository.Create(data, requestContext, callback);
             });
         }
 
         public Update(request:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var data = request.body;
 
             validator.Validate(data, function (validationErrors:ErrorsModel.Model.ClientErrorsModel) {
                 if (validationErrors && validationErrors.HasErrors()) callback(null, validationErrors);
-                else repository.Update(data, callback);
+                else repository.Update(data, requestContext, callback);
             });
         }
 
         //Delete
         public Delete(request:any, callback:(success:boolean, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this.CreateRepositoryForRequest(request);
+            var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
-            repository.Delete(id, callback);
+            repository.Delete(id, requestContext, callback);
         }
     }
 }

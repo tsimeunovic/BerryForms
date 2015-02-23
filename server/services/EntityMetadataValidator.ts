@@ -44,7 +44,7 @@ export module Services {
             else {
                 //Need to verify system name uniqueness
                 var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
-                if(object.Id) {
+                if (object.Id) {
                     //Update
                     callback(null);
                     return;
@@ -52,7 +52,8 @@ export module Services {
 
                 //Create
                 var metadataRepository:RepositoryContract.Data.IRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
-                metadataRepository.FindByCondition({EntitySystemName: object.EntitySystemName}, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
+                var requestContext = {source: 'system'};
+                metadataRepository.FindByCondition({EntitySystemName: object.EntitySystemName}, requestContext, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
                     if (errors) {
                         var invalidSystemNameErrorsModel:ClientErrorsModel.Model.ClientErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('CouldNotVerifySystemNameMetadataValidation', null);
                         callback(invalidSystemNameErrorsModel);

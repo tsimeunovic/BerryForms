@@ -81,7 +81,7 @@ export module Security {
             };
 
             //Extend request
-            request.user = session;
+            request.session = session;
             callback(true, null);
         }
 

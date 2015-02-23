@@ -42,7 +42,8 @@ export module Services {
             //Verify presence of required fields
             var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
             var metadataRepository:RepositoryContract.Data.IRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
-            metadataRepository.FindByCondition({EntitySystemName: entitySystemName}, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
+            var requestContext = {source: 'system'};
+            metadataRepository.FindByCondition({EntitySystemName: entitySystemName}, requestContext, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
                 if (errors) {
                     var invalidSystemNameErrorsModel:ClientErrorsModel.Model.ClientErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('CouldNotLoadSchemaEntityValidation', null);
                     callback(invalidSystemNameErrorsModel);

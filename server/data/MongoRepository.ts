@@ -17,7 +17,7 @@ export module Data {
         }
 
         //Read
-        public FindById(id:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
+        public FindById(id:any, requestContext:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this;
             var collectionName:string = this.CollectionName;
             var idNum:number = parseInt(id);
@@ -44,11 +44,11 @@ export module Data {
             });
         }
 
-        public FindByCondition(condition:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
-            this.FindByConditionAndProject(condition, {}, callback);
+        public FindByCondition(condition:any, requestContext:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
+            this.FindByConditionAndProject(condition, {}, requestContext, callback);
         }
 
-        public FindByConditionAndProject(condition:any, projector:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
+        public FindByConditionAndProject(condition:any, projector:any, requestContext:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this;
             var collectionName = this.CollectionName;
 
@@ -75,7 +75,7 @@ export module Data {
             });
         }
 
-        public FindPaged(query:any, page:number, size:number, callback:(pagedData:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
+        public FindPaged(query:any, page:number, size:number, requestContext:any, callback:(pagedData:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
             var repository = this;
             var collectionName = this.CollectionName;
 
@@ -147,7 +147,7 @@ export module Data {
         }
 
         //Create
-        public Create(data:T, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
+        public Create(data:T, requestContext:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
             var repository = this;
             var collectionName = this.CollectionName;
 
@@ -177,41 +177,43 @@ export module Data {
 
                         repository.CloseClientWithCallback(function () {
                             callback(returnedItem, returnedError);
+                            if (!err) repository.LogOperationAsync(requestContext, collectionName, id, 'create', null, null);
                         });
                     });
                 });
             });
         }
 
-        public CreateMultiple(data:T[], callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
+        public CreateMultiple(data:T[], requestContext:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
             throw new Error();
         }
 
         //Update
-        public Update(data:T, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
+        public Update(data:T, requestContext:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
             var repository = this;
             var collectionName = this.CollectionName;
 
             repository.DoCollectionOperation(collectionName, function (collection, err) {
+                var id = data['Id'];
                 var now = (new Date()).getTime();
                 var modified = data['ModifiedDate'];
                 data['ModifiedDate'] = now;
 
                 var setter = {$set: {Data: data['Data'], Fields: data['Fields'], ModifiedDate: now}};
                 var recordQuery = ConfigServer.Config.Server.UseOptimisticConcurrencyUpdate ?
-                {"Id": data['Id'], "ModifiedDate": modified} :
-                {"Id": data['Id']};
+                {"Id": id, "ModifiedDate": modified} :
+                {"Id": id};
 
                 if (err) {
-                    console.log('Error updating record with id ' + data['Id'] + ' from ' + collectionName + '\n' + err);
+                    console.log('Error updating record with id ' + id + ' from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else collection.update(recordQuery, setter, {w: 1}, function (err, result) {
                     var logMessage = err ?
-                    'Error updating record with id ' + data['Id'] + ' from ' + collectionName + '\n' + err :
+                    'Error updating record with id ' + id + ' from ' + collectionName + '\n' + err :
                         (result == 0 ?
-                        'Could not update record with id ' + data['Id'] + ' from ' + collectionName + '. No record found, or concurrency error' :
-                        'Updated record with id ' + data['Id'] + ' in collection ' + collectionName);
+                        'Could not update record with id ' + id + ' from ' + collectionName + '. No record found, or concurrency error' :
+                        'Updated record with id ' + id + ' in collection ' + collectionName);
 
                     console.log(logMessage);
                     var returnedItem = err ? null : data;
@@ -221,26 +223,27 @@ export module Data {
 
                     repository.CloseClientWithCallback(function () {
                         callback(returnedItem, returnedError);
+                        if (!err) repository.LogOperationAsync(requestContext, collectionName, id, 'update', null, null);
                     });
                 });
             });
         }
 
         //Delete
-        public Delete(id:any, callback:(success:boolean, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
+        public Delete(idStr:string, requestContext:any, callback:(success:boolean, errors:ErrorsModel.Model.ClientErrorsModel)=> void):void {
             var repository = this;
             var collectionName = this.CollectionName;
-            var idNum:number = parseInt(id);
+            var idNum:number = parseInt(idStr);
 
             repository.DoCollectionOperation(collectionName, function (collection, err) {
                 if (err) {
-                    console.log('Error deleting record with id ' + id + ' from ' + collectionName + '\n' + err);
+                    console.log('Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err);
                     callback(null, ErrorsModel.Model.ClientErrorsModel.CreateWithError('DatabaseConnectionError', null));
                 }
                 else collection.remove({"Id": idNum}, function (err) {
                     var logMessage = err ?
-                    'Error deleting record with id ' + id + ' from ' + collectionName + '\n' + err :
-                    'Deleted record with id ' + id + ' in collection ' + collectionName;
+                    'Error deleting record with id ' + idStr + ' from ' + collectionName + '\n' + err :
+                    'Deleted record with id ' + idStr + ' in collection ' + collectionName;
 
                     console.log(logMessage);
                     var returnedItem:boolean = err ? null : true;
@@ -248,6 +251,7 @@ export module Data {
 
                     repository.CloseClientWithCallback(function () {
                         callback(returnedItem, returnedError);
+                        if (!err) repository.LogOperationAsync(requestContext, collectionName, idNum, 'delete', null, null);
                     });
                 });
             });
