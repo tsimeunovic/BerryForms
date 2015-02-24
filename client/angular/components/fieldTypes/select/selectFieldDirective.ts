@@ -32,7 +32,8 @@ module Directives {
             this.ToggleButton = rootElement.querySelector('.dropdown-toggle');
 
             //Add select function to scope
-            this.Scope.IsOpened = false;
+            this.Scope.Opened = false;
+            this.Scope.ToggleOpen = this.ToggleOpen.bind(this);
             this.Scope.SelectOption = this.SelectOption.bind(this);
 
             //Assert model data
@@ -48,22 +49,28 @@ module Directives {
 
         private ToggleButton:any;
 
+        private ToggleOpen($event:any):void {
+            $event.preventDefault();
+            $event.stopPropagation();
+            this.Scope.Opened = !this.Scope.Opened;
+        }
+
         private SelectOption($event:any, option:string):void {
             this.Scope.Entity.Data[this.Scope.field.FieldSystemName] = option;
-            this.Scope.IsOpened = false;
+            this.Scope.Opened = false;
         }
 
         private WatchOpened():void {
             var _this = this;
-            this.Scope.$watch('IsOpened', function (value) {
+            this.Scope.$watch('Opened', function (value) {
                 var bindUnbindMethod:string = value ? 'bind' : 'unbind';
                 SelectField.Document[bindUnbindMethod]('click', _this.DocumentClick.bind(_this));
             });
         }
 
         private DocumentClick(event):void {
-            if (!this.Scope.IsOpened || event.target === this.ToggleButton) return;
-            this.Scope.IsOpened = false;
+            if (!this.Scope.Opened || event.target === this.ToggleButton) return;
+            this.Scope.Opened = false;
             this.Scope.$apply(function () {});
         }
     }

@@ -1,4 +1,4 @@
-<div class="btn-group btn-block" data-ng-class="{'error': !IsValid, 'open': IsOpened}">
+<div class="btn-group btn-block" data-ng-class="{'error': !IsValid, 'open': Opened}">
     <div>
         <button type="button" class="btn btn-default btn-sm form-control errorElement">
             <span data-system-symbol="{{Entity.Data[field.FieldSystemName] && Entity.Data[field.FieldSystemName].Value}}"></span>
@@ -8,7 +8,7 @@
         </button>
     </div>
     <button type="button" class="btn btn-default btn-sm dropdown-toggle errorElement"
-            data-toggle="dropdown" data-ng-click="IsOpened = !IsOpened">
+            data-toggle="dropdown" data-ng-click="ToggleOpen($event)">
         <span class="caret"></span>
         <span class="sr-only"></span>
     </button>

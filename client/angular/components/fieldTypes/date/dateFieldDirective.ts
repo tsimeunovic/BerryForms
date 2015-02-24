@@ -25,17 +25,17 @@ module Directives {
             super.Link($scope, $linkElement, $linkAttributes);
 
             this.Scope.Opened = this.Opened;
-            this.Scope.Open = this.Open.bind(this);
+            this.Scope.ToggleOpen = this.ToggleOpen.bind(this);
             this.Scope.IsDisabled = this.IsDisabled;
 
             this.EntityValueChanged();
             this.Watch();
         }
 
-        private Open($event:any):void {
+        private ToggleOpen($event:any):void {
             $event.preventDefault();
             $event.stopPropagation();
-            this.Scope.Opened = true;
+            this.Scope.Opened = !this.Scope.Opened;
         }
 
         private IsDisabled(date, mode):boolean {
