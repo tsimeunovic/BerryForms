@@ -21,6 +21,7 @@ module Localization {
         FieldDescription:string;
         FieldTypeName:string;
         TextField:string;
+        NumberField:string;
         TextareaField:string;
         BooleanField:string;
         DateField:string;
@@ -49,6 +50,11 @@ module Localization {
         DateFrom:string;
         DateTo:string;
         AnyValue:string;
+        AllowFloating:string;
+        MinValue:string;
+        MaxValue:string;
+        NumberFrom:string;
+        NumberTo:string;
 
         //Form
         PleaseSelect:string;

@@ -13,12 +13,6 @@ module Services {
             }
         }
 
-        public GetIntegerFromStringProperty(sourceObject:any, propertyName:string):number {
-            var value = sourceObject[propertyName];
-            if (!value) return null;
-            else return parseInt(value);
-        }
-
         public GetSelectFieldOptionFromStringProperty(sourceObject:any, propertyName:string):Models.SelectFieldOptionMetadata {
             var value = sourceObject[propertyName];
             return new Models.SelectFieldOptionMetadata(value, value);

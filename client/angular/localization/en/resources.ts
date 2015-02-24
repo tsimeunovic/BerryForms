@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Field description';
         FieldTypeName:string = 'Field type';
         TextField:string = 'Text field';
+        NumberField:string = 'Number field';
         TextareaField:string = 'Textarea field';
         BooleanField:string = 'Boolean field';
         DateField:string = 'Date field';
@@ -52,6 +53,11 @@ module Localization {
         DateFrom:string = '{0} from';
         DateTo:string = '{0} to';
         AnyValue:string = 'Any value ...';
+        AllowFloating:string = 'Allow decimal number';
+        MinValue:string = 'Minimal value';
+        MaxValue:string = 'Maximal value';
+        NumberFrom:string = '{0} from';
+        NumberTo:string = '{0} to';
 
         //Form
         PleaseSelect:string = 'Please select value ...';

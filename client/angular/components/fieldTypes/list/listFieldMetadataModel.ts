@@ -33,14 +33,8 @@ module Models {
         }
 
         //Mapping
-        public FieldSpecialProperties:string[] = [];
+        public FieldSpecialProperties:string[] = ['MaxRecordsCount', 'MaxRecordLength'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
-            //Map from entity (when loading from server) to metadata and vice-versa (when saving to server)
-            if(this.MaxRecordsCount) entity.Data['MaxRecordsCount'] = this.MaxRecordsCount.toString();
-            else this.MaxRecordsCount = mapperService.GetIntegerFromStringProperty(entity.Data, 'MaxRecordsCount');
-
-            if(this.MaxRecordLength) entity.Data['MaxRecordLength'] = this.MaxRecordLength.toString();
-            this.MaxRecordLength = mapperService.GetIntegerFromStringProperty(entity.Data, 'MaxRecordLength');
         }
     }
 }

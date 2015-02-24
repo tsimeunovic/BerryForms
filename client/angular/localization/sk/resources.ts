@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Popis';
         FieldTypeName:string = 'Typ';
         TextField:string = 'Text';
+        NumberField:string;
         TextareaField:string = 'Viacriadkový text';
         BooleanField:string = 'Áno/nie';
         DateField:string = 'Dátum';
@@ -52,6 +53,11 @@ module Localization {
         DateFrom:string = '{0} od';
         DateTo:string = '{0} do';
         AnyValue:string = 'Všetky hodnoty ...';
+        AllowFloating:string;
+        MinValue:string;
+        MaxValue:string;
+        NumberFrom:string;
+        NumberTo:string;
 
         //Form
         PleaseSelect:string = 'Zvoľte hodnotu ...';

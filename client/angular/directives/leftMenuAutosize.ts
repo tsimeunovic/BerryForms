@@ -105,7 +105,7 @@ module Directives {
         }
 
         private BindExpandButton():void {
-            var toggle = this.Element[0].querySelector('.menuEntityExpand');
+            var toggle:any = this.Element[0].querySelector('.menuEntityExpand');
             toggle.onclick = this.ExpandCollapseMenu.bind(this);
             toggle.onblur = this.ExpandCollapseMenu.bind(this);
         }

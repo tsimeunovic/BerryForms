@@ -9,8 +9,8 @@ module Models {
             super("Date");
         }
 
-        public MinDate:Date;
-        public MaxDate:Date;
+        public MinDate:number;
+        public MaxDate:number;
 
         public ValidateValue(value:any):boolean {
             //Required
@@ -19,8 +19,8 @@ module Models {
 
             //Min and Max date
             if(!value) return true;
-            else if(this.MinDate && this.AssertDateType(this.MinDate) > value) return false;
-            else if(this.MaxDate && this.AssertDateType(this.MaxDate) < value) return false;
+            else if(this.MinDate && this.MinDate > value) return false;
+            else if(this.MaxDate && this.MaxDate < value) return false;
 
             return true;
         }
@@ -28,10 +28,6 @@ module Models {
         //Mapping
         public FieldSpecialProperties:string[] = ['MinDate', 'MaxDate'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
-        }
-
-        private AssertDateType(date:any):Date {
-            return new Date(date);
         }
     }
 }

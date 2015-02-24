@@ -32,11 +32,8 @@ module Models {
         }
 
         //Mapping
-        public FieldSpecialProperties:string[] = ['RegularExpression', 'MaskCharacters'];
+        public FieldSpecialProperties:string[] = ['MaxLength', 'RegularExpression', 'MaskCharacters'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
-            //Map from entity (when loading from server) to metadata and vice-versa (when saving to server)
-            if(this.MaxLength) entity.Data['MaxLength'] = this.MaxLength.toString();
-            else this.MaxLength = mapperService.GetIntegerFromStringProperty(entity.Data, 'MaxLength');
         }
     }
 }

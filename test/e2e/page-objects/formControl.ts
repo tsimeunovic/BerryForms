@@ -22,6 +22,9 @@ module PageObjects {
                 case 'textarea':
                     using(this.ControlRootSelector, this.ControlScopeName).input(this.CommonModel).enter(value);
                     break;
+                case 'number':
+                    using(this.ControlRootSelector, this.ControlScopeName).input('Value').enter(value);
+                    break;
                 case 'date':
                     using(this.ControlRootSelector, this.ControlScopeName).input('LocalDate').enter(value);
                     break;

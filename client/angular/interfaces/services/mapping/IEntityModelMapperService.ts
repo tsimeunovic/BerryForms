@@ -15,7 +15,6 @@ module Services {
         CloneEntityModel(entity:Models.Entity):Models.Entity;
 
         //Fields converting
-        GetIntegerFromStringProperty(sourceObject:any, propertyName:string):number;
         GetSelectFieldOptionFromEntityJson(entityJson:any, entityMetadata:Models.EntityMetadata):Models.SelectFieldOptionMetadata;
         GetSelectFieldOptionFromStringProperty(sourceObject:any, propertyName:string):Models.SelectFieldOptionMetadata;
         GetSelectFieldOptionsFromArrayProperty(sourceObject:any, propertyName:string):Models.SelectFieldOptionMetadata[];

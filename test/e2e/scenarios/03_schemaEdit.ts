@@ -31,7 +31,7 @@ describe('Feature: Schema edit', function () {
             {Name: 'FieldTypeName', Type: 'select', Value: 'Text'},
             {Name: 'Required', Type: 'boolean', Value: 'Yes'},
             {Name: 'DisplayInListName', Type: 'boolean', Value: 'Yes'},
-            {Name: 'MaxLength', Type: 'text', Value: '15'}
+            {Name: 'MaxLength', Type: 'number', Value: '15'}
         ],
         [
             {Name: 'FieldName', Type: 'text', Value: 'Date field'},
@@ -48,8 +48,8 @@ describe('Feature: Schema edit', function () {
             {Name: 'FieldTypeName', Type: 'select', Value: 'List'},
             {Name: 'Required', Type: 'boolean', Value: 'No'},
             {Name: 'DisplayInListName', Type: 'boolean', Value: 'No'},
-            {Name: 'MaxRecordsCount', Type: 'text', Value: '8'},
-            {Name: 'MaxRecordLength', Type: 'text', Value: '15'}
+            {Name: 'MaxRecordsCount', Type: 'number', Value: '8'},
+            {Name: 'MaxRecordLength', Type: 'number', Value: '15'}
         ],
         [
             {Name: 'FieldName', Type: 'text', Value: 'Select field'},
@@ -66,7 +66,7 @@ describe('Feature: Schema edit', function () {
             {Name: 'FieldTypeName', Type: 'select', Value: 'Textarea'},
             {Name: 'Required', Type: 'boolean', Value: 'No'},
             {Name: 'DisplayInListName', Type: 'boolean', Value: 'Yes'},
-            {Name: 'MaxLength', Type: 'text', Value: '30'}
+            {Name: 'MaxLength', Type: 'number', Value: '30'}
         ],
         [
             {Name: 'FieldName', Type: 'text', Value: 'Relationship field'},
@@ -131,7 +131,7 @@ describe('Feature: Schema edit', function () {
             {Name: 'FieldTypeName', Type: 'select', Value: 'Text'},
             {Name: 'Required', Type: 'boolean', Value: 'Yes'},
             {Name: 'DisplayInListName', Type: 'boolean', Value: 'Yes'},
-            {Name: 'MaxLength', Type: 'text', Value: '15'}
+            {Name: 'MaxLength', Type: 'number', Value: '15'}
         ];
 
         //Act

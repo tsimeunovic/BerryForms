@@ -26,11 +26,8 @@ module Models {
         }
 
         //Mapping
-        public FieldSpecialProperties:string[] = [];
+        public FieldSpecialProperties:string[] = ['MaxLength'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
-            //Map from entity to model and vice-versa
-            if(this.MaxLength) entity.Data['MaxLength'] = this.MaxLength.toString();
-            else this.MaxLength = mapperService.GetIntegerFromStringProperty(entity.Data, 'MaxLength');
         }
     }
 }

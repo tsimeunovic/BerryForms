@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Опис поља';
         FieldTypeName:string = 'Врста поља';
         TextField:string = 'Текст';
+        NumberField:string;
         TextareaField:string = 'Дужи текст';
         BooleanField:string = 'Да/не';
         DateField:string = 'Датум';
@@ -52,6 +53,11 @@ module Localization {
         DateFrom:string = '{0} од';
         DateTo:string = '{0} до';
         AnyValue:string = 'Свака вриједност ...';
+        AllowFloating:string;
+        MinValue:string;
+        MaxValue:string;
+        NumberFrom:string;
+        NumberTo:string;
 
         //Form
         PleaseSelect:string = 'Одаберите вриједност ...';
