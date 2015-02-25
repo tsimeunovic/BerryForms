@@ -22,11 +22,13 @@ module.exports = function (config) {
             'bower_components/angularjs-toaster/toaster.js',
 
             //Files that needs to be registered in explicit order
+            //(when they are base classes for other elements for example)
             'client/extensions/*.js',
             'client/static/*.js',
             'client/config/*.js',
             'client/angular/components/fieldTypes/fieldTypesRegistry.js',
             'client/angular/components/plugins/pluginsRegistry.js',
+            'client/angular/components/fieldTypes/text/textFieldComponent.js',
             'client/angular/models/core/fieldMetadataModel.js',
             'client/angular/directives/fieldDirectiveBase.js',
             'client/angular/models/core/persistentObject.js',

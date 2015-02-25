@@ -21,6 +21,7 @@ module Localization {
         FieldDescription:string;
         FieldTypeName:string;
         TextField:string;
+        EmailField:string;
         NumberField:string;
         TextareaField:string;
         BooleanField:string;

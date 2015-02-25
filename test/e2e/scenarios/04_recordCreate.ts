@@ -38,7 +38,9 @@ describe('Feature: Record create', function () {
         listfield: [['a', 'b', 'c'], ['1', '2', '3']],
 
         selectfield: ['Pear'],
-        textareafield: ['Lorem ipsum dolor sit amet']
+        textareafield: ['Lorem ipsum dolor sit amet'],
+        numberfield: ['25'],
+        emailfield: ['email@server.dm']
     };
 
     it('should be able to create entity using valid data', function () {
@@ -56,7 +58,9 @@ describe('Feature: Record create', function () {
                 {Name: 'datefield', Type: 'date', Value: rotationObject['datefield']},
                 {Name: 'listfield', Type: 'list', Value: rotationObject['listfield']},
                 {Name: 'selectfield', Type: 'select', Value: rotationObject['selectfield']},
-                {Name: 'textareafield', Type: 'textarea', Value: rotationObject['textareafield']}
+                {Name: 'textareafield', Type: 'textarea', Value: rotationObject['textareafield']},
+                {Name: 'numberfield', Type: 'number', Value: rotationObject['numberfield']},
+                {Name: 'emailfield', Type: 'text', Value: rotationObject['emailfield']}
             ]);
         }
 

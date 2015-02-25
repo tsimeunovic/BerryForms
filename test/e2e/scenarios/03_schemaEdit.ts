@@ -75,6 +75,23 @@ describe('Feature: Schema edit', function () {
             {Name: 'Required', Type: 'boolean', Value: 'No'},
             {Name: 'DisplayInListName', Type: 'boolean', Value: 'No'},
             {Name: 'RelatedEntity', Type: 'select', Value: 'first_entity'}
+        ],
+        [
+            {Name: 'FieldName', Type: 'text', Value: 'Number field'},
+            {Name: 'FieldDescription', Type: 'text', Value: 'Description of number field'},
+            {Name: 'FieldTypeName', Type: 'select', Value: 'Number'},
+            {Name: 'Required', Type: 'boolean', Value: 'No'},
+            {Name: 'DisplayInListName', Type: 'boolean', Value: 'No'},
+            {Name: 'AllowFloating', Type: 'boolean', Value: 'No'},
+            {Name: 'MinValue', Type: 'number', Value: '10'},
+            {Name: 'MaxValue', Type: 'number', Value: '100'}
+        ],
+        [
+            {Name: 'FieldName', Type: 'text', Value: 'Email field'},
+            {Name: 'FieldDescription', Type: 'text', Value: 'Description of email field'},
+            {Name: 'FieldTypeName', Type: 'select', Value: 'Email'},
+            {Name: 'Required', Type: 'boolean', Value: 'No'},
+            {Name: 'DisplayInListName', Type: 'boolean', Value: 'No'}
         ]
     ];
 
@@ -226,6 +243,30 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(7);
     });
 
+    it('should be able to create \'number\' field type', function () {
+        //Arrange
+        var form = PageObjects.Form.Current();
+        var fieldsList = PageObjects.EntityList.Current();
+
+        //Act
+        form.FillAndSubmit(fields[7]);
+
+        //Assert
+        expect(fieldsList.GetListItems().count()).toEqual(8);
+    });
+
+    it('should be able to create \'email\' field type', function () {
+        //Arrange
+        var form = PageObjects.Form.Current();
+        var fieldsList = PageObjects.EntityList.Current();
+
+        //Act
+        form.FillAndSubmit(fields[8]);
+
+        //Assert
+        expect(fieldsList.GetListItems().count()).toEqual(9);
+    });
+
     it('should redirect to empty entity list when list of entities icon is clicked', function () {
         //Arrange
         var headerIcons = PageObjects.HeaderIcons.Current();
@@ -238,6 +279,6 @@ describe('Feature: Schema edit', function () {
         //Assert
         expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.EntityRecordForm.UrlForEntityCreate('first_entity'));
         expect(recordsList.GetListItems().count()).toEqual(0);
-        expect(form.FormFields.count()).toEqual(7);
+        expect(form.FormFields.count()).toEqual(9);
     });
 });

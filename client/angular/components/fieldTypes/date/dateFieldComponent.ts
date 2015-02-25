@@ -1,3 +1,4 @@
+/// <reference path="../../../../extensions/dateExtensions.ts" />
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./dateFieldDirective.ts" />
@@ -25,7 +26,7 @@ module Components.FieldTypes {
         //Format value
         FormatValue(value:any):string {
             if(!value) return null;
-            var date = new Date(value);
+            var date:Date = new Date(value);
             return date.format(Config.Client.DatepickerFormat);
         }
 

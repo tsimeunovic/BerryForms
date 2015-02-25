@@ -42,13 +42,13 @@ module Directives {
         private EntityValueChanged():void {
             var uiValueStr:string = this.Scope.Value;
             var parsed:number = parseFloat(uiValueStr);
-            if (parsed !== this.Scope.Value) this.Scope.Value = this.Scope.Entity.Data[this.Scope.field.FieldSystemName];
+            if (parsed !== this.Scope.Entity.Data[this.Scope.field.FieldSystemName]) this.Scope.Value = this.Scope.Entity.Data[this.Scope.field.FieldSystemName];
         }
 
         private UIValueChanged():void {
             var uiValueStr:string = this.Scope.Value;
             var parsed:number = parseFloat(uiValueStr);
-            this.Scope.Entity.Data[this.Scope.field.FieldSystemName] = parsed || uiValueStr;
+            this.Scope.Entity.Data[this.Scope.field.FieldSystemName] = parsed || uiValueStr || null;
         }
     }
 }

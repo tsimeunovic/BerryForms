@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Field description';
         FieldTypeName:string = 'Field type';
         TextField:string = 'Text field';
+        EmailField:string = 'Email address field';
         NumberField:string = 'Number field';
         TextareaField:string = 'Textarea field';
         BooleanField:string = 'Boolean field';

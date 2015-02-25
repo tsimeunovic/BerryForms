@@ -22,6 +22,7 @@ var Localization;
             this.FieldDescription = 'Field description';
             this.FieldTypeName = 'Field type';
             this.TextField = 'Text field';
+            this.EmailField = 'Email address field';
             this.NumberField = 'Number field';
             this.TextareaField = 'Textarea field';
             this.BooleanField = 'Boolean field';

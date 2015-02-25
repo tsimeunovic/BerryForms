@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Опис поља';
         FieldTypeName:string = 'Врста поља';
         TextField:string = 'Текст';
+        EmailField:string;
         NumberField:string;
         TextareaField:string = 'Дужи текст';
         BooleanField:string = 'Да/не';

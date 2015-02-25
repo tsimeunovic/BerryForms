@@ -139,4 +139,20 @@ describe('Feature: Filtered list', function () {
         //Assert
         expect(filteredList.GetListItems().count()).toEqual(1);
     });
+
+    it('should be able to filter by \'number\' field', function () {
+        //Arrange
+        var filteredList = PageObjects.FilteredList.Current();
+        var filterObject = [
+            {Name: 'from_numberfield', Type: 'number', Value: '20'},
+            {Name: 'to_numberfield', Type: 'number', Value: '30'}
+        ];
+
+        //Act
+        filteredList.ApplyFilterObject(filterObject);
+
+        //Assert
+        expect(filteredList.GetListItems().count()).toEqual(10);
+        expect(filteredList.TotalPages()).toEqual('2');
+    });
 });

@@ -24,6 +24,7 @@ module Localization {
         FieldDescription:string = 'Popis';
         FieldTypeName:string = 'Typ';
         TextField:string = 'Text';
+        EmailField:string;
         NumberField:string;
         TextareaField:string = 'Viacriadkový text';
         BooleanField:string = 'Áno/nie';

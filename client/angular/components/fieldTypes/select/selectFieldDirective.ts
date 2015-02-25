@@ -36,14 +36,8 @@ module Directives {
             this.Scope.ToggleOpen = this.ToggleOpen.bind(this);
             this.Scope.SelectOption = this.SelectOption.bind(this);
 
-            //Assert model data
-            var fieldSystemName:string = this.Scope.field.FieldSystemName;
-            this.Scope.Entity.Data[fieldSystemName] =
-                this.Scope.Entity.Data[fieldSystemName] ||
-                this.Scope.field.DefaultValue ||
-                new Models.SelectFieldOptionMetadata('', '');
-
-            //Setup watch
+            //Setup watches
+            this.Watch();
             this.WatchOpened();
         }
 
@@ -60,6 +54,24 @@ module Directives {
             this.Scope.Opened = false;
         }
 
+        private Watch():void {
+            var _this = this;
+            this.SetInitialData();
+            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function () {
+                _this.SetInitialData();
+            });
+        }
+
+        private SetInitialData():void {
+            //Assert initialized model data
+            var fieldSystemName:string = this.Scope.field.FieldSystemName;
+            if (this.Scope.Entity.Data[fieldSystemName]) return;
+            this.Scope.Entity.Data[fieldSystemName] =
+                this.Scope.Entity.Data[fieldSystemName] ||
+                this.Scope.field.DefaultValue ||
+                new Models.SelectFieldOptionMetadata('', '');
+        }
+
         private WatchOpened():void {
             var _this = this;
             this.Scope.$watch('Opened', function (value) {
@@ -71,7 +83,8 @@ module Directives {
         private DocumentClick(event):void {
             if (!this.Scope.Opened || event.target === this.ToggleButton) return;
             this.Scope.Opened = false;
-            this.Scope.$apply(function () {});
+            this.Scope.$apply(function () {
+            });
         }
     }
 }

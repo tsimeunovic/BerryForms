@@ -12,6 +12,7 @@ module Models {
         public RegularExpression:string;
         public MaxLength:number;
         public MaskCharacters:boolean;
+        public Symbol:string;
 
         public ValidateValue(value:any):boolean {
             //Required

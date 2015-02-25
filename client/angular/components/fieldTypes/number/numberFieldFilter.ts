@@ -44,10 +44,16 @@ module Components.FieldTypes {
 
         public static ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             var routeValueFrom = routeParams['from_' + fieldMetadata.FieldSystemName];
-            if (routeValueFrom) filterEntity.Data['from_' + fieldMetadata.FieldSystemName] = routeValueFrom;
+            if (routeValueFrom) {
+                var valueFrom = parseFloat(routeValueFrom);
+                filterEntity.Data['from_' + fieldMetadata.FieldSystemName] = valueFrom;
+            }
 
             var routeValueTo = routeParams['to_' + fieldMetadata.FieldSystemName];
-            if (routeValueTo) filterEntity.Data['to_' + fieldMetadata.FieldSystemName] = routeValueTo;
+            if (routeValueTo) {
+                var valueTo = parseFloat(routeValueTo);
+                filterEntity.Data['to_' + fieldMetadata.FieldSystemName] = valueTo;
+            }
         }
 
         public static CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
