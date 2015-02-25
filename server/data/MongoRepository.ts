@@ -113,7 +113,7 @@ export module Data {
 
                         //Total count and collection version identifier
                         collection
-                            .aggregate(repository.GetCollectionInfoAggregationObject(query), function (err, agg) {
+                            .aggregate(repository.GetCollectionInfoAggregationObject(collectionQuery), function (err, agg) {
                                 if (err || agg == null) {
                                     console.log(err);
                                     var errorModel = ErrorsModel.Model.ClientErrorsModel.CreateWithError('FindPagedError', [collectionName, page.toString()]);
