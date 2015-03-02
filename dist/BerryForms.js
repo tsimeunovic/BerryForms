@@ -22,7 +22,7 @@ ProcessStarted.NodeHelpers.ProcessStarter.ApplyProcessParameters(process);
 //Api routes
 Router.NodeHelpers.Router.InitializeRoutes(App);
 //Static content
-App.use('/', Express.static(__dirname + '/client/'));
+App.use('/', Express.static(__dirname + '/client/', { maxage: 365 * 86400 * 1000 }));
 App.use('/bower_components/', Express.static(__dirname + '/bower_components/')); //Just for dev
 //Start server
 App.listen(ConfigServer.Config.Server.NodePort);
