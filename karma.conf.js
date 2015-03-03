@@ -63,6 +63,13 @@ module.exports = function (config) {
             'client/angular/app.js'
         ],
 
+        // coverage reporter generates the coverage
+        reporters: ['progress', 'coverage'],
+
+        preprocessors: {
+            'client/**/*.js': ['coverage']
+        },
+
         // web server port
         port: 8082,
 
