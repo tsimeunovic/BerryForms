@@ -25,6 +25,7 @@ Replace hard-coded dependencies with angular constants (http://twofuckingdevelop
 
 //Future feature:
 Roles and permissions
+Multi-relationship control
 Settings page
 Entity create and modify date in filter
 Aggregate functions (sum, average, -custom-fn-, etc ...) to summarize list results

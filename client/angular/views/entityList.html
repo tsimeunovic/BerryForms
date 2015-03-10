@@ -1,11 +1,11 @@
 <div data-role="list">
     <!-- Title -->
     <h1>
-        {{ListHeader}}
+        {{::ListHeader}}
         <span data-ng-repeat="icon in ListHeaderIcons"
-              class="glyphicon glyphicon-{{icon.Icon}}"
+              class="glyphicon glyphicon-{{::icon.Icon}}"
               data-ng-click="icon.Action()"
-              title="{{icon.Tooltip}}"></span>
+              title="{::{icon.Tooltip}}"></span>
     </h1>
     <div class="empty"></div>
 
@@ -23,16 +23,16 @@
             <div class="dragZone" data-as-sortable-item-handle>
                 <div class="threeDots"></div>
             </div>
-            {{listItem.GetDisplayName(ListItemMetadata)}}
+            {{::listItem.GetDisplayName(ListItemMetadata)}}
         </div>
 
         <!-- Empty list message -->
         <span class="emptyListMessage" data-ng-hide="EntityList.length">
-            {{EmptyListMessage}}
+            {{::EmptyListMessage}}
         </span>
 
         <!-- List paging -->
-        <div data-ng-include="'angular/views/listPaging.html'" class="listPaging" data-ng-show="Paging.ShowPaging"></div>
+        <div data-ng-include="'angular/views/listPaging.html'" class="listPaging" data-ng-if="Paging.ShowPaging"></div>
     </div>
 </div>
 

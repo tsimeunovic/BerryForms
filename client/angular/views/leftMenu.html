@@ -12,9 +12,9 @@
          data-icon-count="Entities.length">
 
         <div data-ng-repeat="entity in Entities"
-             class="menuicon entityicon glyphicon glyphicon-{{entity.IconClassName}}"
+             class="menuicon entityicon glyphicon glyphicon-{{::entity.IconClassName}}"
              data-ng-style="{'background-color':entity.IconColorHex}"
-             title="{{entity.EntityName}}">
+             title="{{::entity.EntityName}}">
             <a href="#/entity/{{entity.EntitySystemName}}"></a>
         </div>
 

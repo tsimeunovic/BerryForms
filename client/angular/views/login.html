@@ -1,14 +1,14 @@
 <div class="dialog login" data-ng-if="!LoggedInUser">
     <div class="dialogHeader">
         <div class="logo image-berry"></div>
-        {{LoginHeader}}
+        {{::LoginHeader}}
     </div>
     <div class="dialogText">
         <div class="entityForm" data-role="login">
             <div class="fields">
                 <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
-                    <span class="entityFieldLabel" title="{{field.FieldDescription}}">
-                        {{field.FieldName}}
+                    <span class="entityFieldLabel" title="{{::field.FieldDescription}}">
+                        {{::field.FieldName}}
                     </span>
                     <span class="entityFieldInput">
                         <span data-field-component-creator></span>
@@ -25,7 +25,7 @@
                  <button class="btn btn-default btn-sm form-control btn-submit"
                          data-ng-disabled="!Entity || Entity.ErrorFields.length || LoginInProgress"
                          data-ng-click="Login()">
-                     {{LoginButtonText}}
+                     {{::LoginButtonText}}
                  </button>
             </span>
             </div>

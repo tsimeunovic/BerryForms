@@ -2,11 +2,11 @@
     <div data-role="full-list">
         <!-- Title -->
         <h1>
-            {{ListHeader}}
+            {{::ListHeader}}
         <span data-ng-repeat="icon in ListHeaderIcons"
-              class="glyphicon glyphicon-{{icon.Icon}}"
+              class="glyphicon glyphicon-{{::icon.Icon}}"
               data-ng-click="icon.Action()"
-              title="{{icon.Tooltip}}"></span>
+              title="{{::icon.Tooltip}}"></span>
         </h1>
         <div class="empty"></div>
 
@@ -19,8 +19,8 @@
             <!-- List item -->
             <div class="entityRecord" data-ng-repeat="listItem in EntityList">
                 <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
-                    <span class="entityFieldLabel" title="{{field.FieldDescription}}">
-                        {{field.FieldName}} :
+                    <span class="entityFieldLabel" title="{{::field.FieldDescription}}">
+                        {{::field.FieldName}} :
                     </span>
                     <span class="entityFieldValue">
                         <span data-field-component-creator data-readonly="true"></span>
@@ -32,7 +32,7 @@
 
         <!-- Empty list message -->
         <span class="emptyListMessage" data-ng-hide="EntityList.length">
-            {{EmptyListMessage}}
+            {{::EmptyListMessage}}
         </span>
 
         <!-- List paging -->
