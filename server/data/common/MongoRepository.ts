@@ -1,17 +1,17 @@
-/// <reference path="../model/ClientErrorsModel.ts" />
-/// <reference path="../data/MongoRepositoryBase.ts" />
-/// <reference path="../data/IRepository.ts" />
-/// <reference path="../data/IIdentifierRepository.ts" />
+/// <reference path="../../model/ClientErrorsModel.ts" />
+/// <reference path="MongoRepositoryBase.ts" />
+/// <reference path="../common/IMongoRepository.ts" />
+/// <reference path="../common/IIdentifierRepository.ts" />
 
 'use strict';
-import Base = require('../data/MongoRepositoryBase');
-import Contract = require('../data/IRepository');
-import Repository = require('../data/IdentifierRepository');
-import ErrorsModel = require('../model/ClientErrorsModel');
-import ConfigServer = require('../config/Config');
+import Base = require('../common/MongoRepositoryBase');
+import Contract = require('../common/IMongoRepository');
+import Repository = require('../common/IdentifierRepository');
+import ErrorsModel = require('../../model/ClientErrorsModel');
+import ConfigServer = require('../../config/Config');
 
 export module Data {
-    export class MongoRepository<T> extends Base.Data.MongoRepositoryBase implements Contract.Data.IRepository<T> {
+    export class MongoRepository<T> extends Base.Data.MongoRepositoryBase implements Contract.Data.IMongoRepository<T> {
         constructor(collectionName:string) {
             super(collectionName);
         }

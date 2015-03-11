@@ -1,16 +1,16 @@
 /// <reference path="../GlobalReferences.ts" />
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 
 'use strict';
 
 import Contract = require('../services/IValidator');
-import ChildContract = require('../data/IRepository');
+import ChildContract = require('../data/common/IMongoRepository');
 import ClientErrorModel = require('../model/ClientErrorModel');
 import ClientErrorsModel = require('../model/ClientErrorsModel');
-import RepositoryFactory = require('../services/RepositoryFactory');
-import RepositoryContract = require('../data/IRepository');
+import RepositoryFactoryModule = require('../services/RepositoryFactory');
+import RepositoryContract = require('../data/common/IMongoRepository');
 
 export module Services {
     export class EntityMetadataValidator<T> implements Contract.Services.IValidator<T> {
@@ -43,7 +43,7 @@ export module Services {
             }
             else {
                 //Need to verify system name uniqueness
-                var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
+                var metadataRepositoryFactory = new RepositoryFactoryModule.Services.RepositoryFactory();
                 if (object.Id) {
                     //Update
                     callback(null);
@@ -51,7 +51,7 @@ export module Services {
                 }
 
                 //Create
-                var metadataRepository:RepositoryContract.Data.IRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
+                var metadataRepository:RepositoryContract.Data.IMongoRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
                 var requestContext = {source: 'system'};
                 metadataRepository.FindByCondition({EntitySystemName: object.EntitySystemName}, requestContext, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
                     if (errors) {

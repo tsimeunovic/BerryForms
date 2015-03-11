@@ -4,10 +4,10 @@
 'use strict';
 
 import Base = require('../model/ErrorsModel');
-import ClientErrorModel = require('../model/ClientErrorModel');
+import ClientErrorModelModule = require('../model/ClientErrorModel');
 
 export module Model {
-    export class ClientErrorsModel extends Base.Model.ErrorsModel<ClientErrorModel.Model.ClientErrorModel> {
+    export class ClientErrorsModel extends Base.Model.ErrorsModel<ClientErrorModelModule.Model.ClientErrorModel> {
         constructor() {
             super();
             this.Type = 'Client';
@@ -15,7 +15,7 @@ export module Model {
 
         public static CreateWithError(key:string, parameters:string[]):Model.ClientErrorsModel {
             var result:Model.ClientErrorsModel = new Model.ClientErrorsModel();
-            var error = new ClientErrorModel.Model.ClientErrorModel(key, parameters);
+            var error = new ClientErrorModelModule.Model.ClientErrorModel(key, parameters);
             result.Errors = [error];
             return result;
         }

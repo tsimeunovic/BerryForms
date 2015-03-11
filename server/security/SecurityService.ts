@@ -2,7 +2,7 @@
 /// <reference path="../security/ISecurityService.ts" />
 
 'use strict';
-import NodeRepositoryContract = require('../data/INodeRepository');
+import NodeRepositoryContract = require('../data/entity/IEntityRepository');
 import Contract = require('../security/ISecurityService');
 import ErrorsModel = require('../model/ClientErrorsModel');
 import ConfigServer = require('../config/Config');
@@ -10,7 +10,7 @@ var SHA256:any = require('crypto-js/sha256');
 
 export module Security {
     export class SecurityService implements Contract.Services.ISecurityService {
-        constructor(nodeRepository:NodeRepositoryContract.Data.INodeRepository<any>) {
+        constructor(nodeRepository:NodeRepositoryContract.Data.IEntityRepository<any>) {
             this.ServerConfig = ConfigServer.Config.Server;
         }
 

@@ -1,9 +1,9 @@
 'use strict';
 
-import ErrorsModel = require('../model/ClientErrorsModel');
+import ErrorsModel = require('../../model/ClientErrorsModel');
 
 export module Data {
-    export interface INodeRepository<T> {
+    export interface IEntityRepository<T> {
         //Read
         GetAll(request:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void): void;
         GetFiltered(request:any, callback:(filteredData:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void): void;

@@ -1,23 +1,23 @@
-/// <reference path="../GlobalReferences.ts" />
-/// <reference path="./IRepository.ts" />
-/// <reference path="./INodeRepository.ts" />
-/// <reference path="../services/IRepositoryFactory.ts" />
-/// <reference path="../services/IValidatorFactory.ts" />
+/// <reference path="../../GlobalReferences.ts" />
+/// <reference path="../common/IMongoRepository.ts" />
+/// <reference path="./IEntityRepository.ts" />
+/// <reference path="../../services/IRepositoryFactory.ts" />
+/// <reference path="../../services/IValidatorFactory.ts" />
 
 'use strict';
-import Contract = require('../data/INodeRepository');
-import ChildContract = require('../data/IRepository');
-import ErrorsModel = require('../model/ClientErrorsModel');
-import ValidatorContract = require('../services/IValidator');
-import RepositoryFactoryContract = require('../services/IRepositoryFactory');
-import ValidatorFactoryContract = require('../services/IValidatorFactory');
-import RepositoryFactory = require('../services/RepositoryFactory');
-import ValidatorFactory = require('../services/ValidatorFactory');
-import ProjectorFactory = require('../services/ProjectorFactory');
+import Contract = require('IEntityRepository');
+import ChildContract = require('../common/IMongoRepository');
+import ErrorsModel = require('../../model/ClientErrorsModel');
+import ValidatorContract = require('../../services/IValidator');
+import RepositoryFactoryContract = require('../../services/IRepositoryFactory');
+import ValidatorFactoryContract = require('../../services/IValidatorFactory');
+import RepositoryFactory = require('../../services/RepositoryFactory');
+import ValidatorFactory = require('../../services/ValidatorFactory');
+import ProjectorFactory = require('../../services/ProjectorFactory');
 
 export module Data {
-    export class NodeRepository<T> implements Contract.Data.INodeRepository<T> {
-        private CreateRepositoryForRequest(request:any):ChildContract.Data.IRepository<any> {
+    export class EntityRepository<T> implements Contract.Data.IEntityRepository<T> {
+        private CreateRepositoryForRequest(request:any):ChildContract.Data.IMongoRepository<any> {
             var type = request.params.type;
             var name = request.params.name;
             var factory = new RepositoryFactory.Services.RepositoryFactory();

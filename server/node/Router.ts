@@ -1,7 +1,7 @@
 /// <reference path="../GlobalReferences.ts" />
 /// <reference path="../config/Config.ts" />
 /// <reference path="../services/IRepositoryFactory.ts" />
-/// <reference path="../data/INodeRepository.ts" />
+/// <reference path="../data/entity/IEntityRepository.ts" />
 /// <reference path="../security/ISecurityService.ts" />
 
 'use strict';
@@ -9,12 +9,12 @@
 //Modules
 import ConfigServer = require('../config/Config');
 import ConfigClient = require('../config/ClientConfig');
-import NodeRepository = require('../data/NodeRepository');
+import EntityRepository = require('../data/entity/EntityRepository');
 import Security = require('../security/SecurityService');
 
 export module NodeHelpers {
     export class Router {
-        private static NodeRepository;
+        private static EntityRepository;
         private static SecurityService;
 
         private static ReturnJsonResultOf(req:any, res:any, authenticatedOnly:boolean, action:(request:any, callback:(data:any, errors:any)=>void)=>void) {
@@ -65,12 +65,12 @@ export module NodeHelpers {
             //Api prefix
             var routeBaseUrl = '/' + ConfigServer.Config.Server.ApiPrefix;
             var clientConfig = ConfigClient.Config.ClientConfig;
-            Router.NodeRepository = new NodeRepository.Data.NodeRepository<any>();
-            Router.SecurityService = new Security.Security.SecurityService(Router.NodeRepository);
+            Router.EntityRepository = new EntityRepository.Data.EntityRepository<any>();
+            Router.SecurityService = new Security.Security.SecurityService(Router.EntityRepository);
 
             //Special methods
             app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAllProjected.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAllProjected.bind(Router.EntityRepository));
             });
             app.get(routeBaseUrl + '/configuration', function (req, res) {
                 Router.ReturnObjectAssignment(req, res, 'ConfigurationOverrides', clientConfig.GetClientConfigurationOverrides);
@@ -81,25 +81,25 @@ export module NodeHelpers {
 
             //Generic methods
             app.get(routeBaseUrl + '/:type/:name/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetPaged.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetPaged.bind(Router.EntityRepository));
             });
             app.post(routeBaseUrl + '/:type/:name/filtered/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetFiltered.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetFiltered.bind(Router.EntityRepository));
             });
             app.get(routeBaseUrl + '/:type/:name', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAll.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAll.bind(Router.EntityRepository));
             });
             app.get(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetById.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetById.bind(Router.EntityRepository));
             });
             app.post(routeBaseUrl + '/:type/:name', function (req, res) {
                 var isNewRecord:boolean = req.body.Id == null;
                 isNewRecord ?
-                    Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Create.bind(Router.NodeRepository)) :
-                    Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Update.bind(Router.NodeRepository));
+                    Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Create.bind(Router.EntityRepository)) :
+                    Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Update.bind(Router.EntityRepository));
             });
             app.delete(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Delete.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Delete.bind(Router.EntityRepository));
             });
         }
     }

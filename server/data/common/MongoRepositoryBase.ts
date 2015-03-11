@@ -1,9 +1,9 @@
-/// <reference path="../config/Config.ts" />
-/// <reference path="./IRepository.ts" />
+/// <reference path="../../config/Config.ts" />
+/// <reference path="../common/IMongoRepository.ts" />
 
 'use strict';
 
-var ConfigServer:any = require('../config/Config').Config.Server;
+var ConfigServer:any = require('../../config/Config').Config.Server;
 
 var MongoClientObject:any = require('mongodb').MongoClient;
 var MongoServerObject:any = require('mongodb').Server;

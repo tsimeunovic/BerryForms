@@ -1,5 +1,5 @@
 /// <reference path="../GlobalReferences.ts" />
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 
@@ -8,8 +8,8 @@
 import Contract = require('../services/IValidator');
 import ClientErrorModel = require('../model/ClientErrorModel');
 import ClientErrorsModel = require('../model/ClientErrorsModel');
-import RepositoryFactory = require('../services/RepositoryFactory');
-import RepositoryContract = require('../data/IRepository');
+import RepositoryFactoryModule = require('../services/RepositoryFactory');
+import RepositoryContract = require('../data/common/IMongoRepository');
 
 export module Services {
     export class EntityValidator<T> implements Contract.Services.IValidator<T> {
@@ -40,8 +40,8 @@ export module Services {
             }
 
             //Verify presence of required fields
-            var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
-            var metadataRepository:RepositoryContract.Data.IRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
+            var metadataRepositoryFactory = new RepositoryFactoryModule.Services.RepositoryFactory();
+            var metadataRepository:RepositoryContract.Data.IMongoRepository<any> = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
             var requestContext = {source: 'system'};
             metadataRepository.FindByCondition({EntitySystemName: entitySystemName}, requestContext, function (data:any[], errors:ClientErrorsModel.Model.ClientErrorsModel) {
                 if (errors) {

@@ -1,11 +1,11 @@
-/// <reference path="../model/ClientErrorsModel.ts" />
+/// <reference path="../../model/ClientErrorsModel.ts" />
 
 'use strict';
 
-import ErrorsModel = require('../model/ClientErrorsModel');
+import ErrorsModel = require('../../model/ClientErrorsModel');
 
 export module Data {
-    export interface IRepository<T> {
+    export interface IMongoRepository<T> {
         //Read
         FindById(id:any, requestContext:any, callback:(data:T, errors:ErrorsModel.Model.ClientErrorsModel)=>void): void;
         FindByCondition(condition:any, requestContext:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel)=>void): void;

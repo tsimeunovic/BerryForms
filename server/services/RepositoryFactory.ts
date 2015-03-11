@@ -4,8 +4,8 @@
 'use strict';
 
 import Contract = require('../services/IRepositoryFactory');
-import ChildContract = require('../data/IRepository');
-import MongoRepository = require('../data/MongoRepository');
+import ChildContract = require('../data/common/IMongoRepository');
+import MongoRepository = require('../data/common/MongoRepository');
 var ConfigServer:any = require('../config/Config').Config.Server;
 
 export module Services {
@@ -14,7 +14,7 @@ export module Services {
             return type == 'entity' ? name : ConfigServer.SystemPrefix + 'metadata';
         }
 
-        public CreateRepositoryFor(type:string, name:string):ChildContract.Data.IRepository<any> {
+        public CreateRepositoryFor(type:string, name:string):ChildContract.Data.IMongoRepository<any> {
             var collectionName = this.GetCollectionNameFor(type, name);
             return new MongoRepository.Data.MongoRepository(collectionName);
         }

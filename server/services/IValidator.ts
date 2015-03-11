@@ -1,4 +1,4 @@
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 
 'use strict';

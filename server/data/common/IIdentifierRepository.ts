@@ -1,8 +1,8 @@
-/// <reference path="../model/ClientErrorsModel.ts" />
+/// <reference path="../../model/ClientErrorsModel.ts" />
 
 'use strict';
 
-import ErrorsModel = require('../model/ClientErrorsModel');
+import ErrorsModel = require('../../model/ClientErrorsModel');
 
 export module Data {
     export interface IIdentifierRepository {
