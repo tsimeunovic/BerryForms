@@ -1,5 +1,5 @@
 /// <reference path="../GlobalReferences.ts" />
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 'use strict';

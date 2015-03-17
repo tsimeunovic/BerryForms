@@ -1,11 +1,11 @@
 /// <reference path="../GlobalReferences.ts" />
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 'use strict';
 var ClientErrorModel = require('../model/ClientErrorModel');
 var ClientErrorsModel = require('../model/ClientErrorsModel');
-var RepositoryFactory = require('../services/RepositoryFactory');
+var RepositoryFactoryModule = require('../services/RepositoryFactory');
 var Services;
 (function (Services) {
     var EntityValidator = (function () {
@@ -32,7 +32,7 @@ var Services;
                 return;
             }
             //Verify presence of required fields
-            var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
+            var metadataRepositoryFactory = new RepositoryFactoryModule.Services.RepositoryFactory();
             var metadataRepository = metadataRepositoryFactory.CreateRepositoryFor('metadata', null);
             var requestContext = { source: 'system' };
             metadataRepository.FindByCondition({ EntitySystemName: entitySystemName }, requestContext, function (data, errors) {

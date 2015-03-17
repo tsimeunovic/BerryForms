@@ -24,5 +24,9 @@ export module Config {
         public static TokenSalt:string = 'RO^zMe1jFN%9L9BgNlP~LJqOvN15ZCAv9lct-+uIgDZWsnaNks0%ZKw3guul';
         public static SuperUserName:string = 'admin';
         public static SuperUserPassword:string = 'admin';
+
+        //Miscelanous
+        public static LogRetrieveCount:number = 12;
+        public static LogSummaryMinutes:number = 1 * 24 * 60; //1 day
     }
 }

@@ -1,7 +1,7 @@
 /// <reference path="../GlobalReferences.ts" />
 /// <reference path="./IRepositoryFactory.ts" />
 'use strict';
-var MongoRepository = require('../data/MongoRepository');
+var MongoRepository = require('../data/common/MongoRepository');
 var ConfigServer = require('../config/Config').Config.Server;
 var Services;
 (function (Services) {

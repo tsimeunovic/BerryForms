@@ -8,7 +8,7 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 var Base = require('../model/ErrorsModel');
-var ClientErrorModel = require('../model/ClientErrorModel');
+var ClientErrorModelModule = require('../model/ClientErrorModel');
 var Model;
 (function (Model) {
     var ClientErrorsModel = (function (_super) {
@@ -19,7 +19,7 @@ var Model;
         }
         ClientErrorsModel.CreateWithError = function (key, parameters) {
             var result = new Model.ClientErrorsModel();
-            var error = new ClientErrorModel.Model.ClientErrorModel(key, parameters);
+            var error = new ClientErrorModelModule.Model.ClientErrorModel(key, parameters);
             result.Errors = [error];
             return result;
         };

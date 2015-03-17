@@ -1,13 +1,14 @@
 /// <reference path="../GlobalReferences.ts" />
 /// <reference path="../config/Config.ts" />
 /// <reference path="../services/IRepositoryFactory.ts" />
-/// <reference path="../data/INodeRepository.ts" />
+/// <reference path="../data/entity/IEntityRepository.ts" />
 /// <reference path="../security/ISecurityService.ts" />
 'use strict';
 //Modules
 var ConfigServer = require('../config/Config');
 var ConfigClient = require('../config/ClientConfig');
-var NodeRepository = require('../data/NodeRepository');
+var EntityRepository = require('../data/entity/EntityRepository');
+var DashboardRepository = require('../data/dashboard/DashboardRepository');
 var Security = require('../security/SecurityService');
 var NodeHelpers;
 (function (NodeHelpers) {
@@ -59,37 +60,48 @@ var NodeHelpers;
             //Api prefix
             var routeBaseUrl = '/' + ConfigServer.Config.Server.ApiPrefix;
             var clientConfig = ConfigClient.Config.ClientConfig;
-            Router.NodeRepository = new NodeRepository.Data.NodeRepository();
-            Router.SecurityService = new Security.Security.SecurityService(Router.NodeRepository);
+            Router.EntityRepository = new EntityRepository.Data.EntityRepository();
+            Router.DashboardRepository = new DashboardRepository.Data.DashboardRepository(Router.EntityRepository);
+            Router.SecurityService = new Security.Security.SecurityService(Router.EntityRepository);
             //Special methods
-            app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAllProjected.bind(Router.NodeRepository));
-            });
             app.get(routeBaseUrl + '/configuration', function (req, res) {
                 Router.ReturnObjectAssignment(req, res, 'ConfigurationOverrides', clientConfig.GetClientConfigurationOverrides);
             });
             app.post(routeBaseUrl + '/user/login', function (req, res) {
                 Router.ReturnJsonResultOf(req, res, false, Router.SecurityService.LoginUser.bind(Router.SecurityService));
             });
-            //Generic methods
+            //Dashboard methods
+            app.get(routeBaseUrl + '/dashboard/activity/summary', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetEntitiesActivitySummary.bind(Router.DashboardRepository));
+            });
+            app.get(routeBaseUrl + '/dashboard/activity/me', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
+            });
+            app.get(routeBaseUrl + '/dashboard/activity', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
+            });
+            //Entity methods
+            app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAllProjected.bind(Router.EntityRepository));
+            });
             app.get(routeBaseUrl + '/:type/:name/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetPaged.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetPaged.bind(Router.EntityRepository));
             });
             app.post(routeBaseUrl + '/:type/:name/filtered/page/:page/:size', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetFiltered.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetFiltered.bind(Router.EntityRepository));
             });
             app.get(routeBaseUrl + '/:type/:name', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetAll.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAll.bind(Router.EntityRepository));
             });
             app.get(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.GetById.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetById.bind(Router.EntityRepository));
             });
             app.post(routeBaseUrl + '/:type/:name', function (req, res) {
                 var isNewRecord = req.body.Id == null;
-                isNewRecord ? Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Create.bind(Router.NodeRepository)) : Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Update.bind(Router.NodeRepository));
+                isNewRecord ? Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Create.bind(Router.EntityRepository)) : Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Update.bind(Router.EntityRepository));
             });
             app.delete(routeBaseUrl + '/:type/:name/:id', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.NodeRepository.Delete.bind(Router.NodeRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Delete.bind(Router.EntityRepository));
             });
         };
         return Router;

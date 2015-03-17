@@ -1,7 +1,7 @@
-/// <reference path="../model/ClientErrorsModel.ts" />
-/// <reference path="../data/MongoRepositoryBase.ts" />
-/// <reference path="../data/IRepository.ts" />
-/// <reference path="../data/IIdentifierRepository.ts" />
+/// <reference path="../../model/ClientErrorsModel.ts" />
+/// <reference path="MongoRepositoryBase.ts" />
+/// <reference path="../common/IMongoRepository.ts" />
+/// <reference path="../common/IIdentifierRepository.ts" />
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9,10 +9,10 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var Base = require('../data/MongoRepositoryBase');
-var Repository = require('../data/IdentifierRepository');
-var ErrorsModel = require('../model/ClientErrorsModel');
-var ConfigServer = require('../config/Config');
+var Base = require('../common/MongoRepositoryBase');
+var Repository = require('../common/IdentifierRepository');
+var ErrorsModel = require('../../model/ClientErrorsModel');
+var ConfigServer = require('../../config/Config');
 var Data;
 (function (Data) {
     var MongoRepository = (function (_super) {

@@ -10,12 +10,14 @@
 import ConfigServer = require('../config/Config');
 import ConfigClient = require('../config/ClientConfig');
 import EntityRepository = require('../data/entity/EntityRepository');
+import DashboardRepository = require('../data/dashboard/DashboardRepository');
 import Security = require('../security/SecurityService');
 
 export module NodeHelpers {
     export class Router {
         private static EntityRepository;
         private static SecurityService;
+        private static DashboardRepository;
 
         private static ReturnJsonResultOf(req:any, res:any, authenticatedOnly:boolean, action:(request:any, callback:(data:any, errors:any)=>void)=>void) {
             var actionWrapperFn = function() {
@@ -66,12 +68,10 @@ export module NodeHelpers {
             var routeBaseUrl = '/' + ConfigServer.Config.Server.ApiPrefix;
             var clientConfig = ConfigClient.Config.ClientConfig;
             Router.EntityRepository = new EntityRepository.Data.EntityRepository<any>();
+            Router.DashboardRepository = new DashboardRepository.Data.DashboardRepository(Router.EntityRepository);
             Router.SecurityService = new Security.Security.SecurityService(Router.EntityRepository);
 
             //Special methods
-            app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
-                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAllProjected.bind(Router.EntityRepository));
-            });
             app.get(routeBaseUrl + '/configuration', function (req, res) {
                 Router.ReturnObjectAssignment(req, res, 'ConfigurationOverrides', clientConfig.GetClientConfigurationOverrides);
             });
@@ -79,7 +79,21 @@ export module NodeHelpers {
                 Router.ReturnJsonResultOf(req, res, false, Router.SecurityService.LoginUser.bind(Router.SecurityService));
             });
 
-            //Generic methods
+            //Dashboard methods
+            app.get(routeBaseUrl + '/dashboard/activity/summary', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetEntitiesActivitySummary.bind(Router.DashboardRepository));
+            });
+            app.get(routeBaseUrl + '/dashboard/activity/me', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
+            });
+            app.get(routeBaseUrl + '/dashboard/activity', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
+            });
+
+            //Entity methods
+            app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {
+                Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetAllProjected.bind(Router.EntityRepository));
+            });
             app.get(routeBaseUrl + '/:type/:name/page/:page/:size', function (req, res) {
                 Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.GetPaged.bind(Router.EntityRepository));
             });

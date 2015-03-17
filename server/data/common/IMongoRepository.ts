@@ -21,5 +21,10 @@ export module Data {
 
         //Delete
         Delete(id:any, requestContext:any, callback:(success:boolean, errors:ErrorsModel.Model.ClientErrorsModel)=> void): void;
+
+        //Log
+        LogOperationAsync(requestContext:any, collection:string, id:number, operation:string, additionalArgs:any, callback:(error:any)=>void):void;
+        GetLatestLogRecordsFor(userName:string, entities:string[], count:number, callback:(data:any[], err:any)=>void):void;
+        GetEntitiesSummary(entities:string[], minutes:number, callback:(data:any[], err:any)=>void):void;
     }
 }

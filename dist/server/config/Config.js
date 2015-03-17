@@ -21,6 +21,9 @@ var Config;
         Server.TokenSalt = 'RO^zMe1jFN%9L9BgNlP~LJqOvN15ZCAv9lct-+uIgDZWsnaNks0%ZKw3guul';
         Server.SuperUserName = 'admin';
         Server.SuperUserPassword = 'admin';
+        //Miscelanous
+        Server.LogRetrieveCount = 12;
+        Server.LogSummaryMinutes = 1 * 24 * 60; //1 day
         return Server;
     })();
     Config.Server = Server;

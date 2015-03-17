@@ -1,9 +1,9 @@
 /// <reference path="../GlobalReferences.ts" />
 /// <reference path="../services/IValidatorFactory.ts" />
 'use strict';
-var EntityValidator = require('../services/EntityValidator');
-var EntityMetadataValidator = require('../services/EntityMetadataValidator');
-var UnknownTypeValidator = require('../services/UnknownTypeValidator');
+var EntityValidatorModule = require('../services/EntityValidator');
+var EntityMetadataValidatorModule = require('../services/EntityMetadataValidator');
+var UnknownTypeValidatorModule = require('../services/UnknownTypeValidator');
 var Services;
 (function (Services) {
     var ValidatorFactory = (function () {
@@ -11,11 +11,11 @@ var Services;
         }
         ValidatorFactory.prototype.CreateValidatorFor = function (type, name) {
             if (type == 'metadata')
-                return new EntityMetadataValidator.Services.EntityMetadataValidator();
+                return new EntityMetadataValidatorModule.Services.EntityMetadataValidator();
             else if (type == 'entity')
-                return new EntityValidator.Services.EntityValidator();
+                return new EntityValidatorModule.Services.EntityValidator();
             else
-                return new UnknownTypeValidator.Services.UnknownTypeValidator(type);
+                return new UnknownTypeValidatorModule.Services.UnknownTypeValidator(type);
         };
         return ValidatorFactory;
     })();

@@ -1,10 +1,10 @@
 /// <reference path="../GlobalReferences.ts" />
-/// <reference path="../data/IRepository.ts" />
+/// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
 'use strict';
 var ClientErrorsModel = require('../model/ClientErrorsModel');
-var RepositoryFactory = require('../services/RepositoryFactory');
+var RepositoryFactoryModule = require('../services/RepositoryFactory');
 var Services;
 (function (Services) {
     var EntityMetadataValidator = (function () {
@@ -32,7 +32,7 @@ var Services;
             }
             else {
                 //Need to verify system name uniqueness
-                var metadataRepositoryFactory = new RepositoryFactory.Services.RepositoryFactory();
+                var metadataRepositoryFactory = new RepositoryFactoryModule.Services.RepositoryFactory();
                 if (object.Id) {
                     //Update
                     callback(null);

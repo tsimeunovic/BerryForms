@@ -6,7 +6,7 @@
 
 'use strict';
 import Contract = require('IEntityRepository');
-import ChildContract = require('../common/IMongoRepository');
+import DbContract = require('../common/IMongoRepository');
 import ErrorsModel = require('../../model/ClientErrorsModel');
 import ValidatorContract = require('../../services/IValidator');
 import RepositoryFactoryContract = require('../../services/IRepositoryFactory');
@@ -17,7 +17,7 @@ import ProjectorFactory = require('../../services/ProjectorFactory');
 
 export module Data {
     export class EntityRepository<T> implements Contract.Data.IEntityRepository<T> {
-        private CreateRepositoryForRequest(request:any):ChildContract.Data.IMongoRepository<any> {
+        private CreateRepositoryForRequest(request:any):DbContract.Data.IMongoRepository<any> {
             var type = request.params.type;
             var name = request.params.name;
             var factory = new RepositoryFactory.Services.RepositoryFactory();

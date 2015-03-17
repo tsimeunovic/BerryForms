@@ -1,35 +1,35 @@
-/// <reference path="../GlobalReferences.ts" />
-/// <reference path="./IRepository.ts" />
-/// <reference path="./INodeRepository.ts" />
-/// <reference path="../services/IRepositoryFactory.ts" />
-/// <reference path="../services/IValidatorFactory.ts" />
+/// <reference path="../../GlobalReferences.ts" />
+/// <reference path="../common/IMongoRepository.ts" />
+/// <reference path="./IEntityRepository.ts" />
+/// <reference path="../../services/IRepositoryFactory.ts" />
+/// <reference path="../../services/IValidatorFactory.ts" />
 'use strict';
-var RepositoryFactory = require('../services/RepositoryFactory');
-var ValidatorFactory = require('../services/ValidatorFactory');
-var ProjectorFactory = require('../services/ProjectorFactory');
+var RepositoryFactory = require('../../services/RepositoryFactory');
+var ValidatorFactory = require('../../services/ValidatorFactory');
+var ProjectorFactory = require('../../services/ProjectorFactory');
 var Data;
 (function (Data) {
-    var NodeRepository = (function () {
-        function NodeRepository() {
+    var EntityRepository = (function () {
+        function EntityRepository() {
         }
-        NodeRepository.prototype.CreateRepositoryForRequest = function (request) {
+        EntityRepository.prototype.CreateRepositoryForRequest = function (request) {
             var type = request.params.type;
             var name = request.params.name;
             var factory = new RepositoryFactory.Services.RepositoryFactory();
             return factory.CreateRepositoryFor(type, name);
         };
-        NodeRepository.prototype.CreateValidatorForRequest = function (request) {
+        EntityRepository.prototype.CreateValidatorForRequest = function (request) {
             var type = request.params.type;
             var name = request.params.name;
             var factory = new ValidatorFactory.Services.ValidatorFactory();
             return factory.CreateValidatorFor(type, name);
         };
-        NodeRepository.prototype.CreateProjectorForRequest = function (request) {
+        EntityRepository.prototype.CreateProjectorForRequest = function (request) {
             var type = request.params.type;
             var factory = new ProjectorFactory.Services.ProjectorFactory();
             return factory.CreateProjectorFor(type);
         };
-        NodeRepository.prototype.CreateRequestContext = function (request) {
+        EntityRepository.prototype.CreateRequestContext = function (request) {
             return {
                 source: 'client',
                 session: request.session,
@@ -37,7 +37,7 @@ var Data;
             };
         };
         //Special methods
-        NodeRepository.prototype.GetAllProjected = function (request, callback) {
+        EntityRepository.prototype.GetAllProjected = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var projector = this.CreateProjectorForRequest(request);
             var requestContext = this.CreateRequestContext(request);
@@ -45,19 +45,19 @@ var Data;
         };
         //Generic methods
         //Read
-        NodeRepository.prototype.GetAll = function (request, callback) {
+        EntityRepository.prototype.GetAll = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var requestContext = this.CreateRequestContext(request);
             repository.FindByCondition({}, requestContext, callback);
         };
-        NodeRepository.prototype.GetPaged = function (request, callback) {
+        EntityRepository.prototype.GetPaged = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
             var size = request.params.size * 1;
             repository.FindPaged({}, page, size, requestContext, callback);
         };
-        NodeRepository.prototype.GetFiltered = function (request, callback) {
+        EntityRepository.prototype.GetFiltered = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var requestContext = this.CreateRequestContext(request);
             var page = request.params.page * 1;
@@ -65,14 +65,14 @@ var Data;
             var query = request.body;
             repository.FindPaged(query, page, size, requestContext, callback);
         };
-        NodeRepository.prototype.GetById = function (request, callback) {
+        EntityRepository.prototype.GetById = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
             repository.FindById(id, requestContext, callback);
         };
         //Create
-        NodeRepository.prototype.Create = function (request, callback) {
+        EntityRepository.prototype.Create = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
             var requestContext = this.CreateRequestContext(request);
@@ -84,7 +84,7 @@ var Data;
                     repository.Create(data, requestContext, callback);
             });
         };
-        NodeRepository.prototype.Update = function (request, callback) {
+        EntityRepository.prototype.Update = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var validator = this.CreateValidatorForRequest(request);
             var requestContext = this.CreateRequestContext(request);
@@ -97,14 +97,14 @@ var Data;
             });
         };
         //Delete
-        NodeRepository.prototype.Delete = function (request, callback) {
+        EntityRepository.prototype.Delete = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
             var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
             repository.Delete(id, requestContext, callback);
         };
-        return NodeRepository;
+        return EntityRepository;
     })();
-    Data.NodeRepository = NodeRepository;
+    Data.EntityRepository = EntityRepository;
 })(Data = exports.Data || (exports.Data = {}));
-//# sourceMappingURL=NodeRepository.js.map
+//# sourceMappingURL=EntityRepository.js.map

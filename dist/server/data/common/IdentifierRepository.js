@@ -1,5 +1,5 @@
-/// <reference path="../data/MongoRepositoryBase.ts" />
-/// <reference path="../data/IIdentifierRepository.ts" />
+/// <reference path="MongoRepositoryBase.ts" />
+/// <reference path="IIdentifierRepository.ts" />
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7,9 +7,9 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var Base = require('../data/MongoRepositoryBase');
-var ErrorsModel = require('../model/ClientErrorsModel');
-var Config = require('../config/Config');
+var Base = require('../common/MongoRepositoryBase');
+var ErrorsModel = require('../../model/ClientErrorsModel');
+var Config = require('../../config/Config');
 var Data;
 (function (Data) {
     var IdentifierRepository = (function (_super) {
