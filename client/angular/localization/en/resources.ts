@@ -184,6 +184,10 @@ module Localization {
         CreateEntity:string = 'Creation of entity';
         UpdateEntity:string = 'Update of entity';
         DeleteEntity:string = 'Deletion of entity';
+
+        //Dashboard
+        Dashboard:string = 'Dashboard';
+        DashboardFor:string = '\'{0}\' dashboard';
     }
 
     (function () {

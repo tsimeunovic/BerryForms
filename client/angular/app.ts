@@ -20,6 +20,8 @@
 /// <reference path="./controllers/list/entityListController.ts" />
 /// <reference path="./controllers/list/entityListWithFilterController.ts" />
 /// <reference path="./controllers/list/fieldMetadataListController.ts" />
+/// <reference path="./controllers/combined/dashboardController.ts" />
+/// <reference path="./controllers/dashboard/dashboardActivityController.ts" />
 
 /// <reference path="./services/communication/messagingService.ts" />
 /// <reference path="./services/communication/queueService.ts" />
@@ -31,6 +33,7 @@
 /// <reference path="./services/repository/httpWrapperService.ts" />
 /// <reference path="./services/repository/entityRepositoryService.ts" />
 /// <reference path="./services/repository/userRepositoryService.ts" />
+/// <reference path="./services/repository/dashboardRepositoryService.ts" />
 /// <reference path="./services/repository/urlLocatorService.ts" />
 /// <reference path="./services/interaction/notificationService.ts" />
 /// <reference path="./services/state/entityMetadataListCacheService.ts" />
@@ -76,6 +79,7 @@ module AngularApplication {
             app.service('HttpWrapperService', Services.HttpWrapperService.injection());
             app.service('EntityRepositoryService', Services.EntityRepositoryService.injection());
             app.service('UserRepositoryService', Services.UserRepositoryService.injection());
+            app.service('DashboardRepositoryService', Services.DashboardRepositoryService.injection());
             app.service('UrlLocatorService', Services.UrlLocatorService.injection());
             app.service('NotificationService', Services.NotificationService.injection());
             app.service('EntityMetadataListCacheService', Services.EntityMetadataListCacheService.injection());
@@ -100,6 +104,8 @@ module AngularApplication {
             app.controller('EntityListController', Controllers.EntityListController.injection());
             app.controller('EntityListWithFilterController', Controllers.EntityListWithFilterController.injection());
             app.controller('FieldMetadataListController', Controllers.FieldMetadataListController.injection());
+            app.controller('DashboardController', Controllers.DashboardController.injection());
+            app.controller('DashboardActivityController', Controllers.DashboardActivityController.injection());
 
             //Components
             app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry.injection());
@@ -163,4 +169,3 @@ module AngularApplication {
         ResourcesLoader.LoadRemainingResourcesAndStart();
     })();
 }
-

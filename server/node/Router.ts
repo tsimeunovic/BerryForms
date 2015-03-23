@@ -81,12 +81,15 @@ export module NodeHelpers {
 
             //Dashboard methods
             app.get(routeBaseUrl + '/dashboard/activity/summary', function (req, res) {
+                //Aggregated
                 Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetEntitiesActivitySummary.bind(Router.DashboardRepository));
             });
             app.get(routeBaseUrl + '/dashboard/activity/me', function (req, res) {
+                //Just by me
                 Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
             });
             app.get(routeBaseUrl + '/dashboard/activity', function (req, res) {
+                //By all users
                 Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
             });
 

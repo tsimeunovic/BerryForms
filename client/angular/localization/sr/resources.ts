@@ -184,6 +184,10 @@ module Localization {
         CreateEntity:string;
         UpdateEntity:string;
         DeleteEntity:string;
+
+        //Dashboard
+        Dashboard:string;
+        DashboardFor:string;
     }
 
     (function () {

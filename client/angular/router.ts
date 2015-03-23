@@ -12,9 +12,22 @@ module Config {
         }
 
         public static InitializeRoutes($routeProvider:any):void {
+            Router.InitializeDashboardRoutes($routeProvider);
             Router.InitializeMetadataRoutes($routeProvider);
             Router.InitializeEntityRoutes($routeProvider);
             Router.InitializeOtherRoutes($routeProvider);
+        }
+
+        private static InitializeDashboardRoutes($routeProvider:any):any {
+            return $routeProvider
+                .when('/dashboard/:_entityName', {
+                    templateUrl: 'angular/views/dashboard.html',
+                    controller: 'DashboardController'
+                })
+                .when('/dashboard', {
+                    templateUrl: 'angular/views/dashboard.html',
+                    controller: 'DashboardController'
+                });
         }
 
         private static InitializeMetadataRoutes($routeProvider:any):any {
@@ -93,7 +106,7 @@ module Config {
             $routeProvider
                 //Default
                 .otherwise({
-                    redirectTo: '/schema/entity'
+                    redirectTo: '/dashboard'
                 });
         }
     }

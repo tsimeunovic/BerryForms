@@ -69,5 +69,11 @@ module Services {
         public GetUrlForLogin():string {
             return this.ApiBaseUrl + 'user/login';
         }
+
+        public GetUrlForDashboardActivitySummary(entityName:string):string {
+            var url = this.ApiBaseUrl + 'dashboard/activity/summary';
+            if(entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/summary').format([entityName]);
+            return this.AddPreventCacheParameter(url);
+        }
     }
 }

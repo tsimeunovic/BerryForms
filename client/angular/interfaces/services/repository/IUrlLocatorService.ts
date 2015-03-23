@@ -4,6 +4,7 @@
 module Services {
     export interface IUrlLocatorService {
         //Rest API
+        //Entities
         GetUrlForEntityMetadataListRetrieve():string;
         GetUrlForEntityMetadataRetrieve(entityName:string):string;
         GetUrlForEntityMetadataSave(entityName:string):string;
@@ -15,6 +16,10 @@ module Services {
         GetUrlForEntitySave(entityName:string):string;
         GetUrlForEntityDelete(entityName:string, entityId:number):string;
 
+        //User
         GetUrlForLogin():string;
+
+        //Dashboard
+        GetUrlForDashboardActivitySummary(entityName:string):string;
     }
 }

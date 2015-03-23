@@ -44,5 +44,9 @@ module Mocks {
         public GetUrlForLogin():string {
             return 'Login';
         }
+
+        public GetUrlForDashboardActivitySummary(entityName:string):string {
+            return 'DashboardActivitySummary/' + entityName;
+        }
     }
 }
