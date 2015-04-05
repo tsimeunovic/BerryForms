@@ -188,6 +188,12 @@ module Localization {
         //Dashboard
         Dashboard:string = 'Dashboard';
         DashboardFor:string = '\'{0}\' dashboard';
+        RecentActivity:string = 'Recently active entities';
+        NoRecentActivity:string = 'No recent activity';
+        TotalCount:string = 'Total count: {0}';
+        Created:string = 'Created';
+        Updated:string = 'Updated';
+        Deleted:string = 'Deleted';
     }
 
     (function () {

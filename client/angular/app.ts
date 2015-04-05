@@ -1,6 +1,7 @@
 /// <reference path="./directives/leftMenuAutosize.ts" />
 /// <reference path="./directives/systemSymbolDirective.ts" />
 /// <reference path="./directives/fieldComponentCreator.ts" />
+/// <reference path="./directives/dashboardActivityItemChart.ts" />
 /// <reference path="./components/fieldTypes/boolean/booleanFieldDirective.ts" />
 /// <reference path="./components/fieldTypes/date/dateFieldDirective.ts" />
 /// <reference path="./components/fieldTypes/list/listFieldDirective.ts" />
@@ -21,7 +22,7 @@
 /// <reference path="./controllers/list/entityListWithFilterController.ts" />
 /// <reference path="./controllers/list/fieldMetadataListController.ts" />
 /// <reference path="./controllers/combined/dashboardController.ts" />
-/// <reference path="./controllers/dashboard/dashboardActivityController.ts" />
+/// <reference path="./controllers/dashboard/dashboardActivitySummaryController.ts" />
 
 /// <reference path="./services/communication/messagingService.ts" />
 /// <reference path="./services/communication/queueService.ts" />
@@ -67,6 +68,7 @@ module AngularApplication {
             app.directive('leftMenuAutosize', Directives.LeftMenuAutosize.injection());
             app.directive('systemSymbol', Directives.SystemSymbol.injection());
             app.directive('fieldComponentCreator', Directives.FieldComponentCreator.injection());
+            app.directive('dashboardActivityItemChart', Directives.DashboardActivityItemChart.injection());
 
             //Services
             app.service('MessagingService', Services.MessagingService.injection());
@@ -105,7 +107,7 @@ module AngularApplication {
             app.controller('EntityListWithFilterController', Controllers.EntityListWithFilterController.injection());
             app.controller('FieldMetadataListController', Controllers.FieldMetadataListController.injection());
             app.controller('DashboardController', Controllers.DashboardController.injection());
-            app.controller('DashboardActivityController', Controllers.DashboardActivityController.injection());
+            app.controller('DashboardActivitySummaryController', Controllers.DashboardActivitySummaryController.injection());
 
             //Components
             app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry.injection());

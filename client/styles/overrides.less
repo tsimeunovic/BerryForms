@@ -92,4 +92,21 @@
       }
     }
   }
+
+  //Chartist - Graph colors
+  g.createdSeries path.ct-slice {
+    fill: @dashboardChartCreated; //Create
+  }
+  g.updatedSeries path.ct-slice {
+    fill: @dashboardChartUpdated; //Update
+  }
+  g.deletedSeries path.ct-slice {
+    fill: @dashboardChartDeleted; //Delete
+  }
+
+  //Labels
+  .ct-chart .ct-label {
+    fill: #000;
+    color: #000;
+  }
 }

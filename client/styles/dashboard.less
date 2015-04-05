@@ -1,3 +1,54 @@
 @import "configuration";
 @import "mixins";
 
+div.dashboardActivity {
+  div.emptyActivityMessage {
+    text-align: center;
+  }
+
+  div.activityItem {
+    .borderRadius(4px, 4px, 4px, 4px);
+    background-color: @dashboardItemColor;
+    border: 1px solid @contrastingDarkColor;
+    box-shadow: 2px 2px @menuWidthCollapsed / 6 #888;
+    padding: 20px;
+    margin: 10px 0;
+
+    &:hover {
+      cursor: pointer;
+      background-color: @dashboardItemHoverColor;
+    }
+
+    h4 {
+      text-align: center;
+    }
+
+    div.chartLegend {
+      display: inline-block;
+
+      span {
+        font-size: 0.75em;
+      }
+
+      div.colorSquare {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+
+        &.created {
+          background-color: @dashboardChartCreated;
+        }
+        &.updated {
+          background-color: @dashboardChartUpdated;
+        }
+        &.deleted {
+          background-color: @dashboardChartDeleted;
+        }
+      }
+    }
+
+    div.chartContainer {
+      display: inline-block;
+    }
+  }
+}

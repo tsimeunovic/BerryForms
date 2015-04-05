@@ -27,6 +27,6 @@ export module Config {
 
         //Miscelanous
         public static LogRetrieveCount:number = 12;
-        public static LogSummaryMinutes:number = 1 * 24 * 60; //1 day
+        public static LogSummaryMinutes:number = 7 * 24 * 60; //7 days
     }
 }

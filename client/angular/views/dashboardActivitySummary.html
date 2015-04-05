@@ -1,0 +1,24 @@
+<div data-role="dashboard">
+    <!-- Title -->
+    <h1>
+        {{::FormHeader}}
+        <span data-ng-repeat="icon in FormHeaderIcons"
+              class="glyphicon glyphicon-{{::icon.Icon}}"
+              data-ng-click="icon.Action()"
+              title="{{::icon.Tooltip}}"></span>
+    </h1>
+    <div class="empty"></div>
+
+    <!-- Activity charts -->
+    <div class="dashboardActivity">
+        <h2>{{::RecentActivityHeader}}</h2>
+        <div class="activityItem" data-ng-repeat="activity in ActivitySummary">
+            <div data-dashboard-activity-item-chart></div>
+        </div>
+
+        <!-- No activity message -->
+        <div class="emptyActivityMessage" data-ng-hide="ActivitySummary.length">
+            {{::NoRecentActivityMessage}}
+        </div>
+    </div>
+</div>

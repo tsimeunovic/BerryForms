@@ -188,6 +188,12 @@ module Localization {
         //Dashboard
         Dashboard:string;
         DashboardFor:string;
+        RecentActivity:string;
+        NoRecentActivity:string;
+        TotalCount:string;
+        Created:string;
+        Updated:string;
+        Deleted:string;
     }
 
     (function () {

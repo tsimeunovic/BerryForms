@@ -1,10 +1,17 @@
 /// <reference path="../base/baseController.ts" />
+/// <reference path="../base/baseViewController.ts" />
+/// <reference path="../../interfaces/services/repository/IDashboardRepositoryService.ts" />
+/// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
+/// <reference path="../../interfaces/services/localization/ILocalizationService.ts" />
+/// <reference path="../../interfaces/services/system/IRedirectService.ts" />
+/// <reference path="../../../static/routeParams.ts" />
+/// <reference path="../../../extensions/stringExtensions.ts" />
 
 'use strict';
 
-//Controller for dashboard activity component
+//Controller for dashboard activity summary component
 module Controllers {
-    export class DashboardActivityController extends BaseViewController {
+    export class DashboardActivitySummaryController extends BaseViewController {
         public static injection():any[] {
             return [
                 '$scope',
@@ -17,7 +24,7 @@ module Controllers {
                 'LocalizationService',
                 'RedirectService',
                 'DashboardRepositoryService',
-                DashboardActivityController
+                DashboardActivitySummaryController
             ]
         }
 
@@ -43,8 +50,13 @@ module Controllers {
 
         private InitializeScope():void {
             //Header
-            if (this.EntityName) this.LoadEntityMetadata();
-            else this.Scope.FormHeader = this.LocalizationService.Resources.Dashboard;
+            if (this.EntityName) {
+                this.LoadEntityMetadata();
+            }
+            else {
+                this.Scope.FormHeader = this.LocalizationService.Resources.Dashboard;
+                this.Scope.RecentActivityHeader = this.LocalizationService.Resources.RecentActivity;
+            }
 
             //Data
             this.LoadDashboardData();
@@ -80,6 +92,7 @@ module Controllers {
         private ActivitySummaryLoaded(activityData:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardSummary);
             if (errorsModel == null) {
+                this.Scope.NoRecentActivityMessage = this.LocalizationService.Resources.NoRecentActivity;
                 this.Scope.ActivitySummary = activityData;
             }
             else {

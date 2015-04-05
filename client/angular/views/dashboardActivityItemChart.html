@@ -1,0 +1,16 @@
+<div>
+    <!-- Title -->
+    <h4>{{SummaryItem.EntityName}}</h4>
+
+    <!-- Chart -->
+    <div class="chartContainer ct-chart"></div>
+
+    <!-- Legend -->
+    <div class="chartLegend">
+        <h5>{{::SummaryItem.LegendTitle}}</h5>
+        <div data-ng-repeat="legendItem in SummaryItem.Legend">
+            <div class="colorSquare {{::legendItem.className}}"></div>
+            <span>{{::legendItem.title}}</span>&nbsp;<span>({{::legendItem.count}})</span>
+        </div>
+    </div>
+</div>
