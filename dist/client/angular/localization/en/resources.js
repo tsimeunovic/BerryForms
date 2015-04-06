@@ -169,6 +169,15 @@ var Localization;
             this.CreateEntity = 'Creation of entity';
             this.UpdateEntity = 'Update of entity';
             this.DeleteEntity = 'Deletion of entity';
+            //Dashboard
+            this.Dashboard = 'Dashboard';
+            this.DashboardFor = '\'{0}\' dashboard';
+            this.RecentActivity = 'Recently active entities';
+            this.NoRecentActivity = 'No recent activity';
+            this.TotalCount = 'Total count: {0}';
+            this.Created = 'Created';
+            this.Updated = 'Updated';
+            this.Deleted = 'Deleted';
         }
         return ResourcesEn;
     })();

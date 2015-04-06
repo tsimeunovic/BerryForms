@@ -168,6 +168,7 @@ var Data;
                         }
                         else {
                             //Create model
+                            console.log('Retrieved entities summary for last \'' + minutes + '\' minutes');
                             var indexedResult = [];
                             var result = [];
                             for (var i = 0; i < agg.length; i++) {

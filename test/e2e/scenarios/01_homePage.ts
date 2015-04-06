@@ -1,5 +1,7 @@
 /// <reference path="../../jasmine.d.ts" />
+/// <reference path="../page-objects/dashboard.ts" />
 /// <reference path="../page-objects/homePage.ts" />
+/// <reference path="../page-objects/loginDialog.ts" />
 /// <reference path="../page-objects/entitySchemaForm.ts" />
 
 'use strict';
@@ -27,6 +29,6 @@ describe('Feature: Home screen', function () {
 
         //Assert
         expect(loginDialog.VisibleDialogsCount()).toEqual(0);
-        expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.EntitySchemaForm.CreateEntityUrlPattern);
+        expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.Dashboard.DashboardUrlPattern);
     });
 });

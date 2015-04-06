@@ -23,7 +23,7 @@ var Config;
         Server.SuperUserPassword = 'admin';
         //Miscelanous
         Server.LogRetrieveCount = 12;
-        Server.LogSummaryMinutes = 1 * 24 * 60; //1 day
+        Server.LogSummaryMinutes = 7 * 24 * 60; //7 days
         return Server;
     })();
     Config.Server = Server;

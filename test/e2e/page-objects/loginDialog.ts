@@ -1,4 +1,5 @@
 /// <reference path="../../jasmine.d.ts" />
+/// <reference path="../page-objects/form.ts" />
 
 'use strict';
 

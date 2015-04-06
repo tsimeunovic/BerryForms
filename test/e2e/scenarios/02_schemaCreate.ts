@@ -19,6 +19,7 @@ describe('Feature: Schema create', function () {
         var leftMenu = PageObjects.LeftMenu.Current();
 
         //Act
+        PageObjects.EntitySchemaForm.NavigateToCreateWithLogin();
         form.FillAndSubmit([
             {Name: 'EntityName', Type: 'text', Value: 'First entity'},
             {Name: 'EntityDescription', Type: 'text', Value: 'First entity description'},
