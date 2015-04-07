@@ -2,6 +2,7 @@
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./textFieldDirective.ts" />
 /// <reference path="./textFieldFormFields.ts" />
+/// <reference path="./textFieldFilter.ts" />
 
 'use strict';
 

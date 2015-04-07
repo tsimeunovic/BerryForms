@@ -174,7 +174,6 @@ module Localization {
         Login:string = 'Login';
         UserName:string = 'User name';
         Password:string = 'Password';
-        UserUnauthenticated:string;
         InvalidUserNameOrPassword:string = 'Could not login user. Invalid user name or password';
 
         //Actions

@@ -24,8 +24,8 @@ module Localization {
         FieldDescription:string = 'Popis';
         FieldTypeName:string = 'Typ';
         TextField:string = 'Text';
-        EmailField:string;
-        NumberField:string;
+        EmailField:string = 'Emailová adresa';
+        NumberField:string = 'Číslo';
         TextareaField:string = 'Viacriadkový text';
         BooleanField:string = 'Áno/nie';
         DateField:string = 'Dátum';
@@ -54,11 +54,11 @@ module Localization {
         DateFrom:string = '{0} od';
         DateTo:string = '{0} do';
         AnyValue:string = 'Všetky hodnoty ...';
-        AllowFloating:string;
-        MinValue:string;
-        MaxValue:string;
-        NumberFrom:string;
-        NumberTo:string;
+        AllowFloating:string = 'Povoliť desatinné číslo';
+        MinValue:string = 'Minimálna hodnota';
+        MaxValue:string = 'Maximálna hodnota';
+        NumberFrom:string = '{0} od';
+        NumberTo:string = '{0} do';
 
         //Form
         PleaseSelect:string = 'Zvoľte hodnotu ...';
@@ -172,28 +172,27 @@ module Localization {
 
         //Security
         Login:string = 'Prihlásenie';
-        UserName:string;
-        Password:string;
-        UserUnauthenticated:string;
-        InvalidUserNameOrPassword:string;
+        UserName:string = 'Uživateľské meno';
+        Password:string = 'Heslo';
+        InvalidUserNameOrPassword:string = 'Prihlásenie nebolo úspešné. Nesprávne meno, alebo heslo';
 
         //Actions
-        RetryActionsQuestion:string;
-        CreateEntityMetadata:string;
-        UpdateEntityMetadata:string;
-        CreateEntity:string;
-        UpdateEntity:string;
-        DeleteEntity:string;
+        RetryActionsQuestion:string = 'Niektoré operácie nebolo možné vykonať. Prajete si ich zopakovať?';
+        CreateEntityMetadata:string = 'Vytvorenie typu entity';
+        UpdateEntityMetadata:string = 'Aktualizácia typu entity';
+        CreateEntity:string = 'Vytvorenie záznamu';
+        UpdateEntity:string = 'Aktualizácia záznamu';
+        DeleteEntity:string = 'Vymazanie záznamu';
 
         //Dashboard
-        Dashboard:string;
-        DashboardFor:string;
-        RecentActivity:string;
-        NoRecentActivity:string;
-        TotalCount:string;
-        Created:string;
-        Updated:string;
-        Deleted:string;
+        Dashboard:string = 'Dashboard';
+        DashboardFor:string = 'Dashboard pre \'{0}\'';
+        RecentActivity:string = 'Nedávna aktivita';
+        NoRecentActivity:string = 'Žiadna nedávna aktivita';
+        TotalCount:string = 'Počet spolu: {0}';
+        Created:string = 'Vytvorené';
+        Updated:string = 'Aktualizované';
+        Deleted:string = 'Vymazané';
     }
 
     (function () {

@@ -1,7 +1,8 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
 
 'use strict';
-declare var _global:any;
+declare
+var _global:any;
 
 //Resource file with translations for Serbian language (Српски бре!)
 module Localization {
@@ -24,8 +25,8 @@ module Localization {
         FieldDescription:string = 'Опис поља';
         FieldTypeName:string = 'Врста поља';
         TextField:string = 'Текст';
-        EmailField:string;
-        NumberField:string;
+        EmailField:string = 'Имејл адреса';
+        NumberField:string = 'Број';
         TextareaField:string = 'Дужи текст';
         BooleanField:string = 'Да/не';
         DateField:string = 'Датум';
@@ -54,11 +55,11 @@ module Localization {
         DateFrom:string = '{0} од';
         DateTo:string = '{0} до';
         AnyValue:string = 'Свака вриједност ...';
-        AllowFloating:string;
-        MinValue:string;
-        MaxValue:string;
-        NumberFrom:string;
-        NumberTo:string;
+        AllowFloating:string = 'Дозволити децималне бројеве';
+        MinValue:string = 'Најмања вриједност';
+        MaxValue:string = 'Највећа вриједност';
+        NumberFrom:string = '{0} од';
+        NumberTo:string = '{0} до';
 
         //Form
         PleaseSelect:string = 'Одаберите вриједност ...';
@@ -171,29 +172,28 @@ module Localization {
         Success:string = 'Успјех';
 
         //Security
-        Login:string;
-        UserName:string;
-        Password:string;
-        UserUnauthenticated:string;
-        InvalidUserNameOrPassword:string;
+        Login:string = 'Пријављивање';
+        UserName:string = 'Корисничко име';
+        Password:string = 'Лозинка';
+        InvalidUserNameOrPassword:string  = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
 
         //Actions
-        RetryActionsQuestion:string;
-        CreateEntityMetadata:string;
-        UpdateEntityMetadata:string;
-        CreateEntity:string;
-        UpdateEntity:string;
-        DeleteEntity:string;
+        RetryActionsQuestion:string  = 'Неке операције нису биле успјешне. Желите ли да их поновите?';
+        CreateEntityMetadata:string = 'Додавање новог типа шеме';
+        UpdateEntityMetadata:string = 'Ажурирање типа шеме';
+        CreateEntity:string = 'Додавање записа';
+        UpdateEntity:string = 'Ажурирање записа';
+        DeleteEntity:string = 'Брисање записа';
 
         //Dashboard
-        Dashboard:string;
-        DashboardFor:string;
-        RecentActivity:string;
-        NoRecentActivity:string;
-        TotalCount:string;
-        Created:string;
-        Updated:string;
-        Deleted:string;
+        Dashboard:string = 'Дешборд';
+        DashboardFor:string = 'Дешборд за \'{0}\'';
+        RecentActivity:string = 'Скорашња активност';
+        NoRecentActivity:string = 'Нема скорашње активности';
+        TotalCount:string = 'Укупно: {0}';
+        Created:string = 'Нове';
+        Updated:string = 'Ажуриране';
+        Deleted:string = 'Избрисане';
     }
 
     (function () {
