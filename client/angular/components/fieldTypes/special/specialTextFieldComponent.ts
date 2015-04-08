@@ -1,6 +1,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="../text/textFieldFormFields.ts" />
+/// <reference path="../text/textFieldComponent.ts" />
 
 'use strict';
 

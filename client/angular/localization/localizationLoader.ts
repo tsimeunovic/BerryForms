@@ -13,6 +13,7 @@ module Localization {
             var userLanguage = this.DetermineUserLanguage();
             var resourcesUrl = Config.Client.LocalizedResourcesBaseUrl.format([userLanguage]);
             _global.ResourcesToLoad.push({Url: resourcesUrl, Callback: LocalizationLoader.ResourceLoaded});
+            document.body.className = userLanguage;
         }
 
         private static DetermineUserLanguage():string {

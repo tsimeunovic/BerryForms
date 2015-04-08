@@ -50,6 +50,7 @@
 /// <reference path="./components/fieldTypes/boolean/booleanFieldComponent.ts" />
 
 /// <reference path="./router.ts" />
+/// <reference path="./helpers/resourceLoader.ts" />
 
 'use strict';
 var _global:any = this;
@@ -124,50 +125,12 @@ module AngularApplication {
 
             //Manual bootstrap
             angular.bootstrap(document, ['BerryFormsApp']);
-            document.body.className = 'ng-app';
+            document.body.className += ' ng-app';
         }
     }
 
-    class ResourcesLoader {
-        private static ResourcesToLoad:any = _global.ResourcesToLoad || [];
-        private static SetupDone:boolean = false;
-
-        public static LoadRemainingResourcesAndStart() {
-            //Load scheduled resources before application starts
-            var resourcesCopy:any[] = ResourcesLoader.ResourcesToLoad.createCopy();
-            for (var i = 0; i < resourcesCopy.length; i++) {
-                var resource = resourcesCopy[i];
-                var resourceLoadFunction = function (resource:any) {
-                    var request = new XMLHttpRequest();
-                    request.onreadystatechange = function () {
-                        if (request.readyState === 4) {
-                            if (request.status === 200) {
-                                if (resource.Callback) resource.Callback(request.responseText);
-                            }
-                            else {
-                                console.error(('Could not load resource \'{0}\'').format([resource.Url]));
-                            }
-                            ResourcesLoader.ResourcesToLoad.remove(resource);
-                            ResourcesLoader.CheckRemainingResources();
-                        }
-                    };
-                    request.open('GET', resource.Url, Config.Client.LoadResourcesAsynchronously);
-                    request.send(null);
-                };
-                resourceLoadFunction(resource);
-            }
-            ResourcesLoader.CheckRemainingResources();
-        }
-
-        private static CheckRemainingResources():void {
-            if (ResourcesLoader.ResourcesToLoad.length == 0 && !ResourcesLoader.SetupDone) {
-                ResourcesLoader.SetupDone = true;
-                Bootstrap.Start();
-            }
-        }
-    }
-
+    //Load resources and start
     (function () {
-        ResourcesLoader.LoadRemainingResourcesAndStart();
+        Helpers.ResourceLoader.LoadRemainingResources(Bootstrap.Start);
     })();
 }
