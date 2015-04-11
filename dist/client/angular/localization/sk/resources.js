@@ -22,6 +22,8 @@ var Localization;
             this.FieldDescription = 'Popis';
             this.FieldTypeName = 'Typ';
             this.TextField = 'Text';
+            this.EmailField = 'Emailová adresa';
+            this.NumberField = 'Číslo';
             this.TextareaField = 'Viacriadkový text';
             this.BooleanField = 'Áno/nie';
             this.DateField = 'Dátum';
@@ -49,6 +51,11 @@ var Localization;
             this.DateFrom = '{0} od';
             this.DateTo = '{0} do';
             this.AnyValue = 'Všetky hodnoty ...';
+            this.AllowFloating = 'Povoliť desatinné číslo';
+            this.MinValue = 'Minimálna hodnota';
+            this.MaxValue = 'Maximálna hodnota';
+            this.NumberFrom = '{0} od';
+            this.NumberTo = '{0} do';
             //Form
             this.PleaseSelect = 'Zvoľte hodnotu ...';
             this.Create = 'Vytvoriť';
@@ -152,6 +159,25 @@ var Localization;
             this.Success = 'Úspech';
             //Security
             this.Login = 'Prihlásenie';
+            this.UserName = 'Uživateľské meno';
+            this.Password = 'Heslo';
+            this.InvalidUserNameOrPassword = 'Prihlásenie nebolo úspešné. Nesprávne meno, alebo heslo';
+            //Actions
+            this.RetryActionsQuestion = 'Niektoré operácie nebolo možné vykonať. Prajete si ich zopakovať?';
+            this.CreateEntityMetadata = 'Vytvorenie typu entity';
+            this.UpdateEntityMetadata = 'Aktualizácia typu entity';
+            this.CreateEntity = 'Vytvorenie záznamu';
+            this.UpdateEntity = 'Aktualizácia záznamu';
+            this.DeleteEntity = 'Vymazanie záznamu';
+            //Dashboard
+            this.Dashboard = 'Dashboard';
+            this.DashboardFor = 'Dashboard pre \'{0}\'';
+            this.RecentActivity = 'Nedávna aktivita';
+            this.NoRecentActivity = 'Žiadna nedávna aktivita';
+            this.TotalCount = 'Počet spolu: {0}';
+            this.Created = 'Vytvorené';
+            this.Updated = 'Aktualizované';
+            this.Deleted = 'Vymazané';
         }
         return ResourcesSk;
     })();

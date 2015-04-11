@@ -22,6 +22,8 @@ var Localization;
             this.FieldDescription = 'Опис поља';
             this.FieldTypeName = 'Врста поља';
             this.TextField = 'Текст';
+            this.EmailField = 'Имејл адреса';
+            this.NumberField = 'Број';
             this.TextareaField = 'Дужи текст';
             this.BooleanField = 'Да/не';
             this.DateField = 'Датум';
@@ -49,6 +51,11 @@ var Localization;
             this.DateFrom = '{0} од';
             this.DateTo = '{0} до';
             this.AnyValue = 'Свака вриједност ...';
+            this.AllowFloating = 'Дозволити децималне бројеве';
+            this.MinValue = 'Најмања вриједност';
+            this.MaxValue = 'Највећа вриједност';
+            this.NumberFrom = '{0} од';
+            this.NumberTo = '{0} до';
             //Form
             this.PleaseSelect = 'Одаберите вриједност ...';
             this.Create = 'Створи';
@@ -150,6 +157,27 @@ var Localization;
             this.Warning = 'Упозорење';
             this.Information = 'Информација';
             this.Success = 'Успјех';
+            //Security
+            this.Login = 'Пријављивање';
+            this.UserName = 'Корисничко име';
+            this.Password = 'Лозинка';
+            this.InvalidUserNameOrPassword = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
+            //Actions
+            this.RetryActionsQuestion = 'Неке операције нису биле успјешне. Желите ли да их поновите?';
+            this.CreateEntityMetadata = 'Додавање новог типа шеме';
+            this.UpdateEntityMetadata = 'Ажурирање типа шеме';
+            this.CreateEntity = 'Додавање записа';
+            this.UpdateEntity = 'Ажурирање записа';
+            this.DeleteEntity = 'Брисање записа';
+            //Dashboard
+            this.Dashboard = 'Дешборд';
+            this.DashboardFor = 'Дешборд за \'{0}\'';
+            this.RecentActivity = 'Скорашња активност';
+            this.NoRecentActivity = 'Нема скорашње активности';
+            this.TotalCount = 'Укупно: {0}';
+            this.Created = 'Нове';
+            this.Updated = 'Ажуриране';
+            this.Deleted = 'Избрисане';
         }
         return ResourcesSr;
     })();
