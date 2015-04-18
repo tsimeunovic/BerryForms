@@ -24,6 +24,8 @@
 /// <reference path="./controllers/combined/dashboardController.ts" />
 /// <reference path="./controllers/dashboard/dashboardActivitySummaryController.ts" />
 
+/// <reference path="./interceptors/exceptionHandler.ts" />
+
 /// <reference path="./services/communication/messagingService.ts" />
 /// <reference path="./services/communication/queueService.ts" />
 /// <reference path="./services/system/namingConventionsService.ts" />
@@ -64,6 +66,9 @@ module AngularApplication {
             var app = angular.module('BerryFormsApp', ['ngRoute', 'ui.bootstrap.datepicker', 'ui.sortable', 'toaster']);
             //Routing & Configuration
             app.config(Config.Router.injection());
+
+            //Interceptors
+            app.factory('$exceptionHandler', Interceptors.ExceptionHandler.injection());
 
             //Directives
             app.directive('leftMenuAutosize', Directives.LeftMenuAutosize.injection());
