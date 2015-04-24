@@ -48,5 +48,13 @@ module Mocks {
         public GetUrlForDashboardActivitySummary(entityName:string):string {
             return 'DashboardActivitySummary/' + entityName;
         }
+
+        public GetUrlForMyRecentActivity(entityName:string):string {
+            return 'MyRecentActivity/' + entityName;
+        }
+
+        public GetUrlForRecentActivity(entityName:string):string {
+            return 'RecentActivity/' + entityName;
+        }
     }
 }
