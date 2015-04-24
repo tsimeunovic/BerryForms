@@ -88,7 +88,7 @@ export module NodeHelpers {
                 //Just by me
                 Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
             });
-            app.get(routeBaseUrl + '/dashboard/activity', function (req, res) {
+            app.get(routeBaseUrl + '/dashboard/activity/all', function (req, res) {
                 //By all users
                 Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
             });

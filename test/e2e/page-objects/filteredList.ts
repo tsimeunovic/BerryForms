@@ -1,4 +1,7 @@
 /// <reference path="./browser.ts" />
+/// <reference path="./form.ts" />
+/// <reference path="./loginDialog.ts" />
+/// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/extensions/stringExtensions.ts" />
 
 'use strict';

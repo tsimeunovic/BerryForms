@@ -1,5 +1,6 @@
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 /// <reference path="../../../interfaces/services/repository/IEntityRepositoryService.ts" />
+/// <reference path="../../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 /// <reference path="../../../interfaces/services/system/IRedirectService.ts" />
 
 'use strict';

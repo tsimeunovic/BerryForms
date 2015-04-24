@@ -193,6 +193,8 @@ module Localization {
         Created:string = 'Vytvorené';
         Updated:string = 'Aktualizované';
         Deleted:string = 'Vymazané';
+        RecentlyModifiedRecords:string;
+        RecentlyModifiedRecordsByMe:string;
     }
 
     (function () {

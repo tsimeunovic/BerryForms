@@ -5,6 +5,7 @@
 /// <reference path="../../../mocks/entityModelMapperServiceMock.ts" />
 /// <reference path="../../../mocks/queryCreatorServiceMock.ts" />
 /// <reference path="../../../mocks/pluginsExecutorServiceMock.ts" />
+/// <reference path="../../../mocks/httpWrapperServiceMock.ts" />
 /// <reference path="../../../../../client/angular/services/repository/entityRepositoryService.ts" />
 
 'use strict';

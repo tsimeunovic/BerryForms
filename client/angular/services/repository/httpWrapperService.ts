@@ -1,3 +1,8 @@
+/// <reference path="../../interfaces/services/repository/IHttpWrapperService.ts" />
+/// <reference path="../../interfaces/services/state/IStateService.ts" />
+/// <reference path="../../models/security/userSessionModel.ts" />
+/// <reference path="../../../extensions/stringExtensions.ts" />
+
 'use strict';
 
 //Service that wraps angular $http calls to api. Adds authentication headers and stores unauthenticated requests for later retry

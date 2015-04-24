@@ -1,3 +1,5 @@
+/// <reference path="../../jasmine.d.ts" />
+
 'use strict';
 
 module Mocks {

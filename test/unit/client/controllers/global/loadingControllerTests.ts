@@ -1,6 +1,7 @@
 /// <reference path="../../../../jasmine.d.ts" />
 /// <reference path="../../../mocks/scopeMock.ts" />
 /// <reference path="../../../mocks/messagingServiceMock.ts" />
+/// <reference path="../../../mocks/stateServiceMock.ts" />
 /// <reference path="../../../../../client/angular/controllers/global/loadingController.ts" />
 
 'use strict';

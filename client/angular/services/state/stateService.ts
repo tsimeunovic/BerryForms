@@ -1,4 +1,8 @@
 /// <reference path="../../interfaces/services/state/IStateService.ts" />
+/// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
+/// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
+/// <reference path="../../interfaces/services/system/IRedirectService.ts" />
+/// <reference path="../../interfaces/services/localization/ILocalizationService.ts" />
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 

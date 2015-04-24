@@ -9,7 +9,7 @@
 
 'use strict';
 
-//Controller for dashboard activity summary component
+//Controller for dashboard activity summary component (display graph with activity summary per entity)
 module Controllers {
     export class DashboardActivitySummaryController extends BaseViewController {
         public static injection():any[] {
@@ -39,7 +39,7 @@ module Controllers {
                     private RedirectService:Services.IRedirectService,
                     private DashboardRepositoryService:Services.IDashboardRepositoryService) {
             super(Scope, Static.ControllerArea.Dashboard, MessagingService, NotificationService, QueueService, StateService);
-            var entityName = RouteParams[Static.RouteParams.EntityName];
+            var entityName:string = RouteParams[Static.RouteParams.EntityName];
 
             this.EntityName = entityName;
 

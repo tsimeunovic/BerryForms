@@ -1,3 +1,6 @@
+/// <reference path="../../../mocks/httpMock.ts" />
+/// <reference path="../../../mocks/qMock.ts" />
+/// <reference path="../../../mocks/stateServiceMock.ts" />
 /// <reference path="../../../../jasmine.d.ts" />
 /// <reference path="../../../../../client/angular/services/repository/httpWrapperService.ts" />
 

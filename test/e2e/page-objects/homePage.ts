@@ -1,4 +1,5 @@
 /// <reference path="./browser.ts" />
+/// <reference path="./loginDialog.ts" />
 
 'use strict';
 

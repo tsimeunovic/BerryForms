@@ -1,0 +1,16 @@
+<div data-role="dashboard">
+    <div data-ng-repeat="list in ActivityLists"
+         class="activityList {{::list.Type}}">
+        <h2>
+            {{::list.Title}}
+        </h2>
+
+        <!-- Items -->
+        <div data-ng-repeat="activityListItem in list.Items"
+             class="activityListItem {{::activityListItem.Operation}}">
+            <span class="collection">{{::activityListItem.Collection}}</span>
+            <span class="id">{{::activityListItem.Id}}</span>
+            <span class="user">{{::activityListItem.User}}</span>
+        </div>
+    </div>
+</div>

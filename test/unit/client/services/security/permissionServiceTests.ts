@@ -1,3 +1,5 @@
+/// <reference path="../../../../jasmine.d.ts" />
+/// <reference path="../../../mocks/stateServiceMock.ts" />
 /// <reference path="../../../../../client/angular/services/security/permissionService.ts" />
 
 'use strict';

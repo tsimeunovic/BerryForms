@@ -72,7 +72,19 @@ module Services {
 
         public GetUrlForDashboardActivitySummary(entityName:string):string {
             var url = this.ApiBaseUrl + 'dashboard/activity/summary';
-            if(entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/summary').format([entityName]);
+            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/summary').format([entityName]);
+            return this.AddPreventCacheParameter(url);
+        }
+
+        public GetUrlForMyRecentActivity(entityName:string):string {
+            var url = this.ApiBaseUrl + 'dashboard/activity/me';
+            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/me').format([entityName]);
+            return this.AddPreventCacheParameter(url);
+        }
+
+        public GetUrlForRecentActivity(entityName:string):string {
+            var url = this.ApiBaseUrl + 'dashboard/activity/all';
+            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);
             return this.AddPreventCacheParameter(url);
         }
     }

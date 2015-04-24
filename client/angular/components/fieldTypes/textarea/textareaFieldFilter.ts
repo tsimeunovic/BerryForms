@@ -1,4 +1,5 @@
 /// <reference path="./textareaFieldMetadataModel.ts" />
+/// <reference path="../text/textFieldMetadataModel.ts" />
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 
 'use strict';

@@ -52,3 +52,41 @@ div.dashboardActivity {
     }
   }
 }
+
+div.activityList {
+  padding-left: 10px;
+  padding-bottom: 5px;
+
+  div.activityListItem {
+    .borderRadius(4px, 0, 0, 4px);
+    border: 1px solid @contrastingDarkColor;
+
+    height: 34px;
+    margin: 4px 0;
+    padding: 6px 10px 6px 40px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &.create {
+      background-color: lighten(@dashboardChartCreated, 25%);
+    }
+    &.update {
+      background-color: lighten(@dashboardChartUpdated, 25%);
+    }
+    &.delete {
+      background-color: lighten(@dashboardChartDeleted, 25%);
+    }
+
+    span:nth-child(n+2)::before {
+      content: ' - ';
+    }
+  }
+
+  &.me {
+    span.user {
+      display: none;
+    }
+  }
+}

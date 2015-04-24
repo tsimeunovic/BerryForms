@@ -190,5 +190,7 @@ module Localization {
         Created:string;
         Updated:string;
         Deleted:string;
+        RecentlyModifiedRecords:string;
+        RecentlyModifiedRecordsByMe:string;
     }
 }

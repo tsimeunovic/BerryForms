@@ -4,5 +4,7 @@
 module Services {
     export interface IDashboardRepositoryService {
         GetActivitySummary(entityName:string, callback:(activityData:any[], errorsModel:any)=>void):void;
+        GetMyRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any)=>void):void;
+        GetRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any)=>void):void
     }
 }

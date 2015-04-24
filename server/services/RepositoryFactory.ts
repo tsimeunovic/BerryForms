@@ -11,6 +11,7 @@ var ConfigServer:any = require('../config/Config').Config.Server;
 export module Services {
     export class RepositoryFactory implements Contract.Services.IRepositoryFactory {
         private GetCollectionNameFor(type:string, name:string) {
+            //TODO: Return null and create no repository for unknown type
             return type == 'entity' ? name : ConfigServer.SystemPrefix + 'metadata';
         }
 

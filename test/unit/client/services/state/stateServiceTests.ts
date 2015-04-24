@@ -1,5 +1,9 @@
 /// <reference path="../../../../jasmine.d.ts" />
 /// <reference path="../../../mocks/callbackMock.ts" />
+/// <reference path="../../../mocks/messagingServiceMock.ts" />
+/// <reference path="../../../mocks/dialogServiceMock.ts" />
+/// <reference path="../../../mocks/redirectServiceMock.ts" />
+/// <reference path="../../../mocks/localizationServiceMock.ts" />
 /// <reference path="../../../../../client/angular/services/state/stateService.ts" />
 
 'use strict';

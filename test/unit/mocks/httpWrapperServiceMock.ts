@@ -1,3 +1,7 @@
+/// <reference path="../../../client/angular/interfaces/services/repository/IHttpWrapperService.ts" />
+/// <reference path="../../jasmine.d.ts" />
+/// <reference path="../mocks/httpMock.ts" />
+
 'use strict';
 
 module Mocks {

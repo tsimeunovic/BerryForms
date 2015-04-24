@@ -194,6 +194,8 @@ module Localization {
         Created:string = 'Нове';
         Updated:string = 'Ажуриране';
         Deleted:string = 'Избрисане';
+        RecentlyModifiedRecords:string;
+        RecentlyModifiedRecordsByMe:string;
     }
 
     (function () {

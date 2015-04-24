@@ -26,7 +26,7 @@ export module Config {
         public static SuperUserPassword:string = 'admin';
 
         //Miscelanous
-        public static LogRetrieveCount:number = 12;
+        public static LogRetrieveCount:number = 8;
         public static LogSummaryMinutes:number = 7 * 24 * 60; //7 days
     }
 }

@@ -23,6 +23,7 @@
 /// <reference path="./controllers/list/fieldMetadataListController.ts" />
 /// <reference path="./controllers/combined/dashboardController.ts" />
 /// <reference path="./controllers/dashboard/dashboardActivitySummaryController.ts" />
+/// <reference path="./controllers/dashboard/dashboardActivityListController.ts" />
 
 /// <reference path="./interceptors/exceptionHandler.ts" />
 
@@ -114,6 +115,7 @@ module AngularApplication {
             app.controller('FieldMetadataListController', Controllers.FieldMetadataListController.injection());
             app.controller('DashboardController', Controllers.DashboardController.injection());
             app.controller('DashboardActivitySummaryController', Controllers.DashboardActivitySummaryController.injection());
+            app.controller('DashboardActivityListController', Controllers.DashboardActivityListController.injection());
 
             //Components
             app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry.injection());

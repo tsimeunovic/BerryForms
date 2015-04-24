@@ -19,5 +19,7 @@ module Static {
         public static FieldSchemaSubmit:string = 'FieldSchemaSubmit';
         public static LoggingIn:string = 'LoggingIn';
         public static DashboardSummary:string = 'DashboardSummary';
+        public static DashboardMyActivity:string = 'DashboardMyActivity';
+        public static DashboardActivity:string = 'DashboardActivity';
     }
 }
