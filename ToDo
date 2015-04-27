@@ -25,6 +25,8 @@ Replace hard-coded dependencies with angular constants (http://twofuckingdevelop
 
 //Future feature:
 Roles and permissions
+Soft delete functionality
+Auto login (ie. long lasting session) and logout
 Multi-relationship control
 Settings page
 Entity create and modify date in filter

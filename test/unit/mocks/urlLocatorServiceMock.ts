@@ -56,5 +56,9 @@ module Mocks {
         public GetUrlForRecentActivity(entityName:string):string {
             return 'RecentActivity/' + entityName;
         }
+
+        public GetClientUrlForEntityDetail(entityName:string, entityId:number):string {
+            return '#/ClientUrlForEntityDetail/' + entityName + '/' + entityId;
+        }
     }
 }

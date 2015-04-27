@@ -63,11 +63,23 @@ div.activityList {
 
     height: 34px;
     margin: 4px 0;
-    padding: 6px 10px 6px 40px;
+    padding: 6px 10px 6px 10px;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    div.viewIcon {
+      position: relative;
+      display: inline-block;
+      top: 3px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    span:nth-child(n+3)::before {
+      content: ' - ';
+    }
 
     &.create {
       background-color: lighten(@dashboardChartCreated, 25%);
@@ -77,13 +89,14 @@ div.activityList {
     }
     &.delete {
       background-color: lighten(@dashboardChartDeleted, 25%);
-    }
 
-    span:nth-child(n+2)::before {
-      content: ' - ';
+      div.viewIcon {
+        display: none;
+      }
     }
   }
 
+  //My activity list
   &.me {
     span.user {
       display: none;
