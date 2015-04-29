@@ -55,16 +55,17 @@
 /// <reference path="./router.ts" />
 /// <reference path="./helpers/resourceLoader.ts" />
 
-'use strict';
 var _global:any = this;
 _global.BootstrapScripts = _global.BootstrapScripts || [];
 declare var angular:any;
 
 //Application entry point. Load all required resources, then registers module and its dependencies
 module AngularApplication {
+    'use strict';
+
     class Bootstrap {
-        public static Start() {
-            var app = angular.module('BerryFormsApp', ['ngRoute', 'ui.bootstrap.datepicker', 'ui.sortable', 'toaster']);
+        public static Start():void {
+            var app:any = angular.module('BerryFormsApp', ['ngRoute', 'ui.bootstrap.datepicker', 'ui.sortable', 'toaster']);
             //Routing & Configuration
             app.config(Config.Router.injection());
 
@@ -119,14 +120,14 @@ module AngularApplication {
 
             //Components
             app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry.injection());
-            angular.forEach(_global.Components.FieldTypes, function (value:Components.FieldTypes.IFieldType) {
+            angular.forEach(_global.Components.FieldTypes, function (value:Components.FieldTypes.IFieldType):void {
                 //Register each field type as directive
                 app.directive(value.DirectiveName, value.DirectiveOptions());
             });
 
             //Additional bootstrap scripts
-            for (var i = 0; i < _global.BootstrapScripts.length; i++) {
-                var bootstrapScript = _global.BootstrapScripts[i];
+            for (var i:number = 0; i < _global.BootstrapScripts.length; i++) {
+                var bootstrapScript:(ng:any) => void = _global.BootstrapScripts[i];
                 bootstrapScript(angular);
             }
 
@@ -137,7 +138,7 @@ module AngularApplication {
     }
 
     //Load resources and start
-    (function () {
+    (function ():void {
         Helpers.ResourceLoader.LoadRemainingResources(Bootstrap.Start);
     })();
 }

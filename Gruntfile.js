@@ -55,14 +55,14 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
-        jshint: {
+        tslint: {
             options: {
-                jshintrc: '.jshintrc'
+                configuration: grunt.file.readJSON("tslint.json")
             },
             all: [
-                'client/{,*/}*.js',
-                'server/{,*/}*.js',
-                'test/{,*/}*.js'
+                'client/{,*/}*.ts',
+                'server/{,*/}*.ts',
+                'test/{,*/}*.ts'
             ]
         },
         rev: {
@@ -303,7 +303,7 @@ module.exports = function (grunt) {
     //Tasks
     //Lint
     grunt.registerTask('lint', [
-        'jshint'
+        'tslint:all'
     ]);
 
     //Tests

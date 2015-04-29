@@ -23,8 +23,5 @@ module Services {
         GetUrlForDashboardActivitySummary(entityName:string):string;
         GetUrlForMyRecentActivity(entityName:string):string;
         GetUrlForRecentActivity(entityName:string):string;
-
-        //Client routes
-        GetClientUrlForEntityDetail(entityName:string, entityId:number):string;
     }
 }

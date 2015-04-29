@@ -1,7 +1,7 @@
-'use strict';
-
 //Application routes
 module Config {
+    'use strict';
+
     export class Router {
 
         public static injection():any[] {

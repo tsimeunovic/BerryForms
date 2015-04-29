@@ -13,7 +13,6 @@ module Services {
             ];
         }
 
-        private ClientBaseUrl:string = '#/';
         private ApiBaseUrl:string = Config.Client.ApiBaseUrl;
 
         private AddPreventCacheParameter(url:string):string {
@@ -88,12 +87,6 @@ module Services {
             var url = this.ApiBaseUrl + 'dashboard/activity/all';
             if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);
             return this.AddPreventCacheParameter(url);
-        }
-
-        //Client routes
-        public GetClientUrlForEntityDetail(entityName:string, entityId:number):string {
-            var entityIdStr = entityId.toString();
-            return (this.ClientBaseUrl + 'entity/{0}/id/{1}').format([entityName, entityIdStr]);
         }
     }
 }

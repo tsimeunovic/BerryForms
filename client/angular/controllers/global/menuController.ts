@@ -1,6 +1,7 @@
 /// <reference path="../base/baseController.ts" />
 /// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 /// <reference path="../../interfaces/services/localization/ILocalizationService.ts" />
+/// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 
 'use strict';

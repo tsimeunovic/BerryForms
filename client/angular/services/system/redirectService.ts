@@ -1,4 +1,5 @@
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
+/// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
 'use strict';

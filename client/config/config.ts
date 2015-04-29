@@ -1,7 +1,7 @@
-'use strict';
-
 //Client configuration
 module Config {
+    'use strict';
+
     export class Client {
         public static SystemPrefix:string = '__';
         public static SystemEntityName:string = Client.SystemPrefix + 'BerryFormsSystem';
@@ -17,7 +17,7 @@ module Config {
 
         public static DatepickerFormat:string = 'dd.MM.yyyy';
         public static DatepickerOptions:any = {
-            'year-format': "'yyyy'",
+            'year-format': '\'yyyy\'',
             'starting-day': 1
         };
 

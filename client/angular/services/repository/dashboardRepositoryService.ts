@@ -1,6 +1,7 @@
 /// <reference path="../../interfaces/services/repository/IDashboardRepositoryService.ts" />
 /// <reference path="../../interfaces/services/repository/IHttpWrapperService.ts" />
 /// <reference path="../../interfaces/services/repository/IUrlLocatorService.ts" />
+/// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 
 'use strict';
@@ -12,6 +13,7 @@ module Services {
             return [
                 'HttpWrapperService',
                 'UrlLocatorService',
+                'RedirectService',
                 'EntityMetadataListCacheService',
                 DashboardRepositoryService
             ];
@@ -19,6 +21,7 @@ module Services {
 
         constructor(private HttpWrapperService:Services.IHttpWrapperService,
                     private UrlLocatorService:Services.IUrlLocatorService,
+                    private RedirectService:Services.IRedirectService,
                     private EntityMetadataListCacheService:Services.IEntityMetadataListCacheService) {
         }
 
@@ -82,7 +85,7 @@ module Services {
             var _this = this;
             this.EntityMetadataListCacheService.LoadEntityMetadataFromCache(activityItem.Collection, function (metadata:Models.EntityMetadata) {
                 activityItem.EntityName = metadata.EntityName;
-                activityItem.Url = _this.UrlLocatorService.GetClientUrlForEntityDetail(activityItem.Collection, activityItem.Id);
+                activityItem.Url = _this.RedirectService.GetEditEntityUrl(activityItem.Collection, activityItem.Id);
                 callback();
             });
         }
