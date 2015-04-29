@@ -1,6 +1,7 @@
 'use strict';
 
 //Extensions of javascript string type
+/* tslint:disable:interface-name */
 interface String {
     format: (args:string[]) => string;
     startsWith: (searchWord:string) => boolean;
@@ -9,14 +10,14 @@ interface String {
 }
 
 String.prototype.format = function (args:string[]):string {
-    var numRegex = new RegExp('{(\\d+)}', 'g');
-    return this.replace(numRegex, function (match, num) {
-        return typeof arguments != 'undefined' ? args[num] : match;
+    var numRegex:RegExp = new RegExp('{(\\d+)}', 'g');
+    return this.replace(numRegex, function (match:string, num:number):string {
+        return typeof arguments !== 'undefined' ? args[num] : match;
     });
 };
 
 String.prototype.startsWith = function (searchWord:string):boolean {
-    return(this.indexOf(searchWord) == 0);
+    return(this.indexOf(searchWord) === 0);
 };
 
 String.prototype.replaceAll = function (searchWord:string, replaceWord:string):string {
@@ -24,7 +25,8 @@ String.prototype.replaceAll = function (searchWord:string, replaceWord:string):s
     return this.replace(searchRegExp, replaceWord);
 };
 
-var defaultDiacriticsRemovalMap = [
+/* tslint:disable:max-line-length */
+var defaultDiacriticsRemovalMap:any[] = [
     {'base': 'A', 'letters': new RegExp('[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]', 'g')},
     {'base': 'AA', 'letters': new RegExp('[\uA732]', 'g')},
     {'base': 'AE', 'letters': new RegExp('[\u00C6\u01FC\u01E2]', 'g')},
@@ -113,7 +115,7 @@ var defaultDiacriticsRemovalMap = [
 
 String.prototype.removeDiacritics = function ():string {
     var result:string = this;
-    for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
+    for (var i:number = 0; i < defaultDiacriticsRemovalMap.length; i++) {
         result = result.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
     }
     return result;
