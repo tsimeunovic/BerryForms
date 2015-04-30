@@ -1,11 +1,11 @@
 /// <reference path="../../../models/core/fieldMetadataModel.ts" />
 
-'use strict';
-
 module Models {
+    'use strict';
+
     export class BooleanFieldMetadata extends FieldMetadata {
         constructor() {
-            super("Boolean");
+            super('Boolean');
         }
 
         public ThreeState: boolean;
@@ -13,6 +13,7 @@ module Models {
         //Mapping
         public FieldSpecialProperties:string[] = ['ThreeState'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
+            //No additional properties
         }
     }
 }

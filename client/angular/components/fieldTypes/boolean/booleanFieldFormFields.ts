@@ -1,5 +1,3 @@
-'use strict';
-
 /// <reference path="./booleanFieldMetadataModel.ts" />
 /// <reference path="./../../../data/createFieldFormFields.ts" />
 /// <reference path="../../../models/core/entityMetadataModel.ts" />
@@ -13,9 +11,11 @@
 /// <reference path="../../../../config/config.ts" />
 
 module Data {
+    'use strict';
+
     export class CreateBooleanFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var booleanFields = Data.CreateFieldFormFields.GetData(null);
+            var booleanFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             booleanFields.Fields = booleanFields.Fields.concat([
                 CreateBooleanFieldFormFields.ThreeStateField()
             ]);
@@ -23,7 +23,7 @@ module Data {
         }
 
         private static ThreeStateField():Models.BooleanFieldMetadata {
-            var result = new Models.BooleanFieldMetadata();
+            var result:Models.BooleanFieldMetadata = new Models.BooleanFieldMetadata();
             result.FieldSystemName = 'ThreeState';
             result.FieldName = Services.LocalizationService.Resources.ThreeState;
             result.FieldDescription = result.FieldName;

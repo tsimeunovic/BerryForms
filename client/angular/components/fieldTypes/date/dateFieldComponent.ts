@@ -10,43 +10,48 @@
 module Components.FieldTypes {
     export class DateFieldComponent implements IFieldType {
         //Identifier
-        FieldName:string = 'Date';
+        public FieldName:string = 'Date';
 
         //Directive registration
-        DirectiveName:string = 'fieldDate';
-        DirectiveOptions():any[] {
+        public DirectiveName:string = 'fieldDate';
+
+        public DirectiveOptions():any[] {
             return Directives.DateField.injection();
         }
 
         //Metadata model
-        CreateMetadata():Models.FieldMetadata {
+        public CreateMetadata():Models.FieldMetadata {
             return new Models.DateFieldMetadata();
         }
 
         //Format value
-        FormatValue(value:any):string {
-            if(!value) return null;
+        public FormatValue(value:any):string {
+            if (!value) {
+                return null;
+            }
             var date:Date = new Date(value);
             return date.format(Config.Client.DatepickerFormat);
         }
 
         //Field filtering
-        CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
+        public CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
             return Components.FieldTypes.DateFieldFilter.CreateFilterFields(fieldMetadata);
         }
-        CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
+
+        public CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
             return Components.FieldTypes.DateFieldFilter.CreateFilterQuery(fieldMetadata, filterValues);
         }
 
-        ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
+        public ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             return Components.FieldTypes.DateFieldFilter.ParseFilterQueryString(fieldMetadata, filterEntity, routeParams);
         }
-        CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
+
+        public CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
             return Components.FieldTypes.DateFieldFilter.CreateFilterQueryString(fieldMetadata, filterValues);
         }
 
         //Field creation form
-        CreateFieldForm():Models.EntityMetadata {
+        public CreateFieldForm():Models.EntityMetadata {
             return Data.CreateDateFieldFormFields.GetData();
         }
     }

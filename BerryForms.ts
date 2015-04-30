@@ -17,7 +17,7 @@ var BodyParser:any = require('body-parser');
 
 //Configure server and allow CORS
 Bootstrap.NodeHelpers.Bootstrap.Setup();
-var App = Express();
+var App:any = Express();
 App.use(Compress());
 App.use(BodyParser.urlencoded({ extended: true }));
 App.use(BodyParser.json());

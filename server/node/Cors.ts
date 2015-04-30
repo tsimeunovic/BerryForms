@@ -1,10 +1,10 @@
-'use strict';
-
 export module NodeHelpers {
+    'use strict';
+
     export class Cors {
-        public static EnableCorsOnExpress(app) {
-            app.use(function (req:any, res:any, next:any) {
-                var oneof = false;
+        public static EnableCorsOnExpress(app:any):void {
+            app.use(function (req:any, res:any, next:any):void {
+                var oneof:boolean = false;
                 if (req.headers.origin) {
                     res.header('Access-Control-Allow-Origin', req.headers.origin);
                     oneof = true;
@@ -22,10 +22,9 @@ export module NodeHelpers {
                 }
 
                 // intercept OPTIONS method
-                if (oneof && req.method == 'OPTIONS') {
+                if (oneof && req.method === 'OPTIONS') {
                     res.send(200);
-                }
-                else {
+                } else {
                     next();
                 }
             });

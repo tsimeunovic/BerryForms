@@ -1,7 +1,7 @@
-'use strict';
-
 //Actions in application that are specific to entity
 module Static {
+    'use strict';
+
     export class EntityAction {
         //Records
         public static View:string = 'ViewEntity';

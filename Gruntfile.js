@@ -60,9 +60,16 @@ module.exports = function (grunt) {
                 configuration: grunt.file.readJSON("tslint.json")
             },
             all: [
-                'client/{,*/}*.ts',
-                'server/{,*/}*.ts',
-                'test/{,*/}*.ts'
+                'BerryForms.ts',
+                'client/{,**/}*.ts',
+                'server/{,**/}*.ts',
+                'test/{,**/}*.ts'
+            ],
+            client: [
+                'client/{,**/}*.ts'
+            ],
+            server: [
+                'server/{,**/}*.ts'
             ]
         },
         rev: {

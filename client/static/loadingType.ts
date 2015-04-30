@@ -1,7 +1,7 @@
-'use strict';
-
 //Types of loadings that application performs
 module Static {
+    'use strict';
+
     export class LoadingType {
         public static Entity:string = 'Entity';
         public static EntityData:string = 'EntityData';

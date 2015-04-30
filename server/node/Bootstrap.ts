@@ -1,10 +1,11 @@
-'use strict';
-
 export module NodeHelpers {
+    'use strict';
+
     export class Bootstrap {
-        public static Setup() {
+        public static Setup():void {
             //Prototype overrides
-            RegExp.prototype['toJSON'] = function() { return this.source; };
+            /* tslint:disable:no-string-literal */
+            RegExp.prototype['toJSON'] = function():any { return this.source; };
         }
     }
 }
