@@ -3,10 +3,11 @@
 /// <reference path="../../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 /// <reference path="../../../interfaces/services/system/IRedirectService.ts" />
 
-'use strict';
-
 module Directives {
+    'use strict';
+
     export class RelationField extends Directives.BaseField {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 'EntityRepositoryService',
@@ -20,11 +21,13 @@ module Directives {
         private static EntityMetadataListCacheService:Services.IEntityMetadataListCacheService;
         private static RedirectService:Services.IRedirectService;
 
-        public static RelationDirectiveOptions(entityRepositoryService:Services.IEntityRepositoryService, entityMetadataListCacheService:Services.IEntityMetadataListCacheService, redirectService:Services.IRedirectService):any {
+        public static RelationDirectiveOptions(entityRepositoryService:Services.IEntityRepositoryService,
+                                               entityMetadataListCacheService:Services.IEntityMetadataListCacheService,
+                                               redirectService:Services.IRedirectService):any {
             RelationField.EntityRepositoryService = entityRepositoryService;
             RelationField.EntityMetadataListCacheService = entityMetadataListCacheService;
             RelationField.RedirectService = redirectService;
-            return BaseField.DirectiveOptions("Relation", RelationField.StaticConstructor);
+            return BaseField.DirectiveOptions('Relation', RelationField.StaticConstructor);
         }
 
         public static StaticConstructor():Directives.RelationField {
@@ -44,14 +47,14 @@ module Directives {
         }
 
         private WatchSearchExpression():void {
-            var _this = this;
-            this.Scope.$watch('SearchExpression', function () {
+            var _this:RelationField = this;
+            this.Scope.$watch('SearchExpression', function ():void {
                 _this.ScheduleSearch();
             });
         }
 
         private ScheduleSearch():void {
-            var _this = this;
+            var _this:RelationField = this;
 
             //Invalidate old results
             this.Scope.SearchResults = null;
@@ -65,22 +68,32 @@ module Directives {
             if (this.Scope.SearchExpression &&
                 this.Scope.SearchExpression.length >= Config.Client.SearchMinExpressionLength) {
                 //Schedule new search
-                this.Scope.SearchTimer = setTimeout(function () {
+                this.Scope.SearchTimer = setTimeout(function ():void {
                     _this.Scope.SearchTimer = null;
                     _this.SearchForEntity(_this.Scope.SearchExpression);
                 }, Config.Client.SearchTypingWaitTimeMs);
             }
         }
 
-        private SearchForEntity(searchExpression:string) {
-            var _this = this;
-            RelationField.EntityMetadataListCacheService.LoadEntityMetadataFromCache(this.Scope.EntitySystemName, function (entityMetadata:Models.EntityMetadata) {
-                RelationField.EntityRepositoryService.LoadSearchResults(entityMetadata, searchExpression, _this.SearchForEntityCompleted.bind(_this));
-            });
+        private SearchForEntity(searchExpression:string):void {
+            var _this:RelationField = this;
+
+            RelationField.EntityMetadataListCacheService.LoadEntityMetadataFromCache(
+                this.Scope.EntitySystemName,
+                function (entityMetadata:Models.EntityMetadata):void {
+                    RelationField.EntityRepositoryService.LoadSearchResults(
+                        entityMetadata, searchExpression,
+                        _this.SearchForEntityCompleted.bind(_this));
+                });
         }
 
-        private SearchForEntityCompleted(searchExpression:string, searchResults:Models.SelectFieldOptionMetadata[], totalResultsCount:number, errorsModel:any) {
-            if (searchExpression != this.Scope.SearchExpression) return;
+        private SearchForEntityCompleted(searchExpression:string,
+                                         searchResults:Models.SelectFieldOptionMetadata[],
+                                         totalResultsCount:number,
+                                         errorsModel:any):void {
+            if (searchExpression !== this.Scope.SearchExpression) {
+                return;
+            }
 
             this.Scope.SearchResults = searchResults;
             this.Scope.SearchResults.HasError = errorsModel != null;
@@ -94,8 +107,10 @@ module Directives {
         }
 
         private GetFollowItemUrl(item:Models.SelectFieldOptionMetadata):string {
-            if (!item) return null;
-            var entityId:number = parseInt(item.Value);
+            if (!item) {
+                return null;
+            }
+            var entityId:number = parseInt(item.Value, 10);
             return RelationField.RedirectService.GetEditEntityUrl(this.Scope.EntitySystemName, entityId);
         }
     }

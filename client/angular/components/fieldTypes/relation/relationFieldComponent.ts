@@ -5,46 +5,46 @@
 /// <reference path="./relationFieldFormFields.ts" />
 /// <reference path="./relationFieldFilter.ts" />
 
-'use strict';
-
 module Components.FieldTypes {
+    'use strict';
+
     export class RelationFieldComponent implements IFieldType {
         //Identifier
-        FieldName:string = 'Relation';
+        public FieldName:string = 'Relation';
 
         //Directive registration
-        DirectiveName:string = 'fieldRelation';
-        DirectiveOptions():any[] {
+        public DirectiveName:string = 'fieldRelation';
+        public DirectiveOptions():any[] {
             return Directives.RelationField.injection();
         }
 
         //Metadata model
-        CreateMetadata():Models.FieldMetadata {
+        public CreateMetadata():Models.FieldMetadata {
             return new Models.RelationFieldMetadata();
         }
 
         //Format value
-        FormatValue(value:any):string {
+        public FormatValue(value:any):string {
             return value ? value.Text : null;
         }
 
         //Field filtering
-        CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
+        public CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
             return Components.FieldTypes.RelationFieldFilter.CreateFilterFields(fieldMetadata);
         }
-        CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
+        public CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
             return Components.FieldTypes.RelationFieldFilter.CreateFilterQuery(fieldMetadata, filterValues);
         }
 
-        ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
+        public ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             return Components.FieldTypes.RelationFieldFilter.ParseFilterQueryString(fieldMetadata, filterEntity, routeParams);
         }
-        CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
+        public CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
             return Components.FieldTypes.RelationFieldFilter.CreateFilterQueryString(fieldMetadata, filterValues);
         }
 
         //Field creation form
-        CreateFieldForm():Models.EntityMetadata {
+        public CreateFieldForm():Models.EntityMetadata {
             return Data.CreateRelationFieldFormFields.GetData();
         }
     }

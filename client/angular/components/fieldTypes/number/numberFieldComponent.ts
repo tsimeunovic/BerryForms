@@ -4,46 +4,46 @@
 /// <reference path="./numberFieldFormFields.ts" />
 /// <reference path="./numberFieldFilter.ts" />
 
-'use strict';
-
 module Components.FieldTypes {
+    'use strict';
+
     export class NumberFieldComponent implements IFieldType {
         //Identifier
-        FieldName:string = 'Number';
+        public FieldName:string = 'Number';
 
         //Directive registration
-        DirectiveName:string = 'fieldNumber';
-        DirectiveOptions():any[] {
+        public DirectiveName:string = 'fieldNumber';
+        public DirectiveOptions():any[] {
             return Directives.NumberField.injection();
         }
 
         //Metadata model
-        CreateMetadata():Models.FieldMetadata {
+        public CreateMetadata():Models.FieldMetadata {
             return new Models.NumberFieldMetadata();
         }
 
         //Format value
-        FormatValue(value:any):string {
+        public FormatValue(value:any):string {
             return value;
         }
 
         //Field filtering
-        CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
+        public CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
             return Components.FieldTypes.NumberFieldFilter.CreateFilterFields(fieldMetadata);
         }
-        CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
+        public CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
             return Components.FieldTypes.NumberFieldFilter.CreateFilterQuery(fieldMetadata, filterValues);
         }
 
-        ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
+        public ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             return Components.FieldTypes.NumberFieldFilter.ParseFilterQueryString(fieldMetadata, filterEntity, routeParams);
         }
-        CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
+        public CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
             return Components.FieldTypes.NumberFieldFilter.CreateFilterQueryString(fieldMetadata, filterValues);
         }
 
         //Field creation form
-        CreateFieldForm():Models.EntityMetadata {
+        public CreateFieldForm():Models.EntityMetadata {
             return Data.CreateNumberFieldFormFields.GetData();
         }
     }

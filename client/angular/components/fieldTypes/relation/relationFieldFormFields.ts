@@ -9,14 +9,16 @@
 /// <reference path="../../../../config/config.ts" />
 /// <reference path="../../../../extensions/arrayExtensions.ts" />
 
-'use strict';
 var _global:any = this;
-declare var angular:any;
+declare
+var angular:any;
 
 module Data {
+    'use strict';
+
     export class CreateRelationFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var relationFields = Data.CreateFieldFormFields.GetData(null);
+            var relationFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             relationFields.Fields = relationFields.Fields.concat([
                 CreateRelationFieldFormFields.RelatedEntityField()
             ]);
@@ -24,7 +26,7 @@ module Data {
         }
 
         private static RelatedEntityField():Models.SelectFieldMetadata {
-            var result = new Models.SelectFieldMetadata();
+            var result:Models.SelectFieldMetadata = new Models.SelectFieldMetadata();
             result.FieldSystemName = 'RelatedEntity';
             result.FieldName = Services.LocalizationService.Resources.RelatedEntity;
             result.FieldDescription = result.FieldName;
@@ -33,8 +35,9 @@ module Data {
             //List of entity types
             result.Values = [];
             var EntityMetadataListCacheService:Services.IEntityMetadataListCacheService = _global.Instances.EntityMetadataListCacheService;
-            angular.forEach(EntityMetadataListCacheService.Data, function (entityMetadata:Models.EntityMetadata, index:number) {
-                var optionItem = new Models.SelectFieldOptionMetadata(entityMetadata.EntityName, entityMetadata.EntitySystemName);
+            angular.forEach(EntityMetadataListCacheService.Data, function (entityMetadata:Models.EntityMetadata, index:number):void {
+                var optionItem:Models.SelectFieldOptionMetadata =
+                    new Models.SelectFieldOptionMetadata(entityMetadata.EntityName, entityMetadata.EntitySystemName);
                 result.Values.add(optionItem);
             });
 

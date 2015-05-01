@@ -4,47 +4,52 @@
 /// <reference path="./listFieldFormFields.ts" />
 /// <reference path="./listFieldFilter.ts" />
 
-'use strict';
-
 module Components.FieldTypes {
+    'use strict';
+
     export class ListFieldComponent implements IFieldType {
         //Identifier
-        FieldName:string = 'List';
+        public FieldName:string = 'List';
 
         //Directive registration
-        DirectiveName:string = 'fieldList';
-        DirectiveOptions():any[] {
+        public DirectiveName:string = 'fieldList';
+
+        public DirectiveOptions():any[] {
             return Directives.ListField.injection();
         }
 
         //Metadata model
-        CreateMetadata():Models.FieldMetadata {
+        public CreateMetadata():Models.FieldMetadata {
             return new Models.ListFieldMetadata();
         }
 
         //Format value
-        FormatValue(value:any):string {
-            if(!value || !value.length) return null;
+        public FormatValue(value:any):string {
+            if (!value || !value.length) {
+                return null;
+            }
             return value.join(', ');
         }
 
         //Field filtering
-        CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
+        public CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
             return Components.FieldTypes.ListFieldFilter.CreateFilterFields(fieldMetadata);
         }
-        CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
+
+        public CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
             return Components.FieldTypes.ListFieldFilter.CreateFilterQuery(fieldMetadata, filterValues);
         }
 
-        ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
+        public ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             return Components.FieldTypes.ListFieldFilter.ParseFilterQueryString(fieldMetadata, filterEntity, routeParams);
         }
-        CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
+
+        public CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
             return Components.FieldTypes.ListFieldFilter.CreateFilterQueryString(fieldMetadata, filterValues);
         }
 
         //Field creation form
-        CreateFieldForm():Models.EntityMetadata {
+        public CreateFieldForm():Models.EntityMetadata {
             return Data.CreateListFieldFormFields.GetData();
         }
     }

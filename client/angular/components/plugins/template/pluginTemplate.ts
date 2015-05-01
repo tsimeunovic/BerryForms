@@ -4,11 +4,12 @@
 /// <reference path="../../../../static/pluginOperations.ts" />
 /// <reference path="../../../../static/pluginDataTypes.ts" />
 
-'use strict';
 var _global:any = this;
 
 //Copy this template when developing new plugin
 module Components.Plugins {
+    'use strict';
+
     //Change <any> to <Models.Entity> or Models.EntityMetadata
     export class PluginTemplate implements Components.Plugin.IPlugin<any> {
         //Set plugin friendly name here
@@ -19,7 +20,8 @@ module Components.Plugins {
             return false;
         }
 
-        public Execute(pluginContext:Models.PluginContext<any>, callback:(pluginContext:Models.PluginContext<any>)=>void):void {
+        public Execute(pluginContext:Models.PluginContext<any>,
+                       callback:(pluginContext:Models.PluginContext<any>) => void):void {
             //Modify data and/or cancel operation execution here
         }
     }

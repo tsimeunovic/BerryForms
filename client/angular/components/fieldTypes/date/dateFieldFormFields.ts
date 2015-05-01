@@ -10,12 +10,12 @@
 /// <reference path="../../../services/localization/localizationService.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Data {
+    'use strict';
+
     export class CreateDateFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var dateFields = Data.CreateFieldFormFields.GetData(null);
+            var dateFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             dateFields.Fields = dateFields.Fields.concat([
                 CreateDateFieldFormFields.MinDateField(),
                 CreateDateFieldFormFields.MaxDateField()
@@ -24,7 +24,7 @@ module Data {
         }
 
         private static MinDateField():Models.DateFieldMetadata {
-            var result = new Models.DateFieldMetadata();
+            var result:Models.DateFieldMetadata = new Models.DateFieldMetadata();
             result.FieldSystemName = 'MinDate';
             result.FieldName = Services.LocalizationService.Resources.MinDate;
             result.FieldDescription = result.FieldName;
@@ -32,7 +32,7 @@ module Data {
         }
 
         private static MaxDateField():Models.DateFieldMetadata {
-            var result = new Models.DateFieldMetadata();
+            var result:Models.DateFieldMetadata = new Models.DateFieldMetadata();
             result.FieldSystemName = 'MaxDate';
             result.FieldName = Services.LocalizationService.Resources.MaxDate;
             result.FieldDescription = result.FieldName;

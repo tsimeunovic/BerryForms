@@ -11,12 +11,12 @@
 /// <reference path="../../../services/localization/localizationService.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Data {
+    'use strict';
+
     export class CreateTextFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var textFields = Data.CreateFieldFormFields.GetData(null);
+            var textFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             textFields.Fields = textFields.Fields.concat([
                 CreateTextFieldFormFields.RegularExpressionField(),
                 CreateTextFieldFormFields.MaxLengthField()
@@ -25,7 +25,7 @@ module Data {
         }
 
         private static RegularExpressionField():Models.TextFieldMetadata {
-            var result = new Models.TextFieldMetadata();
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'RegularExpression';
             result.FieldName = Services.LocalizationService.Resources.RegularExpression;
             result.FieldDescription = result.FieldName;
@@ -33,7 +33,7 @@ module Data {
         }
 
         private static MaxLengthField():Models.NumberFieldMetadata {
-            var result = new Models.NumberFieldMetadata();
+            var result:Models.NumberFieldMetadata = new Models.NumberFieldMetadata();
             result.FieldSystemName = 'MaxLength';
             result.FieldName = Services.LocalizationService.Resources.MaxLength;
             result.FieldDescription = result.FieldName;

@@ -1,10 +1,11 @@
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Directives {
+    'use strict';
+
     export class SelectField extends Directives.BaseField {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$document',
@@ -16,7 +17,7 @@ module Directives {
 
         public static DirectiveOptions(Document:any):any {
             SelectField.Document = Document;
-            return BaseField.DirectiveOptions("Select", SelectField.StaticConstructor);
+            return BaseField.DirectiveOptions('Select', SelectField.StaticConstructor);
         }
 
         public static StaticConstructor():Directives.SelectField {
@@ -27,8 +28,10 @@ module Directives {
             super.Link($scope, $linkElement, $linkAttributes);
 
             //Find toggle
-            var rootElement = $linkElement;
-            if (rootElement.length > 0) rootElement = rootElement[0];
+            var rootElement:any = $linkElement;
+            if (rootElement.length > 0) {
+                rootElement = rootElement[0];
+            }
             this.ToggleButton = rootElement.querySelector('.dropdown-toggle');
 
             //Add select function to scope
@@ -55,9 +58,9 @@ module Directives {
         }
 
         private Watch():void {
-            var _this = this;
+            var _this:SelectField = this;
             this.SetInitialData();
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function () {
+            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
                 _this.SetInitialData();
             });
         }
@@ -65,7 +68,9 @@ module Directives {
         private SetInitialData():void {
             //Assert initialized model data
             var fieldSystemName:string = this.Scope.field.FieldSystemName;
-            if (this.Scope.Entity.Data[fieldSystemName]) return;
+            if (this.Scope.Entity.Data[fieldSystemName]) {
+                return;
+            }
             this.Scope.Entity.Data[fieldSystemName] =
                 this.Scope.Entity.Data[fieldSystemName] ||
                 this.Scope.field.DefaultValue ||
@@ -73,17 +78,20 @@ module Directives {
         }
 
         private WatchOpened():void {
-            var _this = this;
-            this.Scope.$watch('Opened', function (value) {
+            var _this:SelectField = this;
+            this.Scope.$watch('Opened', function (value:boolean):void {
                 var bindUnbindMethod:string = value ? 'bind' : 'unbind';
                 SelectField.Document[bindUnbindMethod]('click', _this.DocumentClick.bind(_this));
             });
         }
 
-        private DocumentClick(event):void {
-            if (!this.Scope.Opened || event.target === this.ToggleButton) return;
+        private DocumentClick(event:any):void {
+            if (!this.Scope.Opened || event.target === this.ToggleButton) {
+                return;
+            }
             this.Scope.Opened = false;
-            this.Scope.$apply(function () {
+            this.Scope.$apply(function ():void {
+                //Nothing to apply, just run digest to detect opened dropdown
             });
         }
     }

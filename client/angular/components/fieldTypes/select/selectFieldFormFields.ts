@@ -10,12 +10,12 @@
 /// <reference path="../../../services/localization/localizationService.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Data {
+    'use strict';
+
     export class CreateSelectFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var selectFields = Data.CreateFieldFormFields.GetData(null);
+            var selectFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             selectFields.Fields = selectFields.Fields.concat([
                 CreateSelectFieldFormFields.ValuesField(),
                 CreateSelectFieldFormFields.DefaultValueField()
@@ -24,7 +24,7 @@ module Data {
         }
 
         private static ValuesField():Models.ListFieldMetadata {
-            var result = new Models.ListFieldMetadata();
+            var result:Models.ListFieldMetadata = new Models.ListFieldMetadata();
             result.FieldSystemName = 'Values';
             result.FieldName = Services.LocalizationService.Resources.Values;
             result.FieldDescription = result.FieldName;
@@ -33,7 +33,7 @@ module Data {
         }
 
         private static DefaultValueField():Models.TextFieldMetadata {
-            var result = new Models.TextFieldMetadata();
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'DefaultValue';
             result.FieldName = Services.LocalizationService.Resources.DefaultValue;
             result.FieldDescription = result.FieldName;

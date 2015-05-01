@@ -4,46 +4,46 @@
 /// <reference path="./textareaFieldFormFields.ts" />
 /// <reference path="./textareaFieldFilter.ts" />
 
-'use strict';
-
 module Components.FieldTypes {
+    'use strict';
+
     export class TextareaFieldComponent implements IFieldType {
         //Identifier
-        FieldName:string = 'Textarea';
+        public FieldName:string = 'Textarea';
 
         //Directive registration
-        DirectiveName:string = 'fieldTextarea';
-        DirectiveOptions():any[] {
+        public DirectiveName:string = 'fieldTextarea';
+        public DirectiveOptions():any[] {
             return Directives.TextareaField.injection();
         }
 
         //Metadata model
-        CreateMetadata():Models.FieldMetadata {
+        public CreateMetadata():Models.FieldMetadata {
             return new Models.TextareaFieldMetadata();
         }
 
         //Format value
-        FormatValue(value:any):string {
+        public FormatValue(value:any):string {
             return value;
         }
 
         //Field filtering
-        CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
+        public CreateFilterFields(fieldMetadata:Models.FieldMetadata):Models.FieldMetadata[] {
             return Components.FieldTypes.TextareaFieldFilter.CreateFilterFields(fieldMetadata);
         }
-        CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
+        public CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
             return Components.FieldTypes.TextareaFieldFilter.CreateFilterQuery(fieldMetadata, filterValues);
         }
 
-        ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
+        public ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
             return Components.FieldTypes.TextareaFieldFilter.ParseFilterQueryString(fieldMetadata, filterEntity, routeParams);
         }
-        CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
+        public CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
             return Components.FieldTypes.TextareaFieldFilter.CreateFilterQueryString(fieldMetadata, filterValues);
         }
 
         //Field creation form
-        CreateFieldForm():Models.EntityMetadata {
+        public CreateFieldForm():Models.EntityMetadata {
             return Data.CreateTextareaFieldFormFields.GetData();
         }
     }

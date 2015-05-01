@@ -1,8 +1,8 @@
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 
-'use strict';
-
 module Directives {
+    'use strict';
+
     export class TextareaField extends Directives.BaseField {
         public static injection():any[] {
             return [
@@ -10,13 +10,11 @@ module Directives {
             ];
         }
 
-        public static DirectiveOptions():any
-        {
-            return BaseField.DirectiveOptions("Textarea", TextareaField.StaticConstructor);
+        public static DirectiveOptions():any {
+            return BaseField.DirectiveOptions('Textarea', TextareaField.StaticConstructor);
         }
 
-        public static StaticConstructor():Directives.TextareaField
-        {
+        public static StaticConstructor():Directives.TextareaField {
             return new Directives.TextareaField();
         }
     }

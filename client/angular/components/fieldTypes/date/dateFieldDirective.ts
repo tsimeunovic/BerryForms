@@ -5,11 +5,14 @@ module Directives {
     'use strict';
 
     export class DateField extends Directives.BaseField {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 DateField.DirectiveOptions
             ];
         }
+
+        private Opened:boolean = false;
 
         public static DirectiveOptions():any {
             return BaseField.DirectiveOptions('Date', DateField.StaticConstructor);
@@ -18,8 +21,6 @@ module Directives {
         public static StaticConstructor():Directives.DateField {
             return new Directives.DateField();
         }
-
-        private Opened:boolean = false;
 
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             super.Link($scope, $linkElement, $linkAttributes);
@@ -38,7 +39,7 @@ module Directives {
             this.Scope.Opened = !this.Scope.Opened;
         }
 
-        private IsDisabled(date, mode):boolean {
+        private IsDisabled(date:Date, mode:string):boolean {
             return false;
         }
 
@@ -63,21 +64,21 @@ module Directives {
             }
 
             //Convert date
-            var localTimeZoneOffset = localDate.getTimezoneOffset();
-            var utcTime = localDate.getTime() - (localTimeZoneOffset * 60 * 1000);
+            var localTimeZoneOffset:number = localDate.getTimezoneOffset();
+            var utcTime:number = localDate.getTime() - (localTimeZoneOffset * 60 * 1000);
             return utcTime;
         }
 
         private Watch():void {
-            var _this = this;
+            var _this:DateField = this;
 
             //Underlying model changed
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function () {
+            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
                 _this.EntityValueChanged();
             });
 
             //User changed value
-            this.Scope.$watch('LocalDate', function () {
+            this.Scope.$watch('LocalDate', function ():void {
                 _this.UIValueChanged();
             });
         }

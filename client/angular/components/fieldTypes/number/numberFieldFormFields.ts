@@ -11,12 +11,12 @@
 /// <reference path="../../../services/localization/localizationService.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Data {
+    'use strict';
+
     export class CreateNumberFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var numberFields = Data.CreateFieldFormFields.GetData(null);
+            var numberFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             numberFields.Fields = numberFields.Fields.concat([
                 CreateNumberFieldFormFields.AllowFloatingField(),
                 CreateNumberFieldFormFields.MinValueField(),
@@ -26,7 +26,7 @@ module Data {
         }
 
         private static AllowFloatingField():Models.BooleanFieldMetadata {
-            var result = new Models.BooleanFieldMetadata();
+            var result:Models.BooleanFieldMetadata = new Models.BooleanFieldMetadata();
             result.FieldSystemName = 'AllowFloating';
             result.FieldName = Services.LocalizationService.Resources.AllowFloating;
             result.FieldDescription = result.FieldName;
@@ -35,7 +35,7 @@ module Data {
         }
 
         private static MinValueField():Models.NumberFieldMetadata {
-            var result = new Models.NumberFieldMetadata();
+            var result:Models.NumberFieldMetadata = new Models.NumberFieldMetadata();
             result.FieldSystemName = 'MinValue';
             result.FieldName = Services.LocalizationService.Resources.MinValue;
             result.FieldDescription = result.FieldName;
@@ -44,7 +44,7 @@ module Data {
         }
 
         private static MaxValueField():Models.NumberFieldMetadata {
-            var result = new Models.NumberFieldMetadata();
+            var result:Models.NumberFieldMetadata = new Models.NumberFieldMetadata();
             result.FieldSystemName = 'MaxValue';
             result.FieldName = Services.LocalizationService.Resources.MaxValue;
             result.FieldDescription = result.FieldName;

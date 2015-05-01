@@ -11,12 +11,12 @@
 /// <reference path="../../../services/localization/localizationService.ts" />
 /// <reference path="../../../../config/config.ts" />
 
-'use strict';
-
 module Data {
+    'use strict';
+
     export class CreateListFieldFormFields {
         public static GetData():Models.EntityMetadata {
-            var listFields = Data.CreateFieldFormFields.GetData(null);
+            var listFields:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
             listFields.Fields = listFields.Fields.concat([
                 CreateListFieldFormFields.MaxRecordsCountField(),
                 CreateListFieldFormFields.MaxRecordLengthField()
@@ -25,7 +25,7 @@ module Data {
         }
 
         private static MaxRecordsCountField():Models.NumberFieldMetadata {
-            var result = new Models.NumberFieldMetadata();
+            var result:Models.NumberFieldMetadata = new Models.NumberFieldMetadata();
             result.FieldSystemName = 'MaxRecordsCount';
             result.FieldName = Services.LocalizationService.Resources.MaxRecordsCount;
             result.FieldDescription = result.FieldName;
@@ -36,7 +36,7 @@ module Data {
         }
 
         private static MaxRecordLengthField():Models.NumberFieldMetadata {
-            var result = new Models.NumberFieldMetadata();
+            var result:Models.NumberFieldMetadata = new Models.NumberFieldMetadata();
             result.FieldSystemName = 'MaxRecordLength';
             result.FieldName = Services.LocalizationService.Resources.MaxRecordLength;
             result.FieldDescription = result.FieldName;

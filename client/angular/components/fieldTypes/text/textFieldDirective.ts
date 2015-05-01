@@ -1,8 +1,8 @@
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 
-'use strict';
-
 module Directives {
+    'use strict';
+
     export class TextField extends Directives.BaseField {
         public static injection():any[] {
             return [
@@ -10,13 +10,11 @@ module Directives {
             ];
         }
 
-        public static DirectiveOptions():any
-        {
-            return BaseField.DirectiveOptions("Text", TextField.StaticConstructor);
+        public static DirectiveOptions():any {
+            return BaseField.DirectiveOptions('Text', TextField.StaticConstructor);
         }
 
-        public static StaticConstructor():Directives.TextField
-        {
+        public static StaticConstructor():Directives.TextField {
             return new Directives.TextField();
         }
     }

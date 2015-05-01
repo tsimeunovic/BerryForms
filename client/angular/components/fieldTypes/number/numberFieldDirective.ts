@@ -1,8 +1,8 @@
 /// <reference path="../../../directives/fieldDirectiveBase.ts" />
 
-'use strict';
-
 module Directives {
+    'use strict';
+
     export class NumberField extends Directives.BaseField {
         public static injection():any[] {
             return [
@@ -11,7 +11,7 @@ module Directives {
         }
 
         public static DirectiveOptions():any {
-            return BaseField.DirectiveOptions("Number", NumberField.StaticConstructor);
+            return BaseField.DirectiveOptions('Number', NumberField.StaticConstructor);
         }
 
         public static StaticConstructor():Directives.NumberField {
@@ -26,15 +26,15 @@ module Directives {
         }
 
         private Watch():void {
-            var _this = this;
+            var _this:NumberField = this;
 
             //Underlying model changed
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function () {
+            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
                 _this.EntityValueChanged();
             });
 
             //User changed value
-            this.Scope.$watch('Value', function () {
+            this.Scope.$watch('Value', function ():void {
                 _this.UIValueChanged();
             });
         }
@@ -42,7 +42,9 @@ module Directives {
         private EntityValueChanged():void {
             var uiValueStr:string = this.Scope.Value;
             var parsed:number = parseFloat(uiValueStr);
-            if (parsed !== this.Scope.Entity.Data[this.Scope.field.FieldSystemName]) this.Scope.Value = this.Scope.Entity.Data[this.Scope.field.FieldSystemName];
+            if (parsed !== this.Scope.Entity.Data[this.Scope.field.FieldSystemName]) {
+                this.Scope.Value = this.Scope.Entity.Data[this.Scope.field.FieldSystemName];
+            }
         }
 
         private UIValueChanged():void {

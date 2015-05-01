@@ -28,42 +28,56 @@ module Components.FieldTypes {
         }
 
         public static CreateFilterQuery(fieldMetadata:Models.FieldMetadata, filterValues:any[]):any {
-            if (!filterValues || filterValues.length != 2) return null;
-            var from = filterValues[0];
-            var to = filterValues[1];
-            if (!from && !to) return null;
+            if (!filterValues || filterValues.length !== 2) {
+                return null;
+            }
+            var from:number = filterValues[0];
+            var to:number = filterValues[1];
+            if (!from && !to) {
+                return null;
+            }
 
-            var filterExpression = {};
-            var filterExpressionNumberQuery = {};
-            if (from) filterExpressionNumberQuery['$gte'] = from;
-            if (to) filterExpressionNumberQuery['$lte'] = to;
+            var filterExpression:any = {};
+            var filterExpressionNumberQuery:any = {};
+            if (from) {
+                filterExpressionNumberQuery.$gte = from;
+            }
+            if (to) {
+                filterExpressionNumberQuery.$lte = to;
+            }
             filterExpression['Data.' + fieldMetadata.FieldSystemName] = filterExpressionNumberQuery;
 
             return filterExpression;
         }
 
         public static ParseFilterQueryString(fieldMetadata:Models.FieldMetadata, filterEntity:Models.Entity, routeParams:any):void {
-            var routeValueFrom = routeParams['from_' + fieldMetadata.FieldSystemName];
+            var routeValueFrom:string = routeParams['from_' + fieldMetadata.FieldSystemName];
             if (routeValueFrom) {
-                var valueFrom = parseFloat(routeValueFrom);
+                var valueFrom:number = parseFloat(routeValueFrom);
                 filterEntity.Data['from_' + fieldMetadata.FieldSystemName] = valueFrom;
             }
 
-            var routeValueTo = routeParams['to_' + fieldMetadata.FieldSystemName];
+            var routeValueTo:string = routeParams['to_' + fieldMetadata.FieldSystemName];
             if (routeValueTo) {
-                var valueTo = parseFloat(routeValueTo);
+                var valueTo:number = parseFloat(routeValueTo);
                 filterEntity.Data['to_' + fieldMetadata.FieldSystemName] = valueTo;
             }
         }
 
         public static CreateFilterQueryString(fieldMetadata:Models.FieldMetadata, filterValues:any[]):string[] {
-            if (!filterValues || filterValues.length != 2) return null;
-            var from = filterValues[0];
-            var to = filterValues[1];
+            if (!filterValues || filterValues.length !== 2) {
+                return null;
+            }
+            var from:number = filterValues[0];
+            var to:number = filterValues[1];
 
-            var result = [];
-            if (from) result.push('from_' + fieldMetadata.FieldSystemName + '=' + from);
-            if (to) result.push('to_' + fieldMetadata.FieldSystemName + '=' + to);
+            var result:string[] = [];
+            if (from) {
+                result.push('from_' + fieldMetadata.FieldSystemName + '=' + from);
+            }
+            if (to) {
+                result.push('to_' + fieldMetadata.FieldSystemName + '=' + to);
+            }
             return result;
         }
     }

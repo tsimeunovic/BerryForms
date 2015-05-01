@@ -106,7 +106,7 @@ export module NodeHelpers {
 
             //Validate user then invoke action method
             if (authenticatedOnly) {
-                Router.SecurityService.ValidateRequest(req, function (valid:boolean, errors:any[]):void {
+                Router.SecurityService.ValidateRequest(req, function (valid:boolean, errors:any):void {
                     if (!valid) {
                         res.status(401);
                         res.send();

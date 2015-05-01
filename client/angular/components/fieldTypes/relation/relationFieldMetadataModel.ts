@@ -1,11 +1,11 @@
 /// <reference path="../../../models/core/fieldMetadataModel.ts" />
 
-'use strict';
-
 module Models {
+    'use strict';
+
     export class RelationFieldMetadata extends FieldMetadata {
         constructor() {
-            super("Relation");
+            super('Relation');
         }
 
         public RelatedEntity: Models.SelectFieldOptionMetadata;
@@ -13,6 +13,7 @@ module Models {
         //Mapping
         public FieldSpecialProperties:string[] = ['RelatedEntity'];
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
+            //No additional properties
         }
     }
 }
