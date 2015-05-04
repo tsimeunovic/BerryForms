@@ -7,11 +7,12 @@
 /// <reference path="../../../extensions/objectExtensions.ts" />
 /// <reference path="../../../config/config.ts" />
 
-'use strict';
-
 //Service that stores some of entity records of currently used type that matches query
 module Services {
+    'use strict';
+
     export class EntityListCacheService extends Services.CacheBaseService<Models.Entity[]> implements Services.IEntityListCacheService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 'MessagingService',
@@ -38,13 +39,6 @@ module Services {
         private TotalPages:number;
         private VersionIdentifier:any;
 
-        private RegisterDependencies():void {
-            //Adding new entity cause reload
-            this.MessagingService.Messages.Entity.Created.subscribe(this.EntityCreatedHandler.bind(this));
-            this.MessagingService.Messages.Entity.Modified.subscribe(this.EntityModifiedHandler.bind(this));
-            this.MessagingService.Messages.Entity.Deleted.subscribe(this.EntityDeletedHandler.bind(this));
-        }
-
         public InvalidateCache():void {
             this.Data = null;
             this.TotalCount = null;
@@ -55,22 +49,35 @@ module Services {
 
         public LoadData(argument:any):void {
             //argument = { EntitySystemName, Query, PageIndex, PageSize, HasCurrent }
-            if (this.IsLoading && this.EntitySystemName == argument.EntitySystemName && Object.haveEqualData(this.Query, argument.Query)) return;
+            if (this.IsLoading && this.EntitySystemName === argument.EntitySystemName &&
+                Object.haveEqualData(this.Query, argument.Query)) {
+                return;
+            }
             this.IsLoading = true;
-            if (!argument.HasCurrent) this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityListCache);
-            this.EntityRepositoryService.LoadPagedFilteredResults(this.EntitySystemName, argument.Query, argument.PageIndex, argument.PageSize, this.LoadDataCompleted.bind(this));
+            if (!argument.HasCurrent) {
+                this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityListCache);
+            }
+            this.EntityRepositoryService.LoadPagedFilteredResults(
+                this.EntitySystemName, argument.Query, argument.PageIndex, argument.PageSize, this.LoadDataCompleted.bind(this));
         }
 
         public LoadDataCompleted(data:any, errorsModel:any):void {
-            //data = { EntitySystemName, Query, Page: { PageIndex, TotalCount, TotalPages, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
-            if (errorsModel == null) {
+            //data = {
+            //  EntitySystemName,
+            //  Query,
+            //  Page: { PageIndex, TotalCount, TotalPages, StartIndex, LoadedCount, VersionIdentifier },
+            //  List : []
+            // }
+
+            if (errorsModel === null) {
                 //Verify correct data or if cache is outdated
-                if (data != null && (this.EntitySystemName != data.EntitySystemName || !Object.haveEqualData(this.Query, data.Query))) {
+                if (data !== null &&
+                    (this.EntitySystemName !== data.EntitySystemName || !Object.haveEqualData(this.Query, data.Query))) {
                     return;
                 }
 
-                if (this.TotalCount != data.Page.TotalCount ||
-                    this.VersionIdentifier != data.Page.VersionIdentifier) {
+                if (this.TotalCount !== data.Page.TotalCount ||
+                    this.VersionIdentifier !== data.Page.VersionIdentifier) {
                     this.InvalidateCache();
                     this.TotalCount = data.Page.TotalCount;
                     this.TotalPages = data.Page.TotalPages;
@@ -79,16 +86,16 @@ module Services {
                 }
 
                 if (data.Page.PageIndex < 0 ||
-                    (data.Page.PageIndex != 0 && data.Page.PageIndex >= data.Page.TotalPages)) {
+                    (data.Page.PageIndex !== 0 && data.Page.PageIndex >= data.Page.TotalPages)) {
                     //Non existing page
-                    this.NotificationService.NotifyMessage(this.LocalizationService.Resources.NonExistingPage, Services.NotificationSeverity.Warning);
-                }
-                else if (data.List.length != data.Page.LoadedCount ||
+                    this.NotificationService.NotifyMessage(
+                        this.LocalizationService.Resources.NonExistingPage, Services.NotificationSeverity.Warning);
+                } else if (data.List.length !== data.Page.LoadedCount ||
                     data.Page.StartIndex + data.Page.LoadedCount > data.Page.TotalCount) {
                     //Other data integrity failure
-                    this.NotificationService.NotifyMessage(this.LocalizationService.Resources.InvalidDataLoaded, Services.NotificationSeverity.Error);
-                }
-                else {
+                    this.NotificationService.NotifyMessage(
+                        this.LocalizationService.Resources.InvalidDataLoaded, Services.NotificationSeverity.Error);
+                } else {
                     //Add loaded values to array
                     for (var i = 0; i < data.List.length; i++) {
                         this.Data[data.Page.StartIndex + i] = data.List[i];
@@ -114,13 +121,13 @@ module Services {
             }
             else {
                 //Have to wait
-                var _this = this;
+                var _this:EntityListCacheService = this;
                 var subscription = this.MessagingService.Messages.Cache.EntityList.DataLoaded.subscribe(
                     function (data:any) {
                         //data = { EntitySystemName, Query, Page: { PageIndex, TotalCount, TotalPages, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
-                        if (data.EntitySystemName == entitySystemName &&
+                        if (data.EntitySystemName === entitySystemName &&
                             Object.haveEqualData(query, data.Query) &&
-                            data.Page.PageIndex == pageIndex) {
+                            data.Page.PageIndex === pageIndex) {
                             subscription();
 
                             if (_this.HasPageData(pageIndex)) {
@@ -145,7 +152,9 @@ module Services {
         }
 
         private EntityCreatedHandler(createdEntity:Models.Entity):void {
-            if (createdEntity.EntitySystemName != this.EntitySystemName) return;
+            if (createdEntity.EntitySystemName != this.EntitySystemName) {
+                return;
+            }
             this.Data.unshift(createdEntity);
             this.TotalCount = this.Data.length;
             this.TotalPages = Math.ceil(this.TotalCount / this.PageSize);
@@ -156,8 +165,8 @@ module Services {
             //Find modified entity in cache
             var entityPredicate = function (e:Models.Entity) {
                 return e &&
-                    e.EntitySystemName == modifiedEntity.EntitySystemName &&
-                    e.Id == modifiedEntity.Id;
+                    e.EntitySystemName === modifiedEntity.EntitySystemName &&
+                    e.Id === modifiedEntity.Id;
             };
             var modifiedEntityFromCache:Models.Entity = this.Data.single(entityPredicate);
 
@@ -174,12 +183,19 @@ module Services {
             }
         }
 
+        private RegisterDependencies():void {
+            //Adding new entity cause reload
+            this.MessagingService.Messages.Entity.Created.subscribe(this.EntityCreatedHandler.bind(this));
+            this.MessagingService.Messages.Entity.Modified.subscribe(this.EntityModifiedHandler.bind(this));
+            this.MessagingService.Messages.Entity.Deleted.subscribe(this.EntityDeletedHandler.bind(this));
+        }
+
         private EntityDeletedHandler(deletedEntity:Models.Entity):void {
             //Find deleted entity in cache
             var entityPredicate = function (e:Models.Entity) {
                 return e &&
-                    e.EntitySystemName == deletedEntity.EntitySystemName &&
-                    e.Id == deletedEntity.Id;
+                    e.EntitySystemName === deletedEntity.EntitySystemName &&
+                    e.Id === deletedEntity.Id;
             };
             var deletedEntityFromCache:Models.Entity = this.Data.single(entityPredicate);
 
@@ -198,7 +214,7 @@ module Services {
 
         private AssertEntityPageInCache(entitySystemName:string, query:any, pageIndex:number):Models.Entity[] {
             //Assert correct cache is used
-            if (this.EntitySystemName != entitySystemName || !Object.haveEqualData(this.Query, query)) {
+            if (this.EntitySystemName !== entitySystemName || !Object.haveEqualData(this.Query, query)) {
                 this.InvalidateCache();
                 this.EntitySystemName = entitySystemName;
                 this.Query = query;
@@ -208,46 +224,64 @@ module Services {
             var hasCurrentPageData = this.HasPageData(pageIndex);
 
             //Check if sibling pages are loaded as well
-            var hasPreviousPageData = pageIndex == 0 || this.HasPageData(pageIndex - 1);
-            var hasNextPageData = pageIndex + 1 == this.TotalPages || this.HasPageData(pageIndex + 1);
+            var hasPreviousPageData = pageIndex === 0 || this.HasPageData(pageIndex - 1);
+            var hasNextPageData = pageIndex + 1 === this.TotalPages || this.HasPageData(pageIndex + 1);
 
             var hasAllNeededData = hasCurrentPageData && hasPreviousPageData && hasNextPageData;
-            if (!hasAllNeededData) this.LoadData({
-                EntitySystemName: entitySystemName,
-                Query: query,
-                PageIndex: pageIndex,
-                PageSize: this.PageSize,
-                HasCurrent: hasCurrentPageData
-            });
+            if (!hasAllNeededData) {
+                this.LoadData({
+                    EntitySystemName: entitySystemName,
+                    Query: query,
+                    PageIndex: pageIndex,
+                    PageSize: this.PageSize,
+                    HasCurrent: hasCurrentPageData
+                });
+            }
 
-            if (hasCurrentPageData) return this.GetPageData(pageIndex);
-            else return null;
+            if (hasCurrentPageData) {
+                return this.GetPageData(pageIndex);
+            } else {
+                return null;
+            }
         }
 
         private HasPageData(pageIndex:number):boolean {
-            if (this.Data == null || this.TotalCount == null) return false;
+            if (this.Data === null || this.TotalCount === null) {
+                return false;
+            }
             var indexes = this.GetPageIndexes(pageIndex);
-            if (indexes == null) return false;
+            if (indexes === null) {
+                return false;
+            }
 
             for (var i = indexes.StartIndex; i < indexes.EndIndex; i++) {
-                if (!this.Data[i]) return false;
+                if (!this.Data[i]) {
+                    return false;
+                }
             }
             return true;
         }
 
         private GetPageData(pageIndex:number):Models.Entity[] {
-            var indexes = this.GetPageIndexes(pageIndex);
-            if (indexes == null) return null;
-            return this.Data.slice(indexes.StartIndex, indexes.EndIndex);
+            var indexes:any = this.GetPageIndexes(pageIndex);
+            if (indexes === null) {
+                return null;
+            } else {
+                return this.Data.slice(indexes.StartIndex, indexes.EndIndex);
+            }
         }
 
         private GetPageIndexes(pageIndex:number):any {
             var startIndex = pageIndex * this.PageSize;
             var endIndex = (pageIndex + 1) * this.PageSize;
 
-            if (startIndex < 0 || endIndex < 0) return null;
-            if (startIndex > this.Data.length) return null;
-            if (endIndex > this.Data.length) endIndex = this.Data.length;
+            if (startIndex < 0 || endIndex < 0) {
+                return null;
+            } else if (startIndex > this.Data.length) {
+                return null;
+            } else if (endIndex > this.Data.length) {
+                endIndex = this.Data.length;
+            }
 
             return {
                 StartIndex: startIndex,

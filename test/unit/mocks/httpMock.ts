@@ -1,4 +1,5 @@
 /// <reference path="../../jasmine.d.ts" />
+/// <reference path="../../../client/extensions/arrayExtensions.ts" />
 
 'use strict';
 

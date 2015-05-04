@@ -5,10 +5,10 @@
 /// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 /// <reference path="../../../static/controllerArea.ts" />
 
-'use strict';
-
 //Base controllers for main views (views loaded with ng-view according to route)
 module Controllers {
+    'use strict';
+
     export class BaseViewController extends BaseController {
         constructor(Scope:any,
                     public ControllerArea:Static.ControllerArea,
@@ -28,7 +28,7 @@ module Controllers {
         }
 
         private DeleteInvalidState():void {
-            if (this.ControllerArea != Static.ControllerArea.Entity) {
+            if (this.ControllerArea !== Static.ControllerArea.Entity) {
                 this.StateService.SetEditedEntity(null);
             }
         }
@@ -38,11 +38,13 @@ module Controllers {
         }
 
         private NotifyAllWaitingMessages():void {
-            var allMessages = this.QueueService.Queues.NextPage.Notifications.retrieveAll();
-            if (!allMessages || allMessages.length == 0) return;
+            var allMessages:any[] = this.QueueService.Queues.NextPage.Notifications.retrieveAll();
+            if (!allMessages || allMessages.length === 0) {
+                return;
+            }
 
-            for (var i = 0; i < allMessages.length; i++) {
-                var messageObject = allMessages[i];
+            for (var i:number = 0; i < allMessages.length; i++) {
+                var messageObject:any = allMessages[i];
                 this.NotificationService.NotifyMessage(messageObject.Message, messageObject.Severity);
             }
         }
@@ -50,7 +52,7 @@ module Controllers {
         private SetConfiguration():void {
             this.Scope.Configuration = {
                 List: {
-                    MoveEnabled: this.ControllerArea == Static.ControllerArea.Metadata,
+                    MoveEnabled: this.ControllerArea === Static.ControllerArea.Metadata,
                     EditEnabled: true,
                     DeleteEnabled: true
                 }

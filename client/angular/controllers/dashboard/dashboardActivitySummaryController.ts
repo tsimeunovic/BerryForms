@@ -7,11 +7,12 @@
 /// <reference path="../../../static/routeParams.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-'use strict';
-
 //Controller for dashboard activity summary component (display graph with activity summary per entity)
 module Controllers {
+    'use strict';
+
     export class DashboardActivitySummaryController extends BaseViewController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -25,7 +26,7 @@ module Controllers {
                 'RedirectService',
                 'DashboardRepositoryService',
                 DashboardActivitySummaryController
-            ]
+            ];
         }
 
         constructor(Scope:any,
@@ -52,8 +53,7 @@ module Controllers {
             //Header
             if (this.EntityName) {
                 this.LoadEntityMetadata();
-            }
-            else {
+            } else {
                 this.Scope.FormHeader = this.LocalizationService.Resources.Dashboard;
                 this.Scope.RecentActivityHeader = this.LocalizationService.Resources.RecentActivity;
             }
@@ -69,7 +69,7 @@ module Controllers {
 
         private LoadEntityMetadataCompleted(metadata:Models.EntityMetadata, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityData);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 //Non existing or empty entity
                 if (!metadata) {
                     this.RedirectService.RedirectToCreateEntitySchema();
@@ -78,8 +78,7 @@ module Controllers {
 
                 this.Scope.EntityMetadata = metadata;
                 this.Scope.FormHeader = this.LocalizationService.Resources.DashboardFor.format([metadata.EntityName]);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
@@ -91,11 +90,10 @@ module Controllers {
 
         private ActivitySummaryLoaded(activityData:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardSummary);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.Scope.NoRecentActivityMessage = this.LocalizationService.Resources.NoRecentActivity;
                 this.Scope.ActivitySummary = activityData;
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }

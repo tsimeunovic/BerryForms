@@ -5,10 +5,10 @@
 /// <reference path="../../interfaces/services/state/IStateService.ts" />
 /// <reference path="../../../static/controllerArea.ts" />
 
-'use strict';
-
 //Base controllers for all list views
 module Controllers {
+    'use strict';
+
     export class BaseListController extends BaseViewController {
         constructor(Scope:any,
                     ControllerArea:Static.ControllerArea,
@@ -26,13 +26,13 @@ module Controllers {
         }
 
         private ListItemOrderChanged(event:any):void {
-            var newIndex = event.dest.index;
-            var oldIndex = event.source.index;
+            var newIndex:number = event.dest.index;
+            var oldIndex:number = event.source.index;
 
             //Update on server
             if (this.Scope.OriginalMetadata) {
                 this.Scope.OriginalMetadata.Fields.move(oldIndex, newIndex);
-                this.Scope.SaveEntityMetadata(this.Scope.OriginalMetadata)
+                this.Scope.SaveEntityMetadata(this.Scope.OriginalMetadata);
             }
         }
     }

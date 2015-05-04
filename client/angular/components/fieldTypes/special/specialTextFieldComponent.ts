@@ -8,19 +8,12 @@ module Components.FieldTypes {
     'use strict';
 
     export class SpecialTextFieldComponent extends TextFieldComponent implements IFieldType {
-        constructor(fieldName:string,
-                    symbol:string,
-                    regularExpression:string) {
+        constructor(public FieldName:string,
+                    public Symbol:string,
+                    public RegularExpression:string) {
             super();
-            this.FieldName = fieldName;
-            this.Symbol = symbol;
-            this.RegularExpression = regularExpression;
             this.DirectiveName = ('field{0}').format([this.FieldName]);
         }
-
-        public FieldName:string;
-        public Symbol:string;
-        public RegularExpression:string;
 
         //Metadata model
         public CreateMetadata():Models.FieldMetadata {

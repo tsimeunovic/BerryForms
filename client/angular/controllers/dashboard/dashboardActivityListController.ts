@@ -5,11 +5,12 @@
 /// <reference path="../../../static/routeParams.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-'use strict';
-
 //Controller for dashboard activity list component (display recently active records as a list)
 module Controllers {
+    'use strict';
+
     export class DashboardActivityListController extends BaseViewController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -21,7 +22,7 @@ module Controllers {
                 'LocalizationService',
                 'DashboardRepositoryService',
                 DashboardActivityListController
-            ]
+            ];
         }
 
         constructor(Scope:any,
@@ -56,28 +57,26 @@ module Controllers {
             ];
 
             //Load activity lists
-            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.DashboardActivity);
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.DashboardMyActivity);
+            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.DashboardActivity);
             this.DashboardRepositoryService.GetMyRecentActivity(this.EntityName, this.MyRecentActivityLoaded.bind(this));
             this.DashboardRepositoryService.GetRecentActivity(this.EntityName, this.RecentActivityLoaded.bind(this));
         }
 
         private MyRecentActivityLoaded(activityItems:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardMyActivity);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.Scope.ActivityLists[0].Items = activityItems;
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private RecentActivityLoaded(activityItems:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardActivity);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.Scope.ActivityLists[1].Items = activityItems;
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }

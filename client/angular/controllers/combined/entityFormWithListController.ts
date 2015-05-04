@@ -1,16 +1,16 @@
 /// <reference path="../base/baseController.ts" />
 
-'use strict';
-
 //Controller for screen with entity record creation & edit
 module Controllers {
+    'use strict';
+
     export class EntityFormWithListController extends BaseController {
         public static injection():any[] {
             return [
                 '$scope',
                 '$route',
                 EntityFormWithListController
-            ]
+            ];
         }
 
         constructor(Scope:any,
