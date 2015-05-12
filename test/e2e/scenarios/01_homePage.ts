@@ -2,7 +2,6 @@
 /// <reference path="../page-objects/dashboard.ts" />
 /// <reference path="../page-objects/homePage.ts" />
 /// <reference path="../page-objects/loginDialog.ts" />
-/// <reference path="../page-objects/entitySchemaForm.ts" />
 
 'use strict';
 
@@ -19,7 +18,7 @@ describe('Feature: Home screen', function () {
         expect(loginDialog.EnabledSubmitButtonsCount()).toEqual(0);
     });
 
-    it('should display form for creating new entity after login', function () {
+    it('should display global dashboard after login', function () {
         //Arrange
         var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
 

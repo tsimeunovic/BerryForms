@@ -100,6 +100,7 @@ module Directives {
 
         private LoadEntityMetadataCompleted(metadata:Models.EntityMetadata, errorsModel:any):void {
             if (errorsModel == null) {
+                this.Scope.SummaryItem.EntitySystemName = metadata.EntitySystemName;
                 this.Scope.SummaryItem.EntityName = metadata.EntityName;
             }
             else {

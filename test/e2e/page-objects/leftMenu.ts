@@ -23,6 +23,16 @@ module PageObjects {
             element(entityIconSelector).click();
         }
 
+        public ClickNthGlobalIcon(position:number):void {
+            var entityIconSelector = ('div.leftMenu div.leftMenuEntitiesList:nth-child(1) div.glyphicon.menuicon:nth-child({0}) a').format([position.toString()]);
+            element(entityIconSelector).click();
+        }
+
+        public ClickNthEntityIcon(position:number):void {
+            var entityIconSelector = ('div.leftMenu div.leftMenuEntitiesList:nth-child(2) div.glyphicon.menuicon:nth-child({0}) a').format([position.toString()]);
+            element(entityIconSelector).click();
+        }
+
         public static Current():PageObjects.LeftMenu {
             return new PageObjects.LeftMenu();
         }

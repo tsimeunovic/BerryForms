@@ -30,8 +30,12 @@ module PageObjects {
         }
 
         //Urls
+        public static UrlForNewSchema():string {
+            return '/schema/entity';
+        }
+
         public static UrlForSchemaEdit(entityName:string):string {
-            return '/schema/entity/' + entityName
+            return '/schema/entity/' + entityName;
         }
     }
 }
