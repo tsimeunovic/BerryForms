@@ -18,6 +18,11 @@ module PageObjects {
             return using(this.ListSelector, this.ListScopeName).element(listItemSelector);
         }
 
+        public GetNthItem(itemIndex:number):any {
+            var nthItemSelector = ('.entityRecord:nth-child({0})').format([itemIndex.toString()]);
+            return using(this.ListSelector, this.ListScopeName).element(nthItemSelector);
+        }
+
         public EditItem(itemIndex:number):void {
             var listItemSelector = ('.entityRecord:nth-child({0}) .commandEdit').format([itemIndex.toString()]);
             using(this.ListSelector, this.ListScopeName).element(listItemSelector).click();

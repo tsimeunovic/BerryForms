@@ -24,11 +24,11 @@ describe('Feature: Dashboard', function () {
             PageObjects.Dashboard.NavigateToGlobalDashboardWithLogin();
         });
 
-        it('should have single chart element', function () {
+        it('should have chart elements for \'2\' entities', function () {
             //Arrange
             //Act
             //Assert
-            expect(PageObjects.ActivityPieChart.Count()).toEqual(1);
+            expect(PageObjects.ActivityPieChart.Count()).toEqual(2);
         });
 
         it('should have \'First entity\' chart with 17 inserts', function () {
@@ -38,6 +38,17 @@ describe('Feature: Dashboard', function () {
             //Act
             //Assert
             expect(firstEntityChart.CreatedCount()).toEqual('17');
+        });
+
+        it('should have \'Second entity\' chart with 2 inserts, 1 update and 1 delete', function () {
+            //Arrange
+            var firstEntityChart:PageObjects.ActivityPieChart = new PageObjects.ActivityPieChart('second_entity');
+
+            //Act
+            //Assert
+            expect(firstEntityChart.CreatedCount()).toEqual('2');
+            expect(firstEntityChart.UpdatedCount()).toEqual('1');
+            expect(firstEntityChart.DeletedCount()).toEqual('1');
         });
     });
 });
