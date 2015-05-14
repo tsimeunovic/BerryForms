@@ -1,6 +1,6 @@
-'use strict';
 var Model;
 (function (Model) {
+    'use strict';
     var ErrorsModel = (function () {
         function ErrorsModel() {
             this.Errors = [];

@@ -1,11 +1,11 @@
 /// <reference path="../GlobalReferences.ts" />
 /// <reference path="../security/ISecurityService.ts" />
-'use strict';
 var ErrorsModel = require('../model/ClientErrorsModel');
 var ConfigServer = require('../config/Config');
 var SHA256 = require('crypto-js/sha256');
 var Security;
 (function (Security) {
+    'use strict';
     var SecurityService = (function () {
         function SecurityService(nodeRepository) {
             this.ServerConfig = ConfigServer.Config.Server;
@@ -14,7 +14,7 @@ var Security;
             var data = request.body;
             var reqUserName = data && data.userName;
             var reqPassword = data && data.password;
-            var validUser = reqUserName == this.ServerConfig.SuperUserName && reqPassword == this.ServerConfig.SuperUserPassword;
+            var validUser = reqUserName === this.ServerConfig.SuperUserName && reqPassword === this.ServerConfig.SuperUserPassword;
             if (validUser) {
                 var tokeValidityMinutes = ConfigServer.Config.Server.TokenValidityMinutes;
                 var nowTime = (new Date()).getTime();
@@ -41,7 +41,7 @@ var Security;
         SecurityService.prototype.ValidateRequest = function (request, callback) {
             var userName = request.header('X-BF-Auth-User');
             var validToStr = request.header('X-BF-Auth-Valid-To');
-            var validTo = parseInt(validToStr);
+            var validTo = parseInt(validToStr, 10);
             var token = request.header('X-BF-Auth-Token');
             //Validate date
             var nowTime = (new Date()).getTime();

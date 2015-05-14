@@ -48,7 +48,7 @@ module Services {
 
         private DoHttpOperation(authenticatedOnly:boolean, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
             var deferred:any = this.Q.defer();
-            var afterLoginRetryFunction:(df:any, i:boolean, m:string, u:string, a:string, d:any) => void = authenticatedOnly ?
+            var afterLoginRetryFunction:any = authenticatedOnly ?
                 this.CreateAfterLoginRetryFunctionFor(deferred, isInvariantOperation, method, url, actionName, data) :
                 null;
 
@@ -107,7 +107,7 @@ module Services {
             };
         }
 
-        private ChainPromises(originalDeferred:any, newPromise:any, retryFunction:() => void):void {
+        private ChainPromises(originalDeferred:any, newPromise:any, retryFunction:any):void {
             var _this:HttpWrapperService = this;
             var successCallback:(d:any, s:number, h:any, c:any) => void = function (data:any, status:number, headers:any, config:any):void {
                 originalDeferred.resolve(data);
@@ -122,7 +122,6 @@ module Services {
                 //Reject
                 originalDeferred.reject(data);
             };
-
 
             if (newPromise.success !== undefined) {
                 //Http promise

@@ -1,6 +1,7 @@
-'use strict';
+//Represents error propagated to the client
 var Model;
 (function (Model) {
+    'use strict';
     var ClientErrorModel = (function () {
         function ClientErrorModel(key, parameters) {
             this.ErrorTypeKey = key;

@@ -1,6 +1,6 @@
-'use strict';
 var NodeHelpers;
 (function (NodeHelpers) {
+    'use strict';
     var Cors = (function () {
         function Cors() {
         }
@@ -23,7 +23,7 @@ var NodeHelpers;
                     res.header('Access-Control-Max-Age', 60 * 60 * 24 * 365);
                 }
                 // intercept OPTIONS method
-                if (oneof && req.method == 'OPTIONS') {
+                if (oneof && req.method === 'OPTIONS') {
                     res.send(200);
                 }
                 else {

@@ -1,6 +1,5 @@
 /// <reference path="../model/ErrorsModel.ts" />
 /// <reference path="../model/ClientErrorModel.ts" />
-'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -11,6 +10,7 @@ var Base = require('../model/ErrorsModel');
 var ClientErrorModelModule = require('../model/ClientErrorModel');
 var Model;
 (function (Model) {
+    'use strict';
     var ClientErrorsModel = (function (_super) {
         __extends(ClientErrorsModel, _super);
         function ClientErrorsModel() {

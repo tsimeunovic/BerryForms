@@ -178,6 +178,8 @@ var Localization;
             this.Created = 'Vytvorené';
             this.Updated = 'Aktualizované';
             this.Deleted = 'Vymazané';
+            this.RecentlyModifiedRecords = 'Posledné upravované záznamy';
+            this.RecentlyModifiedRecordsByMe = 'Posledné upravované záznamy mnou';
         }
         return ResourcesSk;
     })();

@@ -1,16 +1,16 @@
 /// <reference path="../GlobalReferences.ts" />
-'use strict';
 var Config;
 (function (Config) {
+    'use strict';
     var ClientConfig = (function () {
         function ClientConfig() {
         }
         ClientConfig.GetClientConfigurationOverrides = function (request, callback) {
             var configObject = {};
-            if (ClientConfig.ConfigurationName == 'e2e_Tests') {
-                configObject['NotificationDisplayTimeMs'] = 50;
-                configObject['SearchTypingWaitTimeMs'] = 50;
-                configObject['LoadResourcesAsynchronously'] = false;
+            if (ClientConfig.ConfigurationName === 'e2e_Tests') {
+                configObject.NotificationDisplayTimeMs = 50;
+                configObject.SearchTypingWaitTimeMs = 50;
+                configObject.LoadResourcesAsynchronously = false;
             }
             callback(configObject, null);
         };

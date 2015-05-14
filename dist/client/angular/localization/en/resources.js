@@ -178,6 +178,8 @@ var Localization;
             this.Created = 'Created';
             this.Updated = 'Updated';
             this.Deleted = 'Deleted';
+            this.RecentlyModifiedRecords = 'Recently modified records';
+            this.RecentlyModifiedRecordsByMe = 'Recently modified records by me';
         }
         return ResourcesEn;
     })();

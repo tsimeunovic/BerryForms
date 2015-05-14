@@ -9,6 +9,7 @@ var Services;
         function RepositoryFactory() {
         }
         RepositoryFactory.prototype.GetCollectionNameFor = function (type, name) {
+            //TODO: Return null and create no repository for unknown type
             return type == 'entity' ? name : ConfigServer.SystemPrefix + 'metadata';
         };
         RepositoryFactory.prototype.CreateRepositoryFor = function (type, name) {

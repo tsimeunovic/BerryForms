@@ -178,6 +178,8 @@ var Localization;
             this.Created = 'Нове';
             this.Updated = 'Ажуриране';
             this.Deleted = 'Избрисане';
+            this.RecentlyModifiedRecords = 'Последња активност';
+            this.RecentlyModifiedRecordsByMe = 'Моја последња активност';
         }
         return ResourcesSr;
     })();
