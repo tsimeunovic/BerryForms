@@ -2,11 +2,12 @@
 /// <reference path="../../../extensions/stringExtensions.ts" />
 /// <reference path="../../../config/config.ts" />
 
-'use strict';
-
 //Service responsible for resolving urls for all Node api calls
 module Services {
+    'use strict';
+
     export class UrlLocatorService implements Services.IUrlLocatorService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 UrlLocatorService
@@ -21,12 +22,12 @@ module Services {
 
         //Server routes
         public GetUrlForEntityMetadataListRetrieve():string {
-            var url = this.ApiBaseUrl + 'metadata/all';
+            var url:string = this.ApiBaseUrl + 'metadata/all';
             return this.AddPreventCacheParameter(url);
         }
 
         public GetUrlForEntityMetadataRetrieve(entityName:string):string {
-            var url = (this.ApiBaseUrl + 'metadata/{0}/{0}').format([entityName]);
+            var url:string = (this.ApiBaseUrl + 'metadata/{0}/{0}').format([entityName]);
             return this.AddPreventCacheParameter(url);
         }
 
@@ -35,26 +36,26 @@ module Services {
         }
 
         public GetUrlForPagedEntityListRetrieve(entityName:string, pageNumber:number, pageSize:number):string {
-            var pageNumberStr = pageNumber.toString();
-            var pageSizeStr = pageSize.toString();
-            var url = (this.ApiBaseUrl + 'entity/{0}/page/{1}/{2}').format([entityName, pageNumberStr, pageSizeStr]);
+            var pageNumberStr:string = pageNumber.toString();
+            var pageSizeStr:string = pageSize.toString();
+            var url:string = (this.ApiBaseUrl + 'entity/{0}/page/{1}/{2}').format([entityName, pageNumberStr, pageSizeStr]);
             return this.AddPreventCacheParameter(url);
         }
 
         public GetUrlForFilteredListRetrieve(entityName:string, pageNumber:number, pageSize:number):string {
-            var pageNumberStr = pageNumber.toString();
-            var pageSizeStr = pageSize.toString();
+            var pageNumberStr:string = pageNumber.toString();
+            var pageSizeStr:string = pageSize.toString();
             return (this.ApiBaseUrl + 'entity/{0}/filtered/page/{1}/{2}').format([entityName, pageNumberStr, pageSizeStr]);
         }
 
         public GetUrlForEntityListRetrieve(entityName:string):string {
-            var url = (this.ApiBaseUrl + 'entity/{0}').format([entityName]);
+            var url:string = (this.ApiBaseUrl + 'entity/{0}').format([entityName]);
             return this.AddPreventCacheParameter(url);
         }
 
         public GetUrlForEntityRetrieve(entityName:string, entityId:number):string {
-            var entityIdStr = entityId.toString();
-            var url = (this.ApiBaseUrl + 'entity/{0}/{1}').format([entityName, entityIdStr]);
+            var entityIdStr:string = entityId.toString();
+            var url:string = (this.ApiBaseUrl + 'entity/{0}/{1}').format([entityName, entityIdStr]);
             return this.AddPreventCacheParameter(url);
         }
 
@@ -63,7 +64,7 @@ module Services {
         }
 
         public GetUrlForEntityDelete(entityName:string, entityId:number):string {
-            var entityIdStr = entityId.toString();
+            var entityIdStr:string = entityId.toString();
             return (this.ApiBaseUrl + 'entity/{0}/{1}').format([entityName, entityIdStr]);
         }
 
@@ -72,20 +73,26 @@ module Services {
         }
 
         public GetUrlForDashboardActivitySummary(entityName:string):string {
-            var url = this.ApiBaseUrl + 'dashboard/activity/summary';
-            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/summary').format([entityName]);
+            var url:string = this.ApiBaseUrl + 'dashboard/activity/summary';
+            if (entityName) {
+                url = (this.ApiBaseUrl + 'dashboard/activity/{0}/summary').format([entityName]);
+            }
             return this.AddPreventCacheParameter(url);
         }
 
         public GetUrlForMyRecentActivity(entityName:string):string {
-            var url = this.ApiBaseUrl + 'dashboard/activity/me';
-            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/me').format([entityName]);
+            var url:string = this.ApiBaseUrl + 'dashboard/activity/me';
+            if (entityName) {
+                url = (this.ApiBaseUrl + 'dashboard/activity/{0}/me').format([entityName]);
+            }
             return this.AddPreventCacheParameter(url);
         }
 
         public GetUrlForRecentActivity(entityName:string):string {
-            var url = this.ApiBaseUrl + 'dashboard/activity/all';
-            if (entityName) url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);
+            var url:string = this.ApiBaseUrl + 'dashboard/activity/all';
+            if (entityName) {
+                url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);
+            }
             return this.AddPreventCacheParameter(url);
         }
     }

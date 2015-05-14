@@ -97,14 +97,13 @@ module Services {
                         this.LocalizationService.Resources.InvalidDataLoaded, Services.NotificationSeverity.Error);
                 } else {
                     //Add loaded values to array
-                    for (var i = 0; i < data.List.length; i++) {
+                    for (var i:number = 0; i < data.List.length; i++) {
                         this.Data[data.Page.StartIndex + i] = data.List[i];
                     }
                 }
 
                 this.MessagingService.Messages.Cache.EntityList.DataLoaded.publish(data);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
 
@@ -112,18 +111,18 @@ module Services {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityListCache);
         }
 
-        public LoadEntityListPage(entitySystemName:string, query:any, pageIndex:number, callback:(entity:Models.Entity[], query:any, pageIndex:number, totalPages:number, errorsModel:any)=>void):void {
-            var currentPageData = this.AssertEntityPageInCache(entitySystemName, query, pageIndex);
+        public LoadEntityListPage(entitySystemName:string, query:any, pageIndex:number,
+                                  callback:(entity:Models.Entity[], query:any, pageIndex:number, totalPages:number, errorsModel:any) => void):void {
+            var currentPageData:Models.Entity[] = this.AssertEntityPageInCache(entitySystemName, query, pageIndex);
 
             if (currentPageData) {
                 //Have current data
                 callback(currentPageData, query, pageIndex, this.TotalPages, null);
-            }
-            else {
+            } else {
                 //Have to wait
                 var _this:EntityListCacheService = this;
-                var subscription = this.MessagingService.Messages.Cache.EntityList.DataLoaded.subscribe(
-                    function (data:any) {
+                var subscription:() => void = this.MessagingService.Messages.Cache.EntityList.DataLoaded.subscribe(
+                    function (data:any):void {
                         //data = { EntitySystemName, Query, Page: { PageIndex, TotalCount, TotalPages, StartIndex, LoadedCount, VersionIdentifier }, List : [] }
                         if (data.EntitySystemName === entitySystemName &&
                             Object.haveEqualData(query, data.Query) &&
@@ -132,10 +131,9 @@ module Services {
 
                             if (_this.HasPageData(pageIndex)) {
                                 //Success
-                                var pageData = _this.GetPageData(pageIndex);
+                                var pageData:Models.Entity[] = _this.GetPageData(pageIndex);
                                 callback(pageData, query, pageIndex, _this.TotalPages, null);
-                            }
-                            else {
+                            } else {
                                 //Error loading
                                 callback(null, query, pageIndex, null, {
                                     Type: 'Client', Errors: [
@@ -152,7 +150,7 @@ module Services {
         }
 
         private EntityCreatedHandler(createdEntity:Models.Entity):void {
-            if (createdEntity.EntitySystemName != this.EntitySystemName) {
+            if (createdEntity.EntitySystemName !== this.EntitySystemName) {
                 return;
             }
             this.Data.unshift(createdEntity);
@@ -163,7 +161,7 @@ module Services {
 
         private EntityModifiedHandler(modifiedEntity:Models.Entity):void {
             //Find modified entity in cache
-            var entityPredicate = function (e:Models.Entity) {
+            var entityPredicate:(e:Models.Entity) => boolean = function (e:Models.Entity):boolean {
                 return e &&
                     e.EntitySystemName === modifiedEntity.EntitySystemName &&
                     e.Id === modifiedEntity.Id;
@@ -177,8 +175,7 @@ module Services {
                 this.TotalCount = this.Data.length;
                 this.TotalPages = Math.ceil(this.TotalCount / this.PageSize);
                 this.MessagingService.Messages.Cache.EntityList.Changed.publish(this.EntitySystemName);
-            }
-            else {
+            } else {
                 this.InvalidateCache();
             }
         }
@@ -192,7 +189,7 @@ module Services {
 
         private EntityDeletedHandler(deletedEntity:Models.Entity):void {
             //Find deleted entity in cache
-            var entityPredicate = function (e:Models.Entity) {
+            var entityPredicate:(e:Models.Entity) => boolean = function (e:Models.Entity):boolean {
                 return e &&
                     e.EntitySystemName === deletedEntity.EntitySystemName &&
                     e.Id === deletedEntity.Id;
@@ -206,8 +203,7 @@ module Services {
                 this.TotalCount = this.Data.length;
                 this.TotalPages = Math.ceil(this.TotalCount / this.PageSize);
                 this.MessagingService.Messages.Cache.EntityList.Changed.publish(this.EntitySystemName);
-            }
-            else {
+            } else {
                 this.InvalidateCache();
             }
         }
@@ -221,13 +217,13 @@ module Services {
             }
 
             //Check for present data
-            var hasCurrentPageData = this.HasPageData(pageIndex);
+            var hasCurrentPageData:boolean = this.HasPageData(pageIndex);
 
             //Check if sibling pages are loaded as well
-            var hasPreviousPageData = pageIndex === 0 || this.HasPageData(pageIndex - 1);
-            var hasNextPageData = pageIndex + 1 === this.TotalPages || this.HasPageData(pageIndex + 1);
+            var hasPreviousPageData:boolean = pageIndex === 0 || this.HasPageData(pageIndex - 1);
+            var hasNextPageData:boolean = (pageIndex + 1) === this.TotalPages || this.HasPageData(pageIndex + 1);
 
-            var hasAllNeededData = hasCurrentPageData && hasPreviousPageData && hasNextPageData;
+            var hasAllNeededData:boolean = hasCurrentPageData && hasPreviousPageData && hasNextPageData;
             if (!hasAllNeededData) {
                 this.LoadData({
                     EntitySystemName: entitySystemName,
@@ -249,12 +245,12 @@ module Services {
             if (this.Data === null || this.TotalCount === null) {
                 return false;
             }
-            var indexes = this.GetPageIndexes(pageIndex);
+            var indexes:any = this.GetPageIndexes(pageIndex);
             if (indexes === null) {
                 return false;
             }
 
-            for (var i = indexes.StartIndex; i < indexes.EndIndex; i++) {
+            for (var i:number = indexes.StartIndex; i < indexes.EndIndex; i++) {
                 if (!this.Data[i]) {
                     return false;
                 }
@@ -272,8 +268,8 @@ module Services {
         }
 
         private GetPageIndexes(pageIndex:number):any {
-            var startIndex = pageIndex * this.PageSize;
-            var endIndex = (pageIndex + 1) * this.PageSize;
+            var startIndex:number = pageIndex * this.PageSize;
+            var endIndex:number = (pageIndex + 1) * this.PageSize;
 
             if (startIndex < 0 || endIndex < 0) {
                 return null;

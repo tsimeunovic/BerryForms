@@ -3,10 +3,10 @@
 /// <reference path="../../models/security/userSessionModel.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-'use strict';
-
 //Service that wraps angular $http calls to api. Adds authentication headers and stores unauthenticated requests for later retry
 module Services {
+    'use strict';
+
     export class HttpWrapperService implements IHttpWrapperService {
         public static injection():any[] {
             return [
@@ -48,7 +48,7 @@ module Services {
 
         private DoHttpOperation(authenticatedOnly:boolean, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
             var deferred:any = this.Q.defer();
-            var afterLoginRetryFunction = authenticatedOnly ?
+            var afterLoginRetryFunction:(df:any, i:boolean, m:string, u:string, a:string, d:any) => void = authenticatedOnly ?
                 this.CreateAfterLoginRetryFunctionFor(deferred, isInvariantOperation, method, url, actionName, data) :
                 null;
 
@@ -57,13 +57,12 @@ module Services {
             if (!userSession && authenticatedOnly) {
                 //Unauthenticated
                 this.HandleUnauthenticatedUser(deferred, afterLoginRetryFunction);
-            }
-            else {
+            } else {
                 //Do request
                 var requestConfig:any = this.CreateRequestConfigFor(userSession);
                 var hasBodyAs2ndParam:boolean = ['POST', 'PUT'].contains(method);
                 var serviceMethod:string = method.toLowerCase();
-                var httpPromise = this.Http[serviceMethod](url, hasBodyAs2ndParam ? data : requestConfig, hasBodyAs2ndParam ? requestConfig : null);
+                var httpPromise:any = this.Http[serviceMethod](url, hasBodyAs2ndParam ? data : requestConfig, hasBodyAs2ndParam ? requestConfig : null);
                 this.ChainPromises(deferred, httpPromise, afterLoginRetryFunction);
             }
 
@@ -72,27 +71,31 @@ module Services {
         }
 
         private CreateRequestConfigFor(userSession:Models.UserSession):any {
-            if(!userSession) return {};
-            else return {
-                headers: {
-                    'X-BF-Auth-User': userSession.User.UserName,
-                    'X-BF-Auth-Valid-To': userSession.ValidTo,
-                    'X-BF-Auth-Token': userSession.Token
-                }
-            };
+            if (!userSession) {
+                return {};
+            } else {
+                return {
+                    headers: {
+                        'X-BF-Auth-User': userSession.User.UserName,
+                        'X-BF-Auth-Valid-To': userSession.ValidTo,
+                        'X-BF-Auth-Token': userSession.Token
+                    }
+                };
+            }
         }
 
-        private CreateAfterLoginRetryFunctionFor(originalDeferred:any, isInvariantOperation:boolean, method:string, url:string, actionName:string, data:any):any {
-            var _this = this;
+        private CreateAfterLoginRetryFunctionFor(originalDeferred:any, isInvariantOperation:boolean, method:string,
+                                                 url:string, actionName:string, data:any):any {
+            var _this:HttpWrapperService = this;
 
             //Allow cancellation of any method that modify state
             var canCancel:boolean = !isInvariantOperation;
-            var retryFunction = function () {
-                var newPromise = _this.DoHttpOperation(true, isInvariantOperation, method, url, actionName, data);
+            var retryFunction:() => void = function ():void {
+                var newPromise:any = _this.DoHttpOperation(true, isInvariantOperation, method, url, actionName, data);
                 _this.ChainPromises(originalDeferred, newPromise, null);
             };
 
-            var cancelFunction = function () {
+            var cancelFunction:() => void = function ():void {
                 originalDeferred.reject({Type: 'Cancellation'});
             };
 
@@ -101,15 +104,15 @@ module Services {
                 canCancel: canCancel,
                 retryFunction: retryFunction,
                 cancelFunction: canCancel ? cancelFunction : null
-            }
+            };
         }
 
-        private ChainPromises(originalDeferred:any, newPromise:any, retryFunction:()=>void):void {
-            var _this = this;
-            var successCallback = function (data, status, headers, config) {
+        private ChainPromises(originalDeferred:any, newPromise:any, retryFunction:() => void):void {
+            var _this:HttpWrapperService = this;
+            var successCallback:(d:any, s:number, h:any, c:any) => void = function (data:any, status:number, headers:any, config:any):void {
                 originalDeferred.resolve(data);
             };
-            var errorCallback = function (data, status, headers, config) {
+            var errorCallback:(d:any, s:number, h:any, c:any) => void = function (data:any, status:number, headers:any, config:any):void {
                 if (status === 401) {
                     //Unauthenticated
                     _this.HandleUnauthenticatedUser(originalDeferred, retryFunction);
@@ -120,16 +123,25 @@ module Services {
                 originalDeferred.reject(data);
             };
 
-            //Http promise
-            if (newPromise.success !== undefined) newPromise.success(successCallback).error(errorCallback);
-            //Q promise
-            else newPromise.then(successCallback, errorCallback);
+
+            if (newPromise.success !== undefined) {
+                //Http promise
+                newPromise.success(successCallback).error(errorCallback);
+            } else {
+                //Q promise
+                newPromise.then(successCallback, errorCallback);
+            }
         }
 
         private HandleUnauthenticatedUser(deferred:any, afterLoginRetryFunction:any):void {
             //Register retry or reject promise
-            if (afterLoginRetryFunction) this.StateService.RegisterPostLoginAction(afterLoginRetryFunction.actionName, afterLoginRetryFunction.canCancel, afterLoginRetryFunction.retryFunction, afterLoginRetryFunction.cancelFunction);
-            else deferred.reject(null, {Type: 'Client', ErrorTypeKey: 'UserUnauthenticated'});
+            if (afterLoginRetryFunction) {
+                this.StateService.RegisterPostLoginAction(
+                    afterLoginRetryFunction.actionName, afterLoginRetryFunction.canCancel,
+                    afterLoginRetryFunction.retryFunction, afterLoginRetryFunction.cancelFunction);
+            } else {
+                deferred.reject(null, {Type: 'Client', ErrorTypeKey: 'UserUnauthenticated'});
+            }
 
             //Redirect to login
             this.StateService.SetCurrentUserSession(null);

@@ -2,12 +2,14 @@
 /// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/repository/IEntityRepositoryService.ts" />
-
-'use strict';
+/// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 
 //Service that stores all entity types
 module Services {
+    'use strict';
+
     export class EntityMetadataListCacheService extends Services.CacheBaseService<Models.EntityMetadata[]> implements Services.IEntityMetadataListCacheService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 'MessagingService',
@@ -42,14 +44,16 @@ module Services {
             this.MessagingService.Messages.Metadata.Modified.subscribe(this.EntityMetadataCreatedOrModified.bind(this));
         }
 
-        private EntityMetadataCreatedOrModified(entityMetadata:Models.EntityMetadata) {
-            if (this.Data == null) return;
+        private EntityMetadataCreatedOrModified(entityMetadata:Models.EntityMetadata):void {
+            if (this.Data == null) {
+                return;
+            }
 
             //Check for existing metadata
-            var existingMetadataPredicate = function (item:Models.EntityMetadata) {
-                return item.EntitySystemName == entityMetadata.EntitySystemName;
+            var existingMetadataPredicate:(i:Models.EntityMetadata) => boolean = function (item:Models.EntityMetadata):boolean {
+                return item.EntitySystemName === entityMetadata.EntitySystemName;
             };
-            var existingMetadata = this.Data.single(existingMetadataPredicate);
+            var existingMetadata:Models.EntityMetadata = this.Data.single(existingMetadataPredicate);
 
             //Add new or modify existing
             if (existingMetadata) {
@@ -58,8 +62,7 @@ module Services {
                 existingMetadata.ModifiedDate = entityMetadata.ModifiedDate;
                 this.Data.splice(existingMetadataIndex, 1);
                 this.Data.unshift(existingMetadata);
-            }
-            else {
+            } else {
                 this.Data.unshift(entityMetadata);
             }
 
@@ -82,8 +85,7 @@ module Services {
             if (errorsModel == null) {
                 this.Data = data;
                 this.MessagingService.Messages.Cache.MetadataList.Loaded.publish(data);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
 
@@ -91,23 +93,22 @@ module Services {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityMetadataListCache);
         }
 
-        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata)=>void):void {
-            var predicateFunction = function (it:Models.EntityMetadata) {
-                return it.EntitySystemName == entitySystemName;
+        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata) => void):void {
+            var predicateFunction:(it:Models.EntityMetadata) => boolean = function (it:Models.EntityMetadata):boolean {
+                return it.EntitySystemName === entitySystemName;
             };
 
             if (this.IsLoading) {
                 //Have to wait for new data
-                var subscription = this.MessagingService.Messages.Cache.MetadataList.Loaded.subscribe(
-                    function (entityMetadataList:Models.EntityMetadata[]) {
+                var subscription:() => void = this.MessagingService.Messages.Cache.MetadataList.Loaded.subscribe(
+                    function (entityMetadataList:Models.EntityMetadata[]):void {
                         subscription();
-                        var result = entityMetadataList.single(predicateFunction);
+                        var result:Models.EntityMetadata = entityMetadataList.single(predicateFunction);
                         callback(result);
                     });
-            }
-            else {
+            } else {
                 //Can select from existing data
-                var result = this.Data.single(predicateFunction);
+                var result:Models.EntityMetadata = this.Data.single(predicateFunction);
                 callback(result);
             }
         }

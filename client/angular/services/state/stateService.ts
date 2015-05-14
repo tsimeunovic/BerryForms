@@ -6,11 +6,12 @@
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 
-'use strict';
-
 //Stores the state of application for scenarios when it should be preserved (for example page switch while editing)
 module Services {
+    'use strict';
+
     export class StateService implements Services.IStateService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 'MessagingService',
@@ -40,21 +41,20 @@ module Services {
 
         public GetEditedEntity(entityName:string, entityId:number):Models.Entity {
             if (!this.EditedEntity ||
-                this.EditedEntity.EntitySystemName != entityName ||
-                this.EditedEntity.Id != entityId) {
+                this.EditedEntity.EntitySystemName !== entityName ||
+                this.EditedEntity.Id !== entityId) {
                 this.EditedEntity = null;
             }
             return this.EditedEntity;
         }
 
         public SetCurrentUserSession(userSession:Models.UserSession):void {
-            var previousSession = this.CurrentUserSession;
+            var previousSession:Models.UserSession = this.CurrentUserSession;
             this.CurrentUserSession = userSession;
             if (!userSession) {
                 //Invalidation
                 this.MessagingService.Messages.User.LoggedOut.publish(previousSession);
-            }
-            else {
+            } else {
                 //New login
                 this.MessagingService.Messages.User.LoggedIn.publish(userSession);
                 this.PostLoginHandler();
@@ -66,15 +66,15 @@ module Services {
         }
 
         public UpdateCurrentUserSession(validTo:number, token:string):void {
-            var currentSession = this.CurrentUserSession;
+            var currentSession:Models.UserSession = this.CurrentUserSession;
             if (currentSession && currentSession.ValidTo < validTo) {
                 currentSession.ValidTo = validTo;
                 currentSession.Token = token;
             }
         }
 
-        public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void, cancel:()=>void):void {
-            var currentUserSession = this.CurrentUserSession;
+        public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:() => void, cancel:() => void):void {
+            var currentUserSession:Models.UserSession = this.CurrentUserSession;
             this.PostLoginActions.add({
                 registeringUser: currentUserSession && currentUserSession.User.UserName,
                 actionName: actionName,
@@ -85,19 +85,22 @@ module Services {
         }
 
         private PostLoginHandler():void {
-            var _this = this;
-            var currentUserSession = this.CurrentUserSession;
+            var _this:StateService = this;
+            var currentUserSession:Models.UserSession = this.CurrentUserSession;
 
-            var userPostLoginActionPredicate = function (item) {
-                return !item.registeringUser || item.registeringUser == currentUserSession.User.UserName;
+            var userPostLoginActionPredicate:(i:any) => boolean = function (item:any):boolean {
+                return !item.registeringUser ||
+                    item.registeringUser === currentUserSession.User.UserName;
             };
-            var cancelableActionPredicate = function (item) {
+            var cancelableActionPredicate:(i:any) => boolean = function (item:any):boolean {
                 return item.canCancel;
             };
 
             var userPostLoginActions:any[] = this.PostLoginActions.where(userPostLoginActionPredicate);
             this.PostLoginActions = [];
-            if (userPostLoginActions.length == 0) return;
+            if (userPostLoginActions.length === 0) {
+                return;
+            }
 
             //Assemble confirmation message
             var cancelableActions:any[] = userPostLoginActions.where(cancelableActionPredicate);
@@ -106,22 +109,23 @@ module Services {
             //Execute actions
             if (!shouldCreateConfirmationDialog) {
                 this.ExecutePostLoginActions(userPostLoginActions, false);
-            }
-            else {
+            } else {
                 var clientReadableActionsList:string[] = this.CreateClientReadableActionsList(cancelableActions);
-                this.DialogService.CreateConfirmationDialog(clientReadableActionsList, function (result:boolean) {
+                this.DialogService.CreateConfirmationDialog(clientReadableActionsList, function (result:boolean):void {
                     _this.ExecutePostLoginActions(userPostLoginActions, result);
 
                     //Start with new screen
-                    if (!result) _this.RedirectService.RedirectToHomeScreen();
+                    if (!result) {
+                        _this.RedirectService.RedirectToHomeScreen();
+                    }
                 });
             }
         }
 
         private CreateClientReadableActionsList(cancelableActions:any[]):string[] {
-            var result = [this.LocalizationService.Resources.RetryActionsQuestion];
-            for (var i = 0; i < cancelableActions.length; i++) {
-                var action = cancelableActions[i];
+            var result:string[] = [this.LocalizationService.Resources.RetryActionsQuestion];
+            for (var i:number = 0; i < cancelableActions.length; i++) {
+                var action:any = cancelableActions[i];
                 result.push(this.LocalizationService.GetResourceByKey(action.actionName, null));
             }
             return result;
@@ -129,13 +133,16 @@ module Services {
 
         private ExecutePostLoginActions(postLoginActions:any[], executeCancelable:boolean):void {
             //Execute pending actions
-            for (var i = 0; i < postLoginActions.length; i++) {
-                var postLoginAction = postLoginActions[i];
-                var actionFn = postLoginAction.action;
-                var cancelFn = postLoginAction.cancel;
+            for (var i:number = 0; i < postLoginActions.length; i++) {
+                var postLoginAction:any = postLoginActions[i];
+                var actionFn:() => void = postLoginAction.action;
+                var cancelFn:() => void = postLoginAction.cancel;
                 var canCancel:boolean = postLoginAction.canCancel;
-                if (!canCancel || executeCancelable) actionFn();
-                else cancelFn();
+                if (!canCancel || executeCancelable) {
+                    actionFn();
+                } else {
+                    cancelFn();
+                }
             }
         }
     }

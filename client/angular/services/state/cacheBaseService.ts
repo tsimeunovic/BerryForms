@@ -1,9 +1,9 @@
 /// <reference path="../../interfaces/services/state/ICacheService.ts" />
 
-'use strict';
-
 //Base class for services that caches data
 module Services {
+    'use strict';
+
     export class CacheBaseService<T> implements ICacheService<T> {
         public Data:T;
         public IsLoading:boolean;

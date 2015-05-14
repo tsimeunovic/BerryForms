@@ -1,9 +1,9 @@
 /// <reference path="../../interfaces/services/repository/IQueryCreatorService.ts" />
 
-'use strict';
-
 //Service that creates database queries
 module Services {
+    'use strict';
+
     export class QueryCreatorService implements Services.IQueryCreatorService {
         public static injection():any[] {
             return [
@@ -13,17 +13,21 @@ module Services {
 
         public CreateRelationSearchQuery(entityMetadata:Models.EntityMetadata, searchExpression:string):any {
             //Find field to search
-            var searchFieldPredicate = function (fieldMetadata:Models.FieldMetadata) {
+            var searchFieldPredicate:(fm:Models.FieldMetadata) => boolean = function (fieldMetadata:Models.FieldMetadata):boolean {
                 return ['Text', 'Textarea', 'Select'].contains(fieldMetadata.FieldTypeName) &&
                     fieldMetadata.DisplayInListName;
             };
             var searchField:Models.FieldMetadata = entityMetadata.Fields.first(searchFieldPredicate);
-            if (!searchField) return null;
+            if (!searchField) {
+                return null;
+            }
 
             //Create query
-            var query = {};
-            var queryExpressionField = 'Data.' + searchField.FieldSystemName;
-            if (searchField.FieldTypeName == 'Select') queryExpressionField += '.Text';
+            var query:any = {};
+            var queryExpressionField:string = 'Data.' + searchField.FieldSystemName;
+            if (searchField.FieldTypeName === 'Select') {
+                queryExpressionField += '.Text';
+            }
             query[queryExpressionField] = {$regex: searchExpression, $options: 'i'};
             return query;
         }
