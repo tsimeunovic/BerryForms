@@ -1,10 +1,11 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
 
-'use strict';
 declare var _global:any;
 
 //Resource file with translations for English language
 module Localization {
+    'use strict';
+
     export class ResourcesEn implements Localization.IResources {
         //Records
         CreateNewRecord:string = 'Create new \'{0}\'';
@@ -197,7 +198,7 @@ module Localization {
         RecentlyModifiedRecordsByMe:string = 'Recently modified records by me';
     }
 
-    (function () {
+    (function ():void {
         _global.Localization.Resources = new Localization.ResourcesEn();
     })();
 }

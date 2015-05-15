@@ -1,11 +1,8 @@
-'use strict';
-
 //Base class for any model that can be persisted in database
 module Models {
-    export class PersistentObject {
-        constructor() {
-        }
+    'use strict';
 
+    export class PersistentObject {
         //Identifier (set on server)
         public Id:number;
 

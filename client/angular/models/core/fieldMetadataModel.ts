@@ -1,10 +1,10 @@
 /// <reference path="../../interfaces/services/mapping/IEntityModelMapperService.ts" />
 /// <reference path="../../../config/configHelper.ts" />
 
-'use strict';
-
 //Model representing field in entity type
 module Models {
+    'use strict';
+
     export class FieldMetadata {
         constructor(fieldTypeName:string) {
             this.FieldTypeName = fieldTypeName;
@@ -33,20 +33,20 @@ module Models {
         //Events
         public ValueChanged:(value:any, valid:boolean) => void;
 
-        //Validation
-        public ValidateValue(value:any):boolean {
-            //Common implementation
-            var hasValidValue = value != null &&
-                value.length !== 0 &&
-                value.Value !== '';
-            return !this.Required || hasValidValue;
-        }
-
         //Mapping
         public FieldSpecialProperties:string[] = [];
 
         public MapAdditionalProperties(entity:Models.Entity, mapperService:Services.IEntityModelMapperService):void {
             throw new Error();
+        }
+
+        //Validation
+        public ValidateValue(value:any):boolean {
+            //Common implementation
+            var hasValidValue:boolean = value != null &&
+                value.length !== 0 &&
+                value.Value !== '';
+            return !this.Required || hasValidValue;
         }
     }
 }

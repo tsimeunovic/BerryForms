@@ -1,7 +1,7 @@
-'use strict';
-
 //Base interface for all services that caches data
 module Services {
+    'use strict';
+
     export interface ICacheService<T> {
         //Cache content
         Data:T;

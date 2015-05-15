@@ -1,12 +1,12 @@
 /// <reference path="../security/permissionModel.ts" />
 /// <reference path="../security/securityRoleModel.ts" />
 
-'use strict';
-
 //Represents application user
 module Models {
+    'use strict';
+
     export class User {
-        constructor(){
+        constructor() {
             this.Roles = [];
             this.ApplicationPermissions = [];
         }

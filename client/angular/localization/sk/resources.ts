@@ -1,10 +1,11 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
 
-'use strict';
 declare var _global:any;
 
 //Resource file with translations for Slovak language
 module Localization {
+    'use strict';
+
     export class ResourcesSk implements Localization.IResources {
         //Records
         CreateNewRecord:string = 'Vytvoriť \'{0}\'';
@@ -197,7 +198,7 @@ module Localization {
         RecentlyModifiedRecordsByMe:string = 'Posledné upravované záznamy mnou';
     }
 
-    (function () {
+    (function ():void {
         _global.Localization.Resources = new Localization.ResourcesSk();
     })();
 }

@@ -1,12 +1,15 @@
 /// <reference path="./messagingBaseService.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
+/// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 
-'use strict';
 var _global:any = this;
 
 //Service used for communication between components. Has multiple messages that listeners can subscribe to and publishers can publish
 module Services {
+    'use strict';
+
     export class MessagingService extends MessagingBaseService implements Services.IMessagingService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$rootScope',
@@ -39,11 +42,11 @@ module Services {
             this.Messages = new Services.IMessagingServiceType();
             this.MessageDefinitions = [
                 //'Message name', Message reference, Requires apply, Arguments transform fn
-                ['formDisplayItem', this.Messages.Form.DisplayItem, false, function (itemData, itemMetadata) {
-                    return {Data: itemData, Metadata: itemMetadata}
+                ['formDisplayItem', this.Messages.Form.DisplayItem, false, function (itemData:Models.Entity, itemMetadata:Models.EntityMetadata):any {
+                    return {Data: itemData, Metadata: itemMetadata};
                 }],
-                ['notificationMessage', this.Messages.Notification.Message, false, function (message, severity) {
-                    return {Message: message, Severity: severity}
+                ['notificationMessage', this.Messages.Notification.Message, false, function (message:string, severity:Services.NotificationSeverity):any {
+                    return {Message: message, Severity: severity};
                 }],
 
                 ['metadataCreated', this.Messages.Metadata.Created, false, null],
@@ -76,31 +79,31 @@ module Services {
         }
 
         private ImplementAllMessageDefinitions():void {
-            for (var i = 0; i < this.MessageDefinitions.length; i++) {
-                var message = this.MessageDefinitions[i];
+            for (var i:number = 0; i < this.MessageDefinitions.length; i++) {
+                var message:any = this.MessageDefinitions[i];
                 this.ImplementMessage(message);
             }
         }
 
         private ImplementMessage(messageImplementation:any):void {
-            var _this = this;
-            var messageName = messageImplementation[0];
-            var messageReference = messageImplementation[1];
-            var requiresRootApply = messageImplementation[2];
-            var transformFn = messageImplementation[3];
+            var _this:MessagingService = this;
+            var messageName:string = messageImplementation[0];
+            var messageReference:any = messageImplementation[1];
+            var requiresRootApply:boolean = messageImplementation[2];
+            var transformFn:(a1:any, a2:any, a3:any, a4:any, a5:any) => any = messageImplementation[3];
 
             //Create implementations
-            messageReference.subscribe = function (subscriber) {
+            messageReference.subscribe = function (subscriber:(m:any) => void):() => void {
                 return _this.addSubscriber(messageName, subscriber);
             };
-            messageReference.unsubscribe = function (subscriber) {
-                return _this.removeSubscriber(messageName, subscriber);
+            messageReference.unsubscribe = function (subscriber:(m:any) => void):void {
+                _this.removeSubscriber(messageName, subscriber);
             };
-            messageReference.publish = function (a1, a2, a3, a4, a5) {
-                var model = transformFn ?
+            messageReference.publish = function (a1:any, a2:any, a3:any, a4:any, a5:any):void {
+                var model:any = transformFn ?
                     transformFn(a1, a2, a3, a4, a5) :
                     (a1 || null);
-                return _this.notifySubscribers(messageName, model, requiresRootApply);
+                _this.notifySubscribers(messageName, model, requiresRootApply);
             };
         }
     }

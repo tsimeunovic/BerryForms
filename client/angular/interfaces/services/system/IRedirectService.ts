@@ -1,7 +1,7 @@
-'use strict';
-
 //Interface for Redirect service (used to switch views across application)
 module Services {
+    'use strict';
+
     export interface IRedirectService {
         //Urls
         GetEditEntityUrl(entityName:string, entityId:number):string;

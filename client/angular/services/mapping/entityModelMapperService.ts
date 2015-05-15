@@ -12,13 +12,15 @@
 /// <reference path="../../../extensions/objectExtensions.ts" />
 /// <reference path="../../../config/config.ts" />
 
-'use strict';
-var _global:any = this;
-declare var angular:any;
+declare
+var angular:any;
 
 //Service used to map and deserialize Entity/EntityMetadata/FieldMetadata
 module Services {
+    'use strict';
+
     export class EntityModelMapperService extends Services.ObjectMapperBaseService implements Services.IEntityModelMapperService {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 'NamingConventionsService',
@@ -41,7 +43,7 @@ module Services {
         private EntityToFieldMetadataAutoProperties:string[] = ['FieldName', 'FieldDescription', 'Required', 'DisplayInListName'];
 
         public MapEntityToEntityMetadataModel(entity:Models.Entity):Models.EntityMetadata {
-            var result = new Models.EntityMetadata();
+            var result:Models.EntityMetadata = new Models.EntityMetadata();
             this.AutomapProperties(entity.Data, result, this.EntityToMetadataAutoProperties);
             result.Fields = [];
             result.EntitySystemName = this.NamingConventionsService.GetSystemEntityName(result.EntityName);
@@ -51,46 +53,31 @@ module Services {
         }
 
         public MapFieldsMetadataToEntityModels(fieldsMetadata:Models.FieldMetadata[]):Models.Entity[] {
-            var _this = this;
+            var _this:EntityModelMapperService = this;
             var result:Models.Entity[] = [];
-            angular.forEach(fieldsMetadata, function (fieldMetadata:Models.FieldMetadata, index:number) {
-                var entity = _this.MapFieldMetadataToEntityModel(fieldMetadata);
+            angular.forEach(fieldsMetadata, function (fieldMetadata:Models.FieldMetadata, index:number):void {
+                var entity:Models.Entity = _this.MapFieldMetadataToEntityModel(fieldMetadata);
                 entity.Id = index;
                 result.push(entity);
             });
             return result;
         }
 
-        private MapFieldMetadataToEntityModel(fieldMetadata:Models.FieldMetadata):Models.Entity {
-            var fieldTypeComponent = this.FieldTypesRegistry.GetFieldType(fieldMetadata.FieldTypeName, false);
-            if (!fieldTypeComponent) {
-                var errorMessage = this.LocalizationService.Resources.NonExistingFieldType.format([fieldMetadata.FieldTypeName]);
-                this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
-                return null;
-            }
-
-            var result = new Models.Entity(null);
-            result.EntitySystemName = fieldMetadata.FieldSystemName;
-            result.Data['FieldTypeName'] = new Models.SelectFieldOptionMetadata(Services.LocalizationService.Resources[fieldTypeComponent.FieldName + 'Field'], fieldTypeComponent.FieldName);
-            this.AutomapProperties(fieldMetadata, result.Data, this.FieldMetadataToEntityAutoProperties.concat(fieldMetadata.FieldSpecialProperties));
-            fieldMetadata.MapAdditionalProperties(result, this);
-            return result;
-        }
-
         public MapEntityModelToFieldMetadata(entity:Models.Entity):Models.FieldMetadata {
-            var fieldType:string = entity.Data['FieldTypeName'].Value;
+            var fieldType:string = entity.Data.FieldTypeName.Value;
 
             //Create metadata model
-            var fieldTypeComponent = this.FieldTypesRegistry.GetFieldType(fieldType, false);
+            var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldType, false);
             if (!fieldTypeComponent) {
-                var errorMessage = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
+                var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
                 this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
                 return null;
             }
 
             //Map properties
-            var fieldTypeMetadataInstance = fieldTypeComponent.CreateMetadata();
-            this.AutomapProperties(entity.Data, fieldTypeMetadataInstance, this.EntityToFieldMetadataAutoProperties.concat(fieldTypeMetadataInstance.FieldSpecialProperties));
+            var fieldTypeMetadataInstance:Models.FieldMetadata = fieldTypeComponent.CreateMetadata();
+            this.AutomapProperties(entity.Data, fieldTypeMetadataInstance,
+                this.EntityToFieldMetadataAutoProperties.concat(fieldTypeMetadataInstance.FieldSpecialProperties));
             fieldTypeMetadataInstance.MapAdditionalProperties(entity, this);
             fieldTypeMetadataInstance.FieldSystemName = this.NamingConventionsService.GetSystemFieldName(fieldTypeMetadataInstance.FieldName);
             fieldTypeMetadataInstance.FieldTypeName = fieldType;
@@ -99,7 +86,7 @@ module Services {
         }
 
         public DeserializeEntityMetadataModel(entityMetadataJson:any):Models.EntityMetadata {
-            var result = new Models.EntityMetadata();
+            var result:Models.EntityMetadata = new Models.EntityMetadata();
             this.AutomapProperties(entityMetadataJson, result, null);
             result.Fields = this.DeserializeEntityMetadataModelFields(entityMetadataJson);
             return result;
@@ -111,7 +98,7 @@ module Services {
         }
 
         public DeserializeEntityModel(entityJson:any):Models.Entity {
-            var result = new Models.Entity(entityJson.EntitySystemName);
+            var result:Models.Entity = new Models.Entity(entityJson.EntitySystemName);
             result.Id = entityJson.Id;
             result.CreatedDate = entityJson.CreatedDate;
             result.CreatedBy = entityJson.CreatedBy;
@@ -128,13 +115,13 @@ module Services {
         }
 
         private DeserializeEntityMetadataModelFields(entityFieldsJson:any):Models.FieldMetadata[] {
-            var _this = this;
+            var _this:EntityModelMapperService = this;
             var result:Models.FieldMetadata[] = [];
 
             if (entityFieldsJson.Fields != null) {
-                for (var i = 0; i < entityFieldsJson.Fields.length; i++) {
-                    var itemJson = entityFieldsJson.Fields[i];
-                    var item = _this.DeserializeEntityMetadataModelField(itemJson);
+                for (var i:number = 0; i < entityFieldsJson.Fields.length; i++) {
+                    var itemJson:any = entityFieldsJson.Fields[i];
+                    var item:Models.FieldMetadata = _this.DeserializeEntityMetadataModelField(itemJson);
                     result.add(item);
                 }
             }
@@ -146,16 +133,33 @@ module Services {
             var fieldType:string = entityFieldJson.FieldTypeName;
 
             //Create metadata model
-            var fieldTypeComponent = this.FieldTypesRegistry.GetFieldType(fieldType, false);
+            var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldType, false);
             if (!fieldTypeComponent) {
-                var errorMessage = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
+                var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
                 this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
                 return null;
             }
 
-            var fieldTypeMetadataInstance = fieldTypeComponent.CreateMetadata();
+            var fieldTypeMetadataInstance:Models.FieldMetadata = fieldTypeComponent.CreateMetadata();
             this.AutomapProperties(entityFieldJson, fieldTypeMetadataInstance, null);
             return fieldTypeMetadataInstance;
+        }
+
+        private MapFieldMetadataToEntityModel(fieldMetadata:Models.FieldMetadata):Models.Entity {
+            var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldMetadata.FieldTypeName, false);
+            if (!fieldTypeComponent) {
+                var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldMetadata.FieldTypeName]);
+                this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
+                return null;
+            }
+
+            var result:Models.Entity = new Models.Entity(null);
+            result.EntitySystemName = fieldMetadata.FieldSystemName;
+            result.Data.FieldTypeName = new Models.SelectFieldOptionMetadata(
+                Services.LocalizationService.Resources[fieldTypeComponent.FieldName + 'Field'], fieldTypeComponent.FieldName);
+            this.AutomapProperties(fieldMetadata, result.Data, this.FieldMetadataToEntityAutoProperties.concat(fieldMetadata.FieldSpecialProperties));
+            fieldMetadata.MapAdditionalProperties(result, this);
+            return result;
         }
     }
 }

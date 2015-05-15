@@ -1,11 +1,11 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
 
-'use strict';
-declare
-var _global:any;
+declare var _global:any;
 
 //Resource file with translations for Serbian language (Српски бре!)
 module Localization {
+    'use strict';
+
     export class ResourcesSr implements Localization.IResources {
         //Records
         CreateNewRecord:string = 'Додај нови \'{0}\'';
@@ -175,10 +175,10 @@ module Localization {
         Login:string = 'Пријављивање';
         UserName:string = 'Корисничко име';
         Password:string = 'Лозинка';
-        InvalidUserNameOrPassword:string  = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
+        InvalidUserNameOrPassword:string = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
 
         //Actions
-        RetryActionsQuestion:string  = 'Неке операције нису биле успјешне. Желите ли да их поновите?';
+        RetryActionsQuestion:string = 'Неке операције нису биле успјешне. Желите ли да их поновите?';
         CreateEntityMetadata:string = 'Додавање новог типа шеме';
         UpdateEntityMetadata:string = 'Ажурирање типа шеме';
         CreateEntity:string = 'Додавање записа';
@@ -198,7 +198,7 @@ module Localization {
         RecentlyModifiedRecordsByMe:string = 'Моја последња активност';
     }
 
-    (function () {
+    (function ():void {
         _global.Localization.Resources = new Localization.ResourcesSr();
     })();
 }

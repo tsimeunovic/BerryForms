@@ -1,10 +1,10 @@
 /// <reference path="../../../models/core/entityModel.ts" />
 /// <reference path="../../../models/security/userSessionModel.ts" />
 
-'use strict';
-
 //Interface for State service (stores state that needs to be preserved between page switches)
 module Services {
+    'use strict';
+
     export interface IStateService {
         //Entity being created/edited
         SetEditedEntity(entity:Models.Entity):void;
@@ -14,6 +14,6 @@ module Services {
         SetCurrentUserSession(userSession:Models.UserSession):void;
         GetCurrentUserSession():Models.UserSession;
         UpdateCurrentUserSession(validTo:number, token:string):void;
-        RegisterPostLoginAction(actionName:string, canCancel:boolean, action:()=>void, cancel:()=>void):void;
+        RegisterPostLoginAction(actionName:string, canCancel:boolean, action:() => void, cancel:() => void):void;
     }
 }

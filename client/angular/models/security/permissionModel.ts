@@ -1,7 +1,7 @@
-'use strict';
-
 //Represents permission for action
 module Models {
+    'use strict';
+
     export class Permission {
         //Underlying action
         public Action:string;

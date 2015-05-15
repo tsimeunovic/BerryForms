@@ -1,7 +1,10 @@
-'use strict';
+/// <reference path="../../../extensions/arrayExtensions.ts" />
+/// <reference path="../../components/fieldTypes/select/selectFieldOptionMetadataModel.ts" />
 
 //Base class for mapper services (provides some useful functions)
 module Services {
+    'use strict';
+
     export class ObjectMapperBaseService {
         public AutomapProperties(sourceObject:any, destinationObject:any, propertiesArray:string[]):void {
             for (var property in sourceObject) {
@@ -14,18 +17,20 @@ module Services {
         }
 
         public GetSelectFieldOptionFromStringProperty(sourceObject:any, propertyName:string):Models.SelectFieldOptionMetadata {
-            var value = sourceObject[propertyName];
+            var value:string = sourceObject[propertyName];
             return new Models.SelectFieldOptionMetadata(value, value);
         }
 
         public GetSelectFieldOptionsFromArrayProperty(sourceObject:any, propertyName:string):Models.SelectFieldOptionMetadata[] {
-            var value = sourceObject[propertyName];
-            var result = [];
-            if (!value.length) return result;
+            var value:string[] = sourceObject[propertyName];
+            var result:Models.SelectFieldOptionMetadata[] = [];
+            if (!value.length) {
+                return result;
+            }
 
-            for (var i = 0; i < value.length; i++) {
-                var itemValue = value[i];
-                var item = new Models.SelectFieldOptionMetadata(itemValue, itemValue);
+            for (var i:number = 0; i < value.length; i++) {
+                var itemValue:string = value[i];
+                var item:Models.SelectFieldOptionMetadata = new Models.SelectFieldOptionMetadata(itemValue, itemValue);
                 result.push(item);
             }
             return result;

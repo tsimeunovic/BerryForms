@@ -2,10 +2,10 @@
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 
-'use strict';
-
 //Service responsible for frontend UI notifications for user
 module Services {
+    'use strict';
+
     export class NotificationService implements Services.INotificationService {
         public static injection():any[] {
             return [
@@ -24,24 +24,21 @@ module Services {
         }
 
         public Notify(key:string, args:string[], severity:Services.NotificationSeverity):void {
-            var message = this.LocalizationService.GetResourceByKey(key, args);
+            var message:string = this.LocalizationService.GetResourceByKey(key, args);
             this.NotifyMessage(message, severity);
         }
 
         public HandleErrorsModel(errorsModel:any):void {
-            if (errorsModel != null && errorsModel.Type == 'Plugin') {
+            if (errorsModel !== null && errorsModel.Type === 'Plugin') {
                 this.NotifyMessage(errorsModel.PluginMessage, Services.NotificationSeverity.Warning);
-            }
-            else if (errorsModel != null && errorsModel.Type == 'Client') {
-                for (var i = 0; i < errorsModel.Errors.length; i++) {
-                    var error = errorsModel.Errors[i];
+            } else if (errorsModel != null && errorsModel.Type === 'Client') {
+                for (var i:number = 0; i < errorsModel.Errors.length; i++) {
+                    var error:any = errorsModel.Errors[i];
                     this.Notify(error.ErrorTypeKey, error.ErrorParameters, Services.NotificationSeverity.Error);
                 }
-            }
-            else if (errorsModel != null && errorsModel.Type == 'Cancellation') {
+            } else if (errorsModel !== null && errorsModel.Type === 'Cancellation') {
                 //Do nothing
-            }
-            else {
+            } else {
                 this.NotifyMessage(this.LocalizationService.Resources.UnknownError, Services.NotificationSeverity.Error);
             }
         }

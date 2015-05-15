@@ -3,10 +3,10 @@
 /// <reference path="../security/permissionModel.ts" />
 /// <reference path="../../interfaces/models/IPermissionObject.ts" />
 
-'use strict';
-
 //Model representing entity type
 module Models {
+    'use strict';
+
     export class EntityMetadata extends PersistentObject implements Models.IPermissionObject {
         constructor() {
             super();

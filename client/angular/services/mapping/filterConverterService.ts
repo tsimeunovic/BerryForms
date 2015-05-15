@@ -1,11 +1,12 @@
 /// <reference path="../../interfaces/services/mapping/IFilterConverterService.ts" />
 /// <reference path="../../interfaces/components/fieldTypes/IFieldType.ts" />
+/// <reference path="../../interfaces/components/fieldTypes/IFieldTypesRegistry.ts" />
 /// <reference path="../../../extensions/objectExtensions.ts" />
-
-'use strict';
 
 //Service that creates filter query string and database query object
 module Services {
+    'use strict';
+
     export class FilterConverterService implements IFilterConverterService {
         public static injection():any[] {
             return [
@@ -19,22 +20,24 @@ module Services {
 
         //Database query
         public CreateDatabaseQueryFromFilter(metadata:Models.EntityMetadata, filterEntity:Models.Entity):any {
-            var result = {};
-            if (!metadata || !metadata.Fields) return result;
+            var result:any = {};
+            if (!metadata || !metadata.Fields) {
+                return result;
+            }
 
-            for (var i = 0; i < metadata.Fields.length; i++) {
+            for (var i:number = 0; i < metadata.Fields.length; i++) {
                 var metadataField:Models.FieldMetadata = metadata.Fields[i];
                 var fieldComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(metadataField.FieldTypeName, true);
                 var filterFields:Models.FieldMetadata[] = fieldComponent.CreateFilterFields(metadataField);
 
-                var filterValues = [];
-                for (var j = 0; j < filterFields.length; j++) {
-                    var filterField = filterFields[j];
-                    var value = filterEntity.Data[filterField.FieldSystemName];
+                var filterValues:any[] = [];
+                for (var j:number = 0; j < filterFields.length; j++) {
+                    var filterField:Models.FieldMetadata = filterFields[j];
+                    var value:any = filterEntity.Data[filterField.FieldSystemName];
                     filterValues.push(value);
                 }
 
-                var fieldQuery = fieldComponent.CreateFilterQuery(metadataField, filterValues);
+                var fieldQuery:any = fieldComponent.CreateFilterQuery(metadataField, filterValues);
                 Object.copyKeys(fieldQuery, result);
             }
             return result;
@@ -42,16 +45,20 @@ module Services {
 
         //Filter form
         public CreateFilterFormMetadataFromEntityMetadata(metadata:Models.EntityMetadata):Models.EntityMetadata {
-            var result = new Models.EntityMetadata();
+            var result:Models.EntityMetadata = new Models.EntityMetadata();
             result.Fields = [];
-            if (!metadata || !metadata.Fields) return null;
+            if (!metadata || !metadata.Fields) {
+                return null;
+            }
 
-            for (var i = 0; i < metadata.Fields.length; i++) {
+            for (var i:number = 0; i < metadata.Fields.length; i++) {
                 var metadataField:Models.FieldMetadata = metadata.Fields[i];
                 var fieldComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(metadataField.FieldTypeName, true);
                 var filterFields:Models.FieldMetadata[] = fieldComponent.CreateFilterFields(metadataField);
 
-                if (filterFields && filterFields.length) result.Fields = result.Fields.concat(filterFields);
+                if (filterFields && filterFields.length) {
+                    result.Fields = result.Fields.concat(filterFields);
+                }
             }
 
             return result;
@@ -59,8 +66,8 @@ module Services {
 
         //Query string
         public ParseFilterQueryString(metadata:Models.EntityMetadata, routeParams:any):Models.Entity {
-            var result = new Models.Entity(null);
-            for (var i = 0; i < metadata.Fields.length; i++) {
+            var result:Models.Entity = new Models.Entity(null);
+            for (var i:number = 0; i < metadata.Fields.length; i++) {
                 var metadataField:Models.FieldMetadata = metadata.Fields[i];
                 var fieldComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(metadataField.FieldTypeName, true);
                 fieldComponent.ParseFilterQueryString(metadataField, result, routeParams);
@@ -70,25 +77,31 @@ module Services {
 
         public CreateFilterQueryString(metadata:Models.EntityMetadata, filterEntity:Models.Entity):string {
             var result:string = '';
-            if (!filterEntity || !filterEntity.Data) return result;
+            if (!filterEntity || !filterEntity.Data) {
+                return result;
+            }
 
-            for (var i = 0; i < metadata.Fields.length; i++) {
+            for (var i:number = 0; i < metadata.Fields.length; i++) {
                 var metadataField:Models.FieldMetadata = metadata.Fields[i];
                 var fieldComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(metadataField.FieldTypeName, true);
                 var filterFields:Models.FieldMetadata[] = fieldComponent.CreateFilterFields(metadataField);
 
-                var filterValues = [];
-                for (var j = 0; j < filterFields.length; j++) {
-                    var filterField = filterFields[j];
-                    var value = filterEntity.Data[filterField.FieldSystemName];
+                var filterValues:any[] = [];
+                for (var j:number = 0; j < filterFields.length; j++) {
+                    var filterField:Models.FieldMetadata = filterFields[j];
+                    var value:any = filterEntity.Data[filterField.FieldSystemName];
                     filterValues.push(value);
                 }
 
-                var fieldQueryString = fieldComponent.CreateFilterQueryString(metadataField, filterValues);
-                if (!fieldQueryString) continue;
-                for (var k = 0; k < fieldQueryString.length; k++) {
-                    var fieldQueryStringComponent = fieldQueryString[k];
-                    if (!fieldQueryStringComponent) continue;
+                var fieldQueryString:string[] = fieldComponent.CreateFilterQueryString(metadataField, filterValues);
+                if (!fieldQueryString) {
+                    continue;
+                }
+                for (var k:number = 0; k < fieldQueryString.length; k++) {
+                    var fieldQueryStringComponent:string = fieldQueryString[k];
+                    if (!fieldQueryStringComponent) {
+                        continue;
+                    }
                     result += (result ? '&' : '') + fieldQueryStringComponent;
                 }
             }
