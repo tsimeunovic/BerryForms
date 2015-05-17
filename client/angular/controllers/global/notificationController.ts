@@ -5,10 +5,10 @@
 /// <reference path="../../../extensions/dateExtensions.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-'use strict';
-
 //Controller responsible for front end notifications
 module Controllers {
+    'use strict';
+
     export class NotificationController extends BaseController {
         public static injection():any[] {
             return [
@@ -42,7 +42,7 @@ module Controllers {
         }
 
         private NotificationMessageReceived(notification:any):void {
-            var datetime = (new Date()).format('dd.MM.yyyy HH:mm:ss');
+            var datetime:string = (new Date()).format('dd.MM.yyyy HH:mm:ss');
             var severity:string;
             switch (notification.Severity) {
                 case Services.NotificationSeverity.Error:

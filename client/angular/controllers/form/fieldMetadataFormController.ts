@@ -13,11 +13,12 @@
 /// <reference path="../../../static/controllerArea.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 
-'use strict';
-
 //Controllers for entity fields metadata form (adding fields to existing entity type)
 module Controllers {
+    'use strict';
+
     export class FieldMetadataFormController extends BaseViewController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -57,7 +58,7 @@ module Controllers {
 
         private EntityName:string;
 
-        private InitializeScope() {
+        private InitializeScope():void {
             this.Scope.FormHeaderIcons = [];
             this.Scope.SaveEntityMetadata = this.SaveEntityMetadata.bind(this);
             this.AddSubscription(this.MessagingService.Messages.Form.DisplayItem.subscribe(this.DisplayItemMessageReceived.bind(this)));
@@ -73,7 +74,7 @@ module Controllers {
             this.CreateFieldMetadataCompleted(fieldCreateData, fieldCreateMetadata);
         }
 
-        private DisplayItemMessageReceived(message:any) {
+        private DisplayItemMessageReceived(message:any):void {
             this.CreateFieldMetadataCompleted(message.Data, message.Metadata);
         }
 
@@ -84,8 +85,8 @@ module Controllers {
             this.Scope.Entity.ValidateAllFields(fieldCreateMetadata);
 
             //Rebind on type change
-            var fieldNamePredictor = function (field:Models.FieldMetadata) {
-                return field.FieldSystemName == 'FieldTypeName'
+            var fieldNamePredictor:(f:Models.FieldMetadata) => boolean = function (field:Models.FieldMetadata):boolean {
+                return field.FieldSystemName === 'FieldTypeName';
             };
             var fieldTypeField:Models.FieldMetadata = fieldCreateMetadata.Fields.single(fieldNamePredictor);
             fieldTypeField.ValueChanged = this.FieldTypeChanged.bind(this);
@@ -116,9 +117,12 @@ module Controllers {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.FieldSchemaData);
         }
 
-        private FieldTypeChanged(fieldType:Models.SelectFieldOptionMetadata) {
-            if (!fieldType || fieldType.Value == this.Scope.FieldType) return;
-            else this.Scope.FieldType = fieldType.Value;
+        private FieldTypeChanged(fieldType:Models.SelectFieldOptionMetadata):void {
+            if (!fieldType || fieldType.Value === this.Scope.FieldType) {
+                return;
+            } else {
+                this.Scope.FieldType = fieldType.Value;
+            }
 
             var fieldCreateData:Models.Entity = this.Scope.Entity;
             var edit:boolean = !!this.Scope.OriginalEntity.EntitySystemName;
@@ -128,36 +132,35 @@ module Controllers {
         }
 
         private SubmitForm():void {
-            var entity = this.Scope.Entity;
+            var entity:Models.Entity = this.Scope.Entity;
             var fieldMetadata:Models.FieldMetadata = this.EntityModelMapperService.MapEntityModelToFieldMetadata(entity);
             var originalEntity:Models.Entity = this.Scope.OriginalEntity;
             var entityMetadata:Models.EntityMetadata = this.Scope.OriginalMetadata;
 
             //Check if field with same name exists
-            var conflictingFieldPredicate = function (fm:Models.FieldMetadata) {
-                return fm.FieldSystemName == fieldMetadata.FieldSystemName;
+            var conflictingFieldPredicate:(fm:Models.FieldMetadata) => boolean = function (fm:Models.FieldMetadata):boolean {
+                return fm.FieldSystemName === fieldMetadata.FieldSystemName;
             };
             var conflictingField:Models.FieldMetadata = entityMetadata.Fields.single(conflictingFieldPredicate);
-            var systemNameChanged:boolean = originalEntity.EntitySystemName != entity.EntitySystemName;
-            var errorOccured:boolean = !!(systemNameChanged && conflictingField);
+            var systemNameChanged:boolean = originalEntity.EntitySystemName !== entity.EntitySystemName;
+            var errorOccurred:boolean = !!(systemNameChanged && conflictingField);
 
-            if (!errorOccured) {
+            if (!errorOccurred) {
                 if (originalEntity.EntitySystemName) {
                     //Update
                     this.Scope.FieldModified = true;
-                    var existingFieldPredicate = function (fm:Models.FieldMetadata) {
-                        return fm.FieldSystemName == originalEntity.EntitySystemName;
+                    var existingFieldPredicate:(fm:Models.FieldMetadata) => boolean = function (fm:Models.FieldMetadata):boolean {
+                        return fm.FieldSystemName === originalEntity.EntitySystemName;
                     };
                     var existingField:Models.FieldMetadata = entityMetadata.Fields.single(existingFieldPredicate);
-                    errorOccured = !existingField;
+                    errorOccurred = !existingField;
 
                     if (existingField && (!systemNameChanged || !conflictingField)) {
                         entityMetadata.Fields.replace(existingField, fieldMetadata);
                     }
-                }
-                else {
+                } else {
                     //Create
-                    errorOccured = !!conflictingField;
+                    errorOccurred = !!conflictingField;
                     if (!conflictingField) {
                         this.Scope.FieldAdded = true;
                         entityMetadata.Fields.push(fieldMetadata);
@@ -166,13 +169,14 @@ module Controllers {
             }
 
             //Check for error
-            if (errorOccured) {
-                var message = conflictingField ?
+            if (errorOccurred) {
+                var message:string = conflictingField ?
                     this.LocalizationService.Resources.FieldAlreadyExists :
                     this.LocalizationService.Resources.CouldNotUpdateField;
                 this.NotificationService.NotifyMessage(message, Services.NotificationSeverity.Error);
+            } else {
+                this.SaveEntityMetadata(entityMetadata);
             }
-            else this.SaveEntityMetadata(entityMetadata);
         }
 
         private SaveEntityMetadata(entityMetadata:Models.EntityMetadata):void {
@@ -182,26 +186,31 @@ module Controllers {
 
         private SaveEntityMetadataCompleted(savedMetadata:Models.EntityMetadata, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.FieldSchemaSubmit);
-            var fieldAdded = this.Scope.FieldAdded;
-            var fieldModified = this.Scope.FieldModified;
+            var fieldAdded:boolean = this.Scope.FieldAdded;
+            var fieldModified:boolean = this.Scope.FieldModified;
             this.Scope.FieldAdded = false;
             this.Scope.FieldModified = false;
 
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 //Notify success and continue with next field
                 this.MessagingService.Messages.Metadata.Modified.publish(savedMetadata);
-                var savedMessage = fieldAdded ? this.LocalizationService.Resources.MetadataFieldCreatedSuccess : this.LocalizationService.Resources.MetadataSavedSuccess;
+                var savedMessage:string = fieldAdded ?
+                    this.LocalizationService.Resources.MetadataFieldCreatedSuccess :
+                    this.LocalizationService.Resources.MetadataSavedSuccess;
                 this.NotificationService.NotifyMessage(savedMessage, Services.NotificationSeverity.Success);
                 this.Scope.OriginalMetadata = savedMetadata;
-                if (fieldAdded || fieldModified) this.CreateFieldMetadata();
-            }
-            else {
+                if (fieldAdded || fieldModified) {
+                    this.CreateFieldMetadata();
+                }
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private MetadataChangedHandler(savedMetadata:Models.EntityMetadata):void {
-            if (this.Scope.OriginalMetadata.EntitySystemName != savedMetadata.EntitySystemName) return;
+            if (this.Scope.OriginalMetadata.EntitySystemName !== savedMetadata.EntitySystemName) {
+                return;
+            }
             this.Scope.OriginalMetadata = savedMetadata;
         }
     }

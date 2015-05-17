@@ -93,7 +93,7 @@ module Services {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityMetadataListCache);
         }
 
-        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata) => void):void {
+        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata, errorsModel:any) => void):void {
             var predicateFunction:(it:Models.EntityMetadata) => boolean = function (it:Models.EntityMetadata):boolean {
                 return it.EntitySystemName === entitySystemName;
             };
@@ -104,12 +104,12 @@ module Services {
                     function (entityMetadataList:Models.EntityMetadata[]):void {
                         subscription();
                         var result:Models.EntityMetadata = entityMetadataList.single(predicateFunction);
-                        callback(result);
+                        callback(result, null);
                     });
             } else {
                 //Can select from existing data
                 var result:Models.EntityMetadata = this.Data.single(predicateFunction);
-                callback(result);
+                callback(result, null);
             }
         }
     }

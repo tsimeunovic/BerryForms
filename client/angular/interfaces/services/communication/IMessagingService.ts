@@ -7,19 +7,19 @@
 //Interface for Messaging service (used for communication between components)
 module Services {
     'use strict';
-    
+
     //Defined messaging methods
     export class IMessagingServiceType {
-        public Form = {
+        public Form:any = {
           DisplayItem: {
               subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
               unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
               publish: function (itemData:Models.Entity, itemMetadata:Models.EntityMetadata):void { throw new Error(); }
           }
         };
-        public EntityList = {
+        public EntityList:any = {
         };
-        public Metadata = {
+        public Metadata:any = {
             Created: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
@@ -36,7 +36,7 @@ module Services {
                 publish: function (entityMetadata:Models.EntityMetadata):void { throw new Error(); }
             }
         };
-        public Entity = {
+        public Entity:any = {
             Created: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
@@ -63,14 +63,14 @@ module Services {
                 publish: function (entity:Models.Entity):void { throw new Error(); }
             }
         };
-        public Notification = {
+        public Notification:any = {
             Message: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
                 publish: function (message:string, severity:Services.NotificationSeverity):void { throw new Error(); }
             }
         };
-        public Loading = {
+        public Loading:any = {
             Started: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
@@ -87,7 +87,7 @@ module Services {
                 publish: function ():void { throw new Error(); }
             }
         };
-        public Cache = {
+        public Cache:any = {
             MetadataList: {
                 Loaded: {
                     subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
@@ -118,7 +118,7 @@ module Services {
                 }
             }
         };
-        public Dialog = {
+        public Dialog:any = {
             Create: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
@@ -130,7 +130,7 @@ module Services {
                 publish: function ():void { throw new Error(); }
             }
         };
-        public User = {
+        public User:any = {
             LoggedOut: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },

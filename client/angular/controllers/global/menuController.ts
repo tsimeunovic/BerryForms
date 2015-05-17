@@ -4,10 +4,10 @@
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
 
-'use strict';
-
 //Controller for left (top for mobile devices) menu
 module Controllers {
+    'use strict';
+
     export class MenuController extends BaseController {
         public static injection():any[] {
             return [
@@ -36,7 +36,7 @@ module Controllers {
             this.WatchEntityMetadataCache();
         }
 
-        private RetrieveDataFromEntityMetadataCache():void{
+        private RetrieveDataFromEntityMetadataCache():void {
             this.Scope.Entities = this.EntityMetadataListCacheService.Data;
         }
 

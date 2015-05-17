@@ -31,11 +31,11 @@ module Mocks {
         public InvalidateCache():void {}
         public LoadData(argument:any):void {}
         public LoadDataCompleted(data:Models.EntityMetadata[], errorsModel:any):void {}
-        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata)=>void):void {
+        public LoadEntityMetadataFromCache(entitySystemName:string, callback:(entityMetadata:Models.EntityMetadata, errorsModel:any)=>void):void {
             var defaultResponse:Models.EntityMetadata = new Models.EntityMetadata();
             defaultResponse.EntityName = entitySystemName;
             defaultResponse.EntitySystemName = entitySystemName;
-            callback(this.LoadEntityMetadataFromCacheResponse || defaultResponse);
+            callback(this.LoadEntityMetadataFromCacheResponse || defaultResponse, null);
         }
     }
 }

@@ -2,13 +2,14 @@
 /// <reference path="../models/core/fieldMetadataModel.ts" />
 /// <reference path="../services/localization/localizationService.ts" />
 
-'use strict';
-
 //Base directive for all UI components for creating/editing specific type of data
 module Directives {
+    'use strict';
+
     export class BaseField implements Directives.IDirective {
+        /* tslint:disable:member-ordering */
         //Base static methods
-        public static DirectiveOptions(fieldType:string, directiveConstructor:()=>Directives.IDirective):any {
+        public static DirectiveOptions(fieldType:string, directiveConstructor:() => Directives.IDirective):any {
             var templateUrl:string = 'angular/components/fieldTypes/' + fieldType.toLowerCase() + '/template.html';
 
             return {
@@ -16,7 +17,7 @@ module Directives {
                 scope: '=',
                 replace: true,
                 templateUrl: templateUrl,
-                link: function ($scope, $linkElement, $linkAttributes) {
+                link: function ($scope:any, $linkElement:any, $linkAttributes:any):void {
                     var instance:Directives.IDirective = directiveConstructor();
                     instance.Link($scope, $linkElement, $linkAttributes);
                 }
@@ -33,8 +34,8 @@ module Directives {
         }
 
         public WatchValue($scope:any):void {
-            var _this = this;
-            $scope.$watchGroup(['Entity', 'Entity.Data[field.FieldSystemName]'], function () {
+            var _this:BaseField = this;
+            $scope.$watchGroup(['Entity', 'Entity.Data[field.FieldSystemName]'], function ():void {
                 _this.ValueChanged();
             });
         }
@@ -49,11 +50,16 @@ module Directives {
             var value:any = this.Scope.Entity.Data[fieldMetadata.FieldSystemName];
             var valid:boolean = fieldMetadata.ValidateValue(value);
 
-            if (valid) this.Scope.Entity.ErrorFields.remove(fieldMetadata.FieldSystemName);
-            else this.Scope.Entity.ErrorFields.add(fieldMetadata.FieldSystemName);
+            if (valid) {
+                this.Scope.Entity.ErrorFields.remove(fieldMetadata.FieldSystemName);
+            } else {
+                this.Scope.Entity.ErrorFields.add(fieldMetadata.FieldSystemName);
+            }
 
             this.Scope.IsValid = valid;
-            if (fieldMetadata.ValueChanged) fieldMetadata.ValueChanged(value, valid);
+            if (fieldMetadata.ValueChanged) {
+                fieldMetadata.ValueChanged(value, valid);
+            }
         }
     }
 }

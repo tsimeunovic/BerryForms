@@ -28,9 +28,9 @@
     ],
     "member-ordering": [
       true,
-      "public-before-private",
       "static-before-instance",
-      "variables-before-functions"
+      "variables-before-functions",
+      "public-before-private"
     ],
     "no-any": false,
     "no-arg": true,

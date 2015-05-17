@@ -1,7 +1,7 @@
-'use strict';
-
 //Interface for Http wrapper service.
 module Services {
+    'use strict';
+
     export interface IHttpWrapperService {
         //Anonymous operations
         AnonymousGet(url:string, actionName:string):any;

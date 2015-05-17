@@ -1,12 +1,15 @@
 /// <reference path="../../config/config.ts" />
 /// <reference path="../interfaces/directives/IDirective.ts" />
 
-'use strict';
-declare var angular:any;
+declare
+var angular:any;
 
 //Directive responsible for manipulating left (top) menu icons area when available size change
 module Directives {
+    'use strict';
+
     export class LeftMenuAutosize implements Directives.IDirective {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$timeout',
@@ -14,9 +17,6 @@ module Directives {
                 LeftMenuAutosize.DirectiveOptions
             ];
         }
-
-        private static Timeout:any;
-        private static Window:any;
 
         public static DirectiveOptions($timeout:any, $window:any):any {
             LeftMenuAutosize.Timeout = $timeout;
@@ -29,12 +29,15 @@ module Directives {
                     iconCount: '='
                 },
                 replace: false,
-                link: function ($scope, $linkElement, $linkAttributes) {
+                link: function ($scope:any, $linkElement:any, $linkAttributes:any):void {
                     var instance:Directives.IDirective = new LeftMenuAutosize();
                     instance.Link($scope, $linkElement, $linkAttributes);
                 }
             };
         }
+
+        private static Timeout:any;
+        private static Window:any;
 
         private Scope:any;
         private Element:any;
@@ -72,34 +75,37 @@ module Directives {
 
             this.MenuDimensions.primaryDimensionSize = Math.max(this.MenuDimensions.width, this.MenuDimensions.height);
             this.MenuDimensions.primaryDimension = this.MenuDimensions.height > this.MenuDimensions.width ? 'height' : 'width';
-            this.MenuDimensions.secondaryDimension = this.MenuDimensions.primaryDimension == 'height' ? 'width' : 'height';
+            this.MenuDimensions.secondaryDimension = this.MenuDimensions.primaryDimension === 'height' ? 'width' : 'height';
         }
 
         private SetIconsVisibility():void {
             //Collapse menu
-            if (this.Element.hasClass('expanded')) this.ExpandCollapseMenu(null, true);
+            if (this.Element.hasClass('expanded')) {
+                this.ExpandCollapseMenu(null, true);
+            }
 
             //Assume that everything can fit
             this.Element.removeClass('collapsed');
-            var elementChildren = this.Element.children();
-            angular.forEach(elementChildren, function (item, key) {
+            var elementChildren:any[] = this.Element.children();
+            angular.forEach(elementChildren, function (item:any, key:number):void {
                 angular.element(item).removeClass('collapsed');
             });
 
             //Measure space
             this.MeasureDimensions();
-            var availableSpace = this.MenuDimensions.primaryDimensionSize;
-            var everythingCanFit = (this.Scope.iconCount || 0) * this.Scope.iconSize <= availableSpace;
+            var availableSpace:number = this.MenuDimensions.primaryDimensionSize;
+            var everythingCanFit:boolean = (this.Scope.iconCount || 0) * this.Scope.iconSize <= availableSpace;
 
             if (!everythingCanFit) {
                 //Enable collapse-expand of panel
                 this.Element.addClass('collapsed');
 
                 //Hide records that cannot fit
-                var canFitNumber = Math.floor((availableSpace - this.Scope.expandIconSize) / this.Scope.iconSize);
-                angular.forEach(elementChildren, function (item, key) {
-                    if (item.className != 'menuEntityExpand' && key >= canFitNumber)
+                var canFitNumber:number = Math.floor((availableSpace - this.Scope.expandIconSize) / this.Scope.iconSize);
+                angular.forEach(elementChildren, function (item:any, key:number):void {
+                    if (item.className !== 'menuEntityExpand' && key >= canFitNumber) {
                         angular.element(item).addClass('collapsed');
+                    }
                 });
             }
         }
@@ -111,33 +117,36 @@ module Directives {
         }
 
         private ExpandCollapseMenu(event:any, collapse:boolean):void {
-            var _this = this;
-            var isExpanded = this.Element.hasClass('expanded');
-            var shouldCollapse = collapse != null ? collapse : isExpanded;
-            if (event.type == 'blur') shouldCollapse = true;
+            var _this:LeftMenuAutosize = this;
+            var isExpanded:boolean = this.Element.hasClass('expanded');
+            var shouldCollapse:boolean = collapse !== null ? collapse : isExpanded;
+            if (event.type === 'blur') {
+                shouldCollapse = true;
+            }
 
             //Toggle
             if (shouldCollapse) {
                 //Collapse
-                setTimeout(function () {
+                setTimeout(function ():void {
                     _this.Element.addClass('collapsed');
                     _this.Element.removeClass('expanded');
                     _this.Element.css(_this.MenuDimensions.primaryDimension, '');
                     _this.Element.css(_this.MenuDimensions.secondaryDimension, '');
                     _this.Element.css('max-' + _this.MenuDimensions.secondaryDimension, '');
                 }, 200);
-            }
-            else {
+            } else {
                 //Calculate required size
-                var totalCount = this.Scope.iconCount + 1;
+                var totalCount:number = this.Scope.iconCount + 1;
 
-                var primaryDimensionFitCount = Math.floor((this.MenuDimensions.primaryDimensionSize - this.Scope.expandIconSize) / this.Scope.iconSize);
-                var requiredSecondaryDimensionFitCount = Math.ceil(totalCount / primaryDimensionFitCount);
-                var requiredSecondaryDimensionSize = Math.min(requiredSecondaryDimensionFitCount * this.Scope.iconSize, this.WindowDimensions[this.MenuDimensions.secondaryDimension] - this.Scope.iconSize);
+                var primaryDimensionFitCount:number = Math.floor((this.MenuDimensions.primaryDimensionSize - this.Scope.expandIconSize) / this.Scope.iconSize);
+                var requiredSecondaryDimensionFitCount:number = Math.ceil(totalCount / primaryDimensionFitCount);
+                var requiredSecondaryDimensionSize:number = Math.min(requiredSecondaryDimensionFitCount * this.Scope.iconSize,
+                    this.WindowDimensions[this.MenuDimensions.secondaryDimension] - this.Scope.iconSize);
 
-                var secondaryDimensionRealFitCount = Math.floor(requiredSecondaryDimensionSize / this.Scope.iconSize);
-                var primaryDimensionReconciledFitCount = Math.ceil(totalCount / secondaryDimensionRealFitCount);
-                var primaryDimensionReconciledSize = Math.min(primaryDimensionReconciledFitCount * this.Scope.iconSize, this.WindowDimensions[this.MenuDimensions.primaryDimension] - this.Scope.iconSize);
+                var secondaryDimensionRealFitCount:number = Math.floor(requiredSecondaryDimensionSize / this.Scope.iconSize);
+                var primaryDimensionReconciledFitCount:number = Math.ceil(totalCount / secondaryDimensionRealFitCount);
+                var primaryDimensionReconciledSize:number = Math.min(primaryDimensionReconciledFitCount * this.Scope.iconSize,
+                    this.WindowDimensions[this.MenuDimensions.primaryDimension] - this.Scope.iconSize);
 
                 //Expand
                 this.Element.removeClass('collapsed');

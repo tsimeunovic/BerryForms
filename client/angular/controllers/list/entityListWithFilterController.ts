@@ -11,11 +11,12 @@
 /// <reference path="../../../extensions/objectExtensions.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 
-'use strict';
-
 //Controller for entity records list with filter
 module Controllers {
+    'use strict';
+
     export class EntityListWithFilterController extends BaseListController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -30,7 +31,7 @@ module Controllers {
                 'LocalizationService',
                 'FilterConverterService',
                 EntityListWithFilterController
-            ]
+            ];
         }
 
         constructor(Scope:any,
@@ -46,9 +47,9 @@ module Controllers {
                     private FilterConverterService:Services.IFilterConverterService) {
             super(Scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
 
-            var entityName = RouteParams[Static.RouteParams.EntityName];
-            var pageNumber = RouteParams[Static.RouteParams.PageNumber];
-            var pageIndex = pageNumber - 1;
+            var entityName:string = RouteParams[Static.RouteParams.EntityName];
+            var pageNumber:number = RouteParams[Static.RouteParams.PageNumber];
+            var pageIndex:number = pageNumber - 1;
 
             this.EntityName = entityName;
             this.PageIndex = isNaN(pageIndex) ? 0 : pageIndex;
@@ -98,14 +99,13 @@ module Controllers {
                 this.Scope.ListHeader = this.LocalizationService.Resources.ListOfRecords.format([metadata.EntityName]);
 
                 this.LoadEntityList();
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private DoFilteredSearch():void {
-            var filterQueryString = this.FilterConverterService.CreateFilterQueryString(this.EntityMetadata, this.FilterEntity);
+            var filterQueryString:string = this.FilterConverterService.CreateFilterQueryString(this.EntityMetadata, this.FilterEntity);
             this.RedirectService.RedirectToFilteredList(this.EntityName, filterQueryString, 1);
         }
 
@@ -115,47 +115,48 @@ module Controllers {
         }
 
         private LoadEntityListCompleted(entities:Models.Entity[], query:any, pageIndex:number, totalPages:number, errorsModel:any):void {
-            if (!Object.haveEqualData(this.DatabaseQuery, query)) return;
+            if (!Object.haveEqualData(this.DatabaseQuery, query)) {
+                return;
+            }
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityList);
 
             if (errorsModel == null) {
                 this.SetPaging(pageIndex, totalPages);
                 this.Scope.EntityList = entities;
-            }
-            else {
+            } else {
                 this.SetPaging(pageIndex, 0);
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
-        private SetPaging(pageIndex:number, totalPages:number) {
-            var _this = this;
-            var pageNumber = pageIndex + 1;
+        private SetPaging(pageIndex:number, totalPages:number):void {
+            var _this:EntityListWithFilterController = this;
+            var pageNumber:number = pageIndex + 1;
             this.Scope.Paging = {
                 //State
-                ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber != 1) || pageNumber < 0,
-                CanGoFirst: pageNumber != 1,
+                ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber !== 1) || pageNumber < 0,
+                CanGoFirst: pageNumber !== 1,
                 CanGoPrevious: pageNumber > 1,
                 CanGoNext: pageNumber < totalPages,
-                CanGoLast: pageNumber != totalPages,
+                CanGoLast: pageNumber !== totalPages,
                 CurrentPage: pageNumber,
                 SelectedPage: pageNumber,
                 TotalPages: totalPages,
 
                 //Actions
-                GoSelected: function () {
+                GoSelected: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, _this.Scope.Paging.SelectedPage);
                 },
-                GoFirst: function () {
+                GoFirst: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, 1);
                 },
-                GoPrevious: function () {
+                GoPrevious: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, pageNumber - 1);
                 },
-                GoNext: function () {
+                GoNext: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, pageNumber + 1);
                 },
-                GoLast: function () {
+                GoLast: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, totalPages);
                 }
             };

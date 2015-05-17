@@ -1,7 +1,7 @@
-'use strict';
-
 //Interface for every resource file (with specific language localization)
 module Localization {
+    'use strict';
+
     export interface IResources {
         //Records
         CreateNewRecord:string;

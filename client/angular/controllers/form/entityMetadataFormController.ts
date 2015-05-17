@@ -9,10 +9,10 @@
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../../static/loadingType.ts" />
 
-'use strict';
-
 //Controllers for entity metadata form (creating new entity type)
 module Controllers {
+    'use strict';
+
     export class EntityMetadataFormController extends BaseViewController {
         public static injection():any[] {
             return [
@@ -65,7 +65,7 @@ module Controllers {
         }
 
         private SubmitForm():void {
-            var entity = this.Scope.Entity;
+            var entity:Models.Entity = this.Scope.Entity;
             var entityMetadata:Models.EntityMetadata = this.EntityModelMapperService.MapEntityToEntityMetadataModel(entity);
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySchemaSubmit);
             this.EntityRepositoryService.SaveEntityMetadata(entityMetadata, this.SaveEntityMetadataCompleted.bind(this));
@@ -74,11 +74,11 @@ module Controllers {
         private SaveEntityMetadataCompleted(savedMetadata:Models.EntityMetadata, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntitySchemaSubmit);
             if (errorsModel == null) {
-                this.QueueService.Queues.NextPage.Notifications.add(this.LocalizationService.Resources.MetadataCreatedSuccess, Services.NotificationSeverity.Success);
+                this.QueueService.Queues.NextPage.Notifications.add(
+                    this.LocalizationService.Resources.MetadataCreatedSuccess, Services.NotificationSeverity.Success);
                 this.MessagingService.Messages.Metadata.Created.publish(savedMetadata);
                 this.RedirectService.RedirectToEditEntitySchema(savedMetadata.EntitySystemName);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }

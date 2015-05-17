@@ -14,11 +14,12 @@
 /// <reference path="../../../static/controllerArea.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 
-'use strict';
-
 //Controllers for entity record form (creating/editing entity record)
 module Controllers {
+    'use strict';
+
     export class EntityFormController extends BaseViewController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -54,10 +55,10 @@ module Controllers {
                     private DialogService:Services.IDialogService,
                     private DomManipulationService:Services.IDomManipulationService) {
             super(Scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
-            var entityName = RouteParams[Static.RouteParams.EntityName];
-            var entityId = RouteParams[Static.RouteParams.EntityId];
-            var pageNumber = RouteParams[Static.RouteParams.PageNumber] || 1;
-            var pageIndex = pageNumber - 1;
+            var entityName:string = RouteParams[Static.RouteParams.EntityName];
+            var entityId:number = RouteParams[Static.RouteParams.EntityId];
+            var pageNumber:number = RouteParams[Static.RouteParams.PageNumber] || 1;
+            var pageIndex:number = pageNumber - 1;
 
             this.EntityName = entityName;
             this.EntityId = entityId;
@@ -97,14 +98,16 @@ module Controllers {
 
         private LoadEntityMetadataCompleted(metadata:Models.EntityMetadata, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityData);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 //Non existing or empty entity
                 if (!metadata) {
                     this.RedirectService.RedirectToCreateEntitySchema();
                     return;
                 }
 
-                if (!metadata.Fields || !metadata.Fields.length) this.EditEntitySchema();
+                if (!metadata.Fields || !metadata.Fields.length) {
+                    this.EditEntitySchema();
+                }
                 this.Scope.EntityMetadata = metadata;
 
                 this.Scope.FormHeader = this.EntityId ?
@@ -112,16 +115,15 @@ module Controllers {
                     this.LocalizationService.Resources.CreateNewRecord.format([metadata.EntityName]);
 
                 this.LoadEntity();
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private LoadEntity():void {
             //Check for entity being created/edited
-            var editedEntity = this.StateService.GetEditedEntity(this.EntityName, this.EntityId);
-            if(editedEntity) {
+            var editedEntity:Models.Entity = this.StateService.GetEditedEntity(this.EntityName, this.EntityId);
+            if (editedEntity) {
                 this.LoadEntityCompleted(editedEntity, null);
                 return;
             }
@@ -131,8 +133,7 @@ module Controllers {
                 this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.Entity);
                 this.Scope.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
                 this.EntityRepositoryService.LoadEntity(this.EntityName, this.EntityId, this.LoadEntityCompleted.bind(this));
-            }
-            else {
+            } else {
                 var newEntity:Models.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
                 this.Scope.OriginalEntity = newEntity;
                 this.Scope.Entity = this.EntityModelMapperService.CloneEntityModel(newEntity);
@@ -144,19 +145,18 @@ module Controllers {
         private LoadEntityCompleted(entity:Models.Entity, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.Entity);
 
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.Scope.OriginalEntity = entity;
                 this.Scope.Entity = this.EntityModelMapperService.CloneEntityModel(entity);
                 this.StateService.SetEditedEntity(this.Scope.Entity);
                 this.Scope.Entity.ValidateAllFields(this.Scope.EntityMetadata);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private SubmitForm():void {
-            var entity = this.Scope.Entity;
+            var entity:Models.Entity = this.Scope.Entity;
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySubmit);
             this.EntityRepositoryService.SaveEntity(entity, this.SaveEntityCompleted.bind(this));
         }
@@ -164,21 +164,20 @@ module Controllers {
         private SaveEntityCompleted(savedEntity:Models.Entity, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntitySubmit);
 
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 //Notify success and continue with next record
-                if (savedEntity.ModifiedDate == savedEntity.CreatedDate) {
+                if (savedEntity.ModifiedDate === savedEntity.CreatedDate) {
                     this.MessagingService.Messages.Entity.Created.publish(savedEntity);
                     this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityCreatedSuccess, Services.NotificationSeverity.Success);
                     this.StateService.SetEditedEntity(null);
                     this.LoadEntity();
-                }
-                else {
+                } else {
                     this.MessagingService.Messages.Entity.Modified.publish(savedEntity);
-                    this.QueueService.Queues.NextPage.Notifications.add(this.LocalizationService.Resources.EntityModifiedSuccess, Services.NotificationSeverity.Success);
+                    this.QueueService.Queues.NextPage.Notifications.add(
+                        this.LocalizationService.Resources.EntityModifiedSuccess, Services.NotificationSeverity.Success);
                     this.RedirectService.RedirectToEntityPage(this.EntityName, null, this.PageIndex + 1);
                 }
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }

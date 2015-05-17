@@ -2,12 +2,14 @@
 /// <reference path="../interfaces/services/interaction/INotificationService.ts" />
 /// <reference path="../interfaces/localization/IResources.ts" />
 
-'use strict';
 var _global:any = this;
 
 //Interceptor that takes care of unhandled exceptions
 module Interceptors {
+    'use strict';
+
     export class ExceptionHandler {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$log',
@@ -15,7 +17,7 @@ module Interceptors {
             ];
         }
 
-        public static FactoryRegistration(log:any):(exception:any)=>void {
+        public static FactoryRegistration(log:any):(exception:any) => void {
             ExceptionHandler.Log = log;
             return ExceptionHandler.HandleUncaughtError;
         }
@@ -27,7 +29,9 @@ module Interceptors {
             ExceptionHandler.Log.error(exception);
 
             //Display notification
-            var messages:Services.IMessagingServiceType = _global.Instances && _global.Instances.MessagingService && _global.Instances.MessagingService.Messages;
+            var messages:Services.IMessagingServiceType = _global.Instances &&
+                _global.Instances.MessagingService &&
+                _global.Instances.MessagingService.Messages;
             var resources:Localization.IResources = _global.Localization.Resources;
             if (messages && resources) {
                 messages.Notification.Message.publish(resources.UnknownError, Services.NotificationSeverity.Error);

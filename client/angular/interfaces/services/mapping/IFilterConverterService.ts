@@ -1,9 +1,9 @@
 /// <reference path="../../../models/core/entityModel.ts" />
 
-'use strict';
-
 //Interface for Filter converter service (creates filter query string and database query object)
 module Services {
+    'use strict';
+
     export interface IFilterConverterService {
         CreateDatabaseQueryFromFilter(metadata:Models.EntityMetadata, filterEntity:Models.Entity):any;
         CreateFilterFormMetadataFromEntityMetadata(metadata:Models.EntityMetadata):Models.EntityMetadata;

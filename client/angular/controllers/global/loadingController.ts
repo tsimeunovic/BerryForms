@@ -5,11 +5,12 @@
 /// <reference path="../../../static/loadingType.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 
-'use strict';
-
 //Controller responsible for showing loading indicator
 module Controllers {
+    'use strict';
+
     export class LoadingController extends BaseController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -41,15 +42,19 @@ module Controllers {
 
         private LoadingStarted(task:Static.LoadingType):void {
             //Add new task to list
-            var index = this.TasksInProgress.indexOf(task);
-            if (index < 0) this.TasksInProgress.add(task);
+            var index:number = this.TasksInProgress.indexOf(task);
+            if (index < 0) {
+                this.TasksInProgress.add(task);
+            }
             this.SetLoadingState();
         }
 
         private LoadingFinished(task:Static.LoadingType):void {
             //Remove existing task from list
-            var index = this.TasksInProgress.indexOf(task);
-            if (index >= 0) this.TasksInProgress.remove(task);
+            var index:number = this.TasksInProgress.indexOf(task);
+            if (index >= 0) {
+                this.TasksInProgress.remove(task);
+            }
             this.SetLoadingState();
         }
 

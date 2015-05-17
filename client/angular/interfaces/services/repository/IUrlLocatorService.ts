@@ -1,7 +1,7 @@
-'use strict';
-
 //Interface for Url locator service (resolves urls for all Node api calls)
 module Services {
+    'use strict';
+
     export interface IUrlLocatorService {
         //Rest API
         //Entities

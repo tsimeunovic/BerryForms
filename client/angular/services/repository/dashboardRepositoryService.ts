@@ -71,6 +71,11 @@ module Services {
         }
 
         private ExtendActivityList(activityItems:any[], callback:() => void):void {
+            if(activityItems.length === 0) {
+                callback();
+                return;
+            }
+
             var _this:DashboardRepositoryService = this;
             var itemsDone:number = 0;
             for (var i:number = 0; i < activityItems.length; i++) {

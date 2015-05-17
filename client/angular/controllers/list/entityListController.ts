@@ -1,14 +1,21 @@
 /// <reference path="../base/baseListController.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
+/// <reference path="../../interfaces/services/system/IRedirectService.ts" />
+/// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
+/// <reference path="../../interfaces/services/interaction/IDomManipulationService.ts" />
+/// <reference path="../../interfaces/services/repository/IEntityRepositoryService.ts" />
+/// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
+/// <reference path="../../interfaces/services/state/IEntityListCacheService.ts" />
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 
-'use strict';
-
 //Controller for entity records list
 module Controllers {
+    'use strict';
+
     export class EntityListController extends BaseListController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -43,10 +50,10 @@ module Controllers {
                     private EntityRepositoryService:Services.IEntityRepositoryService) {
             super(Scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
 
-            var entityName = RouteParams[Static.RouteParams.EntityName];
-            var entityId = RouteParams[Static.RouteParams.EntityId];
-            var pageNumber = RouteParams[Static.RouteParams.PageNumber] || 1;
-            var pageIndex = pageNumber - 1;
+            var entityName:string = RouteParams[Static.RouteParams.EntityName];
+            var entityId:number = RouteParams[Static.RouteParams.EntityId];
+            var pageNumber:number = RouteParams[Static.RouteParams.PageNumber] || 1;
+            var pageIndex:number = pageNumber - 1;
 
             this.EntityName = entityName;
             this.EntityId = entityId;
@@ -100,8 +107,7 @@ module Controllers {
                 this.LoadEntityList();
                 this.AddSubscription(this.MessagingService.Messages.Cache.EntityList.Invalidated.subscribe(this.LoadEntityList.bind(this)));
                 this.AddSubscription(this.MessagingService.Messages.Cache.EntityList.Changed.subscribe(this.LoadEntityList.bind(this)));
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
@@ -114,11 +120,10 @@ module Controllers {
         private LoadEntityListCompleted(entities:Models.Entity[], query:any, pageIndex:number, totalPages:number, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntityList);
 
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.SetPaging(pageIndex, totalPages);
                 this.Scope.EntityList = entities;
-            }
-            else {
+            } else {
                 this.SetPaging(pageIndex, 0);
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
@@ -135,14 +140,18 @@ module Controllers {
         }
 
         private ListRecordDelete(entity:Models.Entity):void {
-            var _this = this;
-            this.DialogService.CreateConfirmationDialog([this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity], function (confirmationResult:boolean) {
-                if (!confirmationResult) return;
+            var _this:EntityListController = this;
+            this.DialogService.CreateConfirmationDialog(
+                [this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity],
+                function (confirmationResult:boolean):void {
+                    if (!confirmationResult) {
+                        return;
+                    }
 
-                _this.MessagingService.Messages.Entity.Delete.publish(entity);
-                _this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityDelete);
-                _this.EntityRepositoryService.DeleteEntity(entity, _this.ListRecordDeleted.bind(_this));
-            });
+                    _this.MessagingService.Messages.Entity.Delete.publish(entity);
+                    _this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityDelete);
+                    _this.EntityRepositoryService.DeleteEntity(entity, _this.ListRecordDeleted.bind(_this));
+                });
         }
 
         private ListRecordDeleted(deletedEntity:Models.Entity, errorsModel:any):void {
@@ -151,8 +160,7 @@ module Controllers {
             if (errorsModel == null) {
                 this.MessagingService.Messages.Entity.Deleted.publish(deletedEntity);
                 this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityDeletedSuccess, Services.NotificationSeverity.Success);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
@@ -161,34 +169,34 @@ module Controllers {
             this.RedirectService.RedirectToFilteredList(this.EntityName, null, 0);
         }
 
-        private SetPaging(pageIndex:number, totalPages:number) {
-            var _this = this;
-            var pageNumber = pageIndex + 1;
+        private SetPaging(pageIndex:number, totalPages:number):void {
+            var _this:EntityListController = this;
+            var pageNumber:number = pageIndex + 1;
             this.Scope.Paging = {
                 //State
-                ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber != 1) || pageNumber < 0,
-                CanGoFirst: pageNumber != 1,
+                ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber !== 1) || pageNumber < 0,
+                CanGoFirst: pageNumber !== 1,
                 CanGoPrevious: pageNumber > 1,
                 CanGoNext: pageNumber < totalPages,
-                CanGoLast: pageNumber != totalPages,
+                CanGoLast: pageNumber !== totalPages,
                 CurrentPage: pageNumber,
                 SelectedPage: pageNumber,
                 TotalPages: totalPages,
 
                 //Actions
-                GoSelected: function () {
+                GoSelected: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, _this.Scope.Paging.SelectedPage);
                 },
-                GoFirst: function () {
+                GoFirst: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, 1);
                 },
-                GoPrevious: function () {
+                GoPrevious: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, pageNumber - 1);
                 },
-                GoNext: function () {
+                GoNext: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, pageNumber + 1);
                 },
-                GoLast: function () {
+                GoLast: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, totalPages);
                 }
             };

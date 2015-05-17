@@ -9,10 +9,10 @@
 /// <reference path="../services/localization/localizationService.ts" />
 /// <reference path="../../config/config.ts" />
 
-'use strict';
-
 //Class responsible for creating form components for new entity type
 module Data {
+    'use strict';
+
     export class CreateEntityFormFields {
         public static GetData():Models.EntityMetadata {
             var result:Models.EntityMetadata = new Models.EntityMetadata();
@@ -26,8 +26,8 @@ module Data {
             return result;
         }
 
-        private static EntityNameField():Models.TextFieldMetadata{
-            var result = new Models.TextFieldMetadata();
+        private static EntityNameField():Models.TextFieldMetadata {
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'EntityName';
             result.FieldName = Services.LocalizationService.Resources.EntityName;
             result.FieldDescription = result.FieldName;
@@ -37,18 +37,18 @@ module Data {
             return result;
         }
 
-        private static EntityDescriptionField():Models.TextFieldMetadata{
-            var result = new Models.TextFieldMetadata();
+        private static EntityDescriptionField():Models.TextFieldMetadata {
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'EntityDescription';
-            result.FieldName =  Services.LocalizationService.Resources.EntityDescription;
+            result.FieldName = Services.LocalizationService.Resources.EntityDescription;
             result.FieldDescription = result.FieldName;
             result.MaxLength = 100;
 
             return result;
         }
 
-        private static EntityColorField():Models.SelectFieldMetadata{
-            var result = new Models.SelectFieldMetadata();
+        private static EntityColorField():Models.SelectFieldMetadata {
+            var result:Models.SelectFieldMetadata = new Models.SelectFieldMetadata();
             result.FieldSystemName = 'IconColorHex';
             result.FieldName = Services.LocalizationService.Resources.EntityColor;
             result.FieldDescription = result.FieldName;
@@ -69,8 +69,8 @@ module Data {
             return result;
         }
 
-        private static EntityIconField():Models.SelectFieldMetadata{
-            var result = new Models.SelectFieldMetadata();
+        private static EntityIconField():Models.SelectFieldMetadata {
+            var result:Models.SelectFieldMetadata = new Models.SelectFieldMetadata();
             result.FieldSystemName = 'IconClassName';
             result.FieldName = Services.LocalizationService.Resources.EntityIcon;
             result.FieldDescription = result.FieldName;

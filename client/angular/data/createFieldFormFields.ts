@@ -17,22 +17,26 @@
 /// <reference path="../../extensions/arrayExtensions.ts" />
 /// <reference path="../../config/config.ts" />
 
-'use strict';
 var _global:any = this;
 declare var angular:any;
 
 //Class responsible for creating form components for new entity type field
 module Data {
+    'use strict';
+
     export class CreateFieldFormFields {
         public static GetData(fieldType:string, entityEdit:boolean = false):Models.EntityMetadata {
             var result:Models.EntityMetadata;
-            if (fieldType) result = this.GetFieldData(fieldType);
-            else result = this.GetInitialData();
+            if (fieldType) {
+                result = this.GetFieldData(fieldType);
+            } else {
+                result = this.GetInitialData();
+            }
 
-            if(entityEdit) {
+            if (entityEdit) {
                 //Mark immutable fields as read-only
-                var nameFieldPredicate = function(field:Models.FieldMetadata) {
-                    return field.FieldSystemName == 'FieldName';
+                var nameFieldPredicate:(f:Models.FieldMetadata) => boolean = function (field:Models.FieldMetadata):boolean {
+                    return field.FieldSystemName === 'FieldName';
                 };
                 var nameField:Models.FieldMetadata = result.Fields.single(nameFieldPredicate);
                 nameField.ReadOnly = true;
@@ -55,25 +59,30 @@ module Data {
 
         private static GetFieldData(fieldType:string):Models.EntityMetadata {
             var registeredFieldTypes:Components.FieldTypes.IFieldType[] = _global.Components.FieldTypes;
-            var fieldTypePredictor = function (a:Components.FieldTypes.IFieldType) {
-                return a.FieldName == fieldType;
-            };
+            var fieldTypePredictor:(a:Components.FieldTypes.IFieldType) => boolean =
+                function (a:Components.FieldTypes.IFieldType):boolean {
+                    return a.FieldName === fieldType;
+                };
             var fieldTypeComponent:Components.FieldTypes.IFieldType = registeredFieldTypes.single(fieldTypePredictor);
 
-            if (!fieldTypeComponent) throw new Error();
-            else return fieldTypeComponent.CreateFieldForm();
+            if (!fieldTypeComponent) {
+                throw new Error();
+            } else {
+                return fieldTypeComponent.CreateFieldForm();
+            }
         }
 
         private static FieldTypeNameField():Models.SelectFieldMetadata {
-            var result = new Models.SelectFieldMetadata();
+            var result:Models.SelectFieldMetadata = new Models.SelectFieldMetadata();
             result.FieldSystemName = 'FieldTypeName';
             result.FieldName = Services.LocalizationService.Resources.FieldTypeName;
             result.FieldDescription = result.FieldName;
             result.Required = true;
 
             result.Values = [];
-            angular.forEach(_global.Components.FieldTypes, function(value:Components.FieldTypes.IFieldType) {
-                var fieldTypeOptionModel = new Models.SelectFieldOptionMetadata(Services.LocalizationService.Resources[value.FieldName + 'Field'], value.FieldName);
+            angular.forEach(_global.Components.FieldTypes, function (value:Components.FieldTypes.IFieldType):void {
+                var fieldTypeOptionModel:Models.SelectFieldOptionMetadata =
+                    new Models.SelectFieldOptionMetadata(Services.LocalizationService.Resources[value.FieldName + 'Field'], value.FieldName);
                 result.Values.push(fieldTypeOptionModel);
             });
 
@@ -81,7 +90,7 @@ module Data {
         }
 
         private static FieldNameField():Models.TextFieldMetadata {
-            var result = new Models.TextFieldMetadata();
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'FieldName';
             result.FieldName = Services.LocalizationService.Resources.FieldName;
             result.DisplayInListName = true;
@@ -93,7 +102,7 @@ module Data {
         }
 
         private static FieldDescriptionField():Models.TextFieldMetadata {
-            var result = new Models.TextFieldMetadata();
+            var result:Models.TextFieldMetadata = new Models.TextFieldMetadata();
             result.FieldSystemName = 'FieldDescription';
             result.FieldName = Services.LocalizationService.Resources.FieldDescription;
             result.DisplayInListName = true;
@@ -104,7 +113,7 @@ module Data {
         }
 
         private static FieldRequiredField():Models.BooleanFieldMetadata {
-            var result = new Models.BooleanFieldMetadata();
+            var result:Models.BooleanFieldMetadata = new Models.BooleanFieldMetadata();
             result.FieldSystemName = 'Required';
             result.FieldName = Services.LocalizationService.Resources.Required;
             result.FieldDescription = result.FieldName;
@@ -115,7 +124,7 @@ module Data {
         }
 
         private static FieldDisplayInListNameField():Models.BooleanFieldMetadata {
-            var result = new Models.BooleanFieldMetadata();
+            var result:Models.BooleanFieldMetadata = new Models.BooleanFieldMetadata();
             result.FieldSystemName = 'DisplayInListName';
             result.FieldName = Services.LocalizationService.Resources.DisplayInList;
             result.FieldDescription = result.FieldName;

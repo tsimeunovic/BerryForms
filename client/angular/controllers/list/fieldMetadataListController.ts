@@ -12,11 +12,12 @@
 /// <reference path="../../../static/routeParams.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-'use strict';
-
 //Controller for entity type fields list
 module Controllers {
+    'use strict';
+
     export class FieldMetadataListController extends BaseListController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -56,7 +57,7 @@ module Controllers {
 
         private EntityName:string;
 
-        private InitializeScope() {
+        private InitializeScope():void {
             this.Scope.EntityList = [];
             this.Scope.ListHeaderIcons = [];
 
@@ -70,8 +71,7 @@ module Controllers {
                 this.AddSubscription(this.MessagingService.Messages.Metadata.Modified.subscribe(this.LoadEntityMetadata.bind(this)));
                 this.AddSubscription(this.MessagingService.Messages.Metadata.Modified.subscribe(this.MetadataChangedHandler.bind(this)));
                 this.LoadEntityMetadata();
-            }
-            else {
+            } else {
                 //Creation of new schema
                 this.Scope.EmptyListMessage = this.LocalizationService.Resources.NoFieldsInNewEntity;
                 this.Scope.ListHeader = this.LocalizationService.Resources.ListOfEntityFields;
@@ -101,18 +101,20 @@ module Controllers {
                     Tooltip: this.LocalizationService.Resources.CreateNewField
                 }
             ];
-            if (metadata.Fields.length) this.Scope.ListHeaderIcons.push({
-                Icon: 'th-list',
-                Action: this.RedirectToEntityList.bind(this),
-                Tooltip: this.LocalizationService.Resources.ShowListOf.format([metadata.EntityName])
-            });
+            if (metadata.Fields.length) {
+                this.Scope.ListHeaderIcons.push({
+                    Icon: 'th-list',
+                    Action: this.RedirectToEntityList.bind(this),
+                    Tooltip: this.LocalizationService.Resources.ShowListOf.format([metadata.EntityName])
+                });
+            }
 
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.FieldListMetadata);
         }
 
         private ListRecordEdit(fieldEntity:Models.Entity):void {
             this.DomManipulationService.ScrollToTop();
-            this.Scope.FieldType = fieldEntity.Data['FieldTypeName'].Value;
+            this.Scope.FieldType = fieldEntity.Data.FieldTypeName.Value;
             var fieldEditMetadata:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(this.Scope.FieldType, true);
             this.MessagingService.Messages.Form.DisplayItem.publish(fieldEntity, fieldEditMetadata);
         }
@@ -124,20 +126,24 @@ module Controllers {
         }
 
         private ListRecordDelete(fieldEntity:Models.Entity):void {
-            var _this = this;
-            this.DialogService.CreateConfirmationDialog([this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField], function (confirmationResult:boolean) {
-                if (!confirmationResult) return;
+            var _this:FieldMetadataListController = this;
+            this.DialogService.CreateConfirmationDialog(
+                [this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField],
+                function (confirmationResult:boolean):void {
+                    if (!confirmationResult) {
+                        return;
+                    }
 
-                var entityMetadata:Models.EntityMetadata = _this.Scope.OriginalMetadata;
-                var fieldMetadataPredicate = function (fm:Models.FieldMetadata) {
-                    return fm.FieldSystemName == fieldEntity.EntitySystemName;
-                };
-                var fieldMetadata:Models.FieldMetadata = entityMetadata.Fields.single(fieldMetadataPredicate);
-                if (fieldMetadata) {
-                    entityMetadata.Fields.remove(fieldMetadata);
-                    _this.SaveEntityMetadata(entityMetadata);
-                }
-            });
+                    var entityMetadata:Models.EntityMetadata = _this.Scope.OriginalMetadata;
+                    var fieldMetadataPredicate:(fm:Models.FieldMetadata) => boolean = function (fm:Models.FieldMetadata):boolean {
+                        return fm.FieldSystemName === fieldEntity.EntitySystemName;
+                    };
+                    var fieldMetadata:Models.FieldMetadata = entityMetadata.Fields.single(fieldMetadataPredicate);
+                    if (fieldMetadata) {
+                        entityMetadata.Fields.remove(fieldMetadata);
+                        _this.SaveEntityMetadata(entityMetadata);
+                    }
+                });
         }
 
         private SaveEntityMetadata(entityMetadata:Models.EntityMetadata):void {
@@ -148,18 +154,19 @@ module Controllers {
         private SaveEntityMetadataCompleted(savedMetadata:Models.EntityMetadata, errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.FieldSchemaSubmit);
 
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.MessagingService.Messages.Metadata.Modified.publish(savedMetadata);
-                var savedMessage = this.LocalizationService.Resources.MetadataSavedSuccess;
+                var savedMessage:string = this.LocalizationService.Resources.MetadataSavedSuccess;
                 this.NotificationService.NotifyMessage(savedMessage, Services.NotificationSeverity.Success);
-            }
-            else {
+            } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }
 
         private MetadataChangedHandler(savedMetadata:Models.EntityMetadata):void {
-            if(this.Scope.OriginalMetadata.EntitySystemName != savedMetadata.EntitySystemName) return;
+            if (this.Scope.OriginalMetadata.EntitySystemName !== savedMetadata.EntitySystemName) {
+                return;
+            }
             this.LoadEntityMetadataCompleted(savedMetadata);
         }
 

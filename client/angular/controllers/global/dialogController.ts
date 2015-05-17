@@ -1,11 +1,12 @@
 /// <reference path="../base/baseController.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 
-'use strict';
-
 //Controller responsible for showing confirmation dialog
 module Controllers {
+    'use strict';
+
     export class DialogController extends BaseController {
+        /* tslint:disable:member-ordering */
         public static injection():any[] {
             return [
                 '$scope',
@@ -43,7 +44,9 @@ module Controllers {
         }
 
         private RemoveDialog():void {
-            if (this.Scope.Dialog) this.ResultDialog(null);
+            if (this.Scope.Dialog) {
+                this.ResultDialog(null);
+            }
         }
     }
 }

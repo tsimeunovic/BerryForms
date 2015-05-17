@@ -1,12 +1,14 @@
 /// <reference path="../base/baseController.ts" />
 /// <reference path="../../data/createLoginFormFields.ts" />
-/// <reference path="../../services/state/stateService.ts" />
-/// <reference path="../../services/communication/messagingService.ts" />
-
-'use strict';
+/// <reference path="../../interfaces/services/state/IStateService.ts" />
+/// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
+/// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
+/// <reference path="../../interfaces/services/repository/IUserRepositoryService.ts" />
 
 //Controller for login screen
 module Controllers {
+    'use strict';
+
     export class LoginController extends BaseController {
         public static injection():any[] {
             return [
@@ -35,8 +37,10 @@ module Controllers {
         }
 
         private LoggedInUserChanged(userSession:Models.UserSession):void {
-            var currentSession = this.StateService.GetCurrentUserSession();
-            if (!currentSession) this.DialogService.RemoveDialog();
+            var currentSession:Models.UserSession = this.StateService.GetCurrentUserSession();
+            if (!currentSession) {
+                this.DialogService.RemoveDialog();
+            }
             this.InitializeScope(userSession && userSession.User.UserName);
             this.Scope.LoggedInUser = !!currentSession;
         }
@@ -48,12 +52,14 @@ module Controllers {
             this.Scope.LoginButtonText = this.LocalizationService.Resources.Login;
             this.Scope.EntityMetadata = Data.CreateLoginFormFields.GetData();
             this.Scope.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
-            if (prefilledUserName) this.Scope.Entity.Data['UserName'] = prefilledUserName;
+            if (prefilledUserName) {
+                this.Scope.Entity.Data.UserName = prefilledUserName;
+            }
         }
 
         private Login():void {
-            var userName:string = this.Scope.Entity.Data['UserName'];
-            var password:string = this.Scope.Entity.Data['Password'];
+            var userName:string = this.Scope.Entity.Data.UserName;
+            var password:string = this.Scope.Entity.Data.Password;
             this.Scope.LoginInProgress = true;
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.LoggingIn);
             this.UserRepositoryService.LoginUser(userName, password, this.LoginCompleted.bind(this));
@@ -62,9 +68,10 @@ module Controllers {
         private LoginCompleted(session:Models.UserSession, errorsModel:any):void {
             this.Scope.LoginInProgress = false;
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.LoggingIn);
-            if (errorsModel == null) this.StateService.SetCurrentUserSession(session);
-            else {
-                this.Scope.Entity.Data['Password'] = null;
+            if (errorsModel == null) {
+                this.StateService.SetCurrentUserSession(session);
+            } else {
+                this.Scope.Entity.Data.Password = null;
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
         }

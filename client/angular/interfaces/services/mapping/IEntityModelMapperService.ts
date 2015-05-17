@@ -2,10 +2,10 @@
 /// <reference path="../../../models/core/entityMetadataModel.ts" />
 /// <reference path="../../../components/fieldTypes/select/selectFieldOptionMetadataModel.ts" />
 
-'use strict';
-
 //Interface for Entity mapping service (used to map and deserialize Entity/EntityMetadata/FieldMetadata)
 module Services {
+    'use strict';
+
     export interface IEntityModelMapperService {
         MapEntityToEntityMetadataModel(entity:Models.Entity):Models.EntityMetadata;
         MapFieldsMetadataToEntityModels(fieldsMetadata:Models.FieldMetadata[]):Models.Entity[];
