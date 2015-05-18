@@ -157,7 +157,7 @@ module Controllers {
             if (errorsModel === null) {
                 this.MessagingService.Messages.Metadata.Modified.publish(savedMetadata);
                 var savedMessage:string = this.LocalizationService.Resources.MetadataSavedSuccess;
-                this.NotificationService.NotifyMessage(savedMessage, Services.NotificationSeverity.Success);
+                this.NotificationService.NotifyMessage(savedMessage, Static.NotificationSeverity.Success);
             } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }

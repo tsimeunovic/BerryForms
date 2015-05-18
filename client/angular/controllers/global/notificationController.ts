@@ -4,6 +4,7 @@
 /// <reference path="../../../config/config.ts" />
 /// <reference path="../../../extensions/dateExtensions.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 //Controller responsible for front end notifications
 module Controllers {
@@ -45,19 +46,19 @@ module Controllers {
             var datetime:string = (new Date()).format('dd.MM.yyyy HH:mm:ss');
             var severity:string;
             switch (notification.Severity) {
-                case Services.NotificationSeverity.Error:
+                case Static.NotificationSeverity.Error:
                     severity = this.LocalizationService.Resources.Error;
                     this.Toaster.pop('error', null, notification.Message);
                     break;
-                case Services.NotificationSeverity.Warning:
+                case Static.NotificationSeverity.Warning:
                     severity = this.LocalizationService.Resources.Warning;
                     this.Toaster.pop('warning', null, notification.Message);
                     break;
-                case Services.NotificationSeverity.Information:
+                case Static.NotificationSeverity.Information:
                     severity = this.LocalizationService.Resources.Information;
                     this.Toaster.pop('info', null, notification.Message);
                     break;
-                case Services.NotificationSeverity.Success:
+                case Static.NotificationSeverity.Success:
                     severity = this.LocalizationService.Resources.Success;
                     this.Toaster.pop('success', null, notification.Message);
                     break;

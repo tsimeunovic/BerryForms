@@ -67,7 +67,7 @@ module Services {
             Message: {
                 subscribe: function (subscriber:(m:any) => void):() => void { throw new Error(); },
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
-                publish: function (message:string, severity:Services.NotificationSeverity):void { throw new Error(); }
+                publish: function (message:string, severity:Static.NotificationSeverity):void { throw new Error(); }
             }
         };
         public Loading:any = {

@@ -33,7 +33,7 @@ module Services {
             var _this:QueueService = this;
             var nextPageNotificationsQueueName:string = 'nextPageNotifications';
 
-            this.Queues.NextPage.Notifications.add = function (message:string, severity:Services.NotificationSeverity):void {
+            this.Queues.NextPage.Notifications.add = function (message:string, severity:Static.NotificationSeverity):void {
                 _this.addToQueue(nextPageNotificationsQueueName, {
                     Message: message,
                     Severity: severity

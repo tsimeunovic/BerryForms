@@ -13,6 +13,7 @@
 /// <reference path="../../interfaces/services/interaction/IDomManipulationService.ts" />
 /// <reference path="../../../static/controllerArea.ts" />
 /// <reference path="../../../static/routeParams.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 //Controllers for entity record form (creating/editing entity record)
 module Controllers {
@@ -168,13 +169,13 @@ module Controllers {
                 //Notify success and continue with next record
                 if (savedEntity.ModifiedDate === savedEntity.CreatedDate) {
                     this.MessagingService.Messages.Entity.Created.publish(savedEntity);
-                    this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityCreatedSuccess, Services.NotificationSeverity.Success);
+                    this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityCreatedSuccess, Static.NotificationSeverity.Success);
                     this.StateService.SetEditedEntity(null);
                     this.LoadEntity();
                 } else {
                     this.MessagingService.Messages.Entity.Modified.publish(savedEntity);
                     this.QueueService.Queues.NextPage.Notifications.add(
-                        this.LocalizationService.Resources.EntityModifiedSuccess, Services.NotificationSeverity.Success);
+                        this.LocalizationService.Resources.EntityModifiedSuccess, Static.NotificationSeverity.Success);
                     this.RedirectService.RedirectToEntityPage(this.EntityName, null, this.PageIndex + 1);
                 }
             } else {

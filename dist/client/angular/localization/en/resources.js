@@ -1,8 +1,8 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
-'use strict';
 //Resource file with translations for English language
 var Localization;
 (function (Localization) {
+    'use strict';
     var ResourcesEn = (function () {
         function ResourcesEn() {
             //Records

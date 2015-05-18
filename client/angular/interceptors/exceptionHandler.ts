@@ -1,6 +1,7 @@
 /// <reference path="../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../interfaces/services/interaction/INotificationService.ts" />
 /// <reference path="../interfaces/localization/IResources.ts" />
+/// <reference path="../../static/notificationSeverity.ts" />
 
 var _global:any = this;
 
@@ -34,7 +35,7 @@ module Interceptors {
                 _global.Instances.MessagingService.Messages;
             var resources:Localization.IResources = _global.Localization.Resources;
             if (messages && resources) {
-                messages.Notification.Message.publish(resources.UnknownError, Services.NotificationSeverity.Error);
+                messages.Notification.Message.publish(resources.UnknownError, Static.NotificationSeverity.Error);
             }
         }
     }

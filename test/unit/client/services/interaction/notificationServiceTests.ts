@@ -25,12 +25,12 @@ describe('Service: NotificationService', function () {
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
-        systemUnderTest.NotifyMessage(messageText, Services.NotificationSeverity.Information);
+        systemUnderTest.NotifyMessage(messageText, Static.NotificationSeverity.Information);
 
         //Assert
         expect(notificationMessagePublishSpy.calls.any()).toBe(true);
         expect(notificationMessagePublishSpy.calls.first().args[0]).toEqual(messageText);
-        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Services.NotificationSeverity.Information);
+        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Information);
     });
 
     it('should publish \'notification message\' with resolved message when \'Notify\' method is called', function () {
@@ -39,12 +39,12 @@ describe('Service: NotificationService', function () {
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
-        systemUnderTest.Notify(messageKey, [], Services.NotificationSeverity.Error);
+        systemUnderTest.Notify(messageKey, [], Static.NotificationSeverity.Error);
 
         //Assert
         expect(notificationMessagePublishSpy.calls.count()).toEqual(1);
         expect(notificationMessagePublishSpy.calls.first().args[0]).toEqual('#' + messageKey);
-        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Services.NotificationSeverity.Error);
+        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Error);
     });
 
     it('should be able to handle \'plugin error\' properly', function () {
@@ -58,7 +58,7 @@ describe('Service: NotificationService', function () {
         //Assert
         expect(notificationMessagePublishSpy.calls.count()).toEqual(1);
         expect(notificationMessagePublishSpy.calls.first().args[0]).toEqual(errorsModel.PluginMessage);
-        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Services.NotificationSeverity.Warning);
+        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Warning);
     });
 
     it('should be able to handle \'client error\' properly', function () {
@@ -72,7 +72,7 @@ describe('Service: NotificationService', function () {
         //Assert
         expect(notificationMessagePublishSpy.calls.count()).toEqual(2);
         expect(notificationMessagePublishSpy.calls.first().args[0]).toEqual('#ErrorTypeKey1');
-        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Services.NotificationSeverity.Error);
+        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Error);
     });
 
     it('should be able to handle unknown error type', function () {
@@ -86,6 +86,6 @@ describe('Service: NotificationService', function () {
         //Assert
         expect(notificationMessagePublishSpy.calls.count()).toEqual(1);
         expect(notificationMessagePublishSpy.calls.first().args[0]).toEqual('#UnknownError');
-        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Services.NotificationSeverity.Error);
+        expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Error);
     });
 });

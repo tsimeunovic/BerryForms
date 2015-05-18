@@ -8,6 +8,7 @@
 /// <reference path="../../interfaces/services/mapping/IEntityModelMapperService.ts" />
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../../static/loadingType.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 //Controllers for entity metadata form (creating new entity type)
 module Controllers {
@@ -75,7 +76,7 @@ module Controllers {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntitySchemaSubmit);
             if (errorsModel == null) {
                 this.QueueService.Queues.NextPage.Notifications.add(
-                    this.LocalizationService.Resources.MetadataCreatedSuccess, Services.NotificationSeverity.Success);
+                    this.LocalizationService.Resources.MetadataCreatedSuccess, Static.NotificationSeverity.Success);
                 this.MessagingService.Messages.Metadata.Created.publish(savedMetadata);
                 this.RedirectService.RedirectToEditEntitySchema(savedMetadata.EntitySystemName);
             } else {

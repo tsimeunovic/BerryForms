@@ -89,12 +89,12 @@ module Services {
                     (data.Page.PageIndex !== 0 && data.Page.PageIndex >= data.Page.TotalPages)) {
                     //Non existing page
                     this.NotificationService.NotifyMessage(
-                        this.LocalizationService.Resources.NonExistingPage, Services.NotificationSeverity.Warning);
+                        this.LocalizationService.Resources.NonExistingPage, Static.NotificationSeverity.Warning);
                 } else if (data.List.length !== data.Page.LoadedCount ||
                     data.Page.StartIndex + data.Page.LoadedCount > data.Page.TotalCount) {
                     //Other data integrity failure
                     this.NotificationService.NotifyMessage(
-                        this.LocalizationService.Resources.InvalidDataLoaded, Services.NotificationSeverity.Error);
+                        this.LocalizationService.Resources.InvalidDataLoaded, Static.NotificationSeverity.Error);
                 } else {
                     //Add loaded values to array
                     for (var i:number = 0; i < data.List.length; i++) {

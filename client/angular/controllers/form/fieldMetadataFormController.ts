@@ -12,6 +12,7 @@
 /// <reference path="../../interfaces/services/interaction/IDomManipulationService.ts" />
 /// <reference path="../../../static/controllerArea.ts" />
 /// <reference path="../../../static/routeParams.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 //Controllers for entity fields metadata form (adding fields to existing entity type)
 module Controllers {
@@ -173,7 +174,7 @@ module Controllers {
                 var message:string = conflictingField ?
                     this.LocalizationService.Resources.FieldAlreadyExists :
                     this.LocalizationService.Resources.CouldNotUpdateField;
-                this.NotificationService.NotifyMessage(message, Services.NotificationSeverity.Error);
+                this.NotificationService.NotifyMessage(message, Static.NotificationSeverity.Error);
             } else {
                 this.SaveEntityMetadata(entityMetadata);
             }
@@ -197,7 +198,7 @@ module Controllers {
                 var savedMessage:string = fieldAdded ?
                     this.LocalizationService.Resources.MetadataFieldCreatedSuccess :
                     this.LocalizationService.Resources.MetadataSavedSuccess;
-                this.NotificationService.NotifyMessage(savedMessage, Services.NotificationSeverity.Success);
+                this.NotificationService.NotifyMessage(savedMessage, Static.NotificationSeverity.Success);
                 this.Scope.OriginalMetadata = savedMetadata;
                 if (fieldAdded || fieldModified) {
                     this.CreateFieldMetadata();

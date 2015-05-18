@@ -8,7 +8,7 @@ module Services {
     export class IQueueServiceType {
         public NextPage:any = {
             Notifications: {
-                add: function (message:string, severity:Services.NotificationSeverity):void { throw new Error(); },
+                add: function (message:string, severity:Static.NotificationSeverity):void { throw new Error(); },
                 retrieveFirst: function ():any { throw new Error(); },
                 retrieveLast: function ():any { throw new Error(); },
                 retrieveAll: function ():any[] { throw new Error(); }

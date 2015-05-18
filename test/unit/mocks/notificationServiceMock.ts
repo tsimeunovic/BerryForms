@@ -15,10 +15,10 @@ module Mocks {
             spyOn(this, 'HandleErrorsModel').and.callThrough();
         }
 
-        public NotifyMessage(message:string, severity:Services.NotificationSeverity):void {
+        public NotifyMessage(message:string, severity:Static.NotificationSeverity):void {
         }
 
-        public Notify(key:string, args:string[], severity:Services.NotificationSeverity):void {
+        public Notify(key:string, args:string[], severity:Static.NotificationSeverity):void {
         }
 
         public HandleErrorsModel(errorsModel:any):void {

@@ -40,7 +40,7 @@ describe('Controller: NotificationController', function () {
             localizationServiceMock);
     };
 
-    var checkMessageType = function (severity:Services.NotificationSeverity, toasterType:string) {
+    var checkMessageType = function (severity:Static.NotificationSeverity, toasterType:string) {
         //Arrange
         var toasterSpy:any = toasterMock.pop;
         var notificationMessageSpy:any = messagingServiceMock.Messages.Notification.Message.subscribe;
@@ -70,18 +70,18 @@ describe('Controller: NotificationController', function () {
     });
 
     it('should correctly handle \'error\' message type', function () {
-        checkMessageType(Services.NotificationSeverity.Error, 'error');
+        checkMessageType(Static.NotificationSeverity.Error, 'error');
     });
 
     it('should correctly handle \'warning\' message type', function () {
-        checkMessageType(Services.NotificationSeverity.Warning, 'warning');
+        checkMessageType(Static.NotificationSeverity.Warning, 'warning');
     });
 
     it('should correctly handle \'info\' message type', function () {
-        checkMessageType(Services.NotificationSeverity.Information, 'info');
+        checkMessageType(Static.NotificationSeverity.Information, 'info');
     });
 
     it('should correctly handle \'success\' message type', function () {
-        checkMessageType(Services.NotificationSeverity.Success, 'success');
+        checkMessageType(Static.NotificationSeverity.Success, 'success');
     });
 });

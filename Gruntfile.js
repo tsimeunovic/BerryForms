@@ -334,6 +334,8 @@ module.exports = function (grunt) {
     //Build application (compile, bundle, minify)
     grunt.registerTask('build', [
         'compile',
+        //'tslint:all',
+        'tslint:client',
         'clean:dist',
         'useminPrepare',
         'concurrent:dist',

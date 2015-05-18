@@ -12,8 +12,8 @@ describe('Service: QueueService', function () {
 
     it('should be able to retrieve all messages in queue', function() {
         //Arrange
-        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Services.NotificationSeverity.Error);
-        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Services.NotificationSeverity.Warning);
+        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
+        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
         var messages = systemUnderTest.Queues.NextPage.Notifications.retrieveAll();
@@ -22,16 +22,16 @@ describe('Service: QueueService', function () {
         //Assert
         expect(messages.length).toEqual(2);
         expect(messages[0].Message).toEqual('FirstError');
-        expect(messages[0].Severity).toEqual(Services.NotificationSeverity.Error);
+        expect(messages[0].Severity).toEqual(Static.NotificationSeverity.Error);
         expect(messages[1].Message).toEqual('SecondWarning');
-        expect(messages[1].Severity).toEqual(Services.NotificationSeverity.Warning);
+        expect(messages[1].Severity).toEqual(Static.NotificationSeverity.Warning);
         expect(messagesAfter.length).toEqual(0);
     });
 
     it('should be able to retrieve first message in queue', function() {
         //Arrange
-        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Services.NotificationSeverity.Error);
-        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Services.NotificationSeverity.Warning);
+        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
+        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
         var message = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
@@ -41,15 +41,15 @@ describe('Service: QueueService', function () {
         //Assert
         expect(message).not.toBe(null);
         expect(message.Message).toEqual('FirstError');
-        expect(message.Severity).toEqual(Services.NotificationSeverity.Error);
+        expect(message.Severity).toEqual(Static.NotificationSeverity.Error);
         expect(message2).not.toBe(null);
         expect(message3).toBe(null);
     });
 
     it('should be able to retrieve last message in queue', function() {
         //Arrange
-        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Services.NotificationSeverity.Error);
-        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Services.NotificationSeverity.Warning);
+        systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
+        systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
         var message = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
@@ -59,7 +59,7 @@ describe('Service: QueueService', function () {
         //Assert
         expect(message).not.toBe(null);
         expect(message.Message).toEqual('SecondWarning');
-        expect(message.Severity).toEqual(Services.NotificationSeverity.Warning);
+        expect(message.Severity).toEqual(Static.NotificationSeverity.Warning);
         expect(message2).not.toBe(null);
         expect(message3).toBe(null);
     });

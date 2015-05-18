@@ -9,6 +9,7 @@
 /// <reference path="../../interfaces/services/state/IEntityListCacheService.ts" />
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../static/routeParams.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 //Controller for entity records list
 module Controllers {
@@ -159,7 +160,7 @@ module Controllers {
 
             if (errorsModel == null) {
                 this.MessagingService.Messages.Entity.Deleted.publish(deletedEntity);
-                this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityDeletedSuccess, Services.NotificationSeverity.Success);
+                this.NotificationService.NotifyMessage(this.LocalizationService.Resources.EntityDeletedSuccess, Static.NotificationSeverity.Success);
             } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }

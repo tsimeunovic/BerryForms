@@ -1,8 +1,8 @@
 /// <reference path="../../interfaces/localization/IResources.ts" />
-'use strict';
 //Resource file with translations for Slovak language
 var Localization;
 (function (Localization) {
+    'use strict';
     var ResourcesSk = (function () {
         function ResourcesSk() {
             //Records

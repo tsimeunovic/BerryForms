@@ -1,6 +1,7 @@
 /// <reference path="./messagingBaseService.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/interaction/INotificationService.ts" />
+/// <reference path="../../../static/notificationSeverity.ts" />
 
 var _global:any = this;
 
@@ -45,7 +46,7 @@ module Services {
                 ['formDisplayItem', this.Messages.Form.DisplayItem, false, function (itemData:Models.Entity, itemMetadata:Models.EntityMetadata):any {
                     return {Data: itemData, Metadata: itemMetadata};
                 }],
-                ['notificationMessage', this.Messages.Notification.Message, false, function (message:string, severity:Services.NotificationSeverity):any {
+                ['notificationMessage', this.Messages.Notification.Message, false, function (message:string, severity:Static.NotificationSeverity):any {
                     return {Message: message, Severity: severity};
                 }],
 

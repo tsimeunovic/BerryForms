@@ -70,7 +70,7 @@ module Services {
             var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldType, false);
             if (!fieldTypeComponent) {
                 var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
-                this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
+                this.NotificationService.NotifyMessage(errorMessage, Static.NotificationSeverity.Error);
                 return null;
             }
 
@@ -136,7 +136,7 @@ module Services {
             var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldType, false);
             if (!fieldTypeComponent) {
                 var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldType]);
-                this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
+                this.NotificationService.NotifyMessage(errorMessage, Static.NotificationSeverity.Error);
                 return null;
             }
 
@@ -149,7 +149,7 @@ module Services {
             var fieldTypeComponent:Components.FieldTypes.IFieldType = this.FieldTypesRegistry.GetFieldType(fieldMetadata.FieldTypeName, false);
             if (!fieldTypeComponent) {
                 var errorMessage:string = this.LocalizationService.Resources.NonExistingFieldType.format([fieldMetadata.FieldTypeName]);
-                this.NotificationService.NotifyMessage(errorMessage, Services.NotificationSeverity.Error);
+                this.NotificationService.NotifyMessage(errorMessage, Static.NotificationSeverity.Error);
                 return null;
             }
 

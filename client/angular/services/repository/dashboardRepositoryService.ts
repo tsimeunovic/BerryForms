@@ -71,7 +71,7 @@ module Services {
         }
 
         private ExtendActivityList(activityItems:any[], callback:() => void):void {
-            if(activityItems.length === 0) {
+            if (activityItems.length === 0) {
                 callback();
                 return;
             }
