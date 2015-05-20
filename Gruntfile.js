@@ -68,6 +68,9 @@ module.exports = function (grunt) {
             client: [
                 'client/{,**/}*.ts'
             ],
+            test: [
+                'test/{,**/}*.ts'
+            ],
             server: [
                 'server/{,**/}*.ts'
             ]
@@ -334,8 +337,8 @@ module.exports = function (grunt) {
     //Build application (compile, bundle, minify)
     grunt.registerTask('build', [
         'compile',
+        'tslint:client',
         //'tslint:all',
-        //'tslint:client',
         'clean:dist',
         'useminPrepare',
         'concurrent:dist',

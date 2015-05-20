@@ -1,9 +1,9 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/angular/interfaces/services/repository/IUrlLocatorService.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class UrlLocatorServiceMock implements Services.IUrlLocatorService {
         public GetUrlForEntityMetadataListRetrieve():string {
             return 'EntityMetadataListRetrieve';

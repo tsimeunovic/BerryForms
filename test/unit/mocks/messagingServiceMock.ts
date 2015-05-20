@@ -1,16 +1,20 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/angular/interfaces/services/communication/IMessagingService.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class MessagingServiceMock implements Services.IMessagingService {
         constructor() {
             this.Setup();
         }
 
+        //Mock members
+        public Messages:Services.IMessagingServiceType;
+
         private Setup():void {
-            var messages = JSON.parse(JSON.stringify(new Services.IMessagingServiceType()));
+            //Clone IMessagingServiceType object with all members without implementation
+            var messages:Services.IMessagingServiceType = JSON.parse(JSON.stringify(new Services.IMessagingServiceType()));
             this.SetupMessageSpyingOnObject(messages);
             this.Messages = messages;
         }
@@ -24,18 +28,16 @@ module Mocks {
                 }
             }
 
-            var functionNames = ['subscribe', 'unsubscribe', 'publish'];
+            var functionNames:string[] = ['subscribe', 'unsubscribe', 'publish'];
             if (!hasOwnProperties) {
-                for (var i = 0; i < functionNames.length; i++) {
-                    var functionName = functionNames[i];
-                    object[functionName] = function () {
+                for (var i:number = 0; i < functionNames.length; i++) {
+                    var functionName:string = functionNames[i];
+                    object[functionName] = function ():void {
+                        //Do nothing
                     };
                     spyOn(object, functionName);
                 }
             }
         }
-
-        //Mock members
-        public Messages:Services.IMessagingServiceType;
     }
 }

@@ -2,12 +2,45 @@
 /// <reference path="../../../client/angular/interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../../client/extensions/stringExtensions.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class RedirectServiceMock implements Services.IRedirectService {
         constructor() {
             this.Setup();
+        }
+
+        //Mock members
+        public GetEditEntityUrl(entityName:string, entityId:number):string {
+            return ('mockEditEntityUrl/{0}/{1}').format([entityName, entityId.toString()]);
+        }
+
+        public RedirectToCreateEntitySchema():void {
+            //Do nothing
+        }
+
+        public RedirectToEditEntitySchema(entityName:string):void {
+            //Do nothing
+        }
+
+        public RedirectToCreateEntity(entityName:string):void {
+            //Do nothing
+        }
+
+        public RedirectToEditEntity(entityName:string, entityId:number):void {
+            //Do nothing
+        }
+
+        public RedirectToEntityPage(entityName:string, entityId:number, pageNumber:number):void {
+            //Do nothing
+        }
+
+        public RedirectToFilteredList(entityName:string, filterQs:string, pageNumber:number):void {
+            //Do nothing
+        }
+
+        public RedirectToHomeScreen():void {
+            //Do nothing
         }
 
         private Setup():void {
@@ -20,17 +53,5 @@ module Mocks {
             spyOn(this, 'RedirectToFilteredList').and.callThrough();
             spyOn(this, 'RedirectToHomeScreen').and.callThrough();
         }
-
-        //Mock members
-        public GetEditEntityUrl(entityName:string, entityId:number):string {
-            return ('mockEditEntityUrl/{0}/{1}').format([entityName, entityId.toString()]);
-        }
-        public RedirectToCreateEntitySchema():void {}
-        public RedirectToEditEntitySchema(entityName:string):void {}
-        public RedirectToCreateEntity(entityName:string):void {}
-        public RedirectToEditEntity(entityName:string, entityId:number):void {}
-        public RedirectToEntityPage(entityName:string, entityId:number, pageNumber:number):void {}
-        public RedirectToFilteredList(entityName:string, filterQs:string, pageNumber:number):void {}
-        public RedirectToHomeScreen():void {}
     }
 }

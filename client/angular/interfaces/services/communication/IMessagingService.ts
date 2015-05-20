@@ -141,7 +141,7 @@ module Services {
                 unsubscribe: function (subscriber:(m:any) => void):void { throw new Error(); },
                 publish: function (user:Models.UserSession):void { throw new Error(); }
             }
-        }
+        };
     }
 
     //Messaging service contract

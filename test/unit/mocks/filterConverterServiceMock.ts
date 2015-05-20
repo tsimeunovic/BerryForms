@@ -1,20 +1,14 @@
+///<reference path="../../jasmine.d.ts"/>
 ///<reference path="../../../client/angular/models/core/entityModel.ts"/>
 ///<reference path="../../../client/angular/models/core/entityMetadataModel.ts"/>
 ///<reference path="../../../client/angular/interfaces/services/mapping/IFilterConverterService.ts"/>
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class FilterConverterServiceMock implements Services.IFilterConverterService {
         constructor() {
             this.Setup();
-        }
-
-        private Setup():void {
-            spyOn(this, 'CreateDatabaseQueryFromFilter').and.callThrough();
-            spyOn(this, 'CreateFilterFormMetadataFromEntityMetadata').and.callThrough();
-            spyOn(this, 'ParseFilterQueryString').and.callThrough();
-            spyOn(this, 'CreateFilterQueryString').and.callThrough();
         }
 
         public CreateDatabaseQueryFromFilter(metadata:Models.EntityMetadata, filterEntity:Models.Entity):any {
@@ -38,6 +32,13 @@ module Mocks {
 
         public CreateFilterQueryString(metadata:Models.EntityMetadata, filterEntity:Models.Entity):string {
             return 'mockQueryParam1=mockValue1&mockQueryParam2=mockValue2';
+        }
+
+        private Setup():void {
+            spyOn(this, 'CreateDatabaseQueryFromFilter').and.callThrough();
+            spyOn(this, 'CreateFilterFormMetadataFromEntityMetadata').and.callThrough();
+            spyOn(this, 'ParseFilterQueryString').and.callThrough();
+            spyOn(this, 'CreateFilterQueryString').and.callThrough();
         }
     }
 }

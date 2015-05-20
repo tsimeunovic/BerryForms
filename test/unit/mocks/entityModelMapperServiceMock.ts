@@ -1,25 +1,12 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/angular/interfaces/services/mapping/IEntityModelMapperService.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class EntityModelMapperServiceMock implements Services.IEntityModelMapperService {
         constructor() {
             this.Setup();
-        }
-
-        private Setup() {
-            spyOn(this, 'MapEntityToEntityMetadataModel').and.callThrough();
-            spyOn(this, 'MapFieldsMetadataToEntityModels').and.callThrough();
-            spyOn(this, 'MapEntityModelToFieldMetadata').and.callThrough();
-            spyOn(this, 'DeserializeEntityMetadataModel').and.callThrough();
-            spyOn(this, 'DeserializeEntityModel').and.callThrough();
-            spyOn(this, 'CloneEntityModel').and.callThrough();
-            spyOn(this, 'GetIntegerFromStringProperty').and.callThrough();
-            spyOn(this, 'GetSelectFieldOptionFromEntityJson').and.callThrough();
-            spyOn(this, 'GetSelectFieldOptionFromStringProperty').and.callThrough();
-            spyOn(this, 'GetSelectFieldOptionsFromArrayProperty').and.callThrough();
         }
 
         public MapEntityToEntityMetadataModel(entity:Models.Entity):Models.EntityMetadata {
@@ -29,21 +16,21 @@ module Mocks {
         }
 
         public MapFieldsMetadataToEntityModels(fieldsMetadata:Models.FieldMetadata[]):Models.Entity[] {
-            var result = [];
-            for (var i = 0; i < fieldsMetadata.length; i++) {
+            var result:Models.Entity[] = [];
+            for (var i:number = 0; i < fieldsMetadata.length; i++) {
                 result.push(new Models.Entity('EntityModelMapperServiceMockEntity'));
             }
             return result;
         }
 
         public MapEntityModelToFieldMetadata(entity:Models.Entity):Models.FieldMetadata {
-            var mockResult = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
+            var mockResult:Models.FieldMetadata = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
             mockResult.FieldSystemName = 'EntityModelMapperServiceMockFieldMetadata';
             return mockResult;
         }
 
         public DeserializeEntityMetadataModel(entityMetadataJson:any):Models.EntityMetadata {
-            var result = new Models.EntityMetadata();
+            var result:Models.EntityMetadata = new Models.EntityMetadata();
             result.EntityName = 'MockMetadata';
             return result;
         }
@@ -73,6 +60,19 @@ module Mocks {
                 new Models.SelectFieldOptionMetadata('MockText1', 'MockValue1'),
                 new Models.SelectFieldOptionMetadata('MockText2', 'MockValue2')
             ];
+        }
+
+        private Setup():void {
+            spyOn(this, 'MapEntityToEntityMetadataModel').and.callThrough();
+            spyOn(this, 'MapFieldsMetadataToEntityModels').and.callThrough();
+            spyOn(this, 'MapEntityModelToFieldMetadata').and.callThrough();
+            spyOn(this, 'DeserializeEntityMetadataModel').and.callThrough();
+            spyOn(this, 'DeserializeEntityModel').and.callThrough();
+            spyOn(this, 'CloneEntityModel').and.callThrough();
+            spyOn(this, 'GetIntegerFromStringProperty').and.callThrough();
+            spyOn(this, 'GetSelectFieldOptionFromEntityJson').and.callThrough();
+            spyOn(this, 'GetSelectFieldOptionFromStringProperty').and.callThrough();
+            spyOn(this, 'GetSelectFieldOptionsFromArrayProperty').and.callThrough();
         }
     }
 }

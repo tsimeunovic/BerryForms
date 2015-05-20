@@ -2,22 +2,13 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../mocks/httpMock.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class HttpWrapperServiceMock extends HttpMock implements Services.IHttpWrapperService {
         constructor() {
             super();
             this.SetupInherited();
-        }
-
-        private SetupInherited():void {
-            spyOn(this, 'AnonymousGet').and.callThrough();
-            spyOn(this, 'AnonymousPost').and.callThrough();
-            spyOn(this, 'Get').and.callThrough();
-            spyOn(this, 'Post').and.callThrough();
-            spyOn(this, 'Put').and.callThrough();
-            spyOn(this, 'Delete').and.callThrough();
         }
 
         public AnonymousGet(url:string, actionName:string):any {
@@ -42,6 +33,15 @@ module Mocks {
 
         public Delete(url:string, actionName:string):any {
             return this.ResponseFor('delete', url);
+        }
+
+        private SetupInherited():void {
+            spyOn(this, 'AnonymousGet').and.callThrough();
+            spyOn(this, 'AnonymousPost').and.callThrough();
+            spyOn(this, 'Get').and.callThrough();
+            spyOn(this, 'Post').and.callThrough();
+            spyOn(this, 'Put').and.callThrough();
+            spyOn(this, 'Delete').and.callThrough();
         }
     }
 }

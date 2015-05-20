@@ -1,18 +1,20 @@
 /// <reference path="../../jasmine.d.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class CallbackMock {
         constructor() {
             this.Setup();
         }
 
+        //Mock members
+        public callback():void {
+            //Do nothing
+        }
+
         private Setup():void {
             spyOn(this, 'callback');
         }
-
-        //Mock members
-        public callback():void {}
     }
 }

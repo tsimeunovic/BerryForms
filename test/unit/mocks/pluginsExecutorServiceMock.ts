@@ -2,9 +2,9 @@
 /// <reference path="../mocks/pluginMock.ts" />
 /// <reference path="../../../client/angular/interfaces/services/plugins/IPluginsExecutorService.ts" />
 
-'use strict';
-
 module Mocks {
+    'use strict';
+
     export class PluginsExecutorServiceMock implements Services.IPluginsExecutorService {
         constructor(cancelOperation:boolean) {
             this.CancelOperation = cancelOperation;
@@ -13,21 +13,21 @@ module Mocks {
 
         private CancelOperation:boolean;
 
-        private Setup() {
-            spyOn(this, 'ExecuteAllPluginsFor').and.callThrough();
-        }
-
-        public SetCancellation(cancelOperation:boolean) {
+        public SetCancellation(cancelOperation:boolean):void {
             this.CancelOperation = cancelOperation;
         }
 
-        public ExecuteAllPluginsFor(pluginContext:Models.PluginContext<any>, callback:(pluginContext:Models.PluginContext<any>)=>void):void {
+        public ExecuteAllPluginsFor(pluginContext:Models.PluginContext<any>, callback:(pluginContext:Models.PluginContext<any>) => void):void {
             if (this.CancelOperation) {
-                var pluginMock = new Mocks.PluginMock(true, true);
+                var pluginMock:Mocks.PluginMock = new Mocks.PluginMock(true, true);
                 pluginContext.SetCancellation(pluginMock, 'CancelledByPluginsExecutorServiceMock');
                 pluginContext.CancellationPluginErrorModel = 'CancellationErrorModelMock';
             }
             callback(pluginContext);
+        }
+
+        private Setup():void {
+            spyOn(this, 'ExecuteAllPluginsFor').and.callThrough();
         }
     }
 }
