@@ -27,7 +27,7 @@ module Directives {
 
             this.Scope.Opened = this.Opened;
             this.Scope.ToggleOpen = this.ToggleOpen.bind(this);
-            this.Scope.IsDisabled = this.IsDisabled;
+            this.Scope.IsDisabled = this.IsDisabled.bind(this);
 
             this.EntityValueChanged();
             this.Watch();
@@ -40,7 +40,36 @@ module Directives {
         }
 
         private IsDisabled(date:Date, mode:string):boolean {
-            return false;
+            var minDate:number = this.Scope.field.MinDate;
+            var maxDate:number = this.Scope.field.MaxDate;
+            var invalidDate:boolean = false;
+
+            date.setHours(0, 0, 0, 0); //Normalize date to midnight
+            switch (mode) {
+                case 'day':
+                    var utcDate:number = this.ConvertToUtcTime(date);
+                    invalidDate = (minDate && minDate > utcDate) ||
+                        (maxDate && maxDate < utcDate);
+                    break;
+                case 'month':
+                    //Passed date is first date of month
+                    var lastDayOfMonth:Date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                    var utcStartMonth:number = this.ConvertToUtcTime(date);
+                    var utcEndMonth:number = this.ConvertToUtcTime(lastDayOfMonth);
+                    invalidDate = (minDate && minDate > utcEndMonth) ||
+                        (maxDate && maxDate < utcStartMonth);
+                    break;
+                case 'year':
+                    //Passed date is first date of year
+                    var lastDayOfYear:Date = new Date(date.getFullYear(), 11, 31);
+                    var utcStartYear:number = this.ConvertToUtcTime(date);
+                    var utcEndYear:number = this.ConvertToUtcTime(lastDayOfYear);
+                    invalidDate = (minDate && minDate > utcEndYear) ||
+                        (maxDate && maxDate < utcStartYear);
+                    break;
+            }
+
+            return invalidDate;
         }
 
         private ConvertToLocalDate(utcTime:number):Date {

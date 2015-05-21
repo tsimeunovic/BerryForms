@@ -37,5 +37,5 @@ module Components.FieldTypes {
     }
 }
 
-/* tslint:disable:max-line-length */
-_global.Components.FieldTypes.push(new Components.FieldTypes.SpecialTextFieldComponent('Email', 'envelope', '^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'));
+_global.Components.FieldTypes.push(new Components.FieldTypes.SpecialTextFieldComponent('Email', 'envelope',
+    '^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'));

@@ -4,7 +4,7 @@
 
 ## About
 
-Berry Forms is lightweight personal xRM application written using MEAN technologies and [Typescript](http://www.typescriptlang.org/). It aims to run on any device that can run MongoDB and Node.js (like Raspberry Pi). Client is a small responsive website (~ 170kb on first load) that uses simple rest api to retrieve and persist data.
+Berry Forms is lightweight personal xRM application written using MEAN technologies and [Typescript](http://www.typescriptlang.org/). It aims to run on any device that can run MongoDB and Node.js (like Raspberry Pi). Client is a small responsive website (up to 190kb on first load with gzip) that uses simple rest api to retrieve and persist data.
 
 ## Features
 
@@ -27,8 +27,6 @@ Features that I would like to add in future:
 
 - Multi user application with different roles and permissions
 - Settings page
-- Dashboard with charts, predefined and custom counters
-- Additional field types
 - And a lot more ...
 
 ## How to install
