@@ -6,22 +6,22 @@
 
 'use strict';
 
-describe('Service: NotificationService', function () {
+describe('Service: NotificationService', function ():void {
     var systemUnderTest:Services.NotificationService;
     var localizationServiceMock:Services.ILocalizationService;
     var messagingServiceMock:Services.IMessagingService;
     var callbackMock:Mocks.CallbackMock;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         localizationServiceMock = new Mocks.LocalizationServiceMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         callbackMock = new Mocks.CallbackMock();
         systemUnderTest = new Services.NotificationService(localizationServiceMock, messagingServiceMock);
     });
 
-    it('should publish \'notification message\' message when \'NotifyMessage\' method is called', function () {
+    it('should publish \'notification message\' message when \'NotifyMessage\' method is called', function ():void {
         //Arrange
-        var messageText = 'MessageText';
+        var messageText:string = 'MessageText';
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
@@ -33,9 +33,9 @@ describe('Service: NotificationService', function () {
         expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Information);
     });
 
-    it('should publish \'notification message\' with resolved message when \'Notify\' method is called', function () {
+    it('should publish \'notification message\' with resolved message when \'Notify\' method is called', function ():void {
         //Arrange
-        var messageKey = 'MessageKey';
+        var messageKey:string = 'MessageKey';
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
@@ -47,9 +47,9 @@ describe('Service: NotificationService', function () {
         expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Error);
     });
 
-    it('should be able to handle \'plugin error\' properly', function () {
+    it('should be able to handle \'plugin error\' properly', function ():void {
         //Arrange
-        var errorsModel = {Type: 'Plugin', PluginMessage: 'PluginMessage'};
+        var errorsModel:any = {Type: 'Plugin', PluginMessage: 'PluginMessage'};
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
@@ -61,9 +61,9 @@ describe('Service: NotificationService', function () {
         expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Warning);
     });
 
-    it('should be able to handle \'client error\' properly', function () {
+    it('should be able to handle \'client error\' properly', function ():void {
         //Arrange
-        var errorsModel = {Type: 'Client', Errors: [{ErrorTypeKey: 'ErrorTypeKey1'}, {ErrorTypeKey: 'ErrorTypeKey2'}]};
+        var errorsModel:any = {Type: 'Client', Errors: [{ErrorTypeKey: 'ErrorTypeKey1'}, {ErrorTypeKey: 'ErrorTypeKey2'}]};
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act
@@ -75,9 +75,9 @@ describe('Service: NotificationService', function () {
         expect(notificationMessagePublishSpy.calls.first().args[1]).toEqual(Static.NotificationSeverity.Error);
     });
 
-    it('should be able to handle unknown error type', function () {
+    it('should be able to handle unknown error type', function ():void {
         //Arrange
-        var errorsModel = {Type: 'NonExistingType'};
+        var errorsModel:any = {Type: 'NonExistingType'};
         var notificationMessagePublishSpy:any = messagingServiceMock.Messages.Notification.Message.publish;
 
         //Act

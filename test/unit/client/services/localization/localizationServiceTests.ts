@@ -4,21 +4,21 @@
 'use strict';
 var _global:any = this;
 
-describe('Service: LocalizationService', function () {
+describe('Service: LocalizationService', function ():void {
     var systemUnderTest:Services.LocalizationService;
-    var originalResources;
+    var originalResources:Localization.IResources;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         originalResources = _global.Localization.Resources;
     });
 
-    afterEach(function () {
+    afterEach(function ():void {
         _global.Localization.Resources = originalResources;
     });
 
-    it('should read registered resources object from global variable and use it as resource object', function () {
+    it('should read registered resources object from global variable and use it as resource object', function ():void {
         //Arrange
-        var resourcesObj = {a: 'a', b: 'b'};
+        var resourcesObj:any = {a: 'a', b: 'b'};
         _global.Localization.Resources = resourcesObj;
 
         //Act

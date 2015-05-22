@@ -4,30 +4,30 @@
 
 'use strict';
 
-describe('Service: FilterConverterService', function () {
+describe('Service: FilterConverterService', function ():void {
     var systemUnderTest:Services.FilterConverterService;
     var fieldTypesRegistryMock:Components.FieldTypes.IFieldTypesRegistry;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         fieldTypesRegistryMock = new Mocks.FieldTypesRegistryMock();
         systemUnderTest = new Services.FilterConverterService(fieldTypesRegistryMock);
     });
 
-    it('should be able to create database query object from filter entity', function () {
+    it('should be able to create database query object from filter entity', function ():void {
         //Arrange
-        var field = new Models.FieldMetadata('MockFieldMetadata');
+        var field:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata');
         field.FieldSystemName = 'MockFieldSystemName';
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         metadata.Fields = [field];
 
-        var filterEntity = new Models.Entity('MockEntity');
-        var filterFieldValue1 = 'MockFieldValue1';
-        var filterFieldValue2 = 'MockFieldValue2';
-        filterEntity.Data['MockFieldSystemName1'] = filterFieldValue1;
-        filterEntity.Data['MockFieldSystemName2'] = filterFieldValue2;
+        var filterEntity:Models.Entity = new Models.Entity('MockEntity');
+        var filterFieldValue1:string = 'MockFieldValue1';
+        var filterFieldValue2:string = 'MockFieldValue2';
+        filterEntity.Data.MockFieldSystemName1 = filterFieldValue1;
+        filterEntity.Data.MockFieldSystemName2 = filterFieldValue2;
 
         //Act
-        var databaseQuery = systemUnderTest.CreateDatabaseQueryFromFilter(metadata, filterEntity);
+        var databaseQuery:any = systemUnderTest.CreateDatabaseQueryFromFilter(metadata, filterEntity);
 
         //Assert
         expect(databaseQuery).not.toEqual(null);
@@ -37,17 +37,17 @@ describe('Service: FilterConverterService', function () {
         });
     });
 
-    it('should be able to create filter form from entity metadata', function () {
+    it('should be able to create filter form from entity metadata', function ():void {
         //Arrange
-        var field1 = new Models.FieldMetadata('MockFieldMetadata1');
+        var field1:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata1');
         field1.FieldSystemName = 'MockFieldSystemName1';
-        var field2 = new Models.FieldMetadata('MockFieldMetadata2');
+        var field2:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata2');
         field2.FieldSystemName = 'MockFieldSystemName2';
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         metadata.Fields = [field1, field2];
 
         //Act
-        var form = systemUnderTest.CreateFilterFormMetadataFromEntityMetadata(metadata);
+        var form:Models.EntityMetadata = systemUnderTest.CreateFilterFormMetadataFromEntityMetadata(metadata);
 
         //Assert
         expect(form).not.toEqual(null);
@@ -58,16 +58,16 @@ describe('Service: FilterConverterService', function () {
         expect(form.Fields[3].FieldSystemName).toEqual('MockFieldSystemName22');
     });
 
-    it('should be able to convert query string parameters into the filter entity', function () {
+    it('should be able to convert query string parameters into the filter entity', function ():void {
         //Arrange
-        var field1 = new Models.FieldMetadata('MockFieldMetadata1');
+        var field1:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata1');
         field1.FieldSystemName = 'MockFieldSystemName1';
-        var field2 = new Models.FieldMetadata('MockFieldMetadata2');
+        var field2:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata2');
         field2.FieldSystemName = 'MockFieldSystemName2';
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         metadata.Fields = [field1, field2];
 
-        var queryStringParams = {
+        var queryStringParams:any = {
             MockFieldSystemName11: 11,
             MockFieldSystemName12: 12,
             MockFieldSystemName21: 21,
@@ -75,34 +75,34 @@ describe('Service: FilterConverterService', function () {
         };
 
         //Act
-        var filterEntity = systemUnderTest.ParseFilterQueryString(metadata, queryStringParams);
+        var filterEntity:Models.Entity = systemUnderTest.ParseFilterQueryString(metadata, queryStringParams);
 
         //Assert
         expect(filterEntity).not.toEqual(null);
         expect(Object.keys(filterEntity.Data).length).toEqual(4);
-        expect(filterEntity.Data['MockFieldSystemName11']).toEqual(11);
-        expect(filterEntity.Data['MockFieldSystemName12']).toEqual(12);
-        expect(filterEntity.Data['MockFieldSystemName21']).toEqual(21);
-        expect(filterEntity.Data['MockFieldSystemName22']).toEqual(22);
+        expect(filterEntity.Data.MockFieldSystemName11).toEqual(11);
+        expect(filterEntity.Data.MockFieldSystemName12).toEqual(12);
+        expect(filterEntity.Data.MockFieldSystemName21).toEqual(21);
+        expect(filterEntity.Data.MockFieldSystemName22).toEqual(22);
     });
 
-    it('should be able to create query string parameters from filter entity', function () {
+    it('should be able to create query string parameters from filter entity', function ():void {
         //Arrange
-        var field1 = new Models.FieldMetadata('MockFieldMetadata1');
+        var field1:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata1');
         field1.FieldSystemName = 'MockFieldSystemName1';
-        var field2 = new Models.FieldMetadata('MockFieldMetadata2');
+        var field2:Models.FieldMetadata = new Models.FieldMetadata('MockFieldMetadata2');
         field2.FieldSystemName = 'MockFieldSystemName2';
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         metadata.Fields = [field1, field2];
 
-        var filterEntity = new Models.Entity('MockEntitySystemName');
-        filterEntity.Data['MockFieldSystemName11'] = 11;
-        filterEntity.Data['MockFieldSystemName12'] = 12;
-        filterEntity.Data['MockFieldSystemName21'] = 21;
-        filterEntity.Data['MockFieldSystemName22'] = 22;
+        var filterEntity:Models.Entity = new Models.Entity('MockEntitySystemName');
+        filterEntity.Data.MockFieldSystemName11 = 11;
+        filterEntity.Data.MockFieldSystemName12 = 12;
+        filterEntity.Data.MockFieldSystemName21 = 21;
+        filterEntity.Data.MockFieldSystemName22 = 22;
 
         //Act
-        var queryParams = systemUnderTest.CreateFilterQueryString(metadata, filterEntity);
+        var queryParams:string = systemUnderTest.CreateFilterQueryString(metadata, filterEntity);
 
         //Assert
         expect(queryParams).not.toEqual(null);

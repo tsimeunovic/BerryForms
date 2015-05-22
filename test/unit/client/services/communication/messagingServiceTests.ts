@@ -5,22 +5,22 @@
 
 'use strict';
 
-describe('Service: MessagingService', function () {
+describe('Service: MessagingService', function ():void {
     var systemUnderTest:Services.MessagingService;
     var rootScopeMock:Mocks.RootScopeMock;
     var callbackMock:any;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         rootScopeMock = new Mocks.RootScopeMock();
         systemUnderTest = new Services.MessagingService(rootScopeMock);
         callbackMock = new Mocks.CallbackMock();
     });
 
-    it('should notify \'entity created\' subscribers without root scope apply', function(){
+    it('should notify \'entity created\' subscribers without root scope apply', function ():void {
         //Arrange
         systemUnderTest.Messages.Entity.Created.subscribe(callbackMock.callback);
-        var entityData:any = { name: 'test' };
-        var entityData2:any = { name: 'test2' };
+        var entityData:any = {name: 'test'};
+        var entityData2:any = {name: 'test2'};
         var rootScopeSpy:any = rootScopeMock.$apply;
 
         //Act
@@ -33,11 +33,11 @@ describe('Service: MessagingService', function () {
         expect(rootScopeSpy.calls.any()).toBe(false);
     });
 
-    it('should be able to unsubscribe \'metadata created\' after first call', function(){
+    it('should be able to unsubscribe \'metadata created\' after first call', function ():void {
         //Arrange
-        var subscription = systemUnderTest.Messages.Metadata.Created.subscribe(callbackMock.callback);
-        var entityData:any = { name: 'test' };
-        var entityData2:any = { name: 'test2' };
+        var subscription:() => void = systemUnderTest.Messages.Metadata.Created.subscribe(callbackMock.callback);
+        var entityData:any = {name: 'test'};
+        var entityData2:any = {name: 'test2'};
 
         //Act
         systemUnderTest.Messages.Metadata.Created.publish(entityData);

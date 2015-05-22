@@ -8,7 +8,7 @@
 
 'use strict';
 
-describe('Service: EntityListCacheService', function () {
+describe('Service: EntityListCacheService', function ():void {
     var systemUnderTest:Services.EntityListCacheService;
     var callbackMock:Mocks.CallbackMock;
     var messagingServiceMock:Services.IMessagingService;
@@ -16,17 +16,18 @@ describe('Service: EntityListCacheService', function () {
     var notificationServiceMock:Services.INotificationService;
     var localizationServiceMock:Services.ILocalizationService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         callbackMock = new Mocks.CallbackMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         entityRepositoryServiceMock = new Mocks.EntityRepositoryServiceMock();
         notificationServiceMock = new Mocks.NotificationServiceMock();
         localizationServiceMock = new Mocks.LocalizationServiceMock();
 
-        systemUnderTest = new Services.EntityListCacheService(messagingServiceMock, entityRepositoryServiceMock, notificationServiceMock, localizationServiceMock);
+        systemUnderTest = new Services.EntityListCacheService(messagingServiceMock,
+            entityRepositoryServiceMock, notificationServiceMock, localizationServiceMock);
     });
 
-    it('should call repository to retrieve data when they are not loaded', function () {
+    it('should call repository to retrieve data when they are not loaded', function ():void {
         //Arrange
         var callbackMockMethod:any = callbackMock.callback;
         var repositoryMockMethod:any = entityRepositoryServiceMock.LoadPagedFilteredResults;
@@ -44,7 +45,7 @@ describe('Service: EntityListCacheService', function () {
         expect(dataLoadedMessagePublishMockMethod.calls.any()).toEqual(true);
     });
 
-    it('should not call repository when requested data are already available', function () {
+    it('should not call repository when requested data are already available', function ():void {
         //Arrange
         var callbackMockMethod:any = callbackMock.callback;
         systemUnderTest.LoadEntityListPage('TestEntity', null, 0, callbackMockMethod);
@@ -62,7 +63,7 @@ describe('Service: EntityListCacheService', function () {
         expect(dataLoadedMessagePublishMockMethod.calls.any()).toEqual(false);
     });
 
-    it('should return existing data immediately and load next page when its not loaded', function () {
+    it('should return existing data immediately and load next page when its not loaded', function ():void {
         //Arrange
         var callbackMockMethod:any = callbackMock.callback;
         systemUnderTest.LoadEntityListPage('TestEntity', null, 0, callbackMock.callback);
@@ -83,7 +84,7 @@ describe('Service: EntityListCacheService', function () {
         expect(dataLoadedMessagePublishMockMethod.calls.any()).toEqual(true);
     });
 
-    it('should add newly created entity on top of cache list', function () {
+    it('should add newly created entity on top of cache list', function ():void {
         //Arrange
         var callbackMockMethod:any = callbackMock.callback;
         systemUnderTest.LoadEntityListPage('TestEntity', null, 0, callbackMockMethod);
@@ -94,8 +95,8 @@ describe('Service: EntityListCacheService', function () {
         dataLoadedMessagePublishMockMethod.calls.reset();
 
         var entityCreatedMessageMock:any = messagingServiceMock.Messages.Entity.Created.subscribe;
-        var entityCreatedCallback = entityCreatedMessageMock.calls.first().args[0];
-        var createdEntity = new Models.Entity('TestEntity');
+        var entityCreatedCallback:(e:Models.Entity) => void = entityCreatedMessageMock.calls.first().args[0];
+        var createdEntity:Models.Entity = new Models.Entity('TestEntity');
         createdEntity.Id = 123456;
 
         //Act
@@ -110,7 +111,7 @@ describe('Service: EntityListCacheService', function () {
         expect(dataChangedMessagePublishMockMethod.calls.any()).toEqual(true);
     });
 
-    it('should remove deleted entity from list', function () {
+    it('should remove deleted entity from list', function ():void {
         //Arrange
         var callbackMockMethod:any = callbackMock.callback;
         systemUnderTest.LoadEntityListPage('TestEntity', null, 0, callbackMockMethod);
@@ -122,8 +123,8 @@ describe('Service: EntityListCacheService', function () {
         entityRepositoryServiceMock.AddResponse('LoadPagedFilteredResults', null, null); //2nd call will not respond immediately
 
         var entityDeletedMessageMock:any = messagingServiceMock.Messages.Entity.Deleted.subscribe;
-        var entityDeletedCallback = entityDeletedMessageMock.calls.first().args[0];
-        var deletedEntity = new Models.Entity('TestEntity');
+        var entityDeletedCallback:(d:Models.Entity) => void = entityDeletedMessageMock.calls.first().args[0];
+        var deletedEntity:Models.Entity = new Models.Entity('TestEntity');
         deletedEntity.Id = 1;
 
         //Act

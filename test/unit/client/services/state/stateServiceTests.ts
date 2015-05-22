@@ -8,7 +8,7 @@
 
 'use strict';
 
-describe('Service: EntityListCacheService', function () {
+describe('Service: EntityListCacheService', function ():void {
     var callbackMock:Mocks.CallbackMock;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var dialogServiceMock:Mocks.DialogServiceMock;
@@ -16,7 +16,7 @@ describe('Service: EntityListCacheService', function () {
     var localizationServiceMock:Mocks.LocalizationServiceMock;
     var systemUnderTest:Services.StateService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         callbackMock = new Mocks.CallbackMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         dialogServiceMock = new Mocks.DialogServiceMock();
@@ -26,35 +26,35 @@ describe('Service: EntityListCacheService', function () {
         systemUnderTest = new Services.StateService(messagingServiceMock, dialogServiceMock, redirectServiceMock, localizationServiceMock);
     });
 
-    it('should be able to persist edited entity', function(){
+    it('should be able to persist edited entity', function():void {
         //Arrange
-        var editedEntity = new Models.Entity('EditedEntityName');
-        editedEntity.Id = 10;
-        systemUnderTest.SetEditedEntity(editedEntity);
+        var editedEntity1:Models.Entity = new Models.Entity('EditedEntityName');
+        editedEntity1.Id = 10;
+        systemUnderTest.SetEditedEntity(editedEntity1);
 
         //Act
-        var editedEntity = systemUnderTest.GetEditedEntity('EditedEntityName', 10);
+        var editedEntity2:Models.Entity = systemUnderTest.GetEditedEntity('EditedEntityName', 10);
 
         //Assert
-        expect(editedEntity).toBe(editedEntity);
+        expect(editedEntity2).toBe(editedEntity1);
     });
 
-    it('should delete edited entity when other entity is requested', function(){
+    it('should delete edited entity when other entity is requested', function():void {
         //Arrange
-        var editedEntity = new Models.Entity('EditedEntityName');
+        var editedEntity:Models.Entity = new Models.Entity('EditedEntityName');
         editedEntity.Id = 10;
         systemUnderTest.SetEditedEntity(editedEntity);
 
         //Act
-        var editedEntity1 = systemUnderTest.GetEditedEntity('EditedEntityName', 2);
-        var editedEntity2 = systemUnderTest.GetEditedEntity('EditedEntityName', 10);
+        var editedEntity1:Models.Entity = systemUnderTest.GetEditedEntity('EditedEntityName', 2);
+        var editedEntity2:Models.Entity = systemUnderTest.GetEditedEntity('EditedEntityName', 10);
 
         //Assert
         expect(editedEntity1).toEqual(null);
         expect(editedEntity2).toEqual(null);
     });
 
-    it('should be able to save current user session', function () {
+    it('should be able to save current user session', function ():void {
         //Arrange
         var session:Models.UserSession = new Models.UserSession();
 
@@ -66,7 +66,7 @@ describe('Service: EntityListCacheService', function () {
         expect(retrievedSession).toBe(session);
     });
 
-    it('should execute registered post login actions after valid user session is set', function () {
+    it('should execute registered post login actions after valid user session is set', function ():void {
         //Arrange
         var action1Spy:any = jasmine.createSpy('action1');
         var action2Spy:any = jasmine.createSpy('action2');
@@ -83,7 +83,7 @@ describe('Service: EntityListCacheService', function () {
         expect(action2Spy.calls.any()).toEqual(true);
     });
 
-    it('should ask user whether to execute pending post login actions that are cancellable after user session is set', function () {
+    it('should ask user whether to execute pending post login actions that are cancellable after user session is set', function ():void {
         //Arrange
         var action1Spy:any = jasmine.createSpy('action1');
         var action2Spy:any = jasmine.createSpy('action2');

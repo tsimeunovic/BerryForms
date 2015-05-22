@@ -7,12 +7,12 @@
 'use strict';
 var _global:any = this;
 
-describe('Service: PluginsExecutorService', function () {
+describe('Service: PluginsExecutorService', function ():void {
     var systemUnderTest:Services.PluginsExecutorService;
     var localizationServiceMock:Services.ILocalizationService;
     var registeredPlugins:Components.Plugin.IPlugin<any>[];
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         registeredPlugins = [
             new Mocks.PluginMock(true, false), //Execute and proceed
             new Mocks.PluginMock(false, false), //Don't execute
@@ -26,10 +26,10 @@ describe('Service: PluginsExecutorService', function () {
         systemUnderTest = new Services.PluginsExecutorService(localizationServiceMock);
     });
 
-    it('should execute all registered plugins and return correct cancellation status', function () {
+    it('should execute all registered plugins and return correct cancellation status', function ():void {
         //Arrange
-        var pluginData = {};
-        var pluginContext = new Models.PluginContext(pluginData, 'MockData', 'MockOperation');
+        var pluginData:any = {};
+        var pluginContext:Models.PluginContext<any> = new Models.PluginContext(pluginData, 'MockData', 'MockOperation');
         var callback:any = new Mocks.CallbackMock();
 
         //Act

@@ -3,21 +3,21 @@
 
 'use strict';
 
-describe('Service: QueueService', function () {
+describe('Service: QueueService', function ():void {
     var systemUnderTest:Services.QueueService;
 
-    beforeEach(function(){
+    beforeEach(function():void {
         systemUnderTest = new Services.QueueService();
     });
 
-    it('should be able to retrieve all messages in queue', function() {
+    it('should be able to retrieve all messages in queue', function():void {
         //Arrange
         systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
         systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
-        var messages = systemUnderTest.Queues.NextPage.Notifications.retrieveAll();
-        var messagesAfter = systemUnderTest.Queues.NextPage.Notifications.retrieveAll();
+        var messages:any[] = systemUnderTest.Queues.NextPage.Notifications.retrieveAll();
+        var messagesAfter:any[] = systemUnderTest.Queues.NextPage.Notifications.retrieveAll();
 
         //Assert
         expect(messages.length).toEqual(2);
@@ -28,15 +28,15 @@ describe('Service: QueueService', function () {
         expect(messagesAfter.length).toEqual(0);
     });
 
-    it('should be able to retrieve first message in queue', function() {
+    it('should be able to retrieve first message in queue', function():void {
         //Arrange
         systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
         systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
-        var message = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
-        var message2 = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
-        var message3 = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
+        var message:any = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
+        var message2:any = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
+        var message3:any = systemUnderTest.Queues.NextPage.Notifications.retrieveFirst();
 
         //Assert
         expect(message).not.toBe(null);
@@ -46,15 +46,15 @@ describe('Service: QueueService', function () {
         expect(message3).toBe(null);
     });
 
-    it('should be able to retrieve last message in queue', function() {
+    it('should be able to retrieve last message in queue', function():void {
         //Arrange
         systemUnderTest.Queues.NextPage.Notifications.add('FirstError', Static.NotificationSeverity.Error);
         systemUnderTest.Queues.NextPage.Notifications.add('SecondWarning', Static.NotificationSeverity.Warning);
 
         //Act
-        var message = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
-        var message2 = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
-        var message3 = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
+        var message:any = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
+        var message2:any = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
+        var message3:any = systemUnderTest.Queues.NextPage.Notifications.retrieveLast();
 
         //Assert
         expect(message).not.toBe(null);

@@ -10,7 +10,7 @@
 
 'use strict';
 
-describe('Service: EntityRepositoryService', function () {
+describe('Service: EntityRepositoryService', function ():void {
     var systemUnderTest:Services.EntityRepositoryService;
     var httpWrapperServiceMock:Mocks.HttpWrapperServiceMock;
     var callbackMock:Mocks.CallbackMock;
@@ -19,7 +19,7 @@ describe('Service: EntityRepositoryService', function () {
     var queryCreatorServiceMock:Services.IQueryCreatorService;
     var pluginsExecutorServiceMock:Mocks.PluginsExecutorServiceMock;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         httpWrapperServiceMock = new Mocks.HttpWrapperServiceMock();
         callbackMock = new Mocks.CallbackMock();
         urlLocatorServiceMock = new Mocks.UrlLocatorServiceMock();
@@ -27,13 +27,14 @@ describe('Service: EntityRepositoryService', function () {
         queryCreatorServiceMock = new Mocks.QueryCreatorServiceMock();
         pluginsExecutorServiceMock = new Mocks.PluginsExecutorServiceMock(false);
 
-        systemUnderTest = new Services.EntityRepositoryService(httpWrapperServiceMock, urlLocatorServiceMock, entityModelMapperServiceMock, queryCreatorServiceMock, pluginsExecutorServiceMock);
+        systemUnderTest = new Services.EntityRepositoryService(httpWrapperServiceMock,
+            urlLocatorServiceMock, entityModelMapperServiceMock, queryCreatorServiceMock, pluginsExecutorServiceMock);
     });
 
-    it('should deserialize data returned from \'LoadEntityMetadata\'', function () {
+    it('should deserialize data returned from \'LoadEntityMetadata\'', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedMetadata = new Models.EntityMetadata();
+        var returnedMetadata:Models.EntityMetadata = new Models.EntityMetadata();
         httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', returnedMetadata, 200);
 
         //Act
@@ -48,10 +49,10 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.first().args[0]).toBe(returnedMetadata);
     });
 
-    it('should return error model when \'LoadEntityMetadata\' fails', function () {
+    it('should return error model when \'LoadEntityMetadata\' fails', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedError = {};
+        var returnedError:any = {};
         httpWrapperServiceMock.AddResponse('get', 'EntityMetadataRetrieve/entityName', returnedError, 500);
 
         //Act
@@ -63,11 +64,11 @@ describe('Service: EntityRepositoryService', function () {
         expect(callback.calls.first().args[1]).toBe(returnedError);
     });
 
-    it('should cancel \'SaveEntityMetadata\' operation when plugin cancels it', function () {
+    it('should cancel \'SaveEntityMetadata\' operation when plugin cancels it', function ():void {
         //Arrange
         pluginsExecutorServiceMock.SetCancellation(true);
         var callback:any = callbackMock.callback;
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         var postOperationMock:any = httpWrapperServiceMock.Post;
 
         //Act
@@ -80,12 +81,12 @@ describe('Service: EntityRepositoryService', function () {
         expect(postOperationMock.calls.any()).toEqual(false);
     });
 
-    it('should save entity and return it when \'SaveEntityMetadata\' is called', function () {
+    it('should save entity and return it when \'SaveEntityMetadata\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var metadata = new Models.EntityMetadata();
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         metadata.EntitySystemName = 'testEntity';
-        var returnedModel = new Models.EntityMetadata();
+        var returnedModel:Models.EntityMetadata = new Models.EntityMetadata();
         var postOperationMock:any = httpWrapperServiceMock.Post;
         httpWrapperServiceMock.AddResponse('post', 'EntityMetadataSave/testEntity', returnedModel, 200);
 
@@ -102,10 +103,10 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.first().args[0]).toBe(returnedModel);
     });
 
-    it('should deserialize all returned metadata models that are returned to \'LoadAllEntityMetadata\'', function () {
+    it('should deserialize all returned metadata models that are returned to \'LoadAllEntityMetadata\'', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedModel = [
+        var returnedModel:Models.EntityMetadata[] = [
             new Models.EntityMetadata(),
             new Models.EntityMetadata(),
             new Models.EntityMetadata()];
@@ -124,10 +125,10 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.count()).toEqual(3);
     });
 
-    it('should retrieve entity and deserialize it when \'LoadEntity\' is called', function () {
+    it('should retrieve entity and deserialize it when \'LoadEntity\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedModel = new Models.Entity('TestReturnedEntity');
+        var returnedModel:Models.Entity = new Models.Entity('TestReturnedEntity');
         var getOperationMock:any = httpWrapperServiceMock.Get;
         httpWrapperServiceMock.AddResponse('get', 'EntityRetrieve/name/8', returnedModel, 200);
 
@@ -141,11 +142,11 @@ describe('Service: EntityRepositoryService', function () {
         expect(callback.calls.first().args[1]).toEqual(null);
     });
 
-    it('should save entity and return saved data when \'SaveEntity\' is called', function () {
+    it('should save entity and return saved data when \'SaveEntity\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var entityToSave = new Models.Entity('TestSavingEntity');
-        var returnedModel = new Models.Entity('TestReturnedEntity');
+        var entityToSave:Models.Entity = new Models.Entity('TestSavingEntity');
+        var returnedModel:Models.Entity = new Models.Entity('TestReturnedEntity');
         var postOperationMock:any = httpWrapperServiceMock.Post;
         httpWrapperServiceMock.AddResponse('post', 'EntitySave/TestSavingEntity', returnedModel, 200);
 
@@ -161,12 +162,12 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.any()).toEqual(true);
     });
 
-    it('should delete entity and return deleted data when \'DeleteEntity\' is called', function () {
+    it('should delete entity and return deleted data when \'DeleteEntity\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var entityToDelete = new Models.Entity('TestDeletingEntity');
+        var entityToDelete:Models.Entity = new Models.Entity('TestDeletingEntity');
         entityToDelete.Id = 12;
-        var returnedModel = new Models.Entity('TestReturnedEntity');
+        var returnedModel:Models.Entity = new Models.Entity('TestReturnedEntity');
         var deleteOperationMock:any = httpWrapperServiceMock.Delete;
         httpWrapperServiceMock.AddResponse('delete', 'EntityDelete/TestDeletingEntity/12', returnedModel, 200);
 
@@ -182,10 +183,10 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.any()).toEqual(false);
     });
 
-    it('should deserialize all entities returned by \'LoadAllEntities\'', function () {
+    it('should deserialize all entities returned by \'LoadAllEntities\'', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedModel = [
+        var returnedModel:Models.Entity[] = [
             new Models.Entity('TestEntityName'),
             new Models.Entity('TestEntityName'),
             new Models.Entity('TestEntityName')
@@ -205,10 +206,10 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.count()).toEqual(3);
     });
 
-    it('should return paging data and deserialized list of entities when \'LoadPagedEntities\' is called', function () {
+    it('should return paging data and deserialized list of entities when \'LoadPagedEntities\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var returnedModel = {
+        var returnedModel:any = {
             EntitySystemName: 'TestEntityName',
             Page: {
                 PageNumber: 2,
@@ -240,13 +241,13 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeMethodMock.calls.count()).toEqual(3);
     });
 
-    it('should create search query and deserialize result when \'LoadSearchResults\' is called', function () {
+    it('should create search query and deserialize result when \'LoadSearchResults\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var searchedEntityMetadata = new Models.EntityMetadata();
+        var searchedEntityMetadata:Models.EntityMetadata = new Models.EntityMetadata();
         searchedEntityMetadata.EntitySystemName = 'TestSearchEntityMetadata';
-        var searchExpression = 'TestSearchExpression';
-        var returnedModel = {
+        var searchExpression:string = 'TestSearchExpression';
+        var returnedModel:any = {
             EntitySystemName: 'TestEntityName',
             Page: {
                 PageNumber: 1,
@@ -279,11 +280,11 @@ describe('Service: EntityRepositoryService', function () {
         expect(deserializeSelectMock.calls.count()).toEqual(4);
     });
 
-    it('should return paging data and replace list with deserialized models when \'LoadPagedFilteredResults\' is called', function () {
+    it('should return paging data and replace list with deserialized models when \'LoadPagedFilteredResults\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
-        var queryObject = {a: 'abc'};
-        var returnedModel = {
+        var queryObject:any = {a: 'abc'};
+        var returnedModel:any = {
             EntitySystemName: 'TestEntityName',
             Page: {
                 PageNumber: 1,

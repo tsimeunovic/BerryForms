@@ -9,36 +9,37 @@
 
 'use strict';
 
-describe('Service: EntityModelMapperService', function () {
+describe('Service: EntityModelMapperService', function ():void {
     var systemUnderTest:Services.EntityModelMapperService;
     var namingConventionsServiceMock:Services.INamingConventionsService;
     var fieldTypesRegistryMock:Components.FieldTypes.IFieldTypesRegistry;
     var notificationServiceMock:Services.INotificationService;
     var localizationServiceMock:Services.ILocalizationService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         namingConventionsServiceMock = new Mocks.NamingConventionsServiceMock();
         fieldTypesRegistryMock = new Mocks.FieldTypesRegistryMock();
         notificationServiceMock = new Mocks.NotificationServiceMock();
         localizationServiceMock = new Mocks.LocalizationServiceMock();
 
-        systemUnderTest = new Services.EntityModelMapperService(namingConventionsServiceMock, fieldTypesRegistryMock, notificationServiceMock, localizationServiceMock);
+        systemUnderTest = new Services.EntityModelMapperService(namingConventionsServiceMock,
+            fieldTypesRegistryMock, notificationServiceMock, localizationServiceMock);
     });
 
-    it('should correctly map \'entity model\' to \'metadata model\'', function () {
+    it('should correctly map \'entity model\' to \'metadata model\'', function ():void {
         //Arrange
-        var entity = new Models.Entity('test');
-        var entityName = 'Name of entity';
-        entity.Data['EntityName'] = entityName;
-        var entityDescription = 'Description of entity';
-        entity.Data['EntityDescription'] = entityDescription;
-        var iconClass = 'IconClass';
-        entity.Data['IconClassName'] = {Value: '__icon__' + iconClass};
-        var iconColor = 'IconColor';
-        entity.Data['IconColorHex'] = {Value: '__color__' + iconColor};
+        var entity:Models.Entity = new Models.Entity('test');
+        var entityName:string = 'Name of entity';
+        entity.Data.EntityName = entityName;
+        var entityDescription:string = 'Description of entity';
+        entity.Data.EntityDescription = entityDescription;
+        var iconClass:string = 'IconClass';
+        entity.Data.IconClassName = {Value: '__icon__' + iconClass};
+        var iconColor:string = 'IconColor';
+        entity.Data.IconColorHex = {Value: '__color__' + iconColor};
 
         //Act
-        var result = systemUnderTest.MapEntityToEntityMetadataModel(entity);
+        var result:Models.EntityMetadata = systemUnderTest.MapEntityToEntityMetadataModel(entity);
 
         //Assert
         expect(result).not.toEqual(null);
@@ -51,59 +52,59 @@ describe('Service: EntityModelMapperService', function () {
         expect(result.Fields).toEqual([]);
     });
 
-    it('should correctly map \'field models\' to \'entity models\'', function () {
+    it('should correctly map \'field models\' to \'entity models\'', function ():void {
         //Arrange
-        var mockField = new Mocks.FieldTypeMock();
-        var fieldMetadataName = 'TestField';
-        var fieldMetadataSystemName = 'TestFieldSystemName';
-        var fieldMetadataDescription = 'TestFieldDescription';
-        var testMetadata = new Models.FieldMetadata(fieldMetadataName);
+        var mockField:Mocks.FieldTypeMock = new Mocks.FieldTypeMock();
+        var fieldMetadataName:string = 'TestField';
+        var fieldMetadataSystemName:string = 'TestFieldSystemName';
+        var fieldMetadataDescription:string = 'TestFieldDescription';
+        var testMetadata:Models.FieldMetadata = new Models.FieldMetadata(fieldMetadataName);
         testMetadata.FieldSystemName = fieldMetadataSystemName;
         testMetadata.FieldDescription = fieldMetadataDescription;
 
-        var specialPropertyName = 'Special';
-        var specialPropertyValue = 'SpecialValue';
+        var specialPropertyName:string = 'Special';
+        var specialPropertyValue:string = 'SpecialValue';
         testMetadata.FieldSpecialProperties = [specialPropertyName];
         testMetadata[specialPropertyName] = specialPropertyValue;
 
-        var additionalPropertyName = 'Additional';
-        var additionalPropertyValue = 'AdditionalValue';
-        testMetadata.MapAdditionalProperties = function (entity:Models.Entity) {
+        var additionalPropertyName:string = 'Additional';
+        var additionalPropertyValue:string = 'AdditionalValue';
+        testMetadata.MapAdditionalProperties = function (entity:Models.Entity):void {
             entity.Data[additionalPropertyName] = additionalPropertyValue;
         };
 
         //Act
-        var fields = [testMetadata, testMetadata, testMetadata];
-        var result = systemUnderTest.MapFieldsMetadataToEntityModels(fields);
+        var fields:Models.FieldMetadata[] = [testMetadata, testMetadata, testMetadata];
+        var result:Models.Entity[] = systemUnderTest.MapFieldsMetadataToEntityModels(fields);
 
         //Assert
         expect(result).not.toEqual(null);
         expect(result.length).toEqual(3);
-        var firstFieldEntity = result[0];
+        var firstFieldEntity:Models.Entity = result[0];
         expect(firstFieldEntity.EntitySystemName).toEqual(fieldMetadataSystemName);
-        expect(firstFieldEntity.Data['FieldTypeName'].Text).toEqual(mockField.FieldName);
-        expect(firstFieldEntity.Data['FieldTypeName'].Value).toEqual(mockField.FieldName);
-        expect(firstFieldEntity.Data['FieldDescription']).toEqual(fieldMetadataDescription);
+        expect(firstFieldEntity.Data.FieldTypeName.Text).toEqual(mockField.FieldName);
+        expect(firstFieldEntity.Data.FieldTypeName.Value).toEqual(mockField.FieldName);
+        expect(firstFieldEntity.Data.FieldDescription).toEqual(fieldMetadataDescription);
         expect(firstFieldEntity.Data[specialPropertyName]).toEqual(specialPropertyValue);
         expect(firstFieldEntity.Data[additionalPropertyName]).toEqual(additionalPropertyValue);
     });
 
-    it('should correctly map \'entity model\' to \'field model\'', function () {
+    it('should correctly map \'entity model\' to \'field model\'', function ():void {
         //Arrange
         var getRegistryFieldMethodMock:any = fieldTypesRegistryMock.GetFieldType;
-        var entitySystemName = 'EntitySystemName';
-        var entity = new Models.Entity(entitySystemName);
-        var fieldTypeName = 'FieldTypeName';
-        entity.Data['FieldTypeName'] = new Models.SelectFieldOptionMetadata(fieldTypeName, null);
-        var fieldDescription = 'FieldDescription';
-        entity.Data['FieldDescription'] = fieldDescription;
-        var required = true;
-        entity.Data['Required'] = required;
-        var specialValue = 'SpecialValue';
-        entity.Data['Special'] = specialValue;
+        var entitySystemName:string = 'EntitySystemName';
+        var entity:Models.Entity = new Models.Entity(entitySystemName);
+        var fieldTypeName:string = 'FieldTypeName';
+        entity.Data.FieldTypeName = new Models.SelectFieldOptionMetadata(fieldTypeName, null);
+        var fieldDescription:string = 'FieldDescription';
+        entity.Data.FieldDescription = fieldDescription;
+        var required:boolean = true;
+        entity.Data.Required = required;
+        var specialValue:string = 'SpecialValue';
+        entity.Data.Special = specialValue;
 
         //Act
-        var result = systemUnderTest.MapEntityModelToFieldMetadata(entity);
+        var result:Models.FieldMetadata = systemUnderTest.MapEntityModelToFieldMetadata(entity);
 
         //Assert
         expect(getRegistryFieldMethodMock.calls.first().args[0]).toEqual(fieldTypeName);
@@ -111,21 +112,22 @@ describe('Service: EntityModelMapperService', function () {
         expect(result.FieldDescription).toEqual(fieldDescription);
         expect(result.Required).toEqual(required);
         expect(result.FieldSystemName).toEqual('#MockFieldName'); //From FieldTypeMock
+        /* tslint:disable:no-string-literal */
         expect(result['Additional']).toEqual('AdditionalValue'); //From FieldTypeMock
         expect(result['Special']).toEqual(specialValue);
     });
 
-    it('should notify user when non-registered field is used', function () {
+    it('should notify user when non-registered field is used', function ():void {
         //Arrange
         var getRegistryFieldMethodMock:any = fieldTypesRegistryMock.GetFieldType;
         var notifyCallsMock:any = notificationServiceMock.NotifyMessage;
-        var entitySystemName = 'EntitySystemName';
-        var entity = new Models.Entity(entitySystemName);
-        var fieldTypeName = 'UnknownTypeName';
-        entity.Data['FieldTypeName'] = new Models.SelectFieldOptionMetadata(fieldTypeName, null);
+        var entitySystemName:string = 'EntitySystemName';
+        var entity:Models.Entity = new Models.Entity(entitySystemName);
+        var fieldTypeName:string = 'UnknownTypeName';
+        entity.Data.FieldTypeName = new Models.SelectFieldOptionMetadata(fieldTypeName, null);
 
         //Act
-        var result = systemUnderTest.MapEntityModelToFieldMetadata(entity);
+        var result:Models.FieldMetadata = systemUnderTest.MapEntityModelToFieldMetadata(entity);
 
         //Assert
         expect(getRegistryFieldMethodMock.calls.first().args[0]).toEqual(fieldTypeName);
@@ -133,40 +135,40 @@ describe('Service: EntityModelMapperService', function () {
         expect(result).toEqual(null);
     });
 
-    it('should be able to deserialize metadata JSON object to \'metadata model\'', function () {
+    it('should be able to deserialize metadata JSON object to \'metadata model\'', function ():void {
         //Arrange
         var getRegistryFieldMethodMock:any = fieldTypesRegistryMock.GetFieldType;
-        var json = {
-            "EntityName": "TestMetadata",
-            "EntityDescription": "TestMetadata",
-            "EntitySystemName": "test_metadata",
-            "IconClassName": "icon",
-            "IconColorHex": "#hex",
-            "Id": "test_metadata",
-            "CreatedDate": "2014-12-01T12:00:00.000Z",
-            "CreatedBy": "CreateUser",
-            "ModifiedDate": "2014-12-12T12:00:00.000Z",
-            "ModifiedBy": "ModifyUser",
-            "CustomProperty": "CustomValue",
-            "Fields": [
+        var json:any = {
+            EntityName: 'TestMetadata',
+            EntityDescription: 'TestMetadata',
+            EntitySystemName: 'test_metadata',
+            IconClassName: 'icon',
+            IconColorHex: '#hex',
+            Id: 'test_metadata',
+            CreatedDate: '2014-12-01T12:00:00.000Z',
+            CreatedBy: 'CreateUser',
+            ModifiedDate: '2014-12-12T12:00:00.000Z',
+            ModifiedBy: 'ModifyUser',
+            CustomProperty: 'CustomValue',
+            Fields: [
                 {
-                    "FieldSpecialProperties": [
-                        "Special"
+                    FieldSpecialProperties: [
+                        'Special'
                     ],
-                    "FieldTypeName": "Mock",
-                    "Configuration": null,
-                    "FieldName": "TestField",
-                    "Required": true,
-                    "DisplayInListName": true,
-                    "RegularExpression": "",
-                    "MaxLength": 50,
-                    "FieldSystemName": "mock"
+                    FieldTypeName: 'Mock',
+                    Configuration: null,
+                    FieldName: 'TestField',
+                    Required: true,
+                    DisplayInListName: true,
+                    RegularExpression: '',
+                    MaxLength: 50,
+                    FieldSystemName: 'mock'
                 }
             ]
         };
 
         //Act
-        var result = systemUnderTest.DeserializeEntityMetadataModel(json);
+        var result:Models.EntityMetadata = systemUnderTest.DeserializeEntityMetadataModel(json);
 
         //Assert
         expect(result).not.toEqual(null);
@@ -180,6 +182,7 @@ describe('Service: EntityModelMapperService', function () {
         expect(result.CreatedBy).toEqual(json.CreatedBy);
         expect(result.ModifiedDate).toEqual(json.ModifiedDate);
         expect(result.ModifiedBy).toEqual(json.ModifiedBy);
+        /* tslint:disable:no-string-literal */
         expect(result['CustomProperty']).toEqual(json.CustomProperty);
 
         expect(result.Fields.length).toEqual(1);
@@ -190,29 +193,29 @@ describe('Service: EntityModelMapperService', function () {
         expect(firstField.Required).toEqual(json.Fields[0].Required);
     });
 
-    it('should be able to deserialize entity JSON object to \'entity model\'', function () {
+    it('should be able to deserialize entity JSON object to \'entity model\'', function ():void {
         //Arrange
-        var json = {
-            "ErrorFields": [],
-            "Id": 128,
-            "CreatedDate": 1417435200000,
-            "CreatedBy": 'CreateUser',
-            "ModifiedDate": 1418385600000,
-            "ModifiedBy": 'ModifyUser',
-            "EntitySystemName": "test_metadata",
-            "Data": {
-                "option": {
-                    "Value": "Value",
-                    "Text": "Text"
+        var json:any = {
+            ErrorFields: [],
+            Id: 128,
+            CreatedDate: 1417435200000,
+            CreatedBy: 'CreateUser',
+            ModifiedDate: 1418385600000,
+            ModifiedBy: 'ModifyUser',
+            EntitySystemName: 'test_metadata',
+            Data: {
+                option: {
+                    Value: 'Value',
+                    Text: 'Text'
                 },
-                "number": "40",
-                "description": "Description",
-                "bool": true
+                number: '40',
+                description: 'Description',
+                bool: true
             }
         };
 
         //Act
-        var result = systemUnderTest.DeserializeEntityModel(json);
+        var result:Models.Entity = systemUnderTest.DeserializeEntityModel(json);
 
         //Assert
         expect(result).not.toEqual(null);
@@ -225,9 +228,9 @@ describe('Service: EntityModelMapperService', function () {
         expect(result.Data).toEqual(json.Data);
     });
 
-    it('should be able to clone \'entity model\'', function () {
+    it('should be able to clone \'entity model\'', function ():void {
         //Arrange
-        var entity = new Models.Entity('testEntity');
+        var entity:Models.Entity = new Models.Entity('testEntity');
         entity.EntitySystemName = 'systemName';
         entity.Id = 12;
         entity.CreatedDate = 1417435200000;
@@ -237,7 +240,7 @@ describe('Service: EntityModelMapperService', function () {
         entity.Data = {a: 'a'};
 
         //Act
-        var result = systemUnderTest.CloneEntityModel(entity);
+        var result:Models.Entity = systemUnderTest.CloneEntityModel(entity);
 
         //Assert
         expect(result).not.toEqual(null);

@@ -6,22 +6,22 @@
 
 'use strict';
 
-describe('Service: DialogService', function () {
+describe('Service: DialogService', function ():void {
     var systemUnderTest:Services.DialogService;
     var localizationServiceMock:Services.ILocalizationService;
     var messagingServiceMock:Services.IMessagingService;
     var callbackMock:Mocks.CallbackMock;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         localizationServiceMock = new Mocks.LocalizationServiceMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         callbackMock = new Mocks.CallbackMock();
         systemUnderTest = new Services.DialogService(localizationServiceMock, messagingServiceMock);
     });
 
-    it('should publish \'create dialog\' message when \'CreateConfirmationDialog\' method is called', function () {
+    it('should publish \'create dialog\' message when \'CreateConfirmationDialog\' method is called', function ():void {
         //Arrange
-        var dialogText = ['TestDialogText'];
+        var dialogText:string[] = ['TestDialogText'];
         var createDialogPublishSpy:any = messagingServiceMock.Messages.Dialog.Create.publish;
 
         //Act

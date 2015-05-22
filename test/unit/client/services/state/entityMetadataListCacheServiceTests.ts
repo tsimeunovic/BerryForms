@@ -7,14 +7,14 @@
 
 'use strict';
 
-describe('Service: EntityMetadataListCacheService', function () {
+describe('Service: EntityMetadataListCacheService', function ():void {
     var systemUnderTest:Services.EntityMetadataListCacheService;
     var callbackMock:Mocks.CallbackMock;
     var messagingServiceMock:Services.IMessagingService;
     var entityRepositoryServiceMock:Mocks.EntityRepositoryServiceMock;
     var notificationServiceMock:Services.INotificationService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         callbackMock = new Mocks.CallbackMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         entityRepositoryServiceMock = new Mocks.EntityRepositoryServiceMock();
@@ -23,19 +23,18 @@ describe('Service: EntityMetadataListCacheService', function () {
         systemUnderTest = new Services.EntityMetadataListCacheService(messagingServiceMock, entityRepositoryServiceMock, notificationServiceMock);
     });
 
-    it('should call repository to retrieve all metadata when service is created', function () {
+    it('should call repository to retrieve all metadata when service is created', function ():void {
         //Arrange
         var repositoryMockMethod:any = entityRepositoryServiceMock.LoadAllEntityMetadata;
         var dataLoadedMessagePublishMockMethod:any = messagingServiceMock.Messages.Cache.MetadataList.Loaded.publish;
 
         //Act
-
         //Assert
         expect(dataLoadedMessagePublishMockMethod.calls.any()).toEqual(true);
         expect(repositoryMockMethod.calls.any()).toEqual(true);
     });
 
-    it('should not call repository when data are already loaded', function () {
+    it('should not call repository when data are already loaded', function ():void {
         //Arrange
         var repositoryMockMethod:any = entityRepositoryServiceMock.LoadAllEntityMetadata;
         var dataLoadedMessagePublishMockMethod:any = messagingServiceMock.Messages.Cache.MetadataList.Loaded.publish;
@@ -53,12 +52,12 @@ describe('Service: EntityMetadataListCacheService', function () {
         expect(repositoryMockMethod.calls.any()).toEqual(false);
     });
 
-    it('should modify cache when some of entity metadata is modified', function () {
+    it('should modify cache when some of entity metadata is modified', function ():void {
         //Arrange
         var dataLoadedMessagePublishMockMethod:any = messagingServiceMock.Messages.Cache.MetadataList.Loaded.publish;
         var entityModifiedMessageMock:any = messagingServiceMock.Messages.Metadata.Modified.subscribe;
-        var entityChangedCallback = entityModifiedMessageMock.calls.first().args[0];
-        var changedEntity = new Models.EntityMetadata();
+        var entityChangedCallback:(ce:Models.EntityMetadata) => void = entityModifiedMessageMock.calls.first().args[0];
+        var changedEntity:Models.EntityMetadata = new Models.EntityMetadata();
         changedEntity.EntitySystemName = 'Metadata2';
         dataLoadedMessagePublishMockMethod.calls.reset();
 
@@ -70,12 +69,12 @@ describe('Service: EntityMetadataListCacheService', function () {
         expect(dataLoadedMessagePublishMockMethod.calls.any()).toEqual(true);
     });
 
-    it('should modify cache when new entity metadata is created', function () {
+    it('should modify cache when new entity metadata is created', function ():void {
         //Arrange
         var dataLoadedMessagePublishMockMethod:any = messagingServiceMock.Messages.Cache.MetadataList.Loaded.publish;
         var entityCreatedMessageMock:any = messagingServiceMock.Messages.Metadata.Created.subscribe;
-        var entityCreatedCallback = entityCreatedMessageMock.calls.first().args[0];
-        var createdEntity = new Models.EntityMetadata();
+        var entityCreatedCallback:(ce:Models.EntityMetadata) => void = entityCreatedMessageMock.calls.first().args[0];
+        var createdEntity:Models.EntityMetadata = new Models.EntityMetadata();
         createdEntity.EntitySystemName = 'MetadataNew';
         dataLoadedMessagePublishMockMethod.calls.reset();
 

@@ -6,19 +6,19 @@
 
 'use strict';
 
-describe('Service: RedirectService', function () {
+describe('Service: RedirectService', function ():void {
     var systemUnderTest:Services.RedirectService;
     var locationMock:Mocks.LocationMock;
     var messagingServiceMock:Services.IMessagingService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         locationMock = new Mocks.LocationMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
 
         systemUnderTest = new Services.RedirectService(locationMock, messagingServiceMock);
     });
 
-    it('should reset all loadings before redirecting to new entity schema', function () {
+    it('should reset all loadings before redirecting to new entity schema', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;
@@ -31,7 +31,7 @@ describe('Service: RedirectService', function () {
         expect(setPathMock.calls.first().args[0]).toEqual('/schema/entity');
     });
 
-    it('should reset all loadings before redirecting to edit of existing entity schema', function () {
+    it('should reset all loadings before redirecting to edit of existing entity schema', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;
@@ -44,7 +44,7 @@ describe('Service: RedirectService', function () {
         expect(setPathMock.calls.first().args[0]).toEqual('/schema/entity/existing');
     });
 
-    it('should reset all loadings before redirecting to create new entity record', function () {
+    it('should reset all loadings before redirecting to create new entity record', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;
@@ -57,7 +57,7 @@ describe('Service: RedirectService', function () {
         expect(setPathMock.calls.first().args[0]).toEqual('/entity/new');
     });
 
-    it('should reset all loadings before redirecting to edit entity record', function () {
+    it('should reset all loadings before redirecting to edit entity record', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;
@@ -70,7 +70,7 @@ describe('Service: RedirectService', function () {
         expect(setPathMock.calls.first().args[0]).toEqual('/entity/edit/id/12');
     });
 
-    it('should reset all loadings before redirecting to list of entities', function () {
+    it('should reset all loadings before redirecting to list of entities', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;
@@ -83,7 +83,7 @@ describe('Service: RedirectService', function () {
         expect(setPathMock.calls.first().args[0]).toEqual('/entity/edit/page/3/id/12');
     });
 
-    it('should reset all loadings before redirecting to filtered list of entities', function () {
+    it('should reset all loadings before redirecting to filtered list of entities', function ():void {
         //Arrange
         var resetLoadingsMessageMock:any = messagingServiceMock.Messages.Loading.Reset.publish;
         var setPathMock:any = locationMock.path;

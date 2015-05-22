@@ -6,13 +6,13 @@
 
 'use strict';
 
-describe('Service: HttpWrapperService', function () {
+describe('Service: HttpWrapperService', function ():void {
     var qMock:Mocks.QMock;
     var httpMock:Mocks.HttpMock;
     var stateServiceMock:Mocks.StateServiceMock;
     var systemUnderTest:Services.HttpWrapperService;
 
-    beforeEach(function () {
+    beforeEach(function ():void {
         qMock = new Mocks.QMock();
         httpMock = new Mocks.HttpMock();
         stateServiceMock = new Mocks.StateServiceMock();
@@ -20,9 +20,9 @@ describe('Service: HttpWrapperService', function () {
         systemUnderTest = new Services.HttpWrapperService(qMock, httpMock, stateServiceMock);
     });
 
-    it('should resolve returned promise by status of http operation', function () {
+    it('should resolve returned promise by status of http operation', function ():void {
         //Arrange
-        var returnedModel = {a:1};
+        var returnedModel:any = {a:1};
         httpMock.AddResponse('get', 'GetUrl', returnedModel, 200);
         var successSpy:any = jasmine.createSpy('success');
         var errorSpy:any = jasmine.createSpy('error');
@@ -36,7 +36,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should register for after login retry when server respond with 401 status code', function () {
+    it('should register for after login retry when server respond with 401 status code', function ():void {
         //Arrange
         httpMock.AddResponse('post', 'PostUrl', null, 401);
         var successSpy:any = jasmine.createSpy('success');
@@ -54,7 +54,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should resolve original promise when post login action is resolved', function () {
+    it('should resolve original promise when post login action is resolved', function ():void {
         //Arrange
         var postHttpSpy:any = httpMock.post;
         httpMock.AddResponse('post', 'PostUrl', null, 401);
@@ -62,8 +62,8 @@ describe('Service: HttpWrapperService', function () {
         var errorSpy:any = jasmine.createSpy('error');
         var registerPostLoginActionSpy:any = stateServiceMock.RegisterPostLoginAction;
         systemUnderTest.Post('PostUrl', 'PostUrlForTest', {}, false).then(successSpy, errorSpy);
-        var postLoginAction = registerPostLoginActionSpy.calls.first().args[2];
-        var response2Obj = {a:'b'};
+        var postLoginAction:() => void = registerPostLoginActionSpy.calls.first().args[2];
+        var response2Obj:any = {a:'b'};
         httpMock.AddResponse('post', 'PostUrl', response2Obj, 200);
 
         //Act
@@ -77,7 +77,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should register put post login action as cancellable', function () {
+    it('should register put post login action as cancellable', function ():void {
         //Arrange
         var putHttpSpy:any = httpMock.put;
         httpMock.AddResponse('put', 'PutUrl', null, 401);
@@ -97,7 +97,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should register delete post login action as cancellable', function () {
+    it('should register delete post login action as cancellable', function ():void {
         //Arrange
         var deleteHttpSpy:any = httpMock.delete;
         httpMock.AddResponse('delete', 'DeleteUrl', null, 401);
@@ -117,7 +117,7 @@ describe('Service: HttpWrapperService', function () {
         expect(errorSpy.calls.any()).toEqual(false);
     });
 
-    it('should include user session data in request headers', function () {
+    it('should include user session data in request headers', function ():void {
         //Arrange
         var getHttpSpy:any = httpMock.get;
 
