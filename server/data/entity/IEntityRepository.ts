@@ -1,8 +1,8 @@
-'use strict';
-
 import ErrorsModel = require('../../model/ClientErrorsModel');
 
 export module Data {
+    'use strict';
+
     export interface IEntityRepository<T> {
         //Read
         GetAll(request:any, callback:(data:T[], errors:ErrorsModel.Model.ClientErrorsModel) => void):void;

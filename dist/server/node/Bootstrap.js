@@ -7,9 +7,7 @@ var NodeHelpers;
         Bootstrap.Setup = function () {
             //Prototype overrides
             /* tslint:disable:no-string-literal */
-            RegExp.prototype['toJSON'] = function () {
-                return this.source;
-            };
+            RegExp.prototype['toJSON'] = function () { return this.source; };
         };
         return Bootstrap;
     })();

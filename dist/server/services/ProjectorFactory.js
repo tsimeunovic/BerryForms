@@ -1,6 +1,6 @@
-'use strict';
 var Services;
 (function (Services) {
+    'use strict';
     var ProjectorFactory = (function () {
         function ProjectorFactory() {
             this.MetadataProjector = {

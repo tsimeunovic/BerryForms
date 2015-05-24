@@ -2,12 +2,12 @@
 /// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
-'use strict';
 var ClientErrorModel = require('../model/ClientErrorModel');
 var ClientErrorsModel = require('../model/ClientErrorsModel');
 var RepositoryFactoryModule = require('../services/RepositoryFactory');
 var Services;
 (function (Services) {
+    'use strict';
     var EntityValidator = (function () {
         function EntityValidator() {
         }

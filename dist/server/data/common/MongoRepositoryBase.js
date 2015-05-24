@@ -1,6 +1,5 @@
 /// <reference path="../../config/Config.ts" />
 /// <reference path="../common/IMongoRepository.ts" />
-'use strict';
 var ErrorsModel = require('../../model/ClientErrorsModel');
 var ConfigServer = require('../../config/Config').Config.Server;
 var MongoClientObject = require('mongodb').MongoClient;
@@ -20,6 +19,7 @@ MongoClientInstance.open(function (err, MongoClientLocal) {
 });
 var Data;
 (function (Data) {
+    'use strict';
     var MongoRepositoryBase = (function () {
         function MongoRepositoryBase(collectionName) {
             this.CollectionName = collectionName;
@@ -35,10 +35,12 @@ var Data;
         };
         MongoRepositoryBase.prototype.DoCollectionOperation = function (collectionName, collectionAction) {
             Db.collection(collectionName, function (err, collection) {
-                if (err)
+                if (err) {
                     collectionAction(null, err);
-                else
+                }
+                else {
                     collectionAction(collection, null);
+                }
             });
         };
         MongoRepositoryBase.prototype.GetCollectionInfoAggregationObject = function (query) {
@@ -65,12 +67,14 @@ var Data;
         MongoRepositoryBase.prototype.GetLogSummaryAggregationObject = function (entities, minutes) {
             var timeFrom = (new Date()).getTime() - minutes * 60 * 1000;
             return [
+                //Select user entities in last x:minutes
                 {
                     $match: {
-                        "Collection": { "$in": entities },
-                        "Time": { "$gt": timeFrom }
+                        Collection: { $in: entities },
+                        Time: { $gt: timeFrom }
                     }
                 },
+                //Pick just fields we are interested in
                 {
                     $project: {
                         _id: 0,
@@ -78,15 +82,17 @@ var Data;
                         Operation: 1
                     }
                 },
+                //Group them by collection and operation
                 {
                     $group: {
                         _id: {
-                            "Collection": "$Collection",
-                            "Operation": "$Operation"
+                            Collection: '$Collection',
+                            Operation: '$Operation'
                         },
                         OperationsCount: { $sum: 1 }
                     }
                 },
+                //Sort by most active operation
                 {
                     $sort: { OperationsCount: -1 }
                 }
@@ -106,45 +112,62 @@ var Data;
                 var logObjectStr = JSON.stringify(logObject);
                 if (err) {
                     console.log('Could not write log record \'' + logObjectStr + '\'');
-                    if (callback)
+                    if (callback) {
                         callback(err);
+                    }
                 }
-                else
+                else {
                     collection.insert(logObject, { w: 1 }, function (err, result) {
-                        if (err)
+                        if (err) {
                             console.log('Could not write log record \'' + logObjectStr + '\'');
-                        if (callback)
+                        }
+                        if (callback) {
                             _this.CloseClientWithCallback(function () {
                                 callback(err);
                             });
+                        }
                     });
+                }
             });
         };
         MongoRepositoryBase.prototype.GetLatestLogRecordsFor = function (userName, entities, count, callback) {
             var _this = this;
             var logCollectionName = ConfigServer.SystemPrefix + 'log';
             var collectionQuery = {
-                "Collection": { "$in": entities }
+                Collection: { $in: entities }
             };
-            if (userName)
-                collectionQuery["User"] = { $eq: userName };
+            if (userName) {
+                collectionQuery.User = { $eq: userName };
+            }
             this.DoCollectionOperation(logCollectionName, function (collection, err) {
                 if (err) {
                     console.log('Could not open log collection.');
-                    if (callback)
+                    if (callback) {
                         callback(null, err);
+                    }
                 }
-                else
-                    collection.find(collectionQuery).sort('Time', -1).skip(0).limit(count).toArray(function (err, items) {
-                        var logMessage = err ? 'Error finding log records' + '\n' + err : null;
-                        if (logMessage)
+                else {
+                    collection.find(collectionQuery)
+                        .sort('Time', -1)
+                        .skip(0).limit(count)
+                        .toArray(function (err, items) {
+                        var logMessage = err ?
+                            'Error finding log records' + '\n' + err :
+                            null;
+                        if (logMessage) {
                             console.log(logMessage);
-                        var returnedItems = err ? null : items;
-                        var returnedError = err ? ErrorsModel.Model.ClientErrorsModel.CreateWithError('ReadLogError', null) : null;
+                        }
+                        var returnedItems = err ?
+                            null :
+                            items;
+                        var returnedError = err ?
+                            ErrorsModel.Model.ClientErrorsModel.CreateWithError('ReadLogError', null) :
+                            null;
                         _this.CloseClientWithCallback(function () {
                             callback(returnedItems, returnedError);
                         });
                     });
+                }
             });
         };
         MongoRepositoryBase.prototype.GetEntitiesSummary = function (entities, minutes, callback) {
@@ -154,12 +177,13 @@ var Data;
             this.DoCollectionOperation(logCollectionName, function (collection, err) {
                 if (err) {
                     console.log('Could not open log collection.');
-                    if (callback)
+                    if (callback) {
                         callback(null, err);
+                    }
                 }
-                else
+                else {
                     collection.aggregate(aggregationObject, function (err, agg) {
-                        if (err || agg == null) {
+                        if (err || agg === null) {
                             console.log(err);
                             var errorModel = ErrorsModel.Model.ClientErrorsModel.CreateWithError('ReadLogSummaryError', null);
                             _this.CloseClientWithCallback(function () {
@@ -173,8 +197,8 @@ var Data;
                             var result = [];
                             for (var i = 0; i < agg.length; i++) {
                                 var resultItem = agg[i];
-                                var itemCollectionName = resultItem["_id"].Collection;
-                                var itemOperationName = resultItem["_id"].Operation;
+                                var itemCollectionName = resultItem._id.Collection;
+                                var itemOperationName = resultItem._id.Operation;
                                 var itemOperationCount = resultItem.OperationsCount;
                                 var aggregate = indexedResult[itemCollectionName];
                                 if (!aggregate) {
@@ -207,6 +231,7 @@ var Data;
                             });
                         }
                     });
+                }
             });
         };
         return MongoRepositoryBase;

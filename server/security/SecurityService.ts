@@ -17,7 +17,7 @@ export module Security {
 
         private ServerConfig:any;
 
-        public LoginUser(request:any, callback:(data:any, errors:ErrorsModel.Model.ClientErrorsModel)=>void):void {
+        public LoginUser(request:any, callback:(data:any, errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
             var data:any = request.body;
             var reqUserName:string = data && data.userName;
             var reqPassword:string = data && data.password;
@@ -50,7 +50,7 @@ export module Security {
             }
         }
 
-        public ValidateRequest(request:any, callback:(valid:boolean, errors:ErrorsModel.Model.ClientErrorsModel)=>void) {
+        public ValidateRequest(request:any, callback:(valid:boolean, errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
             var userName:string = request.header('X-BF-Auth-User');
             var validToStr:string = request.header('X-BF-Auth-Valid-To');
             var validTo:number = parseInt(validToStr, 10);
@@ -87,7 +87,7 @@ export module Security {
             callback(true, null);
         }
 
-        private GetTokenFor(userName:string, validTo:number) {
+        private GetTokenFor(userName:string, validTo:number):string {
             var tokenString:string = userName + validTo.toString() + this.ServerConfig.TokenSalt;
             return SHA256(tokenString).toString();
         }

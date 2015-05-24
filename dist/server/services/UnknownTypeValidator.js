@@ -2,10 +2,10 @@
 /// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
-'use strict';
 var ClientErrorsModel = require('../model/ClientErrorsModel');
 var Services;
 (function (Services) {
+    'use strict';
     var UnknownTypeValidator = (function () {
         function UnknownTypeValidator(typeName) {
             this.TypeName = typeName;

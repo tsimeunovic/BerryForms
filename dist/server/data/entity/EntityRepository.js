@@ -3,39 +3,15 @@
 /// <reference path="./IEntityRepository.ts" />
 /// <reference path="../../services/IRepositoryFactory.ts" />
 /// <reference path="../../services/IValidatorFactory.ts" />
-'use strict';
 var RepositoryFactory = require('../../services/RepositoryFactory');
 var ValidatorFactory = require('../../services/ValidatorFactory');
 var ProjectorFactory = require('../../services/ProjectorFactory');
 var Data;
 (function (Data) {
+    'use strict';
     var EntityRepository = (function () {
         function EntityRepository() {
         }
-        EntityRepository.prototype.CreateRepositoryForRequest = function (request) {
-            var type = request.params.type;
-            var name = request.params.name;
-            var factory = new RepositoryFactory.Services.RepositoryFactory();
-            return factory.CreateRepositoryFor(type, name);
-        };
-        EntityRepository.prototype.CreateValidatorForRequest = function (request) {
-            var type = request.params.type;
-            var name = request.params.name;
-            var factory = new ValidatorFactory.Services.ValidatorFactory();
-            return factory.CreateValidatorFor(type, name);
-        };
-        EntityRepository.prototype.CreateProjectorForRequest = function (request) {
-            var type = request.params.type;
-            var factory = new ProjectorFactory.Services.ProjectorFactory();
-            return factory.CreateProjectorFor(type);
-        };
-        EntityRepository.prototype.CreateRequestContext = function (request) {
-            return {
-                source: 'client',
-                session: request.session,
-                user: request.session ? request.session.User.UserName : null
-            };
-        };
         //Special methods
         EntityRepository.prototype.GetAllProjected = function (request, callback) {
             var repository = this.CreateRepositoryForRequest(request);
@@ -78,10 +54,12 @@ var Data;
             var requestContext = this.CreateRequestContext(request);
             var data = request.body;
             validator.Validate(data, function (validationErrors) {
-                if (validationErrors && validationErrors.HasErrors())
+                if (validationErrors && validationErrors.HasErrors()) {
                     callback(null, validationErrors);
-                else
+                }
+                else {
                     repository.Create(data, requestContext, callback);
+                }
             });
         };
         EntityRepository.prototype.Update = function (request, callback) {
@@ -90,10 +68,12 @@ var Data;
             var requestContext = this.CreateRequestContext(request);
             var data = request.body;
             validator.Validate(data, function (validationErrors) {
-                if (validationErrors && validationErrors.HasErrors())
+                if (validationErrors && validationErrors.HasErrors()) {
                     callback(null, validationErrors);
-                else
+                }
+                else {
                     repository.Update(data, requestContext, callback);
+                }
             });
         };
         //Delete
@@ -102,6 +82,31 @@ var Data;
             var requestContext = this.CreateRequestContext(request);
             var id = request.params.id;
             repository.Delete(id, requestContext, callback);
+        };
+        //Helper methods
+        EntityRepository.prototype.CreateRepositoryForRequest = function (request) {
+            var type = request.params.type;
+            var name = request.params.name;
+            var factory = new RepositoryFactory.Services.RepositoryFactory();
+            return factory.CreateRepositoryFor(type, name);
+        };
+        EntityRepository.prototype.CreateValidatorForRequest = function (request) {
+            var type = request.params.type;
+            var name = request.params.name;
+            var factory = new ValidatorFactory.Services.ValidatorFactory();
+            return factory.CreateValidatorFor(type, name);
+        };
+        EntityRepository.prototype.CreateProjectorForRequest = function (request) {
+            var type = request.params.type;
+            var factory = new ProjectorFactory.Services.ProjectorFactory();
+            return factory.CreateProjectorFor(type);
+        };
+        EntityRepository.prototype.CreateRequestContext = function (request) {
+            return {
+                source: 'client',
+                session: request.session,
+                user: request.session ? request.session.User.UserName : null
+            };
         };
         return EntityRepository;
     })();

@@ -14,7 +14,8 @@ var Security;
             var data = request.body;
             var reqUserName = data && data.userName;
             var reqPassword = data && data.password;
-            var validUser = reqUserName === this.ServerConfig.SuperUserName && reqPassword === this.ServerConfig.SuperUserPassword;
+            var validUser = reqUserName === this.ServerConfig.SuperUserName &&
+                reqPassword === this.ServerConfig.SuperUserPassword;
             if (validUser) {
                 var tokeValidityMinutes = ConfigServer.Config.Server.TokenValidityMinutes;
                 var nowTime = (new Date()).getTime();

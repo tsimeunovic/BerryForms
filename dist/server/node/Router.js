@@ -60,7 +60,9 @@ var NodeHelpers;
             });
             app.post(routeBaseUrl + '/:type/:name', function (req, res) {
                 var isNewRecord = req.body.Id == null;
-                isNewRecord ? Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Create.bind(Router.EntityRepository)) : Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Update.bind(Router.EntityRepository));
+                isNewRecord ?
+                    Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Create.bind(Router.EntityRepository)) :
+                    Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Update.bind(Router.EntityRepository));
             });
             app.delete(routeBaseUrl + '/:type/:name/:id', function (req, res) {
                 Router.ReturnJsonResultOf(req, res, true, Router.EntityRepository.Delete.bind(Router.EntityRepository));

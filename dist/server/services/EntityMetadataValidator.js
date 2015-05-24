@@ -2,11 +2,11 @@
 /// <reference path="../data/common/IMongoRepository.ts" />
 /// <reference path="../services/IValidator.ts" />
 /// <reference path="../model/ClientErrorsModel.ts" />
-'use strict';
 var ClientErrorsModel = require('../model/ClientErrorsModel');
 var RepositoryFactoryModule = require('../services/RepositoryFactory');
 var Services;
 (function (Services) {
+    'use strict';
     var EntityMetadataValidator = (function () {
         function EntityMetadataValidator() {
         }
@@ -47,8 +47,8 @@ var Services;
                         callback(invalidSystemNameErrorsModel);
                     }
                     else if (data && data.length) {
-                        var invalidSystemNameErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('ExistingSystemNameMetadataValidation', [object.EntitySystemName]);
-                        callback(invalidSystemNameErrorsModel);
+                        var existingSystemNameErrorsModel = ClientErrorsModel.Model.ClientErrorsModel.CreateWithError('ExistingSystemNameMetadataValidation', [object.EntitySystemName]);
+                        callback(existingSystemNameErrorsModel);
                     }
                     else {
                         //Everything is valid
