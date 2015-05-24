@@ -6,8 +6,8 @@
 
 'use strict';
 
-describe('Feature: Dashboard', function () {
-    it('should have navigation button as uppermost button in menu', function () {
+describe('Feature: Dashboard', function ():void {
+    it('should have navigation button as uppermost button in menu', function ():void {
         //Arrange
         PageObjects.EntitySchemaForm.NavigateToCreateWithLogin();
 
@@ -19,19 +19,19 @@ describe('Feature: Dashboard', function () {
         expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.Dashboard.DashboardUrlPattern);
     });
 
-    describe('summary charts', function () {
-        beforeEach(function () {
+    describe('summary charts', function ():void {
+        beforeEach(function ():void {
             PageObjects.Dashboard.NavigateToGlobalDashboardWithLogin();
         });
 
-        it('should have chart elements for \'2\' entities', function () {
+        it('should have chart elements for \'2\' entities', function ():void {
             //Arrange
             //Act
             //Assert
             expect(PageObjects.ActivityPieChart.Count()).toEqual(2);
         });
 
-        it('should have \'First entity\' chart with 17 inserts', function () {
+        it('should have \'First entity\' chart with 17 inserts', function ():void {
             //Arrange
             var firstEntityChart:PageObjects.ActivityPieChart = new PageObjects.ActivityPieChart('first_entity');
 
@@ -40,7 +40,7 @@ describe('Feature: Dashboard', function () {
             expect(firstEntityChart.CreatedCount()).toEqual('17');
         });
 
-        it('should have \'Second entity\' chart with 2 inserts, 1 update and 1 delete', function () {
+        it('should have \'Second entity\' chart with 2 inserts, 1 update and 1 delete', function ():void {
             //Arrange
             var firstEntityChart:PageObjects.ActivityPieChart = new PageObjects.ActivityPieChart('second_entity');
 

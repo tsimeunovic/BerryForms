@@ -8,16 +8,16 @@
 
 'use strict';
 
-describe('Feature: Record create', function () {
-    beforeEach(function () {
+describe('Feature: Record create', function ():void {
+    beforeEach(function ():void {
         PageObjects.EntityRecordForm.NavigateToCreateWithLogin('first_entity');
     });
 
-    it('should mark required fields as invalid when they are not filled', function () {
+    it('should mark required fields as invalid when they are not filled', function ():void {
         //Arrange
-        var errorClass = 'error';
-        var classAttribute = 'class';
-        var form = PageObjects.Form.Current();
+        var errorClass:string = 'error';
+        var classAttribute:string = 'class';
+        var form:PageObjects.Form = PageObjects.Form.Current();
 
         //Act
         //Assert
@@ -31,7 +31,7 @@ describe('Feature: Record create', function () {
         expect(form.FieldFor('relationshipfield').attr(classAttribute)).not().toContain(errorClass);
     });
 
-    var rotationValues1 = {
+    var rotationValues1:any = {
         textfield: ['Banana', 'Orange'],
         booleanfield: ['Yes', 'No'],
         datefield: ['5.5.2015', '10.10.2015'],
@@ -43,24 +43,24 @@ describe('Feature: Record create', function () {
         emailfield: ['email@server.dm']
     };
 
-    it('should be able to create entity using valid data', function () {
+    it('should be able to create entity using valid data', function ():void {
         //Arrange
-        var totalRotations = Helpers.ValuesRotation.NumberOfRotations(rotationValues1);
-        var form = PageObjects.Form.Current();
-        var list = PageObjects.EntityList.Current();
+        var totalRotations:number = Helpers.ValuesRotation.NumberOfRotations(rotationValues1);
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
-        for (var i = 0; i < totalRotations; i++) {
-            var rotationObject = Helpers.ValuesRotation.GetObjectForRotation(rotationValues1, i);
+        for (var i:number = 0; i < totalRotations; i++) {
+            var rotationObject:any = Helpers.ValuesRotation.GetObjectForRotation(rotationValues1, i);
             form.FillAndSubmit([
-                {Name: 'textfield', Type: 'text', Value: rotationObject['textfield']},
-                {Name: 'booleanfield', Type: 'boolean', Value: rotationObject['booleanfield']},
-                {Name: 'datefield', Type: 'date', Value: rotationObject['datefield']},
-                {Name: 'listfield', Type: 'list', Value: rotationObject['listfield']},
-                {Name: 'selectfield', Type: 'select', Value: rotationObject['selectfield']},
-                {Name: 'textareafield', Type: 'textarea', Value: rotationObject['textareafield']},
-                {Name: 'numberfield', Type: 'number', Value: rotationObject['numberfield']},
-                {Name: 'emailfield', Type: 'text', Value: rotationObject['emailfield']}
+                {Name: 'textfield', Type: 'text', Value: rotationObject.textfield},
+                {Name: 'booleanfield', Type: 'boolean', Value: rotationObject.booleanfield},
+                {Name: 'datefield', Type: 'date', Value: rotationObject.datefield},
+                {Name: 'listfield', Type: 'list', Value: rotationObject.listfield},
+                {Name: 'selectfield', Type: 'select', Value: rotationObject.selectfield},
+                {Name: 'textareafield', Type: 'textarea', Value: rotationObject.textareafield},
+                {Name: 'numberfield', Type: 'number', Value: rotationObject.numberfield},
+                {Name: 'emailfield', Type: 'text', Value: rotationObject.emailfield}
             ]);
         }
 
@@ -69,9 +69,9 @@ describe('Feature: Record create', function () {
         expect(list.TotalPages()).toEqual('2');
     });
 
-    it('should be able to switch to another list page', function () {
+    it('should be able to switch to another list page', function ():void {
         //Arrange
-        var list = PageObjects.EntityList.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         list.GoToNextPage();
@@ -80,11 +80,11 @@ describe('Feature: Record create', function () {
         expect(list.GetListItems().count()).toEqual(6);
     });
 
-    it('should be able to create entity with relationship', function () {
+    it('should be able to create entity with relationship', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var list = PageObjects.EntityList.Current();
-        var formValues = [
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var formValues:any[] = [
             {Name: 'textfield', Type: 'text', Value: 'Coconut'},
             {Name: 'booleanfield', Type: 'boolean', Value: 'Yes'},
             {Name: 'datefield', Type: 'date', Value: '5.5.2015'},
@@ -101,9 +101,9 @@ describe('Feature: Record create', function () {
         expect(list.GetListItems().count()).toEqual(7);
     });
 
-    it('should send user to filter screen when filter icon is clicked', function () {
+    it('should send user to filter screen when filter icon is clicked', function ():void {
         //Arrange
-        var headerIcons = PageObjects.HeaderIcons.Current();
+        var headerIcons:PageObjects.HeaderIcons = PageObjects.HeaderIcons.Current();
 
         //Act
         headerIcons.EntitiesList.FilteredList.click();

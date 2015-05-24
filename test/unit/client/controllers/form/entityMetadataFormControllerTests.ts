@@ -14,7 +14,7 @@
 var _global:any = this;
 var OriginalServices:any;
 
-describe('Controller: EntityMetadataFormController', function () {
+describe('Controller: EntityMetadataFormController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var notificationServiceMock:Mocks.NotificationServiceMock;
@@ -26,7 +26,21 @@ describe('Controller: EntityMetadataFormController', function () {
     var redirectServiceMock:Mocks.RedirectServiceMock;
     var systemUnderTest:Controllers.EntityMetadataFormController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createEntityMetadataFormController:() => void = function ():void {
+        systemUnderTest = new Controllers.EntityMetadataFormController(
+            scopeMock,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            entityRepositoryServiceMock,
+            localizationServiceMock,
+            entityModelMapperServiceMock,
+            redirectServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         notificationServiceMock = new Mocks.NotificationServiceMock();
@@ -43,25 +57,11 @@ describe('Controller: EntityMetadataFormController', function () {
         createEntityMetadataFormController();
     });
 
-    afterEach(function () {
+    afterEach(function ():void {
         _global.Services = OriginalServices;
     });
 
-    //Helper methods
-    var createEntityMetadataFormController = function () {
-        systemUnderTest = new Controllers.EntityMetadataFormController(
-            scopeMock,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            entityRepositoryServiceMock,
-            localizationServiceMock,
-            entityModelMapperServiceMock,
-            redirectServiceMock);
-    };
-
-    it('should initialize form for new schema creation', function () {
+    it('should initialize form for new schema creation', function ():void {
         //Arrange
         //Act
         //Assert
@@ -75,7 +75,7 @@ describe('Controller: EntityMetadataFormController', function () {
         expect(scopeMock.SubmitButtonText).toEqual('#Create');
     });
 
-    it('should map entity model to metadata model and save it via repository when form is submitted', function () {
+    it('should map entity model to metadata model and save it via repository when form is submitted', function ():void {
         //Arrange
         var entity:Models.Entity = new Models.Entity(null);
         var savedMetadata:Models.EntityMetadata = new Models.EntityMetadata();
@@ -103,10 +103,10 @@ describe('Controller: EntityMetadataFormController', function () {
         expect(redirectToEditEntitySchemaSpy.calls.first().args[0]).toEqual('SavedEntitySystemName');
     });
 
-    it('should notify user when metadata was not successfully saved', function () {
+    it('should notify user when metadata was not successfully saved', function ():void {
         //Arrange
         scopeMock.Entity = new Models.Entity(null);
-        var errorModel = {Type: 'Client'};
+        var errorModel:any = {Type: 'Client'};
         entityRepositoryServiceMock.AddResponse('SaveEntityMetadata', null, errorModel);
         var handleErrorsModelSpy:any = notificationServiceMock.HandleErrorsModel;
 

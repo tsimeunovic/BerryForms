@@ -7,7 +7,7 @@
 
 'use strict';
 
-describe('Controller: NotificationController', function () {
+describe('Controller: NotificationController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var localizationServiceMock:Mocks.LocalizationServiceMock;
@@ -15,23 +15,8 @@ describe('Controller: NotificationController', function () {
     var toasterMock:any;
     var systemUnderTest:Controllers.NotificationController;
 
-    beforeEach(function () {
-        scopeMock = new Mocks.ScopeMock();
-        messagingServiceMock = new Mocks.MessagingServiceMock();
-        localizationServiceMock = new Mocks.LocalizationServiceMock();
-
-        //Inline Toaster mocks
-        toasterConfigMock = {};
-        toasterMock = {
-            pop: function (type, title, body) {}
-        };
-        spyOn(toasterMock, 'pop').and.callThrough();
-
-        createNotificationController();
-    });
-
     //Helper methods
-    var createNotificationController = function () {
+    var createNotificationController:() => void = function ():void {
         systemUnderTest = new Controllers.NotificationController(
             scopeMock,
             toasterMock,
@@ -40,26 +25,44 @@ describe('Controller: NotificationController', function () {
             localizationServiceMock);
     };
 
-    var checkMessageType = function (severity:Static.NotificationSeverity, toasterType:string) {
-        //Arrange
-        var toasterSpy:any = toasterMock.pop;
-        var notificationMessageSpy:any = messagingServiceMock.Messages.Notification.Message.subscribe;
-        var notificationCallback:any = notificationMessageSpy.calls.first().args[0];
-        var message = {
-            Severity: severity,
-            Message: 'Test message'
+    beforeEach(function ():void {
+        scopeMock = new Mocks.ScopeMock();
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        localizationServiceMock = new Mocks.LocalizationServiceMock();
+
+        //Inline Toaster mocks
+        toasterConfigMock = {};
+        toasterMock = {
+            pop: function (type:string, title:string, body:string):void {
+                //Do nothing
+            }
+        };
+        spyOn(toasterMock, 'pop').and.callThrough();
+
+        createNotificationController();
+    });
+
+    var checkMessageType:(s:Static.NotificationSeverity, t:string) => void =
+        function (severity:Static.NotificationSeverity, toasterType:string):void {
+            //Arrange
+            var toasterSpy:any = toasterMock.pop;
+            var notificationMessageSpy:any = messagingServiceMock.Messages.Notification.Message.subscribe;
+            var notificationCallback:any = notificationMessageSpy.calls.first().args[0];
+            var message:any = {
+                Severity: severity,
+                Message: 'Test message'
+            };
+
+            //Act
+            notificationCallback(message);
+
+            //Assert
+            expect(toasterSpy.calls.any()).toEqual(true);
+            expect(toasterSpy.calls.first().args[0]).toEqual(toasterType);
+            expect(toasterSpy.calls.first().args[2]).toEqual(message.Message);
         };
 
-        //Act
-        notificationCallback(message);
-
-        //Assert
-        expect(toasterSpy.calls.any()).toEqual(true);
-        expect(toasterSpy.calls.first().args[0]).toEqual(toasterType);
-        expect(toasterSpy.calls.first().args[2]).toEqual(message.Message);
-    };
-
-    it('should override toaster configurations and subscribe to notification messages', function () {
+    it('should override toaster configurations and subscribe to notification messages', function ():void {
         //Arrange
         var notificationMessageSpy:any = messagingServiceMock.Messages.Notification.Message.subscribe;
 
@@ -69,19 +72,19 @@ describe('Controller: NotificationController', function () {
         expect(Object.keys(toasterConfigMock).length).toBeGreaterThan(0);
     });
 
-    it('should correctly handle \'error\' message type', function () {
+    it('should correctly handle \'error\' message type', function ():void {
         checkMessageType(Static.NotificationSeverity.Error, 'error');
     });
 
-    it('should correctly handle \'warning\' message type', function () {
+    it('should correctly handle \'warning\' message type', function ():void {
         checkMessageType(Static.NotificationSeverity.Warning, 'warning');
     });
 
-    it('should correctly handle \'info\' message type', function () {
+    it('should correctly handle \'info\' message type', function ():void {
         checkMessageType(Static.NotificationSeverity.Information, 'info');
     });
 
-    it('should correctly handle \'success\' message type', function () {
+    it('should correctly handle \'success\' message type', function ():void {
         checkMessageType(Static.NotificationSeverity.Success, 'success');
     });
 });

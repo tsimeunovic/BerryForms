@@ -5,15 +5,15 @@ module PageObjects {
     'use strict';
 
     export class ActivityPieChart {
-        public static Count():number {
-            return element('div.activityItem').count();
-        }
-
         constructor(private EntityName:string) {
             this.ScopeName = 'SummaryChartItem';
         }
 
         private ScopeName:string;
+
+        public static Count():number {
+            return element('div.activityItem').count();
+        }
 
         public CreatedCount():any {
             return this.ReadValueAttributeFrom('createdSeries');

@@ -1,9 +1,9 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/extensions/stringExtensions.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class Button {
         constructor(private Selector:string) {
         }

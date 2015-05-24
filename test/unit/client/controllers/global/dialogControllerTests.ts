@@ -5,25 +5,25 @@
 
 'use strict';
 
-describe('Controller: DialogController', function () {
+describe('Controller: DialogController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var systemUnderTest:Controllers.DialogController;
 
-    beforeEach(function () {
-        scopeMock = new Mocks.ScopeMock();
-        messagingServiceMock = new Mocks.MessagingServiceMock();
-        createDialogController();
-    });
-
     //Helper methods
-    var createDialogController = function () {
+    var createDialogController:() => void = function ():void {
         systemUnderTest = new Controllers.DialogController(
             scopeMock,
             messagingServiceMock);
     };
 
-    it('should subscribe to create and remove dialog messages', function () {
+    beforeEach(function ():void {
+        scopeMock = new Mocks.ScopeMock();
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        createDialogController();
+    });
+
+    it('should subscribe to create and remove dialog messages', function ():void {
         //Arrange
         var createDialogMessageSpy:any = messagingServiceMock.Messages.Dialog.Create.subscribe;
         var removeDialogMessageSpy:any = messagingServiceMock.Messages.Dialog.Remove.subscribe;
@@ -34,20 +34,20 @@ describe('Controller: DialogController', function () {
         expect(removeDialogMessageSpy.calls.any()).toEqual(true);
     });
 
-    it('should result old dialog object and replace it with new when create dialog method is called', function () {
+    it('should result old dialog object and replace it with new when create dialog method is called', function ():void {
         //Arrange
         var dialogCallbackCalled:boolean = false;
         var dialogCallbackArgument:any = null;
         scopeMock.Dialog = {
             Header: 'Header',
-            Callback: function (argument) {
+            Callback: function (argument:any):void {
                 dialogCallbackCalled = true;
                 dialogCallbackArgument = argument;
             }
         };
         var createDialogMessageSpy:any = messagingServiceMock.Messages.Dialog.Create.subscribe;
         var createDialogCallback:any = createDialogMessageSpy.calls.first().args[0];
-        var dialogObject = {Text: 'Test'};
+        var dialogObject:any = {Text: 'Test'};
 
         //Act
         createDialogCallback(dialogObject);

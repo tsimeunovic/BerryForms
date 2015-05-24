@@ -1,9 +1,9 @@
 /// <reference path="./browser.ts" />
 /// <reference path="./loginDialog.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class HomePage {
         //Navigation
         public static NavigateTo():void {

@@ -1,9 +1,9 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../page-objects/form.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class LoginDialog {
         constructor() {
             this.DialogSelector = '.dialog.login';
@@ -13,8 +13,12 @@ module PageObjects {
         private DialogSelector:string;
         private DialogScopeName:string;
 
+        public static Current():PageObjects.LoginDialog {
+            return new PageObjects.LoginDialog();
+        }
+
         public LoginAs(userName:string, password:string):void {
-            var loginForm = PageObjects.Form.In(this.DialogSelector);
+            var loginForm:PageObjects.Form = PageObjects.Form.In(this.DialogSelector);
             loginForm.FillAndSubmit([
                 {Name: 'UserName', Type: 'text', Value: userName},
                 {Name: 'Password', Type: 'text', Value: password}
@@ -31,10 +35,6 @@ module PageObjects {
 
         public EnabledSubmitButtonsCount():any {
             return element(this.DialogSelector + '.btn-default:not(:disabled)').count();
-        }
-
-        public static Current():PageObjects.LoginDialog {
-            return new PageObjects.LoginDialog();
         }
     }
 }

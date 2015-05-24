@@ -1,12 +1,12 @@
 /// <reference path="./browser.ts" />
 /// <reference path="./loginDialog.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class EntityRecordForm {
         public static NavigateToCreate(entityName:string):void {
-            var url = EntityRecordForm.UrlForEntityCreate(entityName);
+            var url:string = EntityRecordForm.UrlForEntityCreate(entityName);
             PageObjects.Browser.NavigateTo(url);
         }
 
@@ -18,7 +18,7 @@ module PageObjects {
 
         //Urls
         public static UrlForEntityCreate(entityName:string):string {
-            return '/entity/' + entityName
+            return '/entity/' + entityName;
         }
     }
 }

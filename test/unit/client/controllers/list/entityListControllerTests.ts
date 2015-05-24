@@ -15,7 +15,7 @@
 
 'use strict';
 
-describe('Controller: EntityListController', function () {
+describe('Controller: EntityListController', function ():void {
     var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
@@ -31,7 +31,25 @@ describe('Controller: EntityListController', function () {
     var entityRepositoryServiceMock:Mocks.EntityRepositoryServiceMock;
     var systemUnderTest:Controllers.EntityListController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createEntityListController:() => void = function ():void {
+        systemUnderTest = new Controllers.EntityListController(
+            scopeMock,
+            routeParams,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            entityMetadataListCacheServiceMock,
+            localizationServiceMock,
+            redirectServiceMock,
+            dialogServiceMock,
+            domManipulationServiceMock,
+            entityListCacheServiceMock,
+            entityRepositoryServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         routeParams = {'_entityName': 'MockEntity', '_entityId': 8, '_pageNumber': 3};
         messagingServiceMock = new Mocks.MessagingServiceMock();
@@ -49,25 +67,7 @@ describe('Controller: EntityListController', function () {
         createEntityListController();
     });
 
-    //Helper methods
-    var createEntityListController = function () {
-        systemUnderTest = new Controllers.EntityListController(
-            scopeMock,
-            routeParams,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            entityMetadataListCacheServiceMock,
-            localizationServiceMock,
-            redirectServiceMock,
-            dialogServiceMock,
-            domManipulationServiceMock,
-            entityListCacheServiceMock,
-            entityRepositoryServiceMock);
-    };
-
-    it('should retrieve metadata and entity list from cache', function () {
+    it('should retrieve metadata and entity list from cache', function ():void {
         //Arrange
         var loadMetadataFromCacheSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
         var loadEntityListPageSpy:any = entityListCacheServiceMock.LoadEntityListPage;
@@ -83,7 +83,7 @@ describe('Controller: EntityListController', function () {
         expect(scopeMock.EntityList.length).toEqual(6);
     });
 
-    it('should refresh entity list when cache changes', function () {
+    it('should refresh entity list when cache changes', function ():void {
         //Arrange
         var loadEntityListPageSpy:any = entityListCacheServiceMock.LoadEntityListPage;
         var listCacheInvalidatedMessageSpy:any = messagingServiceMock.Messages.Cache.EntityList.Invalidated.subscribe;
@@ -99,7 +99,7 @@ describe('Controller: EntityListController', function () {
         expect(loadEntityListPageSpy.calls.count()).toEqual(3);
     });
 
-    it('should set page headers and icons', function () {
+    it('should set page headers and icons', function ():void {
         //Arrange
         //Act
         //Assert
@@ -108,7 +108,7 @@ describe('Controller: EntityListController', function () {
         expect(scopeMock.ListHeaderIcons.length).toEqual(2);
     });
 
-    it('should set paging according to retrieved list results', function () {
+    it('should set paging according to retrieved list results', function ():void {
         //Arrange
         var redirectToPageMock:any = redirectServiceMock.RedirectToEntityPage;
 
@@ -131,7 +131,7 @@ describe('Controller: EntityListController', function () {
         expect(redirectToPageMock.calls.first().args[2]).toEqual(4);
     });
 
-    it('should redirect to create page when create method is called', function () {
+    it('should redirect to create page when create method is called', function ():void {
         //Arrange
         var createIcon:any = scopeMock.ListHeaderIcons[0];
         var redirectToPageMock:any = redirectServiceMock.RedirectToEntityPage;
@@ -146,7 +146,7 @@ describe('Controller: EntityListController', function () {
         expect(redirectToPageMock.calls.first().args[2]).toEqual(3);
     });
 
-    it('should redirect to edit page when edit method is called', function () {
+    it('should redirect to edit page when edit method is called', function ():void {
         //Arrange
         var scrollToTopSpy:any = domManipulationServiceMock.ScrollToTop;
         var modifyEntityMessageSpy:any = messagingServiceMock.Messages.Entity.Modify.publish;
@@ -167,7 +167,7 @@ describe('Controller: EntityListController', function () {
         expect(modifyEntityMessageSpy.calls.first().args[0]).toBe(editEntity);
     });
 
-    it('should display confirmation dialog before delete method deletes record', function () {
+    it('should display confirmation dialog before delete method deletes record', function ():void {
         //Arrange
         var createDialogSpy:any = dialogServiceMock.CreateConfirmationDialog;
         var deleteEntityMessageSpy:any = messagingServiceMock.Messages.Entity.Delete.publish;

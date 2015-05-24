@@ -338,6 +338,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'compile',
         'tslint:client',
+        'tslint:test',
         //'tslint:all',
         'clean:dist',
         'useminPrepare',

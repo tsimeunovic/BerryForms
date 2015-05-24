@@ -17,7 +17,7 @@
 var _global:any = this;
 var OriginalServices:any;
 
-describe('Controller: FieldMetadataFormController', function () {
+describe('Controller: FieldMetadataFormController', function ():void {
     var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
@@ -33,7 +33,25 @@ describe('Controller: FieldMetadataFormController', function () {
     var domManipulationServiceMock:Mocks.DomManipulationServiceMock;
     var systemUnderTest:Controllers.FieldMetadataFormController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createFieldMetadataFormController:() => void = function ():void {
+        systemUnderTest = new Controllers.FieldMetadataFormController(
+            scopeMock,
+            routeParams,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            entityRepositoryServiceMock,
+            entityMetadataListCacheServiceMock,
+            localizationServiceMock,
+            entityModelMapperServiceMock,
+            redirectServiceMock,
+            dialogServiceMock,
+            domManipulationServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         routeParams = {'_entityName': 'MockEntity'};
         messagingServiceMock = new Mocks.MessagingServiceMock();
@@ -54,29 +72,11 @@ describe('Controller: FieldMetadataFormController', function () {
         createFieldMetadataFormController();
     });
 
-    afterEach(function () {
+    afterEach(function ():void {
         _global.Services = OriginalServices;
     });
 
-    //Helper methods
-    var createFieldMetadataFormController = function () {
-        systemUnderTest = new Controllers.FieldMetadataFormController(
-            scopeMock,
-            routeParams,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            entityRepositoryServiceMock,
-            entityMetadataListCacheServiceMock,
-            localizationServiceMock,
-            entityModelMapperServiceMock,
-            redirectServiceMock,
-            dialogServiceMock,
-            domManipulationServiceMock);
-    };
-
-    it('should load entity metadata from metadata cache', function () {
+    it('should load entity metadata from metadata cache', function ():void {
         //Arrange
         var loadEntityMetadataFromCacheSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
 
@@ -87,13 +87,13 @@ describe('Controller: FieldMetadataFormController', function () {
         expect(scopeMock.SubmitButtonText).toEqual('#Add');
     });
 
-    it('should display updates header when working with existing field', function () {
+    it('should display updates header when working with existing field', function ():void {
         //Arrange
         var displayItemMessageSpy:any = messagingServiceMock.Messages.Form.DisplayItem.subscribe;
         var displayItemMessageSubscribedFunction:any = displayItemMessageSpy.calls.first().args[0];
-        var entity = new Models.Entity('ExistingEntity');
-        var metadata = new Models.EntityMetadata();
-        var field = new Models.FieldMetadata('FieldTypeName');
+        var entity:Models.Entity = new Models.Entity('ExistingEntity');
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
+        var field:Models.FieldMetadata = new Models.FieldMetadata('FieldTypeName');
         field.FieldSystemName = 'FieldTypeName';
         metadata.Fields = [field];
 
@@ -105,13 +105,13 @@ describe('Controller: FieldMetadataFormController', function () {
         expect(scopeMock.SubmitButtonText).toEqual('#Update');
     });
 
-    it('should recreate form when type of field is changed', function () {
+    it('should recreate form when type of field is changed', function ():void {
         //Arrange
         var displayItemMessageSpy:any = messagingServiceMock.Messages.Form.DisplayItem.subscribe;
         var displayItemMessageSubscribedFunction:any = displayItemMessageSpy.calls.first().args[0];
-        var entity = new Models.Entity('ExistingEntity');
-        var metadata = new Models.EntityMetadata();
-        var field = new Models.FieldMetadata('FieldTypeName');
+        var entity:Models.Entity = new Models.Entity('ExistingEntity');
+        var metadata:Models.EntityMetadata = new Models.EntityMetadata();
+        var field:Models.FieldMetadata = new Models.FieldMetadata('FieldTypeName');
         field.FieldSystemName = 'FieldTypeName';
         metadata.Fields = [field];
 
@@ -123,10 +123,10 @@ describe('Controller: FieldMetadataFormController', function () {
         expect(scopeMock.EntityMetadata.Fields.length).toEqual(6);
     });
 
-    it('should not create field when field with same name already exists', function () {
+    it('should not create field when field with same name already exists', function ():void {
         //Arrange
         var originalMetadata:Models.EntityMetadata = new Models.EntityMetadata();
-        var field = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
+        var field:Models.FieldMetadata = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
         field.FieldSystemName = 'EntityModelMapperServiceMockFieldMetadata';
         originalMetadata.Fields = [field];
         scopeMock.OriginalMetadata = originalMetadata;
@@ -143,12 +143,12 @@ describe('Controller: FieldMetadataFormController', function () {
         expect(notifyMessageSpy.calls.first().args[0]).toEqual('#FieldAlreadyExists');
     });
 
-    it('should be able to update existing field', function () {
+    it('should be able to update existing field', function ():void {
         //Arrange
         var originalEntity:Models.Entity = new Models.Entity('EntityModelMapperServiceMockFieldMetadata');
         scopeMock.OriginalEntity = originalEntity;
         var originalMetadata:Models.EntityMetadata = new Models.EntityMetadata();
-        var field = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
+        var field:Models.FieldMetadata = new Models.FieldMetadata('EntityModelMapperServiceMockFieldMetadata');
         field.FieldSystemName = 'EntityModelMapperServiceMockFieldMetadata';
         originalMetadata.Fields = [field];
         scopeMock.OriginalMetadata = originalMetadata;
@@ -166,10 +166,10 @@ describe('Controller: FieldMetadataFormController', function () {
         expect(notifyMessageSpy.calls.first().args[0]).toEqual('#MetadataSavedSuccess');
     });
 
-    it('should notify user and create new field form after metadata are saved', function () {
+    it('should notify user and create new field form after metadata are saved', function ():void {
         //Arrange
         var originalMetadata:Models.EntityMetadata = new Models.EntityMetadata();
-        var field = new Models.FieldMetadata('SomeFieldName');
+        var field:Models.FieldMetadata = new Models.FieldMetadata('SomeFieldName');
         field.FieldSystemName = 'SomeFieldName';
         originalMetadata.Fields = [field];
         scopeMock.OriginalMetadata = originalMetadata;

@@ -10,16 +10,16 @@
 
 'use strict';
 
-describe('Feature: 2nd schema', function () {
-    beforeEach(function () {
+describe('Feature: 2nd schema', function ():void {
+    beforeEach(function ():void {
         PageObjects.HomePage.NavigateToWithLogin();
     });
 
-    it('should notify user when is successfully created', function () {
+    it('should notify user when is successfully created', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var successToaster = PageObjects.Toaster.Current('success');
-        var leftMenu = PageObjects.LeftMenu.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        //var successToaster:PageObjects.Toaster = PageObjects.Toaster.Current('success');
+        var leftMenu:PageObjects.LeftMenu = PageObjects.LeftMenu.Current();
 
         //Act
         PageObjects.EntitySchemaForm.NavigateToCreateWithLogin();
@@ -36,9 +36,9 @@ describe('Feature: 2nd schema', function () {
         expect(leftMenu.GetEntityIcons().count()).toEqual(2);
     });
 
-    it('should create clickable entity icon element', function () {
+    it('should create clickable entity icon element', function ():void {
         //Arrange
-        var leftMenu = PageObjects.LeftMenu.Current();
+        var leftMenu:PageObjects.LeftMenu = PageObjects.LeftMenu.Current();
 
         //Act
         leftMenu.ClickIconNamed('Second entity');
@@ -47,12 +47,12 @@ describe('Feature: 2nd schema', function () {
         expect(PageObjects.Browser.CurrentUrl()).toMatch(PageObjects.EntityRecordForm.UrlForEntityCreate('second_entity'));
     });
 
-    it('should be able to add new text field', function () {
+    it('should be able to add new text field', function ():void {
         //Arrange
         PageObjects.EntitySchemaForm.NavigateToEditWithLogin('second_entity');
-        var fieldsList = PageObjects.EntityList.Current();
-        var form = PageObjects.Form.Current();
-        var nameText = [
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var nameText:any[] = [
             {Name: 'FieldName', Type: 'text', Value: 'Only field'},
             {Name: 'FieldDescription', Type: 'text', Value: 'Description of only text field'},
             {Name: 'FieldTypeName', Type: 'select', Value: 'Text'},
@@ -67,11 +67,11 @@ describe('Feature: 2nd schema', function () {
         expect(fieldsList.GetListItems().count()).toEqual(1);
     });
 
-    it('should be able to create 2 new entity records', function () {
+    it('should be able to create 2 new entity records', function ():void {
         //Arrange
         PageObjects.EntityRecordForm.NavigateToCreateWithLogin('second_entity');
-        var form = PageObjects.Form.Current();
-        var list = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit([{Name: 'onlyfield', Type: 'text', Value: 'First record'}]);
@@ -81,11 +81,11 @@ describe('Feature: 2nd schema', function () {
         expect(list.GetListItems().count()).toEqual(2);
     });
 
-    it('should be able to edit existing record', function () {
+    it('should be able to edit existing record', function ():void {
         //Arrange
         PageObjects.EntityRecordForm.NavigateToCreateWithLogin('second_entity');
-        var form = PageObjects.Form.Current();
-        var list = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         list.EditItem(2);
@@ -96,11 +96,11 @@ describe('Feature: 2nd schema', function () {
         expect(list.GetNthItem(1).text()).toMatch('Updated first record');
     });
 
-    it('should be able to delete existing record', function () {
+    it('should be able to delete existing record', function ():void {
         //Arrange
         PageObjects.EntityRecordForm.NavigateToCreateWithLogin('second_entity');
-        var list = PageObjects.EntityList.Current();
-        var confirmDialog = PageObjects.ConfirmDialog.Current();
+        var list:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var confirmDialog:PageObjects.ConfirmDialog = PageObjects.ConfirmDialog.Current();
 
         //Act
         list.DeleteItem(2);

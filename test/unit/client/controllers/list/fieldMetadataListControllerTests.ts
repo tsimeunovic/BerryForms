@@ -17,7 +17,7 @@
 var _global:any = this;
 var OriginalServices:any;
 
-describe('Controller: FieldMetadataListController', function () {
+describe('Controller: FieldMetadataListController', function ():void {
     var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
@@ -33,7 +33,25 @@ describe('Controller: FieldMetadataListController', function () {
     var entityRepositoryServiceMock:Mocks.EntityRepositoryServiceMock;
     var systemUnderTest:Controllers.FieldMetadataListController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createFieldMetadataListController:() => void = function ():void {
+        systemUnderTest = new Controllers.FieldMetadataListController(
+            scopeMock,
+            routeParams,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            entityMetadataListCacheServiceMock,
+            localizationServiceMock,
+            redirectServiceMock,
+            entityModelMapperServiceMock,
+            dialogServiceMock,
+            domManipulationServiceMock,
+            entityRepositoryServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         routeParams = {'_entityName': 'MockEntity'};
         messagingServiceMock = new Mocks.MessagingServiceMock();
@@ -54,29 +72,11 @@ describe('Controller: FieldMetadataListController', function () {
         createFieldMetadataListController();
     });
 
-    afterEach(function () {
+    afterEach(function ():void {
         _global.Services = OriginalServices;
     });
 
-    //Helper methods
-    var createFieldMetadataListController = function () {
-        systemUnderTest = new Controllers.FieldMetadataListController(
-            scopeMock,
-            routeParams,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            entityMetadataListCacheServiceMock,
-            localizationServiceMock,
-            redirectServiceMock,
-            entityModelMapperServiceMock,
-            dialogServiceMock,
-            domManipulationServiceMock,
-            entityRepositoryServiceMock);
-    };
-
-    it('should display empty list message when new schema is being created', function () {
+    it('should display empty list message when new schema is being created', function ():void {
         //Arrange
         routeParams = {'_entityName': null};
 
@@ -88,7 +88,7 @@ describe('Controller: FieldMetadataListController', function () {
         expect(scopeMock.ListHeader).toEqual('#ListOfEntityFields');
     });
 
-    it('should retrieve metadata from cache', function () {
+    it('should retrieve metadata from cache', function ():void {
         //Arrange
         var loadMetadataFromCacheSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
         var mapFieldsToEntitySpy:any = entityModelMapperServiceMock.MapFieldsMetadataToEntityModels;
@@ -114,7 +114,7 @@ describe('Controller: FieldMetadataListController', function () {
         expect(scopeMock.ListHeaderIcons.length).toEqual(2);
     });
 
-    it('should notify user when metadata is saved', function () {
+    it('should notify user when metadata is saved', function ():void {
         //Arrange
         var metadata:Models.EntityMetadata = new Models.EntityMetadata();
         var saveMetadataSpy:any = entityRepositoryServiceMock.SaveEntityMetadata;
@@ -130,7 +130,7 @@ describe('Controller: FieldMetadataListController', function () {
         expect(notificationSpy.calls.first().args[0]).toEqual('#MetadataSavedSuccess');
     });
 
-    it('should redirect to create entity page when list icon method is invoked', function () {
+    it('should redirect to create entity page when list icon method is invoked', function ():void {
         //Arrange
         var loadMetadataResponse:Models.EntityMetadata = new Models.EntityMetadata();
         loadMetadataResponse.EntityName = 'MockEntity';
@@ -150,7 +150,7 @@ describe('Controller: FieldMetadataListController', function () {
         expect(redirectSpy.calls.first().args[0]).toEqual('MockEntity');
     });
 
-    it('should send message with form data and metadata when edit field is called', function () {
+    it('should send message with form data and metadata when edit field is called', function ():void {
         //Arrange
         var scrollTopSpy:any = domManipulationServiceMock.ScrollToTop;
         var displayItemMessageSpy:any = messagingServiceMock.Messages.Form.DisplayItem.publish;
@@ -167,7 +167,7 @@ describe('Controller: FieldMetadataListController', function () {
         expect(displayItemMessageSpy.calls.first().args[1].Fields.length).toEqual(6);
     });
 
-    it('should send message with new field form metadata when create field is called', function () {
+    it('should send message with new field form metadata when create field is called', function ():void {
         //Arrange
         var displayItemMessageSpy:any = messagingServiceMock.Messages.Form.DisplayItem.publish;
 
@@ -180,10 +180,10 @@ describe('Controller: FieldMetadataListController', function () {
         expect(displayItemMessageSpy.calls.first().args[1].Fields.length).toEqual(5);
     });
 
-    it('should create confirmation dialog when delete field is called', function () {
+    it('should create confirmation dialog when delete field is called', function ():void {
         //Arrange
         var createDialogSpy:any = dialogServiceMock.CreateConfirmationDialog;
-        var saveEntityMetadataSpy:any = entityRepositoryServiceMock.SaveEntityMetadata
+        var saveEntityMetadataSpy:any = entityRepositoryServiceMock.SaveEntityMetadata;
         var loadMetadataResponse:Models.EntityMetadata = new Models.EntityMetadata();
         loadMetadataResponse.EntityName = 'MockEntity';
         loadMetadataResponse.EntitySystemName = 'MockEntity';

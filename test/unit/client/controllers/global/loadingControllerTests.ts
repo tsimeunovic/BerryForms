@@ -6,28 +6,28 @@
 
 'use strict';
 
-describe('Controller: LoadingController', function () {
+describe('Controller: LoadingController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var stateServiceMock:Mocks.StateServiceMock;
     var systemUnderTest:Controllers.LoadingController;
 
-    beforeEach(function () {
-        scopeMock = new Mocks.ScopeMock();
-        messagingServiceMock = new Mocks.MessagingServiceMock();
-        stateServiceMock = new Mocks.StateServiceMock();
-        createLoadingController();
-    });
-
     //Helper methods
-    var createLoadingController = function () {
+    var createLoadingController:() => void = function ():void {
         systemUnderTest = new Controllers.LoadingController(
             scopeMock,
             messagingServiceMock,
             stateServiceMock);
     };
 
-    it('should subscribe to all loading messages', function () {
+    beforeEach(function ():void {
+        scopeMock = new Mocks.ScopeMock();
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        stateServiceMock = new Mocks.StateServiceMock();
+        createLoadingController();
+    });
+
+    it('should subscribe to all loading messages', function ():void {
         //Arrange
         var startLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Started.subscribe;
         var endLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Finished.subscribe;
@@ -41,7 +41,7 @@ describe('Controller: LoadingController', function () {
         expect(scopeMock.LoadingInProgress).toEqual(false);
     });
 
-    it('should display loading when new task is in progress', function () {
+    it('should display loading when new task is in progress', function ():void {
         //Arrange
         var startLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Started.subscribe;
         var startLoadingCallback:any = startLoadingMessageSpy.calls.first().args[0];
@@ -53,7 +53,7 @@ describe('Controller: LoadingController', function () {
         expect(scopeMock.LoadingInProgress).toEqual(true);
     });
 
-    it('should display loading when there are still some tasks in progress', function () {
+    it('should display loading when there are still some tasks in progress', function ():void {
         //Arrange
         var startLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Started.subscribe;
         var startLoadingCallback:any = startLoadingMessageSpy.calls.first().args[0];
@@ -69,7 +69,7 @@ describe('Controller: LoadingController', function () {
         expect(scopeMock.LoadingInProgress).toEqual(true);
     });
 
-    it('should hide loading when all tasks in progress have finished', function () {
+    it('should hide loading when all tasks in progress have finished', function ():void {
         //Arrange
         var startLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Started.subscribe;
         var startLoadingCallback:any = startLoadingMessageSpy.calls.first().args[0];
@@ -86,7 +86,7 @@ describe('Controller: LoadingController', function () {
         expect(scopeMock.LoadingInProgress).toEqual(false);
     });
 
-    it('should hide loading when all loading is reset', function () {
+    it('should hide loading when all loading is reset', function ():void {
         //Arrange
         var startLoadingMessageSpy:any = messagingServiceMock.Messages.Loading.Started.subscribe;
         var startLoadingCallback:any = startLoadingMessageSpy.calls.first().args[0];

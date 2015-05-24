@@ -5,8 +5,8 @@
 
 'use strict';
 
-describe('Feature: Home screen', function () {
-    it('should display login window', function () {
+describe('Feature: Home screen', function ():void {
+    it('should display login window', function ():void {
         //Arrange
         var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
 
@@ -18,7 +18,7 @@ describe('Feature: Home screen', function () {
         expect(loginDialog.EnabledSubmitButtonsCount()).toEqual(0);
     });
 
-    it('should display global dashboard after login', function () {
+    it('should display global dashboard after login', function ():void {
         //Arrange
         var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
 

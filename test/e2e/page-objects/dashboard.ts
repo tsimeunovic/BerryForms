@@ -2,9 +2,9 @@
 /// <reference path="../page-objects/loginDialog.ts" />
 /// <reference path="../../../client/extensions/stringExtensions.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class Dashboard {
         //Navigation
         public static DashboardUrlPattern:string = '/dashboard';

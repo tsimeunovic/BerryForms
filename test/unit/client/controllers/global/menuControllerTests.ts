@@ -8,7 +8,7 @@
 
 'use strict';
 
-describe('Controller: MenuController', function () {
+describe('Controller: MenuController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var entityMetadataListCacheServiceMock:Mocks.EntityMetadataListCacheServiceMock;
@@ -16,17 +16,8 @@ describe('Controller: MenuController', function () {
     var notificationServiceMock:Mocks.NotificationServiceMock;
     var systemUnderTest:Controllers.MenuController;
 
-    beforeEach(function () {
-        scopeMock = new Mocks.ScopeMock();
-        messagingServiceMock = new Mocks.MessagingServiceMock();
-        entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
-        localizationServiceMock = new Mocks.LocalizationServiceMock();
-        notificationServiceMock = new Mocks.NotificationServiceMock();
-        createLoadingController();
-    });
-
     //Helper methods
-    var createLoadingController = function () {
+    var createLoadingController:() => void = function ():void {
         systemUnderTest = new Controllers.MenuController(
             scopeMock,
             messagingServiceMock,
@@ -35,9 +26,18 @@ describe('Controller: MenuController', function () {
             notificationServiceMock);
     };
 
-    it('should set header and retrieve current metadata list from cache', function () {
+    beforeEach(function ():void {
+        scopeMock = new Mocks.ScopeMock();
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
+        localizationServiceMock = new Mocks.LocalizationServiceMock();
+        notificationServiceMock = new Mocks.NotificationServiceMock();
+        createLoadingController();
+    });
+
+    it('should set header and retrieve current metadata list from cache', function ():void {
         //Arrange
-        var metadataCache = [];
+        var metadataCache:Models.EntityMetadata[] = [];
         entityMetadataListCacheServiceMock.SetMetadataCache(metadataCache);
 
         //Act
@@ -48,9 +48,9 @@ describe('Controller: MenuController', function () {
         expect(scopeMock.Entities).toEqual(metadataCache);
     });
 
-    it('should subscribe to metadata cache changes', function () {
+    it('should subscribe to metadata cache changes', function ():void {
         //Arrange
-        var metadataCache = [
+        var metadataCache:Models.EntityMetadata[] = [
             new Models.EntityMetadata(),
             new Models.EntityMetadata(),
             new Models.EntityMetadata()

@@ -7,16 +7,16 @@
 
 'use strict';
 
-describe('Feature: Schema create', function () {
-    beforeEach(function () {
+describe('Feature: Schema create', function ():void {
+    beforeEach(function ():void {
         PageObjects.HomePage.NavigateToWithLogin();
     });
 
-    it('should notify user when new schema is successfully created', function () {
+    it('should notify user when new schema is successfully created', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var successToaster = PageObjects.Toaster.Current('success');
-        var leftMenu = PageObjects.LeftMenu.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        //var successToaster = PageObjects.Toaster.Current('success');
+        var leftMenu:PageObjects.LeftMenu = PageObjects.LeftMenu.Current();
 
         //Act
         PageObjects.EntitySchemaForm.NavigateToCreateWithLogin();
@@ -33,9 +33,9 @@ describe('Feature: Schema create', function () {
         expect(leftMenu.GetEntityIcons().count()).toEqual(1);
     });
 
-    it('should create clickable entity icon element', function () {
+    it('should create clickable entity icon element', function ():void {
         //Arrange
-        var leftMenu = PageObjects.LeftMenu.Current();
+        var leftMenu:PageObjects.LeftMenu = PageObjects.LeftMenu.Current();
 
         //Act
         leftMenu.ClickIconNamed('First entity');

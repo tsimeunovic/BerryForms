@@ -11,12 +11,12 @@
 
 'use strict';
 
-describe('Feature: Schema edit', function () {
-    beforeEach(function () {
+describe('Feature: Schema edit', function ():void {
+    beforeEach(function ():void {
         PageObjects.EntitySchemaForm.NavigateToEditWithLogin('first_entity');
     });
 
-    var fields = [
+    var fields:any[] = [
         [
             {Name: 'FieldName', Type: 'text', Value: 'Boolean field'},
             {Name: 'FieldDescription', Type: 'text', Value: 'Description of boolean field'},
@@ -95,18 +95,18 @@ describe('Feature: Schema edit', function () {
         ]
     ];
 
-    it('should contain no field when entity is newly created', function () {
+    it('should contain no field when entity is newly created', function ():void {
         //Arrange
-        var fieldsList = PageObjects.EntityList.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         //Assert
         expect(fieldsList.GetListItems().count()).toEqual(0);
     });
 
-    it('should have disabled \'Add\' button on form', function () {
+    it('should have disabled \'Add\' button on form', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
 
         //Act
         //Assert
@@ -114,9 +114,9 @@ describe('Feature: Schema edit', function () {
         expect(form.SubmitButton.Text()).toMatch('Add');
     });
 
-    it('should enable submit when form is properly filled with new \'boolean\' field type', function () {
+    it('should enable submit when form is properly filled with new \'boolean\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
 
         //Act
         form.Fill(fields[0]);
@@ -125,10 +125,10 @@ describe('Feature: Schema edit', function () {
         expect(form.SubmitButton.Disabled()).toBeFalsy();
     });
 
-    it('should add newly created \'boolean\' and \'text\' fields to the list', function () {
+    it('should add newly created \'boolean\' and \'text\' fields to the list', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[0]);
@@ -138,11 +138,11 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(2);
     });
 
-    it('should not allow to create two fields with same name', function () {
+    it('should not allow to create two fields with same name', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
-        var conflictingFieldData = [
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var conflictingFieldData:any[] = [
             {Name: 'FieldName', Type: 'text', Value: 'Text field'},
             {Name: 'FieldDescription', Type: 'text', Value: 'Description of text field'},
             {Name: 'FieldTypeName', Type: 'select', Value: 'Text'},
@@ -158,10 +158,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(2);
     });
 
-    it('should be able to delete first item', function () {
+    it('should be able to delete first item', function ():void {
         //Arrange
-        var fieldsList = PageObjects.EntityList.Current();
-        var confirmDialog = PageObjects.ConfirmDialog.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var confirmDialog:PageObjects.ConfirmDialog = PageObjects.ConfirmDialog.Current();
 
         //Act
         fieldsList.DeleteItem(1);
@@ -171,10 +171,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(1);
     });
 
-    it('should be able to recreate previously deleted \'boolean\' field', function () {
+    it('should be able to recreate previously deleted \'boolean\' field', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[0]);
@@ -183,10 +183,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(2);
     });
 
-    it('should be able to create \'date\' field type', function () {
+    it('should be able to create \'date\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[2]);
@@ -195,10 +195,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(3);
     });
 
-    it('should be able to create \'list\' field type', function () {
+    it('should be able to create \'list\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[3]);
@@ -207,10 +207,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(4);
     });
 
-    it('should be able to create \'select\' field type', function () {
+    it('should be able to create \'select\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[4]);
@@ -219,10 +219,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(5);
     });
 
-    it('should be able to create \'textarea\' field type', function () {
+    it('should be able to create \'textarea\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[5]);
@@ -231,10 +231,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(6);
     });
 
-    it('should be able to create \'relationship\' field type', function () {
+    it('should be able to create \'relationship\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[6]);
@@ -243,10 +243,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(7);
     });
 
-    it('should be able to create \'number\' field type', function () {
+    it('should be able to create \'number\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[7]);
@@ -255,10 +255,10 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(8);
     });
 
-    it('should be able to create \'email\' field type', function () {
+    it('should be able to create \'email\' field type', function ():void {
         //Arrange
-        var form = PageObjects.Form.Current();
-        var fieldsList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
+        var fieldsList:PageObjects.EntityList = PageObjects.EntityList.Current();
 
         //Act
         form.FillAndSubmit(fields[8]);
@@ -267,11 +267,11 @@ describe('Feature: Schema edit', function () {
         expect(fieldsList.GetListItems().count()).toEqual(9);
     });
 
-    it('should redirect to empty entity list when list of entities icon is clicked', function () {
+    it('should redirect to empty entity list when list of entities icon is clicked', function ():void {
         //Arrange
-        var headerIcons = PageObjects.HeaderIcons.Current();
-        var recordsList = PageObjects.EntityList.Current();
-        var form = PageObjects.Form.Current();
+        var headerIcons:PageObjects.HeaderIcons = PageObjects.HeaderIcons.Current();
+        var recordsList:PageObjects.EntityList = PageObjects.EntityList.Current();
+        var form:PageObjects.Form = PageObjects.Form.Current();
 
         //Act
         headerIcons.FieldsList.ListOfEntities.click();

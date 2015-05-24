@@ -10,7 +10,7 @@
 
 'use strict';
 
-describe('Controller: DashboardActivityListController', function () {
+describe('Controller: DashboardActivityListController', function ():void {
     var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
@@ -21,7 +21,20 @@ describe('Controller: DashboardActivityListController', function () {
     var dashboardRepositoryServiceMock:Mocks.DashboardRepositoryServiceMock;
     var systemUnderTest:Controllers.DashboardActivityListController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createDashboardActivityListController:() => void = function ():void {
+        systemUnderTest = new Controllers.DashboardActivityListController(
+            scopeMock,
+            routeParams,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            localizationServiceMock,
+            dashboardRepositoryServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         routeParams = {'_entityName': null};
         messagingServiceMock = new Mocks.MessagingServiceMock();
@@ -34,20 +47,7 @@ describe('Controller: DashboardActivityListController', function () {
         createDashboardActivityListController();
     });
 
-    //Helper methods
-    var createDashboardActivityListController = function ():void {
-        systemUnderTest = new Controllers.DashboardActivityListController(
-            scopeMock,
-            routeParams,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            localizationServiceMock,
-            dashboardRepositoryServiceMock);
-    };
-
-    it('should load recent activity', function () {
+    it('should load recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var loadRecentActivitySpy:any = dashboardRepositoryServiceMock.GetRecentActivity;
@@ -65,7 +65,7 @@ describe('Controller: DashboardActivityListController', function () {
         expect(loadingFinishedMessageSpy.calls.mostRecent().args[0]).toEqual(Static.LoadingType.DashboardActivity);
     });
 
-    it('should handle client errors from recent activity', function () {
+    it('should handle client errors from recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var returnedError:any = {Type:'Client'};
@@ -79,7 +79,7 @@ describe('Controller: DashboardActivityListController', function () {
         expect(handleErrorsMock.calls.first().args[0]).toEqual(returnedError);
     });
 
-    it('should load my recent activity', function () {
+    it('should load my recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var loadMyRecentActivitySpy:any = dashboardRepositoryServiceMock.GetMyRecentActivity;
@@ -97,7 +97,7 @@ describe('Controller: DashboardActivityListController', function () {
         expect(loadingFinishedMessageSpy.calls.first().args[0]).toEqual(Static.LoadingType.DashboardMyActivity);
     });
 
-    it('should handle client errors from my recent activity', function () {
+    it('should handle client errors from my recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var returnedError:any = {Type:'Client'};
@@ -111,7 +111,7 @@ describe('Controller: DashboardActivityListController', function () {
         expect(handleErrorsMock.calls.first().args[0]).toEqual(returnedError);
     });
 
-    it('should put both activity lists and translations into scope', function () {
+    it('should put both activity lists and translations into scope', function ():void {
         //Arrange
         //Act
         //Assert

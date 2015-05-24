@@ -1,9 +1,9 @@
 /// <reference path="../../jasmine.d.ts" />
 /// <reference path="../../../client/extensions/stringExtensions.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class FormControl {
         constructor(public ControlName:string,
                     public ControlType:string) {
@@ -29,15 +29,15 @@ module PageObjects {
                     using(this.ControlRootSelector, this.ControlScopeName).input('LocalDate').enter(value);
                     break;
                 case 'boolean':
-                    var optionSelector = ('a[data-value="{0}"]').format([value]);
-                    using(this.ControlRootSelector, this.ControlScopeName).element(optionSelector).click();
+                    var optionSelectorBool:string = ('a[data-value="{0}"]').format([value]);
+                    using(this.ControlRootSelector, this.ControlScopeName).element(optionSelectorBool).click();
                     break;
                 case 'select':
-                    var optionSelector = ('li[data-value="{0}"] a').format([value]);
-                    using(this.ControlRootSelector, this.ControlScopeName).element(optionSelector).click();
+                    var optionSelectorSelect:string = ('li[data-value="{0}"] a').format([value]);
+                    using(this.ControlRootSelector, this.ControlScopeName).element(optionSelectorSelect).click();
                     break;
                 case 'list':
-                    for (var i = 0; i < value.length; i++) {
+                    for (var i:number = 0; i < value.length; i++) {
                         using(this.ControlRootSelector, this.ControlScopeName).input('CurrentValue').enter(value[i]);
                         using(this.ControlRootSelector, this.ControlScopeName).element('.btn-default').click();
                     }

@@ -13,7 +13,7 @@
 
 'use strict';
 
-describe('Controller: EntityListWithFilterController', function () {
+describe('Controller: EntityListWithFilterController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var notificationServiceMock:Mocks.NotificationServiceMock;
@@ -27,7 +27,23 @@ describe('Controller: EntityListWithFilterController', function () {
     var filterConverterServiceMock:Mocks.FilterConverterServiceMock;
     var systemUnderTest:Controllers.EntityListWithFilterController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createEntityListWithFilterController:() => void = function ():void {
+        systemUnderTest = new Controllers.EntityListWithFilterController(
+            scopeMock,
+            messagingServiceMock,
+            notificationServiceMock,
+            queueServiceMock,
+            stateServiceMock,
+            routeParams,
+            entityListCacheServiceMock,
+            entityMetadataListCacheServiceMock,
+            redirectServiceMock,
+            localizationServiceMock,
+            filterConverterServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         notificationServiceMock = new Mocks.NotificationServiceMock();
@@ -43,23 +59,7 @@ describe('Controller: EntityListWithFilterController', function () {
         createEntityListWithFilterController();
     });
 
-    //Helper methods
-    var createEntityListWithFilterController = function () {
-        systemUnderTest = new Controllers.EntityListWithFilterController(
-            scopeMock,
-            messagingServiceMock,
-            notificationServiceMock,
-            queueServiceMock,
-            stateServiceMock,
-            routeParams,
-            entityListCacheServiceMock,
-            entityMetadataListCacheServiceMock,
-            redirectServiceMock,
-            localizationServiceMock,
-            filterConverterServiceMock);
-    };
-
-    it('should retrieve metadata and filtered entity list from cache', function () {
+    it('should retrieve metadata and filtered entity list from cache', function ():void {
         //Arrange
         var loadMetadataFromCacheSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
         var loadEntityListPageSpy:any = entityListCacheServiceMock.LoadEntityListPage;
@@ -76,7 +76,7 @@ describe('Controller: EntityListWithFilterController', function () {
         expect(scopeMock.EntityList.length).toEqual(6);
     });
 
-    it('should create filled filter form from query string', function () {
+    it('should create filled filter form from query string', function ():void {
         //Arrange
         var createFilterFormMetadataSpy:any = filterConverterServiceMock.CreateFilterFormMetadataFromEntityMetadata;
         var parseFilterQueryStringSpy:any = filterConverterServiceMock.ParseFilterQueryString;
@@ -100,7 +100,7 @@ describe('Controller: EntityListWithFilterController', function () {
         expect(scopeMock.ListHeader).toEqual('#ListOfRecords');
     });
 
-    it('should set paging according to retrieved filtered results', function () {
+    it('should set paging according to retrieved filtered results', function ():void {
         //Arrange
         var redirectToFilteredPageMock:any = redirectServiceMock.RedirectToFilteredList;
 
@@ -123,7 +123,7 @@ describe('Controller: EntityListWithFilterController', function () {
         expect(redirectToFilteredPageMock.calls.first().args[2]).toEqual(6);
     });
 
-    it('should create query string according to current filter value and redirect user when search method is called', function () {
+    it('should create query string according to current filter value and redirect user when search method is called', function ():void {
         //Arrange
         var createFilterQueryStringSpy:any = filterConverterServiceMock.CreateFilterQueryString;
         var redirectToFilteredPageMock:any = redirectServiceMock.RedirectToFilteredList;

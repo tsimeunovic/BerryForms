@@ -1,14 +1,14 @@
 /// <reference path="./browser.ts" />
 /// <reference path="./loginDialog.ts" />
 
-'use strict';
-
 module PageObjects {
+    'use strict';
+
     export class EntitySchemaForm {
         //Navigation
         public static CreateEntityUrlPattern:string = '/schema/entity';
         public static NavigateToCreate():void {
-            var url = '/schema/entity';
+            var url:string = '/schema/entity';
             PageObjects.Browser.NavigateTo(url);
         }
 
@@ -19,7 +19,7 @@ module PageObjects {
         }
 
         public static NavigateToEdit(entityName:string):void {
-            var url = EntitySchemaForm.UrlForSchemaEdit(entityName);
+            var url:string = EntitySchemaForm.UrlForSchemaEdit(entityName);
             PageObjects.Browser.NavigateTo(url);
         }
 

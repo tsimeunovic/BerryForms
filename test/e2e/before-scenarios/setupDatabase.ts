@@ -1,4 +1,3 @@
-'use strict';
 declare var require:any;
 declare var process:any;
 
@@ -11,18 +10,20 @@ var MongoServerInstance:any = new MongoServerObject(ConfigServer.MongoServerUri,
 var MongoClientInstance:any = new MongoClientObject(MongoServerInstance);
 
 module E2EBeforeScenarios {
+    'use strict';
+
     export class MongoDatabase {
         public static Setup():void {
-            MongoClientInstance.open(function (err, MongoClientLocal:any) {
+            MongoClientInstance.open(function (err:any, MongoClientLocal:any):void {
                 if (err) {
                     console.log('Could not establish connection to Mongo database ' + ConfigServer.MongoServerUri);
                     process.exit(99);
                     return;
                 }
 
-                var databaseName = 'e2e_' + ConfigServer.BerryFormsDatabaseName;
+                var databaseName:string = 'e2e_' + ConfigServer.BerryFormsDatabaseName;
                 console.log('Connected to Mongo database ' + ConfigServer.MongoServerUri);
-                var db = MongoClientLocal.db(databaseName);
+                var db:any = MongoClientLocal.db(databaseName);
                 db.dropDatabase();
                 console.log('Dropped database ' + databaseName);
                 process.exit(0);

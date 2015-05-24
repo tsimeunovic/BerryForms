@@ -16,7 +16,7 @@
 
 'use strict';
 
-describe('Controller: EntityFormController', function () {
+describe('Controller: EntityFormController', function ():void {
     var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
@@ -33,26 +33,8 @@ describe('Controller: EntityFormController', function () {
     var domManipulationServiceMock:Mocks.DomManipulationServiceMock;
     var systemUnderTest:Controllers.EntityFormController;
 
-    beforeEach(function () {
-        scopeMock = new Mocks.ScopeMock();
-        routeParams = {'_entityName': 'MockEntity', '_entityId': null, '_pageNumber': null};
-        messagingServiceMock = new Mocks.MessagingServiceMock();
-        notificationServiceMock = new Mocks.NotificationServiceMock();
-        queueServiceMock = new Mocks.QueueServiceMock();
-        stateServiceMock = new Mocks.StateServiceMock();
-        entityRepositoryServiceMock = new Mocks.EntityRepositoryServiceMock();
-        entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
-        entityModelMapperServiceMock = new Mocks.EntityModelMapperServiceMock();
-        entityListCacheServiceMock = new Mocks.EntityListCacheServiceMock();
-        localizationServiceMock = new Mocks.LocalizationServiceMock();
-        redirectServiceMock = new Mocks.RedirectServiceMock();
-        dialogServiceMock = new Mocks.DialogServiceMock();
-        domManipulationServiceMock = new Mocks.DomManipulationServiceMock();
-        createEntityFormController();
-    });
-
     //Helper methods
-    var createEntityFormController = function () {
+    var createEntityFormController:() => void = function ():void {
         systemUnderTest = new Controllers.EntityFormController(
             scopeMock,
             routeParams,
@@ -70,7 +52,25 @@ describe('Controller: EntityFormController', function () {
             domManipulationServiceMock);
     };
 
-    it('should retrieve metadata from cache for page with new entity form', function () {
+    beforeEach(function ():void {
+        scopeMock = new Mocks.ScopeMock();
+        routeParams = {'_entityName': 'MockEntity', '_entityId': null, '_pageNumber': null};
+        messagingServiceMock = new Mocks.MessagingServiceMock();
+        notificationServiceMock = new Mocks.NotificationServiceMock();
+        queueServiceMock = new Mocks.QueueServiceMock();
+        stateServiceMock = new Mocks.StateServiceMock();
+        entityRepositoryServiceMock = new Mocks.EntityRepositoryServiceMock();
+        entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
+        entityModelMapperServiceMock = new Mocks.EntityModelMapperServiceMock();
+        entityListCacheServiceMock = new Mocks.EntityListCacheServiceMock();
+        localizationServiceMock = new Mocks.LocalizationServiceMock();
+        redirectServiceMock = new Mocks.RedirectServiceMock();
+        dialogServiceMock = new Mocks.DialogServiceMock();
+        domManipulationServiceMock = new Mocks.DomManipulationServiceMock();
+        createEntityFormController();
+    });
+
+    it('should retrieve metadata from cache for page with new entity form', function ():void {
         //Arrange
         var getEntityMetadataSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
         var loadEntitySpy:any = entityRepositoryServiceMock.LoadEntity;
@@ -85,7 +85,7 @@ describe('Controller: EntityFormController', function () {
         expect(scopeMock.FormHeaderIcons.length).toEqual(1);
     });
 
-    it('should redirect to edit entity scheme when metadata contains no fields', function () {
+    it('should redirect to edit entity scheme when metadata contains no fields', function ():void {
         //Arrange
         var redirectToEditSpy:any = redirectServiceMock.RedirectToEditEntitySchema;
         routeParams = {'_entityName': 'MockEntity', '_entityId': 12, '_pageNumber': null};
@@ -98,7 +98,7 @@ describe('Controller: EntityFormController', function () {
         expect(redirectToEditSpy.calls.first().args[0]).toEqual('MockEntity');
     });
 
-    it('should retrieve metadata from cache and load entity from repository for page with edit entity', function () {
+    it('should retrieve metadata from cache and load entity from repository for page with edit entity', function ():void {
         //Arrange
         var getEntityMetadataSpy:any = entityMetadataListCacheServiceMock.LoadEntityMetadataFromCache;
         var loadEntitySpy:any = entityRepositoryServiceMock.LoadEntity;
@@ -125,10 +125,10 @@ describe('Controller: EntityFormController', function () {
         expect(scopeMock.OriginalEntity).toBe(entity);
     });
 
-    it('should notify user when entity cannot be successfully loaded', function () {
+    it('should notify user when entity cannot be successfully loaded', function ():void {
         //Arrange
         routeParams = {'_entityName': 'MockEntity', '_entityId': 12, '_pageNumber': null};
-        var errorModel = {Type: 'Client'};
+        var errorModel:any = {Type: 'Client'};
         entityRepositoryServiceMock.AddResponse('LoadEntity', null, errorModel);
         var handleErrorsModelSpy:any = notificationServiceMock.HandleErrorsModel;
         stateServiceMock.SetEditedEntity(null);
@@ -141,7 +141,7 @@ describe('Controller: EntityFormController', function () {
         expect(handleErrorsModelSpy.calls.first().args[0]).toBe(errorModel);
     });
 
-    it('should check state service for edited entity before loading it from repository', function () {
+    it('should check state service for edited entity before loading it from repository', function ():void {
         //Arrange
         var getEditedEntitySpy:any = stateServiceMock.GetEditedEntity;
         var editedEntity:Models.Entity = new Models.Entity('EditedEntity');
@@ -156,7 +156,7 @@ describe('Controller: EntityFormController', function () {
         expect(scopeMock.OriginalEntity).toBe(editedEntity);
     });
 
-    it('should call entity repository and create new entity when new entity form is submitted', function () {
+    it('should call entity repository and create new entity when new entity form is submitted', function ():void {
         //Arrange
         var savingEntity:Models.Entity = new Models.Entity('SavingEntity');
         scopeMock.Entity = savingEntity;
@@ -178,7 +178,7 @@ describe('Controller: EntityFormController', function () {
         expect(scopeMock.OriginalEntity.EntitySystemName).toEqual('MockEntity');
     });
 
-    it('should call entity repository and redirect to create new entity form when existing entity form is submitted', function () {
+    it('should call entity repository and redirect to create new entity form when existing entity form is submitted', function ():void {
         //Arrange
         var updatingEntity:Models.Entity = new Models.Entity('UpdatingEntity');
         scopeMock.Entity = updatingEntity;
@@ -208,10 +208,10 @@ describe('Controller: EntityFormController', function () {
         expect(redirectToEntityPageSpy.calls.first().args[2]).toEqual(1);
     });
 
-    it('should notify user about errors during entity saving', function () {
+    it('should notify user about errors during entity saving', function ():any {
         //Arrange
         var handleErrorsModelSpy:any = notificationServiceMock.HandleErrorsModel;
-        var errorModel = {Type: 'Client'};
+        var errorModel:any = {Type: 'Client'};
         entityRepositoryServiceMock.AddResponse('SaveEntity', null, errorModel);
 
         //Act

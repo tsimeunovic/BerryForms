@@ -12,7 +12,7 @@
 var _global:any = this;
 var OriginalServices:any;
 
-describe('Controller: LoginController', function () {
+describe('Controller: LoginController', function ():void {
     var scopeMock:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var stateServiceMock:Mocks.StateServiceMock;
@@ -22,7 +22,19 @@ describe('Controller: LoginController', function () {
     var notificationServiceMock:Mocks.NotificationServiceMock;
     var systemUnderTest:Controllers.LoginController;
 
-    beforeEach(function () {
+    //Helper methods
+    var createLoginController:() => void = function ():void {
+        systemUnderTest = new Controllers.LoginController(
+            scopeMock,
+            messagingServiceMock,
+            stateServiceMock,
+            dialogServiceMock,
+            localizationServiceMock,
+            userRepositoryServiceMock,
+            notificationServiceMock);
+    };
+
+    beforeEach(function ():void {
         scopeMock = new Mocks.ScopeMock();
         messagingServiceMock = new Mocks.MessagingServiceMock();
         stateServiceMock = new Mocks.StateServiceMock();
@@ -37,30 +49,18 @@ describe('Controller: LoginController', function () {
         createLoginController();
     });
 
-    afterEach(function () {
+    afterEach(function ():void {
         _global.Services = OriginalServices;
     });
 
-    //Helper methods
-    var createLoginController = function () {
-        systemUnderTest = new Controllers.LoginController(
-            scopeMock,
-            messagingServiceMock,
-            stateServiceMock,
-            dialogServiceMock,
-            localizationServiceMock,
-            userRepositoryServiceMock,
-            notificationServiceMock);
-    };
-
-    it('should hide login form when valid user is logged in', function () {
+    it('should hide login form when valid user is logged in', function ():void {
         //Arrange
         //Act
         //Assert
         expect(scopeMock.LoggedInUser).toEqual(true);
     });
 
-    it('should initialize scope with header and button text when created', function () {
+    it('should initialize scope with header and button text when created', function ():void {
         //Arrange
         stateServiceMock.SetCurrentUserSession(null);
         var loginMessageSpy:any = messagingServiceMock.Messages.User.LoggedIn.subscribe;
@@ -80,12 +80,12 @@ describe('Controller: LoginController', function () {
         expect(scopeMock.EntityMetadata.Fields.length).toEqual(2);
     });
 
-    it('should fill login form user name with last logged in user name', function () {
+    it('should fill login form user name with last logged in user name', function ():void {
         //Arrange
         var logoutMessageSpy:any = messagingServiceMock.Messages.User.LoggedOut.subscribe;
         var logoutMessageCallback:any = logoutMessageSpy.calls.first().args[0];
-        var lastSession = new Models.UserSession();
-        var lastUser = new Models.User();
+        var lastSession:Models.UserSession = new Models.UserSession();
+        var lastUser:Models.User = new Models.User();
         lastUser.UserName = 'TestUser';
         lastSession.User = lastUser;
         this.DefaultUserSession = lastSession;
@@ -96,16 +96,16 @@ describe('Controller: LoginController', function () {
 
         //Assert
         expect(scopeMock.LoggedInUser).toEqual(false);
-        expect(scopeMock.Entity.Data['UserName']).toEqual('TestUser');
+        expect(scopeMock.Entity.Data.UserName).toEqual('TestUser');
     });
 
-    it('should reset password field after unsuccessful login', function () {
+    it('should reset password field after unsuccessful login', function ():void {
         //Arrange
         var loginUserSpy:any = userRepositoryServiceMock.LoginUser;
         var handleErrorsSpy:any = notificationServiceMock.HandleErrorsModel;
         userRepositoryServiceMock.AddResponse('LoginUser', null, 'InvalidUserNameOrPassword');
-        scopeMock.Entity.Data['UserName'] = 'TestUserName';
-        scopeMock.Entity.Data['Password'] = 'TestPassword';
+        scopeMock.Entity.Data.UserName = 'TestUserName';
+        scopeMock.Entity.Data.Password = 'TestPassword';
 
         //Act
         scopeMock.Login();
@@ -116,10 +116,10 @@ describe('Controller: LoginController', function () {
         expect(loginUserSpy.calls.first().args[1]).toEqual('TestPassword');
         expect(handleErrorsSpy.calls.any()).toEqual(true);
         expect(handleErrorsSpy.calls.first().args[0]).toEqual('InvalidUserNameOrPassword');
-        expect(scopeMock.Entity.Data['Password']).toEqual(null);
+        expect(scopeMock.Entity.Data.Password).toEqual(null);
     });
 
-    it('should set current session after successful login', function () {
+    it('should set current session after successful login', function ():void {
         //Arrange
         var loadingStartedSpy:any = messagingServiceMock.Messages.Loading.Started.publish;
         var loadingFinishedSpy:any = messagingServiceMock.Messages.Loading.Finished.publish;
