@@ -1,5 +1,4 @@
 /// <reference path="../../../../jasmine.d.ts" />
-/// <reference path="../../../mocks/httpMock.ts" />
 /// <reference path="../../../mocks/callbackMock.ts" />
 /// <reference path="../../../mocks/urlLocatorServiceMock.ts" />
 /// <reference path="../../../mocks/entityModelMapperServiceMock.ts" />
