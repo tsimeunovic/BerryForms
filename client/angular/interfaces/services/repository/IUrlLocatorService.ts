@@ -21,7 +21,7 @@ module Services {
 
         //Dashboard
         GetUrlForDashboardActivitySummary(entityName:string):string;
-        GetUrlForMyRecentActivity(entityName:string):string;
-        GetUrlForRecentActivity(entityName:string):string;
+        GetUrlForMyLastActivity(entityName:string):string;
+        GetUrlForLastActivity(entityName:string):string;
     }
 }

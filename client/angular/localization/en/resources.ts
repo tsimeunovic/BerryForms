@@ -194,8 +194,8 @@ module Localization {
         Created:string = 'Created';
         Updated:string = 'Updated';
         Deleted:string = 'Deleted';
-        RecentlyModifiedRecords:string = 'Recently modified records';
-        RecentlyModifiedRecordsByMe:string = 'Recently modified records by me';
+        LastModifiedRecords:string = 'Last modified records';
+        LastModifiedRecordsByMe:string = 'Last modified records by me';
     }
 
     (function ():void {

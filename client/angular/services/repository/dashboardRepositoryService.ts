@@ -38,10 +38,10 @@ module Services {
                 });
         }
 
-        public GetMyRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
+        public GetMyLastActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
             var _this:DashboardRepositoryService = this;
-            var url:string = this.UrlLocatorService.GetUrlForMyRecentActivity(entityName);
-            this.HttpWrapperService.Get(url, 'MyRecentActivity').then(
+            var url:string = this.UrlLocatorService.GetUrlForMyLastActivity(entityName);
+            this.HttpWrapperService.Get(url, 'MyLastActivity').then(
                 //Success
                 function (data:any[]):void {
                     _this.ExtendActivityList(data, function ():void {
@@ -54,10 +54,10 @@ module Services {
                 });
         }
 
-        public GetRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
+        public GetLastActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
             var _this:DashboardRepositoryService = this;
-            var url:string = this.UrlLocatorService.GetUrlForRecentActivity(entityName);
-            this.HttpWrapperService.Get(url, 'RecentActivity').then(
+            var url:string = this.UrlLocatorService.GetUrlForLastActivity(entityName);
+            this.HttpWrapperService.Get(url, 'LastActivity').then(
                 //Success
                 function (data:any[]):void {
                     _this.ExtendActivityList(data, function ():void {

@@ -50,7 +50,7 @@ describe('Controller: DashboardActivityListController', function ():void {
     it('should load recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
-        var loadRecentActivitySpy:any = dashboardRepositoryServiceMock.GetRecentActivity;
+        var loadLastActivitySpy:any = dashboardRepositoryServiceMock.GetLastActivity;
         var loadingStartedMessageSpy:any = messagingServiceMock.Messages.Loading.Started.publish;
         var loadingFinishedMessageSpy:any = messagingServiceMock.Messages.Loading.Finished.publish;
 
@@ -59,8 +59,8 @@ describe('Controller: DashboardActivityListController', function ():void {
         expect(handleErrorsMock.calls.any()).toEqual(false);
         expect(loadingStartedMessageSpy.calls.any()).toEqual(true);
         expect(loadingStartedMessageSpy.calls.mostRecent().args[0]).toEqual(Static.LoadingType.DashboardActivity);
-        expect(loadRecentActivitySpy.calls.any()).toEqual(true);
-        expect(loadRecentActivitySpy.calls.first().args[0]).toEqual(null);
+        expect(loadLastActivitySpy.calls.any()).toEqual(true);
+        expect(loadLastActivitySpy.calls.first().args[0]).toEqual(null);
         expect(loadingFinishedMessageSpy.calls.any()).toEqual(true);
         expect(loadingFinishedMessageSpy.calls.mostRecent().args[0]).toEqual(Static.LoadingType.DashboardActivity);
     });
@@ -69,7 +69,7 @@ describe('Controller: DashboardActivityListController', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var returnedError:any = {Type:'Client'};
-        dashboardRepositoryServiceMock.AddResponse('GetRecentActivity', null, returnedError);
+        dashboardRepositoryServiceMock.AddResponse('GetLastActivity', null, returnedError);
 
         //Act
         createDashboardActivityListController();
@@ -82,7 +82,7 @@ describe('Controller: DashboardActivityListController', function ():void {
     it('should load my recent activity', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
-        var loadMyRecentActivitySpy:any = dashboardRepositoryServiceMock.GetMyRecentActivity;
+        var loadMyLastActivitySpy:any = dashboardRepositoryServiceMock.GetMyLastActivity;
         var loadingStartedMessageSpy:any = messagingServiceMock.Messages.Loading.Started.publish;
         var loadingFinishedMessageSpy:any = messagingServiceMock.Messages.Loading.Finished.publish;
 
@@ -91,8 +91,8 @@ describe('Controller: DashboardActivityListController', function ():void {
         expect(handleErrorsMock.calls.any()).toEqual(false);
         expect(loadingStartedMessageSpy.calls.any()).toEqual(true);
         expect(loadingStartedMessageSpy.calls.first().args[0]).toEqual(Static.LoadingType.DashboardMyActivity);
-        expect(loadMyRecentActivitySpy.calls.any()).toEqual(true);
-        expect(loadMyRecentActivitySpy.calls.first().args[0]).toEqual(null);
+        expect(loadMyLastActivitySpy.calls.any()).toEqual(true);
+        expect(loadMyLastActivitySpy.calls.first().args[0]).toEqual(null);
         expect(loadingFinishedMessageSpy.calls.any()).toEqual(true);
         expect(loadingFinishedMessageSpy.calls.first().args[0]).toEqual(Static.LoadingType.DashboardMyActivity);
     });
@@ -101,7 +101,7 @@ describe('Controller: DashboardActivityListController', function ():void {
         //Arrange
         var handleErrorsMock:any = notificationServiceMock.HandleErrorsModel;
         var returnedError:any = {Type:'Client'};
-        dashboardRepositoryServiceMock.AddResponse('GetMyRecentActivity', null, returnedError);
+        dashboardRepositoryServiceMock.AddResponse('GetMyLastActivity', null, returnedError);
 
         //Act
         createDashboardActivityListController();

@@ -7,7 +7,8 @@ module.exports = function (config) {
         basePath: '',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine'],
+        // phantomjs-shim is workaround for missing Function.prototype.bind in phantomjs 1.x
+        frameworks: ['jasmine', 'phantomjs-shim'],
 
         // list of files / patterns to load in the browser
         files: [
@@ -88,10 +89,10 @@ module.exports = function (config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false
+        singleRun: true
     });
 };

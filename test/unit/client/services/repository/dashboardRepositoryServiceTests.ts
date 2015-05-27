@@ -56,28 +56,28 @@ describe('Service: DashboardRepositoryService', function ():void {
         expect(callback.calls.first().args[1]).toEqual(errorData);
     });
 
-    it('should resolve url and request data from server when \'GetMyRecentActivity\' is called', function ():void {
+    it('should resolve url and request data from server when \'GetMyLastActivity\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
         var returnedActivity:any[] = [];
-        httpWrapperServiceMock.AddResponse('get', 'MyRecentActivity/entityName', returnedActivity, 200);
+        httpWrapperServiceMock.AddResponse('get', 'MyLastActivity/entityName', returnedActivity, 200);
 
         //Act
-        systemUnderTest.GetMyRecentActivity('entityName', callbackMock.callback);
+        systemUnderTest.GetMyLastActivity('entityName', callbackMock.callback);
 
         //Assert
         expect(callback.calls.any()).toEqual(true);
         expect(callback.calls.first().args[0]).toEqual(returnedActivity);
     });
 
-    it('should call callback with error when \'GetMyRecentActivity\' response fails', function ():void {
+    it('should call callback with error when \'GetMyLastActivity\' response fails', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
         var errorData:any = {};
-        httpWrapperServiceMock.AddResponse('get', 'MyRecentActivity/entityName', errorData, 400);
+        httpWrapperServiceMock.AddResponse('get', 'MyLastActivity/entityName', errorData, 400);
 
         //Act
-        systemUnderTest.GetMyRecentActivity('entityName', callbackMock.callback);
+        systemUnderTest.GetMyLastActivity('entityName', callbackMock.callback);
 
         //Assert
         expect(callback.calls.any()).toEqual(true);
@@ -85,28 +85,28 @@ describe('Service: DashboardRepositoryService', function ():void {
         expect(callback.calls.first().args[1]).toEqual(errorData);
     });
 
-    it('should resolve url and request data from server when \'RecentActivity\' is called', function ():void {
+    it('should resolve url and request data from server when \'GetLastActivity\' is called', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
         var returnedActivity:any[] = [];
-        httpWrapperServiceMock.AddResponse('get', 'RecentActivity/entityName', returnedActivity, 200);
+        httpWrapperServiceMock.AddResponse('get', 'LastActivity/entityName', returnedActivity, 200);
 
         //Act
-        systemUnderTest.GetRecentActivity('entityName', callbackMock.callback);
+        systemUnderTest.GetLastActivity('entityName', callbackMock.callback);
 
         //Assert
         expect(callback.calls.any()).toEqual(true);
         expect(callback.calls.first().args[0]).toEqual(returnedActivity);
     });
 
-    it('should call callback with error when \'RecentActivity\' response fails', function ():void {
+    it('should call callback with error when \'GetLastActivity\' response fails', function ():void {
         //Arrange
         var callback:any = callbackMock.callback;
         var errorData:any = {};
-        httpWrapperServiceMock.AddResponse('get', 'RecentActivity/entityName', errorData, 400);
+        httpWrapperServiceMock.AddResponse('get', 'LastActivity/entityName', errorData, 400);
 
         //Act
-        systemUnderTest.GetRecentActivity('entityName', callbackMock.callback);
+        systemUnderTest.GetLastActivity('entityName', callbackMock.callback);
 
         //Assert
         expect(callback.calls.any()).toEqual(true);
@@ -121,10 +121,10 @@ describe('Service: DashboardRepositoryService', function ():void {
             {Collection: 'first', Id: 9},
             {Collection: 'first', Id: 9}
         ];
-        httpWrapperServiceMock.AddResponse('get', 'RecentActivity/entityName', returnedActivity, 200);
+        httpWrapperServiceMock.AddResponse('get', 'LastActivity/entityName', returnedActivity, 200);
 
         //Act
-        systemUnderTest.GetRecentActivity('entityName', callbackMock.callback);
+        systemUnderTest.GetLastActivity('entityName', callbackMock.callback);
 
         //Assert
         expect(callback.calls.any()).toEqual(true);

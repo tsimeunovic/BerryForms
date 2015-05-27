@@ -80,7 +80,7 @@ module Services {
             return this.AddPreventCacheParameter(url);
         }
 
-        public GetUrlForMyRecentActivity(entityName:string):string {
+        public GetUrlForMyLastActivity(entityName:string):string {
             var url:string = this.ApiBaseUrl + 'dashboard/activity/me';
             if (entityName) {
                 url = (this.ApiBaseUrl + 'dashboard/activity/{0}/me').format([entityName]);
@@ -88,7 +88,7 @@ module Services {
             return this.AddPreventCacheParameter(url);
         }
 
-        public GetUrlForRecentActivity(entityName:string):string {
+        public GetUrlForLastActivity(entityName:string):string {
             var url:string = this.ApiBaseUrl + 'dashboard/activity/all';
             if (entityName) {
                 url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);

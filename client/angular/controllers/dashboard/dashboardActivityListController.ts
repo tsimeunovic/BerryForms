@@ -5,7 +5,7 @@
 /// <reference path="../../../static/routeParams.ts" />
 /// <reference path="../../../extensions/stringExtensions.ts" />
 
-//Controller for dashboard activity list component (display recently active records as a list)
+//Controller for dashboard activity list component (display last active records as a list)
 module Controllers {
     'use strict';
 
@@ -47,11 +47,11 @@ module Controllers {
             this.Scope.NoRecentActivityMessage = this.LocalizationService.Resources.NoRecentActivity;
             this.Scope.ActivityLists = [
                 {
-                    Title: this.LocalizationService.Resources.RecentlyModifiedRecordsByMe,
+                    Title: this.LocalizationService.Resources.LastModifiedRecordsByMe,
                     Type: 'me'
                 },
                 {
-                    Title: this.LocalizationService.Resources.RecentlyModifiedRecords,
+                    Title: this.LocalizationService.Resources.LastModifiedRecords,
                     Type: 'all'
                 }
             ];
@@ -59,11 +59,11 @@ module Controllers {
             //Load activity lists
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.DashboardMyActivity);
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.DashboardActivity);
-            this.DashboardRepositoryService.GetMyRecentActivity(this.EntityName, this.MyRecentActivityLoaded.bind(this));
-            this.DashboardRepositoryService.GetRecentActivity(this.EntityName, this.RecentActivityLoaded.bind(this));
+            this.DashboardRepositoryService.GetMyLastActivity(this.EntityName, this.MyLastActivityLoaded.bind(this));
+            this.DashboardRepositoryService.GetLastActivity(this.EntityName, this.LastActivityLoaded.bind(this));
         }
 
-        private MyRecentActivityLoaded(activityItems:any[], errorsModel:any):void {
+        private MyLastActivityLoaded(activityItems:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardMyActivity);
             if (errorsModel === null) {
                 this.Scope.ActivityLists[0].Items = activityItems;
@@ -72,7 +72,7 @@ module Controllers {
             }
         }
 
-        private RecentActivityLoaded(activityItems:any[], errorsModel:any):void {
+        private LastActivityLoaded(activityItems:any[], errorsModel:any):void {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.DashboardActivity);
             if (errorsModel === null) {
                 this.Scope.ActivityLists[1].Items = activityItems;

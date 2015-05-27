@@ -18,11 +18,11 @@ export module Data {
         constructor(private EntityRepository:EntityRepositoryContract.Data.IEntityRepository<any>) {
         }
 
-        public GetRecentActivity(request:any, callback:(data:any[], errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
+        public GetLastActivity(request:any, callback:(data:any[], errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
             this.GetActivityLog(null, request, callback);
         }
 
-        public GetMyRecentActivity(request:any, callback:(data:any[], errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
+        public GetMyLastActivity(request:any, callback:(data:any[], errors:ErrorsModel.Model.ClientErrorsModel) => void):void {
             this.GetActivityLog(request.session.User.UserName, request, callback);
         }
 

@@ -49,12 +49,12 @@ export module NodeHelpers {
             app.get(routeBaseUrl + '/dashboard/activity/me', function (req:any, res:any):void {
                 //Just by me
                 Router.ReturnJsonResultOf(req, res, true,
-                    Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
+                    Router.DashboardRepository.GetMyLastActivity.bind(Router.DashboardRepository));
             });
             app.get(routeBaseUrl + '/dashboard/activity/all', function (req:any, res:any):void {
                 //By all users
                 Router.ReturnJsonResultOf(req, res, true,
-                    Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
+                    Router.DashboardRepository.GetLastActivity.bind(Router.DashboardRepository));
             });
 
             //Entity methods

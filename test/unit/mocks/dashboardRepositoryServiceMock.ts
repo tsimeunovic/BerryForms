@@ -36,12 +36,12 @@ module Mocks {
             }
         }
 
-        public GetMyRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
+        public GetMyLastActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
             var entityNames:string[] = [entityName || 'entity1', entityName || 'entity2', entityName || 'entity3'];
             var users:string[] = ['mockUser'];
             var defaultObject:any[] = this.GenerateActivityList(10, users, entityNames);
 
-            var configuredResponse:any = this.ResponseFor('GetMyRecentActivity');
+            var configuredResponse:any = this.ResponseFor('GetMyLastActivity');
             if (configuredResponse && configuredResponse.AnyResponse) {
                 callback(configuredResponse.Result, configuredResponse.ErrorModel);
             } else if (!configuredResponse) {
@@ -49,7 +49,7 @@ module Mocks {
             }
         }
 
-        public GetRecentActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
+        public GetLastActivity(entityName:string, callback:(activityItems:any[], errorsModel:any) => void):void {
             var defaultObject:any[] = [
                 {
                     Collection: 'entity1',
@@ -67,7 +67,7 @@ module Mocks {
                 }
             ];
 
-            var configuredResponse:any = this.ResponseFor('GetRecentActivity');
+            var configuredResponse:any = this.ResponseFor('GetLastActivity');
             if (configuredResponse && configuredResponse.AnyResponse) {
                 callback(configuredResponse.Result, configuredResponse.ErrorModel);
             } else if (!configuredResponse) {
@@ -79,8 +79,8 @@ module Mocks {
             this.Responses = [];
 
             spyOn(this, 'GetActivitySummary').and.callThrough();
-            spyOn(this, 'GetMyRecentActivity').and.callThrough();
-            spyOn(this, 'GetRecentActivity').and.callThrough();
+            spyOn(this, 'GetMyLastActivity').and.callThrough();
+            spyOn(this, 'GetLastActivity').and.callThrough();
         }
 
         //Helper methods
