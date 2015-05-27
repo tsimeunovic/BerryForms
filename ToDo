@@ -1,19 +1,5 @@
 //To work on
 //Features:
-Dashboard (https://gionkunz.github.io/chartist-js/index.html)
-    - Global (user specific)
-        - Top n: Last changes
-        - Top n: My last changes
-        - Number of activities for last 24 hours (adds, updates, deletes) overall / my
-        - Activity graph for last week
-        - Most active entities
-    - Entity specific
-        - Recent records
-        - Statistics for various fields (can contain links to certain predefined filtered lists)
-            - Number - average, sum, distribution ...
-            - Select - distribution of values - pie chart
-            - Date - graph of values
-            - Boolean - chart of distribution
 
 //Bug fixes:
 

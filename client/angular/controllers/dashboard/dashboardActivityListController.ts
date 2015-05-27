@@ -34,10 +34,8 @@ module Controllers {
                     private LocalizationService:Services.ILocalizationService,
                     private DashboardRepositoryService:Services.IDashboardRepositoryService) {
             super(Scope, Static.ControllerArea.Dashboard, MessagingService, NotificationService, QueueService, StateService);
-            var entityName:string = RouteParams[Static.RouteParams.EntityName];
 
-            this.EntityName = entityName;
-
+            this.EntityName = RouteParams[Static.RouteParams.EntityName];
             this.InitializeScope();
         }
 

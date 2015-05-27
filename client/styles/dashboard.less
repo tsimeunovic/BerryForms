@@ -89,6 +89,10 @@ div.activityList {
     }
     &.delete {
       background-color: lighten(@dashboardChartDeleted, 25%);
+    }
+
+    &.delete,
+    &.deleted {
       padding-left: 41px;
 
       div.viewIcon {
@@ -102,5 +106,9 @@ div.activityList {
     span.user {
       display: none;
     }
+  }
+
+  div.emptyActivityMessage {
+    text-align: center;
   }
 }

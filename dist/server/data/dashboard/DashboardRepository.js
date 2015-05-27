@@ -12,10 +12,10 @@ var Data;
         function DashboardRepository(EntityRepository) {
             this.EntityRepository = EntityRepository;
         }
-        DashboardRepository.prototype.GetRecentActivity = function (request, callback) {
+        DashboardRepository.prototype.GetLastActivity = function (request, callback) {
             this.GetActivityLog(null, request, callback);
         };
-        DashboardRepository.prototype.GetMyRecentActivity = function (request, callback) {
+        DashboardRepository.prototype.GetMyLastActivity = function (request, callback) {
             this.GetActivityLog(request.session.User.UserName, request, callback);
         };
         DashboardRepository.prototype.GetEntitiesActivitySummary = function (request, callback) {

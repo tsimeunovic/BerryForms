@@ -36,11 +36,11 @@ var NodeHelpers;
             });
             app.get(routeBaseUrl + '/dashboard/activity/me', function (req, res) {
                 //Just by me
-                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyRecentActivity.bind(Router.DashboardRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetMyLastActivity.bind(Router.DashboardRepository));
             });
             app.get(routeBaseUrl + '/dashboard/activity/all', function (req, res) {
                 //By all users
-                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetRecentActivity.bind(Router.DashboardRepository));
+                Router.ReturnJsonResultOf(req, res, true, Router.DashboardRepository.GetLastActivity.bind(Router.DashboardRepository));
             });
             //Entity methods
             app.get(routeBaseUrl + '/:type/reducedList', function (req, res) {

@@ -307,6 +307,9 @@ module.exports = function (grunt) {
                     module: 'commonjs'
                 }
             }
+        },
+        lesslint: {
+            src: ['<%= yeoman.app %>/**/*.less']
         }
     });
 

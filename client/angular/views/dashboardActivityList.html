@@ -7,13 +7,19 @@
 
         <!-- Items -->
         <div data-ng-repeat="activityListItem in list.Items"
-             class="activityListItem {{::activityListItem.Operation}}">
+             class="activityListItem {{::activityListItem.Operation}}"
+             data-ng-class="{'deleted' : activityListItem.Deleted}">
             <a href="#{{::activityListItem.Url}}">
                 <div class="glyphicon glyphicon-eye-open viewIcon"></div>
             </a>
             <span class="collection">{{::activityListItem.EntityName}}</span>
             <span class="id">{{::activityListItem.Id}}</span>
             <span class="user">{{::activityListItem.User}}</span>
+        </div>
+
+        <!-- No items message -->
+        <div class="emptyActivityMessage" data-ng-show="list.Items && !list.Items.length">
+            {{::NoRecentActivityMessage}}
         </div>
     </div>
 </div>

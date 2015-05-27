@@ -11,6 +11,7 @@ interface Array<T> {
     where: (predicate:(item:T) => boolean) => T[];
     single: (predicate:(item:T) => boolean) => T;
     first: (predicate:(item:T) => boolean) => T;
+    any: (predicate:(item:T) => boolean) => boolean;
     move: (old_index:number, new_index:number) => void;
 }
 
@@ -87,6 +88,10 @@ Array.prototype.first = function (predicate:(item:any) => boolean):any {
         }
     }
     return null;
+};
+
+Array.prototype.any = function (predicate:(item:any) => boolean):boolean {
+    return this.where(predicate).length > 0;
 };
 
 Array.prototype.move = function (old_index:number, new_index:number):void {

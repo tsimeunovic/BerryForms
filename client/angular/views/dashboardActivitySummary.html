@@ -17,7 +17,7 @@
         </div>
 
         <!-- No activity message -->
-        <div class="emptyActivityMessage" data-ng-hide="ActivitySummary.length">
+        <div class="emptyActivityMessage" data-ng-show="ActivitySummary && !ActivitySummary.length">
             {{::NoRecentActivityMessage}}
         </div>
     </div>

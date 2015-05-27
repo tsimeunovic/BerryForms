@@ -80,7 +80,7 @@ module Services {
             var itemsDone:number = 0;
             for (var i:number = 0; i < activityItems.length; i++) {
                 var item:any = activityItems[i];
-                _this.ExtendActivityListItemModel(item, function ():void {
+                _this.ExtendActivityListItemModel(item, activityItems, function ():void {
                     if (++itemsDone === activityItems.length) {
                         callback();
                     }
@@ -88,11 +88,20 @@ module Services {
             }
         }
 
-        private ExtendActivityListItemModel(activityItem:any, callback:() => void):void {
+        private ExtendActivityListItemModel(activityItem:any, allItems:any[], callback:() => void):void {
             var _this:DashboardRepositoryService = this;
+            var deletedPredicate:(it:any) => boolean = function (it:any):boolean {
+                return it.Collection === activityItem.Collection &&
+                    it.Id === activityItem.Id &&
+                    it.Operation === 'delete';
+            };
+
             this.EntityMetadataListCacheService.LoadEntityMetadataFromCache(activityItem.Collection, function (metadata:Models.EntityMetadata):void {
                 activityItem.EntityName = metadata.EntityName;
-                activityItem.Url = _this.RedirectService.GetEditEntityUrl(activityItem.Collection, activityItem.Id);
+                activityItem.Deleted = allItems.any(deletedPredicate);
+                activityItem.Url = !activityItem.Deleted ?
+                    _this.RedirectService.GetEditEntityUrl(activityItem.Collection, activityItem.Id) :
+                    null;
                 callback();
             });
         }

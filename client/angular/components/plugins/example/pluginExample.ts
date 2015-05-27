@@ -22,7 +22,7 @@ module Components.Plugins {
                        callback:(pluginContext:Models.PluginContext<Models.EntityMetadata>) => void):void {
             //Force description to be filled
             var description:string = pluginContext.Data && pluginContext.Data.EntityDescription;
-            var descriptionFilled:boolean = description !== null && description.length > 0;
+            var descriptionFilled:boolean = description && description.length > 0;
 
             if (!descriptionFilled) {
                 //Cancel execution
