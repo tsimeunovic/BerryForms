@@ -13,7 +13,7 @@ module PageObjects {
         public static NavigateToGlobalDashboardWithLogin():void {
             PageObjects.Browser.NavigateTo(this.DashboardUrlPattern);
             var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
-            loginDialog.LoginAsDefault();
+            loginDialog.LoginAsDefault(false);
         }
 
         //Urls

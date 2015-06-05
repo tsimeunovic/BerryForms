@@ -172,6 +172,7 @@ module Localization {
         UserName:string;
         Password:string;
         InvalidUserNameOrPassword:string;
+        StayLoggedIn:string;
 
         //Actions
         RetryActionsQuestion:string;

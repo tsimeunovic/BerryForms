@@ -162,6 +162,7 @@ var Localization;
             this.UserName = 'Корисничко име';
             this.Password = 'Лозинка';
             this.InvalidUserNameOrPassword = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
+            this.StayLoggedIn = 'Дуготрајно пријављење';
             //Actions
             this.RetryActionsQuestion = 'Неке операције нису биле успјешне. Желите ли да их поновите?';
             this.CreateEntityMetadata = 'Додавање новог типа шеме';

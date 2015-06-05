@@ -162,6 +162,7 @@ var Localization;
             this.UserName = 'User name';
             this.Password = 'Password';
             this.InvalidUserNameOrPassword = 'Could not login user. Invalid user name or password';
+            this.StayLoggedIn = 'Keep me logged in';
             //Actions
             this.RetryActionsQuestion = 'There were some unsuccessful operations. Do you want to retry them?';
             this.CreateEntityMetadata = 'Creation of entity type';

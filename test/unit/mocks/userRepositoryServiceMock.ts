@@ -21,7 +21,7 @@ module Mocks {
             });
         }
 
-        public LoginUser(userName:string, password:string, callback:(session:Models.UserSession, errors:any) => void):void {
+        public LoginUser(userName:string, password:string, stayLoggedIn:boolean, callback:(session:Models.UserSession, errors:any) => void):void {
             var defaultObject:Models.UserSession = new Models.UserSession();
             defaultObject.ValidTo = (new Date()).getTime() + 10 * 60 * 1000;
             var user:Models.User = new Models.User();

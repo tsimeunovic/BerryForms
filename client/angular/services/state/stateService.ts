@@ -1,4 +1,5 @@
 /// <reference path="../../interfaces/services/state/IStateService.ts" />
+/// <reference path="../../interfaces/services/state/IPersistentStorageService.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
@@ -6,7 +7,7 @@
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
 
-//Stores the state of application for scenarios when it should be preserved (for example page switch while editing)
+//Stores the state of application for scenarios when it should be preserved after context switching (for example page switch while editing)
 module Services {
     'use strict';
 
@@ -18,6 +19,7 @@ module Services {
                 'DialogService',
                 'RedirectService',
                 'LocalizationService',
+                'PersistentStorageService',
                 StateService
             ];
         }
@@ -25,10 +27,12 @@ module Services {
         constructor(private MessagingService:Services.IMessagingService,
                     private DialogService:Services.IDialogService,
                     private RedirectService:Services.IRedirectService,
-                    private LocalizationService:Services.ILocalizationService) {
+                    private LocalizationService:Services.ILocalizationService,
+                    private PersistentStorageService:Services.IPersistentStorageService) {
             this.EditedEntity = null;
             this.CurrentUserSession = null;
             this.PostLoginActions = [];
+            this.Initialize();
         }
 
         private EditedEntity:Models.Entity;
@@ -51,6 +55,7 @@ module Services {
         public SetCurrentUserSession(userSession:Models.UserSession):void {
             var previousSession:Models.UserSession = this.CurrentUserSession;
             this.CurrentUserSession = userSession;
+            this.UpdateSavedUserSession(userSession);
             if (!userSession) {
                 //Invalidation
                 this.MessagingService.Messages.User.LoggedOut.publish(previousSession);
@@ -71,6 +76,7 @@ module Services {
                 currentSession.ValidTo = validTo;
                 currentSession.Token = token;
             }
+            this.UpdateSavedUserSession(currentSession);
         }
 
         public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:() => void, cancel:() => void):void {
@@ -143,6 +149,22 @@ module Services {
                 } else {
                     cancelFn();
                 }
+            }
+        }
+
+        private Initialize():void {
+            var savedSession:Models.UserSession = this.PersistentStorageService.LoadUserSession();
+            if (savedSession !== null) {
+                this.SetCurrentUserSession(savedSession);
+            }
+        }
+
+        private UpdateSavedUserSession(userSession:Models.UserSession):void {
+            var savedSession:Models.UserSession = this.PersistentStorageService.LoadUserSession();
+            if (userSession !== null && userSession.StayLoggedIn) {
+                this.PersistentStorageService.SaveUserSession(userSession);
+            } else if (savedSession !== null) {
+                this.PersistentStorageService.SaveUserSession(null);
             }
         }
     }

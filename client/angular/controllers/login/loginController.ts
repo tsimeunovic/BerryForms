@@ -45,30 +45,34 @@ module Controllers {
             this.Scope.LoggedInUser = !!currentSession;
         }
 
-        private InitializeScope(prefilledUserName:string):void {
+        private InitializeScope(preFilledUserName:string):void {
             this.Scope.Login = this.Login.bind(this);
             this.Scope.LoginInProgress = false;
             this.Scope.LoginHeader = this.LocalizationService.Resources.Login;
             this.Scope.LoginButtonText = this.LocalizationService.Resources.Login;
             this.Scope.EntityMetadata = Data.CreateLoginFormFields.GetData();
             this.Scope.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
-            if (prefilledUserName) {
-                this.Scope.Entity.Data.UserName = prefilledUserName;
+
+            //Fill model
+            this.Scope.Entity.Data.StayLoggedIn = false;
+            if (preFilledUserName) {
+                this.Scope.Entity.Data.UserName = preFilledUserName;
             }
         }
 
         private Login():void {
             var userName:string = this.Scope.Entity.Data.UserName;
             var password:string = this.Scope.Entity.Data.Password;
+            var stayLoggedIn:boolean = this.Scope.Entity.Data.StayLoggedIn;
             this.Scope.LoginInProgress = true;
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.LoggingIn);
-            this.UserRepositoryService.LoginUser(userName, password, this.LoginCompleted.bind(this));
+            this.UserRepositoryService.LoginUser(userName, password, stayLoggedIn, this.LoginCompleted.bind(this));
         }
 
         private LoginCompleted(session:Models.UserSession, errorsModel:any):void {
             this.Scope.LoginInProgress = false;
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.LoggingIn);
-            if (errorsModel == null) {
+            if (errorsModel === null) {
                 this.StateService.SetCurrentUserSession(session);
             } else {
                 this.Scope.Entity.Data.Password = null;

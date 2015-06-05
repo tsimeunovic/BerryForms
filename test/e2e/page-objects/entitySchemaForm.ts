@@ -15,7 +15,7 @@ module PageObjects {
         public static NavigateToCreateWithLogin():void {
             this.NavigateToCreate();
             var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
-            loginDialog.LoginAsDefault();
+            loginDialog.LoginAsDefault(false);
         }
 
         public static NavigateToEdit(entityName:string):void {
@@ -26,7 +26,7 @@ module PageObjects {
         public static NavigateToEditWithLogin(entityName:string):void {
             this.NavigateToEdit(entityName);
             var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
-            loginDialog.LoginAsDefault();
+            loginDialog.LoginAsDefault(false);
         }
 
         //Urls

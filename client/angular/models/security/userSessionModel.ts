@@ -8,5 +8,6 @@ module Models {
         public User:Models.User;
         public ValidTo:number;
         public Token:string;
+        public StayLoggedIn:boolean;
     }
 }

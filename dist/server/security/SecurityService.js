@@ -14,10 +14,13 @@ var Security;
             var data = request.body;
             var reqUserName = data && data.userName;
             var reqPassword = data && data.password;
+            var stayLoggedIn = data && data.stayLoggedIn;
             var validUser = reqUserName === this.ServerConfig.SuperUserName &&
                 reqPassword === this.ServerConfig.SuperUserPassword;
             if (validUser) {
-                var tokeValidityMinutes = ConfigServer.Config.Server.TokenValidityMinutes;
+                var tokeValidityMinutes = stayLoggedIn ?
+                    ConfigServer.Config.Server.StayLoggedInTokenValidityMinutes :
+                    ConfigServer.Config.Server.TokenValidityMinutes;
                 var nowTime = (new Date()).getTime();
                 var validTo = nowTime + tokeValidityMinutes * 60000;
                 var token = this.GetTokenFor(reqUserName, validTo);
@@ -28,7 +31,8 @@ var Security;
                         IsSuperUser: true
                     },
                     ValidTo: validTo,
-                    Token: token
+                    Token: token,
+                    StayLoggedIn: stayLoggedIn
                 };
                 console.log('User \'' + reqUserName + '\' logged in');
                 callback(session, null);

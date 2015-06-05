@@ -21,11 +21,14 @@ export module Security {
             var data:any = request.body;
             var reqUserName:string = data && data.userName;
             var reqPassword:string = data && data.password;
+            var stayLoggedIn:boolean = data && data.stayLoggedIn;
             var validUser:boolean = reqUserName === this.ServerConfig.SuperUserName &&
                 reqPassword === this.ServerConfig.SuperUserPassword;
 
             if (validUser) {
-                var tokeValidityMinutes:number = ConfigServer.Config.Server.TokenValidityMinutes;
+                var tokeValidityMinutes:number = stayLoggedIn ?
+                    ConfigServer.Config.Server.StayLoggedInTokenValidityMinutes :
+                    ConfigServer.Config.Server.TokenValidityMinutes;
                 var nowTime:number = (new Date()).getTime();
                 var validTo:number = nowTime + tokeValidityMinutes * 60000;
                 var token:string = this.GetTokenFor(reqUserName, validTo);
@@ -37,7 +40,8 @@ export module Security {
                         IsSuperUser: true
                     },
                     ValidTo: validTo,
-                    Token: token
+                    Token: token,
+                    StayLoggedIn: stayLoggedIn
                 };
 
                 console.log('User \'' + reqUserName + '\' logged in');

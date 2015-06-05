@@ -13,7 +13,7 @@ module PageObjects {
         public static NavigateToCreateWithLogin(entityName:string):void {
             this.NavigateToCreate(entityName);
             var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
-            loginDialog.LoginAsDefault();
+            loginDialog.LoginAsDefault(false);
         }
 
         //Urls

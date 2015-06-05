@@ -17,16 +17,17 @@ module PageObjects {
             return new PageObjects.LoginDialog();
         }
 
-        public LoginAs(userName:string, password:string):void {
+        public LoginAs(userName:string, password:string, keepLoggedIn:boolean):void {
             var loginForm:PageObjects.Form = PageObjects.Form.In(this.DialogSelector);
             loginForm.FillAndSubmit([
                 {Name: 'UserName', Type: 'text', Value: userName},
-                {Name: 'Password', Type: 'text', Value: password}
+                {Name: 'Password', Type: 'text', Value: password},
+                {Name: 'StayLoggedIn', Type: 'boolean', Value: keepLoggedIn ? 'Yes' : 'No'}
             ]);
         }
 
-        public LoginAsDefault():void {
-            this.LoginAs('admin', 'admin');
+        public LoginAsDefault(keepLoggedIn:boolean):void {
+            this.LoginAs('admin', 'admin', keepLoggedIn);
         }
 
         public VisibleDialogsCount():any {

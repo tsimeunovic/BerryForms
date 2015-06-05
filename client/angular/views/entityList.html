@@ -15,7 +15,7 @@
 
         <!-- List item -->
         <div class="entityRecord" data-ng-repeat="listItem in EntityList" data-as-sortable-item
-             data-ng-class="{noMove:!Configuration.List.MoveEnabled}">
+             data-ng-class="::{noMove:!Configuration.List.MoveEnabled}">
             <div class="commandZone">
                 <div class="commandEdit" data-ng-click="ListRecordEdit(listItem)"></div>
                 <div class="commandDelete" data-ng-click="ListRecordDelete(listItem)"></div>

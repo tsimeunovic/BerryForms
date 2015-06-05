@@ -13,7 +13,7 @@ module PageObjects {
         public static NavigateToWithLogin():void {
             this.NavigateTo();
             var loginDialog:PageObjects.LoginDialog = PageObjects.LoginDialog.Current();
-            loginDialog.LoginAsDefault();
+            loginDialog.LoginAsDefault(false);
         }
     }
 }

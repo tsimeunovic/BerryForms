@@ -176,6 +176,7 @@ module Localization {
         UserName:string = 'User name';
         Password:string = 'Password';
         InvalidUserNameOrPassword:string = 'Could not login user. Invalid user name or password';
+        StayLoggedIn:string = 'Keep me logged in';
 
         //Actions
         RetryActionsQuestion:string = 'There were some unsuccessful operations. Do you want to retry them?';

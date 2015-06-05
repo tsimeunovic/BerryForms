@@ -5,6 +5,6 @@ module Services {
     'use strict';
 
     export interface IUserRepositoryService {
-        LoginUser(userName:string, password:string, callback:(session:Models.UserSession, errorsModel:any) => void):void;
+        LoginUser(userName:string, password:string, stayLoggedIn:boolean, callback:(session:Models.UserSession, errorsModel:any) => void):void;
     }
 }

@@ -20,10 +20,11 @@ module Services {
                     private UrlLocatorService:Services.IUrlLocatorService) {
         }
 
-        public LoginUser(userName:string, password:string, callback:(session:Models.UserSession, errorsModel:any) => void):void {
+        public LoginUser(userName:string, password:string, stayLoggedIn:boolean, callback:(session:Models.UserSession, errorsModel:any) => void):void {
             var postData:any = {
                 userName: userName,
-                password: password
+                password: password,
+                stayLoggedIn: stayLoggedIn
             };
 
             var url:string = this.UrlLocatorService.GetUrlForLogin();

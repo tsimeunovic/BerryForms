@@ -162,6 +162,7 @@ var Localization;
             this.UserName = 'Uživateľské meno';
             this.Password = 'Heslo';
             this.InvalidUserNameOrPassword = 'Prihlásenie nebolo úspešné. Nesprávne meno, alebo heslo';
+            this.StayLoggedIn = 'Dlhodobé prihlásenie';
             //Actions
             this.RetryActionsQuestion = 'Niektoré operácie nebolo možné vykonať. Prajete si ich zopakovať?';
             this.CreateEntityMetadata = 'Vytvorenie typu entity';

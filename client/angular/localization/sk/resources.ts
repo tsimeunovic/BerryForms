@@ -176,6 +176,7 @@ module Localization {
         UserName:string = 'Uživateľské meno';
         Password:string = 'Heslo';
         InvalidUserNameOrPassword:string = 'Prihlásenie nebolo úspešné. Nesprávne meno, alebo heslo';
+        StayLoggedIn:string = 'Dlhodobé prihlásenie';
 
         //Actions
         RetryActionsQuestion:string = 'Niektoré operácie nebolo možné vykonať. Prajete si ich zopakovať?';

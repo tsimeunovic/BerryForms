@@ -19,7 +19,8 @@ module Data {
             result.EntityName = Config.Client.SystemEntityName;
             result.Fields = [
                 this.UserNameField(),
-                this.PasswordField()
+                this.PasswordField(),
+                this.StayLoggedInField()
             ];
             return result;
         }
@@ -43,6 +44,16 @@ module Data {
             result.Required = true;
             result.MaskCharacters = true;
             result.RegularExpression = '^[a-zA-Z]\\w{4,12}$';
+
+            return result;
+        }
+
+        private static StayLoggedInField():Models.BooleanFieldMetadata {
+            var result:Models.BooleanFieldMetadata = new Models.BooleanFieldMetadata();
+            result.FieldSystemName = 'StayLoggedIn';
+            result.FieldName = Services.LocalizationService.Resources.StayLoggedIn;
+            result.FieldDescription = result.FieldName;
+            result.Required = true;
 
             return result;
         }

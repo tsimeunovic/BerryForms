@@ -176,6 +176,7 @@ module Localization {
         UserName:string = 'Корисничко име';
         Password:string = 'Лозинка';
         InvalidUserNameOrPassword:string = 'Пријављиваље није било успјешно. Не важеће корисничко име или лозинка';
+        StayLoggedIn:string = 'Дуготрајно пријављење';
 
         //Actions
         RetryActionsQuestion:string = 'Неке операције нису биле успјешне. Желите ли да их поновите?';

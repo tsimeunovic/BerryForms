@@ -43,6 +43,7 @@
 /// <reference path="./services/state/entityMetadataListCacheService.ts" />
 /// <reference path="./services/state/entityListCacheService.ts" />
 /// <reference path="./services/state/stateService.ts" />
+/// <reference path="./services/state/persistentStorageService.ts" />
 /// <reference path="./services/interaction/dialogService.ts" />
 /// <reference path="./services/interaction/domManipulationService.ts" />
 /// <reference path="./services/repository/queryCreatorService.ts" />
@@ -94,6 +95,7 @@ module AngularApplication {
             app.service('NotificationService', Services.NotificationService.injection());
             app.service('EntityMetadataListCacheService', Services.EntityMetadataListCacheService.injection());
             app.service('EntityListCacheService', Services.EntityListCacheService.injection());
+            app.service('PersistentStorageService', Services.PersistentStorageService.injection());
             app.service('StateService', Services.StateService.injection());
             app.service('DialogService', Services.DialogService.injection());
             app.service('DomManipulationService', Services.DomManipulationService.injection());

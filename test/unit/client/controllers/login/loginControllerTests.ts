@@ -77,7 +77,7 @@ describe('Controller: LoginController', function ():void {
         expect(scopeMock.LoginHeader).toEqual('#Login');
         expect(scopeMock.LoginButtonText).toEqual('#Login');
         expect(scopeMock.EntityMetadata).not.toEqual(null);
-        expect(scopeMock.EntityMetadata.Fields.length).toEqual(2);
+        expect(scopeMock.EntityMetadata.Fields.length).toEqual(3);
     });
 
     it('should fill login form user name with last logged in user name', function ():void {
@@ -114,6 +114,7 @@ describe('Controller: LoginController', function ():void {
         expect(loginUserSpy.calls.any()).toEqual(true);
         expect(loginUserSpy.calls.first().args[0]).toEqual('TestUserName');
         expect(loginUserSpy.calls.first().args[1]).toEqual('TestPassword');
+        expect(loginUserSpy.calls.first().args[2]).toEqual(false);
         expect(handleErrorsSpy.calls.any()).toEqual(true);
         expect(handleErrorsSpy.calls.first().args[0]).toEqual('InvalidUserNameOrPassword');
         expect(scopeMock.Entity.Data.Password).toEqual(null);
@@ -133,5 +134,20 @@ describe('Controller: LoginController', function ():void {
         expect(setCurrentUserSessionSpy.calls.first().args[0]).not.toEqual(null);
         expect(loadingStartedSpy.calls.any()).toEqual(true);
         expect(loadingFinishedSpy.calls.any()).toEqual(true);
+    });
+
+    it('should set \'keep logged in\' flag during login when user selected it', function ():void {
+        //Arrange
+        var loginUserSpy:any = userRepositoryServiceMock.LoginUser;
+        scopeMock.Entity.Data.UserName = 'TestUserName';
+        scopeMock.Entity.Data.Password = 'TestPassword';
+        scopeMock.Entity.Data.StayLoggedIn = true;
+
+        //Act
+        scopeMock.Login();
+
+        //Assert
+        expect(loginUserSpy.calls.any()).toEqual(true);
+        expect(loginUserSpy.calls.first().args[2]).toEqual(true);
     });
 });

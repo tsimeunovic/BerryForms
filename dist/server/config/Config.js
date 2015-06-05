@@ -17,6 +17,7 @@ var Config;
         Server.UseOptimisticConcurrencyUpdate = true;
         //Security
         Server.TokenValidityMinutes = 15;
+        Server.StayLoggedInTokenValidityMinutes = 7 * 24 * 60; //7 days
         Server.KeepMeLoggedInTokenValidityMinutes = 15 * 24 * 60; //15 days
         Server.PasswordSalt = 'I^F^y_UmK~G^=1i+xPi|t1_lSOiq~+~La=CvE1Yeh4V~izp~4AnEDVixy4R|';
         //Changing will break entire password database
@@ -24,7 +25,7 @@ var Config;
         //Changing will invalidate all currently valid tokens
         Server.SuperUserName = 'admin';
         Server.SuperUserPassword = 'admin';
-        //Miscelanous
+        //Miscellaneous
         Server.LogRetrieveCount = 8;
         Server.LogSummaryMinutes = 7 * 24 * 60; //7 days
         Server.FieldSummarySample = 512;
