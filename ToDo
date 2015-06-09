@@ -7,7 +7,7 @@ User logged in/out event for plugins
 //Improvements:
 
 //Technical depths:
-Get rid of scope by using aliases
+Get rid of scope by using controller as
 Replace hard-coded dependencies with angular constants (http://twofuckingdevelopers.com/2014/06/angularjs-best-practices-001-constants/)
 
 //Future feature:
