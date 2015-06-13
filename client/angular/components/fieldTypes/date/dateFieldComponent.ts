@@ -2,6 +2,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./dateFieldDirective.ts" />
+/// <reference path="./dateFieldController.ts" />
 /// <reference path="./dateFieldFormFields.ts" />
 /// <reference path="./dateFieldFilter.ts" />
 
@@ -12,11 +13,16 @@ module Components.FieldTypes {
         //Identifier
         public FieldName:string = 'Date';
 
-        //Directive registration
+        //Directive and its controller registration
         public DirectiveName:string = 'fieldDate';
+        public DirectiveControllerName:string = 'DateFieldController';
 
         public DirectiveOptions():any[] {
             return Directives.DateField.injection();
+        }
+
+        public DirectiveControllerOptions():any[] {
+            return Components.FieldTypes.DateFieldController.injection();
         }
 
         //Metadata model

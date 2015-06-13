@@ -1,11 +1,11 @@
-<div class="input-group" data-ng-class="{'error': !IsValid}">
+<div class="input-group" data-ng-class="{'error': !dfc.IsValid}">
     <input type="text" class="form-control errorElement"
-           data-datepicker-popup="{{field.Configuration.DatepickerFormat}}"
-           data-ng-model="LocalDate" data-is-open="Opened"
-           data-datepicker-options="{{field.Configuration.DatepickerOptions}}"
-           readonly="readonly" data-date-disabled="IsDisabled(date, mode)"/>
+           data-datepicker-popup="{{dfc.FieldMetadata.Configuration.DatepickerFormat}}"
+           data-ng-model="dfc.LocalDate" data-is-open="dfc.Opened"
+           data-datepicker-options="{{dfc.FieldMetadata.Configuration.DatepickerOptions}}"
+           readonly="readonly" data-date-disabled="dfc.IsDisabled(date, mode)"/>
     <span class="input-group-btn">
-        <button class="btn btn-default btn-sm errorElement" data-ng-click="ToggleOpen($event)">
+        <button class="btn btn-default btn-sm errorElement" data-ng-click="dfc.ToggleOpen($event)">
             <span class="glyphicon glyphicon-calendar"></span>
         </button>
     </span>

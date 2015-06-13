@@ -1,6 +1,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./relationFieldDirective.ts" />
+/// <reference path="./relationFieldController.ts" />
 /// <reference path="./relationFieldMetadataModel.ts" />
 /// <reference path="./relationFieldFormFields.ts" />
 /// <reference path="./relationFieldFilter.ts" />
@@ -12,10 +13,16 @@ module Components.FieldTypes {
         //Identifier
         public FieldName:string = 'Relation';
 
-        //Directive registration
+        //Directive and its controller registration
         public DirectiveName:string = 'fieldRelation';
+        public DirectiveControllerName:string = 'RelationFieldController';
+
         public DirectiveOptions():any[] {
             return Directives.RelationField.injection();
+        }
+
+        public DirectiveControllerOptions():any[] {
+            return Components.FieldTypes.RelationFieldController.injection();
         }
 
         //Metadata model

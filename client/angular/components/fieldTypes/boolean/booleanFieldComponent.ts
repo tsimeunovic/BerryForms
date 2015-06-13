@@ -1,6 +1,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./booleanFieldDirective.ts" />
+/// <reference path="./booleanFieldController.ts" />
 /// <reference path="./booleanFieldFormFields.ts" />
 /// <reference path="./booleanFieldFilter.ts" />
 
@@ -11,11 +12,16 @@ module Components.FieldTypes {
         //Identifier
         public FieldName:string = 'Boolean';
 
-        //Directive registration
+        //Directive and its controller registration
         public DirectiveName:string = 'fieldBoolean';
+        public DirectiveControllerName:string = 'BooleanFieldController';
 
         public DirectiveOptions():any[] {
             return Directives.BooleanField.injection();
+        }
+
+        public DirectiveControllerOptions():any[] {
+            return Components.FieldTypes.BooleanFieldController.injection();
         }
 
         //Metadata model

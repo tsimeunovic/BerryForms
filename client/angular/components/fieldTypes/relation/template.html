@@ -1,37 +1,39 @@
-<div data-ng-class="{'error': !IsValid}">
+<div data-ng-class="{'error': !rfc.IsValid}">
     <!-- Search -->
-    <div ng-hide="Entity.Data[field.FieldSystemName]">
+    <div ng-hide="rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName]">
         <input type="text"
                class="form-control errorElement entitySearch"
-               placeholder="{{Resources.SearchForEntity}}"
-               data-ng-model="SearchExpression"/>
-        <ul class="search-result-menu" ng-hide="!SearchTimer && !SearchResults">
-            <li ng-show="SearchResults" class="search-result-item selectable" ng-repeat="item in SearchResults">
-                <a ng-click="SelectItem(item)">{{item.Text}}</a>
+               placeholder="{{rfc.Resources.SearchForEntity}}"
+               data-ng-model="rfc.SearchExpression"
+               data-ng-change="rfc.ScheduleSearch()"/>
+        <ul class="search-result-menu" ng-hide="!rfc.SearchTimer && !rfc.SearchResults">
+            <li ng-show="rfc.SearchResults" class="search-result-item selectable" ng-repeat="item in rfc.SearchResults">
+                <a ng-click="rfc.SelectItem(item)">{{item.Text}}</a>
             </li>
-            <li ng-show="SearchResults && SearchResults.MoreResults > 0" class="search-result-item more-results">
-                <a>{{Resources.MoreResults.format([SearchResults.MoreResults.toString()])}}</a>
+            <li ng-show="rfc.SearchResults && rfc.SearchResults.MoreResults > 0"
+                class="search-result-item more-results">
+                <a>{{rfc.Resources.MoreResults.format([SearchResults.MoreResults.toString()])}}</a>
             </li>
-            <li ng-show="SearchTimer" class="search-result-item">
-                <a>{{Resources.Searching}}</a>
+            <li ng-show="rfc.SearchTimer" class="search-result-item">
+                <a>{{rfc.Resources.Searching}}</a>
             </li>
-            <li ng-show="SearchResults && SearchResults.length == 0" class="search-result-item">
-                <a ng-hide="SearchResults.HasError">{{Resources.NoSearchResults}}</a>
-                <a ng-show="SearchResults.HasError">{{Resources.ErrorRetrievingSearchResults}}</a>
+            <li ng-show="rfc.SearchResults && rfc.SearchResults.length == 0" class="search-result-item">
+                <a ng-hide="rfc.SearchResults.HasError">{{rfc.Resources.NoSearchResults}}</a>
+                <a ng-show="rfc.SearchResults.HasError">{{rfc.Resources.ErrorRetrievingSearchResults}}</a>
             </li>
         </ul>
     </div>
     <!-- Selected item -->
-    <div class="btn-group btn-block" ng-show="Entity.Data[field.FieldSystemName]">
+    <div class="btn-group btn-block" ng-show="rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName]">
         <div>
             <button type="button" class="btn btn-default btn-sm form-control errorElement selectedItem">
-                <span data-system-symbol="{{Entity.Data[field.FieldSystemName] && Entity.Data[field.FieldSystemName].Value}}"></span>
-                <a ng-href="#{{GetFollowItemUrl(Entity.Data[field.FieldSystemName])}}" target="_blank">
-                    {{(Entity.Data[field.FieldSystemName] && Entity.Data[field.FieldSystemName].Text)}}
+                <span data-system-symbol="{{rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName] && rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName].Value}}"></span>
+                <a ng-href="#{{rfc.GetFollowItemUrl(rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName])}}" target="_blank">
+                    {{(rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName] && rfc.Entity.Data[rfc.FieldMetadata.FieldSystemName].Text)}}
                 </a>
             </button>
         </div>
-        <button type="button" class="btn btn-default btn-sm errorElement removeButton" ng-click="this.SelectItem(null)">
+        <button type="button" class="btn btn-default btn-sm errorElement removeButton" ng-click="rfc.SelectItem(null)">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
     </div>

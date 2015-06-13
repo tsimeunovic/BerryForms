@@ -11,8 +11,13 @@ module Mocks {
 
         public FieldName:string;
         public DirectiveName:string;
+        DirectiveControllerName:string;
 
         public DirectiveOptions():any[] {
+            return null;
+        }
+
+        public DirectiveControllerOptions():any[] {
             return null;
         }
 

@@ -1,6 +1,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./listFieldDirective.ts" />
+/// <reference path="./listFieldController.ts" />
 /// <reference path="./listFieldFormFields.ts" />
 /// <reference path="./listFieldFilter.ts" />
 
@@ -11,11 +12,16 @@ module Components.FieldTypes {
         //Identifier
         public FieldName:string = 'List';
 
-        //Directive registration
+        //Directive and its controller registration
         public DirectiveName:string = 'fieldList';
+        public DirectiveControllerName:string = 'ListFieldController';
 
         public DirectiveOptions():any[] {
             return Directives.ListField.injection();
+        }
+
+        public DirectiveControllerOptions():any[] {
+            return Components.FieldTypes.ListFieldController.injection();
         }
 
         //Metadata model

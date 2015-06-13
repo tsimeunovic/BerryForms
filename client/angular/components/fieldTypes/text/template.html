@@ -1,16 +1,16 @@
-<div data-ng-class="{'error': !IsValid, 'input-group input-with-symbol':field.Symbol}">
+<div data-ng-class="{'error': !tfc.IsValid, 'input-group input-with-symbol':tfc.FieldMetadata.Symbol}">
     <input type="text"
-           data-ng-if="!field.MaskCharacters"
+           data-ng-if="!tfc.FieldMetadata.MaskCharacters"
            class="form-control errorElement"
-           data-ng-model="Entity.Data[field.FieldSystemName]"
-           data-ng-readonly="field.ReadOnly"/>
+           data-ng-model="tfc.Entity.Data[tfc.FieldMetadata.FieldSystemName]"
+           data-ng-readonly="tfc.FieldMetadata.ReadOnly"/>
     <input type="password"
-           data-ng-if="field.MaskCharacters"
+           data-ng-if="tfc.FieldMetadata.MaskCharacters"
            class="form-control errorElement"
-           data-ng-model="Entity.Data[field.FieldSystemName]"/>
-    <span class="input-group-btn" data-ng-show="field.Symbol">
+           data-ng-model="tfc.Entity.Data[tfc.FieldMetadata.FieldSystemName]"/>
+    <span class="input-group-btn" data-ng-show="tfc.FieldMetadata.Symbol">
         <button type="button" class="btn btn-default btn-sm errorElement" disabled="disabled">
-            <span class="glyphicon glyphicon-{{field.Symbol}}"></span>
+            <span class="glyphicon glyphicon-{{tfc.FieldMetadata.Symbol}}"></span>
         </button>
     </span>
 </div>

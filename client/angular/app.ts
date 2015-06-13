@@ -8,7 +8,6 @@
 /// <reference path="./components/fieldTypes/select/selectFieldDirective.ts" />
 /// <reference path="./components/fieldTypes/textarea/textareaFieldDirective.ts" />
 /// <reference path="./components/fieldTypes/text/textFieldDirective.ts" />
-
 /// <reference path="./controllers/global/menuController.ts" />
 /// <reference path="./controllers/global/loadingController.ts" />
 /// <reference path="./controllers/global/dialogController.ts" />
@@ -24,9 +23,7 @@
 /// <reference path="./controllers/combined/dashboardController.ts" />
 /// <reference path="./controllers/dashboard/dashboardActivitySummaryController.ts" />
 /// <reference path="./controllers/dashboard/dashboardActivityListController.ts" />
-
 /// <reference path="./interceptors/exceptionHandler.ts" />
-
 /// <reference path="./services/communication/messagingService.ts" />
 /// <reference path="./services/communication/queueService.ts" />
 /// <reference path="./services/system/namingConventionsService.ts" />
@@ -49,10 +46,8 @@
 /// <reference path="./services/repository/queryCreatorService.ts" />
 /// <reference path="./services/plugins/pluginsExecutorService.ts" />
 /// <reference path="./services/security/permissionService.ts" />
-
 /// <reference path="./components/fieldTypes/fieldTypesRegistry.ts" />
 /// <reference path="./components/fieldTypes/boolean/booleanFieldComponent.ts" />
-
 /// <reference path="./router.ts" />
 /// <reference path="./helpers/resourceLoader.ts" />
 
@@ -125,6 +120,7 @@ module AngularApplication {
             angular.forEach(_global.Components.FieldTypes, function (value:Components.FieldTypes.IFieldType):void {
                 //Register each field type as directive
                 app.directive(value.DirectiveName, value.DirectiveOptions());
+                app.controller(value.DirectiveControllerName, value.DirectiveControllerOptions());
             });
 
             //Additional bootstrap scripts

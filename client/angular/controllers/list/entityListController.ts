@@ -1,5 +1,6 @@
 /// <reference path="../base/baseListController.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
+/// <reference path="../../../extensions/stringExtensions.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../interfaces/services/interaction/IDialogService.ts" />

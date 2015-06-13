@@ -10,9 +10,11 @@ module Components.FieldTypes {
         //Identifier
         FieldName:string;
 
-        //Directive registration
+        //Directive and its controller registration
         DirectiveName:string;
+        DirectiveControllerName:string;
         DirectiveOptions():any[];
+        DirectiveControllerOptions():any[];
 
         //Metadata model
         CreateMetadata():Models.FieldMetadata;

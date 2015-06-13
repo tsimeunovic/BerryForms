@@ -13,6 +13,7 @@ module Components.FieldTypes {
                     public RegularExpression:string) {
             super();
             this.DirectiveName = ('field{0}').format([this.FieldName]);
+            this.DirectiveControllerName = ('{0}FieldController').format([this.FieldName]);
         }
 
         //Metadata model

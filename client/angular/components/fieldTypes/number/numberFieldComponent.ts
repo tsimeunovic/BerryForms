@@ -1,6 +1,7 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
 /// <reference path="./numberFieldDirective.ts" />
+/// <reference path="./numberFieldController.ts" />
 /// <reference path="./numberFieldFormFields.ts" />
 /// <reference path="./numberFieldFilter.ts" />
 
@@ -11,10 +12,16 @@ module Components.FieldTypes {
         //Identifier
         public FieldName:string = 'Number';
 
-        //Directive registration
+        //Directive and its controller registration
         public DirectiveName:string = 'fieldNumber';
+        public DirectiveControllerName:string = 'NumberFieldController';
+
         public DirectiveOptions():any[] {
             return Directives.NumberField.injection();
+        }
+
+        public DirectiveControllerOptions():any[] {
+            return Components.FieldTypes.NumberFieldController.injection();
         }
 
         //Metadata model
