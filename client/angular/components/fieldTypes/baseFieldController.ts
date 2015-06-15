@@ -1,5 +1,5 @@
-/// <reference path="../../models/core/FieldMetadataModel.ts" />
-/// <reference path="../../../static/RouteParams.ts" />
+/// <reference path="../../models/core/fieldMetadataModel.ts" />
+/// <reference path="../../../static/routeParams.ts" />
 
 module Components.FieldTypes {
     'use strict';

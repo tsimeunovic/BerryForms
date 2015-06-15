@@ -1,6 +1,6 @@
 /// <reference path="./numberFieldMetadataModel.ts" />
 /// <reference path="../baseFieldController.ts" />
-/// <reference path="../../../models/core/EntityModel.ts" />
+/// <reference path="../../../models/core/entityModel.ts" />
 
 module Components.FieldTypes {
     'use strict';
