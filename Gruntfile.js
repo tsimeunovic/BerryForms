@@ -53,7 +53,7 @@ module.exports = function (grunt) {
                     }
                 ]
             },
-            server: '.tmp'
+            tmp: '.tmp'
         },
         tslint: {
             options: {
@@ -198,12 +198,30 @@ module.exports = function (grunt) {
                 src: '{,*/}*.css'
             }
         },
+        purifycss: {
+            options: {},
+            //In 'src' use original html files (purifycss does not find styles from $templatecache) and outputed built javascripts
+            app: {
+                src: ['<%= yeoman.app %>/index.html', '<%= yeoman.app %>/**/*.html', '<%= yeoman.dist %>/scripts/*.js'],
+                css: ['<%= yeoman.dist %>/styles/app-min.css'],
+                dest: '<%= yeoman.dist %>/styles/app-min.css'
+            },
+            external: {
+                src: ['<%= yeoman.app %>/index.html', '<%= yeoman.app %>/**/*.html', '<%= yeoman.dist %>/scripts/*.js'],
+                css: ['<%= yeoman.dist %>/styles/app-external-min.css'],
+                dest: '<%= yeoman.dist %>/styles/app-external-min.css'
+            }
+        },
         concurrent: {
             dist: [
                 'copy:styles',
                 'imagemin',
                 'svgmin',
                 'htmlmin'
+            ],
+            purify: [
+                'purifycss:app',
+                'purifycss:external'
             ]
         },
         karma: {
@@ -339,22 +357,23 @@ module.exports = function (grunt) {
 
     //Build application (compile, bundle, minify)
     grunt.registerTask('build', [
-        'compile',
-        'tslint:all',
-        'clean:dist',
-        'useminPrepare',
-        'concurrent:dist',
-        'autoprefixer',
+        'compile', //Compile all typescript and less files
+        'tslint:all', //Run typescript linter
+        'clean:dist', //Clean 'dist' folder
+        'useminPrepare', //Create references from html block
+        'concurrent:dist', //Do concurrently: copy styles to .tmp, imagemin, svgmin, and htmlmin
+        'autoprefixer', //Adds vendor-prefixes to css
         'concat',
-        'copy:dist',
-        'ngtemplates',
-        'cdnify',
-        'ngmin',
+        'copy:dist', //Copy remaining files to 'dist' folder (localization, server part, fonts, ...)
+        'ngtemplates', //Convert angular templates from html files into app-templates.js
+        'cdnify', //Modify static resource urls
+        'ngmin', //Prepare angular components for minification
         'cssmin',
-        'uglify',
-        'rev',
-        'usemin',
-        'clean:server'
+        'uglify', //Minify javascript files
+        //'concurrent:purify', //Do concurrently: Purify app css and external css (remove unused selectors)
+        'rev', //Add rev hash to files
+        'usemin', //Replace references to static resources
+        'clean:tmp' //Clean '.tmp' folder
     ]);
 
     //Travis build server task

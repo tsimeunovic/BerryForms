@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
-/// <reference path="./numberFieldDirective.ts" />
+/// <reference path="../genericFieldDirective.ts" />
 /// <reference path="./numberFieldController.ts" />
 /// <reference path="./numberFieldFormFields.ts" />
 /// <reference path="./numberFieldFilter.ts" />
@@ -17,7 +17,7 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'NumberFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.NumberField.injection();
+            return Directives.GenericField.injectionFor(this.FieldName);
         }
 
         public DirectiveControllerOptions():any[] {

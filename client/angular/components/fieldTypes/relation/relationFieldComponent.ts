@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
-/// <reference path="./relationFieldDirective.ts" />
+/// <reference path="../genericFieldDirective.ts" />
 /// <reference path="./relationFieldController.ts" />
 /// <reference path="./relationFieldMetadataModel.ts" />
 /// <reference path="./relationFieldFormFields.ts" />
@@ -18,7 +18,7 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'RelationFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.RelationField.injection();
+            return Directives.GenericField.injectionFor(this.FieldName);
         }
 
         public DirectiveControllerOptions():any[] {

@@ -5,6 +5,7 @@ User logged in/out event for plugins
 //Bug fixes:
 
 //Improvements:
+Purify css during build (remove unused css selectors)
 
 //Technical depths:
 Get rid of scope by using controller as

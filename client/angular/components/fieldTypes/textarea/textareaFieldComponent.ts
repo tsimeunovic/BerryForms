@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
-/// <reference path="./textareaFieldDirective.ts" />
+/// <reference path="../genericFieldDirective.ts" />
 /// <reference path="./textareaFieldController.ts" />
 /// <reference path="./textareaFieldFormFields.ts" />
 /// <reference path="./textareaFieldFilter.ts" />
@@ -17,7 +17,7 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'TextareaFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.TextareaField.injection();
+            return Directives.GenericField.injectionFor(this.FieldName);
         }
 
         public DirectiveControllerOptions():any[] {

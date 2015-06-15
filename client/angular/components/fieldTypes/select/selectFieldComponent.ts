@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
-/// <reference path="./selectFieldDirective.ts" />
+/// <reference path="../genericFieldDirective.ts" />
 /// <reference path="./selectFieldController.ts" />
 /// <reference path="./selectFieldFilter.ts" />
 /// <reference path="./selectFieldFormFields.ts" />
@@ -17,7 +17,7 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'SelectFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.SelectField.injection();
+            return Directives.GenericField.injectionFor(this.FieldName);
         }
 
         public DirectiveControllerOptions():any[] {

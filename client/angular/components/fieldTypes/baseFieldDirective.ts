@@ -1,6 +1,6 @@
-/// <reference path="../interfaces/directives/IDirective.ts" />
-/// <reference path="../models/core/fieldMetadataModel.ts" />
-/// <reference path="../services/localization/localizationService.ts" />
+/// <reference path="../../interfaces/directives/IDirective.ts" />
+/// <reference path="../../models/core/fieldMetadataModel.ts" />
+/// <reference path="../../services/localization/localizationService.ts" />
 
 //Base directive for all UI components for creating/editing specific type of data
 module Directives {

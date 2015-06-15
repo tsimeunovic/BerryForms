@@ -1,6 +1,6 @@
 /// <reference path="../../../interfaces/components/fieldTypes/IFieldType.ts" />
 /// <reference path="../../../data/createFieldFormFields.ts" />
-/// <reference path="./textFieldDirective.ts" />
+/// <reference path="../genericFieldDirective.ts" />
 /// <reference path="./textFieldController.ts" />
 /// <reference path="./textFieldFormFields.ts" />
 /// <reference path="./textFieldFilter.ts" />
@@ -17,7 +17,9 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'TextFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.TextField.injection();
+            //Use hardcoded value 'Text' instead of variable to correctly
+            //work with special field types which has no template
+            return Directives.GenericField.injectionFor('Text');
         }
 
         public DirectiveControllerOptions():any[] {
