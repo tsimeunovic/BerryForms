@@ -365,12 +365,12 @@ module.exports = function (grunt) {
         'autoprefixer', //Adds vendor-prefixes to css
         'concat',
         'copy:dist', //Copy remaining files to 'dist' folder (localization, server part, fonts, ...)
+        'concurrent:purify', //Do concurrently: Purify app css and external css (remove unused selectors)
         'ngtemplates', //Convert angular templates from html files into app-templates.js
         'cdnify', //Modify static resource urls
         'ngmin', //Prepare angular components for minification
         'cssmin',
         'uglify', //Minify javascript files
-        //'concurrent:purify', //Do concurrently: Purify app css and external css (remove unused selectors)
         'rev', //Add rev hash to files
         'usemin', //Replace references to static resources
         'clean:tmp' //Clean '.tmp' folder
