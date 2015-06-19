@@ -5,16 +5,16 @@ User logged in/out event for plugins
 //Bug fixes:
 
 //Improvements:
-Purify css during build (remove unused css selectors)
 
 //Technical depths:
-Get rid of scope by using controller as
+Get rid of scope by using controller as (and make it private in FieldControllers)
 Replace hard-coded dependencies with angular constants (http://twofuckingdevelopers.com/2014/06/angularjs-best-practices-001-constants/)
+Cache entity 'DisplayName'
 
 //Future feature:
 Roles and permissions
 Soft delete functionality
-Auto login (ie. long lasting session) and logout
+Logout
 Multi-relationship control
 Settings page
 Entity create and modify date in filter

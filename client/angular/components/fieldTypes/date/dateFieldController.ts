@@ -16,23 +16,25 @@ module Components.FieldTypes {
 
         constructor(Scope:any) {
             super(Scope);
-
+            this.EntityValueChangedEvent = this.EntityValueChanged.bind(this);
             this.EntityValueChanged();
-            this.Watch();
         }
 
-        private Opened:boolean;
-        private LocalDate:any;
+        public Opened:boolean;
+        public LocalDate:any;
 
+        //Bound methods
         /* tslint:disable:no-unused-variable */
-        private ToggleOpen($event:any):void {
-            $event.preventDefault();
-            $event.stopPropagation();
+        public ToggleOpen($event:any):void {
+            if ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+            }
             this.Opened = !this.Opened;
         }
 
         /* tslint:disable:no-unused-variable */
-        private IsDisabled(date:Date, mode:string):boolean {
+        public IsDisabled(date:Date, mode:string):boolean {
             var minDate:number = this.FieldMetadata.MinDate;
             var maxDate:number = this.FieldMetadata.MaxDate;
             var invalidDate:boolean = false;
@@ -65,11 +67,30 @@ module Components.FieldTypes {
             return invalidDate;
         }
 
+        /* tslint:disable:no-unused-variable */
+        public UIValueChanged():void {
+            var utcTime:number = this.ConvertToUtcTime(this.LocalDate);
+            var currentUtcTime:number = this.GetBoundFieldValue();
+            if (utcTime !== currentUtcTime) {
+                this.SetBoundFieldValue(utcTime);
+            }
+        }
+
         //Helper methods
+        private EntityValueChanged():void {
+            var utcTime:number = this.GetBoundFieldValue();
+            var localDate:Date = this.ConvertToLocalDate(utcTime);
+            var currentLocalDate:Date = this.LocalDate;
+            if (!this.AreSameDate(currentLocalDate, localDate)) {
+                this.LocalDate = localDate ? localDate.toISOString() : null;
+            }
+        }
+
         private ConvertToLocalDate(utcTime:number):Date {
             if (!utcTime) {
                 return null;
             }
+
             var utcDate:Date = new Date(utcTime);
             var localTimeZoneOffset:number = utcDate.getTimezoneOffset();
             var localDate:Date = new Date(utcTime + (localTimeZoneOffset * 60 * 1000));
@@ -83,47 +104,13 @@ module Components.FieldTypes {
 
             //String object means that object has been set according to Entity model
             if (Object.prototype.toString.call(localDate) === '[object String]') {
-                return this.Entity.Data[this.FieldMetadata.FieldSystemName];
+                return this.GetBoundFieldValue();
             }
 
             //Convert date
             var localTimeZoneOffset:number = localDate.getTimezoneOffset();
             var utcTime:number = localDate.getTime() - (localTimeZoneOffset * 60 * 1000);
             return utcTime;
-        }
-
-        private Watch():void {
-            var _this:DateFieldController = this;
-
-            //Underlying model changed
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
-                _this.EntityValueChanged();
-            });
-
-            //User changed value
-            this.Scope.$watch(
-                function ():any {
-                    return _this.LocalDate;
-                }, function ():void {
-                    _this.UIValueChanged();
-                });
-        }
-
-        private EntityValueChanged():void {
-            var utcTime:number = this.Entity.Data[this.FieldMetadata.FieldSystemName];
-            var localDate:Date = this.ConvertToLocalDate(utcTime);
-            var currentLocalDate:Date = this.LocalDate;
-            if (!this.AreSameDate(currentLocalDate, localDate)) {
-                this.LocalDate = localDate ? localDate.toISOString() : null;
-            }
-        }
-
-        private UIValueChanged():void {
-            var utcTime:number = this.ConvertToUtcTime(this.LocalDate);
-            var currentUtcTime:number = this.Entity.Data[this.FieldMetadata.FieldSystemName];
-            if (utcTime !== currentUtcTime) {
-                this.Entity.Data[this.FieldMetadata.FieldSystemName] = utcTime;
-            }
         }
 
         private AreSameDate(date1:Date, date2:Date):boolean {

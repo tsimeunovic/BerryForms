@@ -1,7 +1,7 @@
 <div class="input-group" data-ng-class="{'error': !dfc.IsValid}">
     <input type="text" class="form-control errorElement"
            data-datepicker-popup="{{dfc.FieldMetadata.Configuration.DatepickerFormat}}"
-           data-ng-model="dfc.LocalDate" data-is-open="dfc.Opened"
+           data-ng-model="dfc.LocalDate" data-ng-change="dfc.UIValueChanged()" data-is-open="dfc.Opened"
            data-datepicker-options="{{dfc.FieldMetadata.Configuration.DatepickerOptions}}"
            readonly="readonly" data-date-disabled="dfc.IsDisabled(date, mode)"/>
     <span class="input-group-btn">

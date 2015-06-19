@@ -15,22 +15,41 @@ module Components.FieldTypes {
             this.ValueChanged();
         }
 
+        //Bound data
         public Entity:Models.Entity;
         public FieldMetadata:T;
         public IsValid:boolean;
+
+        //Localization resources
         public Resources:Localization.IResources;
+
+        //Entity value changed handler (to register another handler on existing watch)
+        protected EntityValueChangedEvent:() => void;
+
+        public GetBoundFieldValue():any {
+            return this.Entity.Data[this.FieldMetadata.FieldSystemName];
+        }
+
+        public SetBoundFieldValue(value:any):void {
+            this.Entity.Data[this.FieldMetadata.FieldSystemName] = value;
+        }
 
         public WatchValue():void {
             var _this:BaseFieldController<Models.FieldMetadata> = this;
-
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
+            var watchValueFn:() => void = function ():void {
                 _this.ValueChanged();
-            });
+                if (_this.EntityValueChangedEvent) {
+                    _this.EntityValueChangedEvent();
+                }
+            };
+
+            //Watch bound value
+            this.Scope.$watch('Entity.Data[field.FieldSystemName]', watchValueFn);
 
             //Watch parent scope entity
             this.Scope.$watch('Entity', function ():void {
                 _this.Entity = _this.Scope.Entity;
-                _this.ValueChanged();
+                watchValueFn();
             });
         }
 
