@@ -19,6 +19,8 @@ describe('Field Controller: DateFieldController', function ():void {
         entity = new Models.Entity('Test');
         fieldMetadata = new Models.DateFieldMetadata();
         fieldMetadata.FieldSystemName = 'TestField';
+        fieldMetadata.MinDate = Date.UTC(2014, 11, 30);
+        fieldMetadata.MaxDate = Date.UTC(2015, 1, 2);
 
         scopeMock = new Mocks.ScopeMock();
         scopeMock.Entity = entity;
@@ -28,7 +30,7 @@ describe('Field Controller: DateFieldController', function ():void {
 
     it('should parse value from Entity upon load', function ():void {
         //Arrange
-        entity.Data.TestField = 1420070400000; //Utc timestamp for January 1st, 2015
+        entity.Data.TestField = Date.UTC(2015, 0, 1); //Utc timestamp for January 1st, 2015
         var localOffset:number = (new Date(entity.Data.TestField)).getTimezoneOffset();
         var january1stLocalISOString:string = localOffset < 0 ?
             '2014-12-31T' :
@@ -56,9 +58,6 @@ describe('Field Controller: DateFieldController', function ():void {
 
     it('should enable days that are between \'MinDate\' and \'MaxDate\'', function ():void {
         //Arrange
-        fieldMetadata.MinDate = new Date('2014-12-30').getTime();
-        fieldMetadata.MaxDate = new Date('2015-02-02').getTime();
-
         //Act
         var disabledLow:boolean = systemUnderTest.IsDisabled(new Date('2014-11-15'), 'day');
         var disabledBetween:boolean = systemUnderTest.IsDisabled(new Date('2015-01-15'), 'day');
@@ -72,9 +71,6 @@ describe('Field Controller: DateFieldController', function ():void {
 
     it('should enable only months that contain any enabled day', function ():void {
         //Arrange
-        fieldMetadata.MinDate = new Date('2014-12-30').getTime();
-        fieldMetadata.MaxDate = new Date('2015-02-02').getTime();
-
         //Act
         var disabledNov:boolean = systemUnderTest.IsDisabled(new Date('2014-11-01'), 'month');
         var disabledDec:boolean = systemUnderTest.IsDisabled(new Date('2014-12-01'), 'month');
@@ -92,9 +88,6 @@ describe('Field Controller: DateFieldController', function ():void {
 
     it('should enable only years that contain any enabled day', function ():void {
         //Arrange
-        fieldMetadata.MinDate = new Date('2014-12-30').getTime();
-        fieldMetadata.MaxDate = new Date('2015-02-02').getTime();
-
         //Act
         var disabled2013:boolean = systemUnderTest.IsDisabled(new Date('2013-01-01'), 'year');
         var disabled2014:boolean = systemUnderTest.IsDisabled(new Date('2014-01-01'), 'year');
@@ -118,12 +111,12 @@ describe('Field Controller: DateFieldController', function ():void {
         systemUnderTest.UIValueChanged();
 
         //Assert
-        expect(entity.Data.TestField).toEqual(1420070400000);
+        expect(entity.Data.TestField).toEqual(Date.UTC(2015, 0, 1));
     });
 
     it('should update \'LocalDate\' when watch value change', function ():void {
         //Arrange
-        entity.Data.TestField = 1427846400000; //Utc timestamp for April 1st, 2015
+        entity.Data.TestField = Date.UTC(2015, 3, 1); //Utc timestamp for April 1st, 2015
         var localOffset:number = (new Date(entity.Data.TestField)).getTimezoneOffset();
         var april1stLocalISOString:string = localOffset < 0 ?
             '2015-03-31T' :

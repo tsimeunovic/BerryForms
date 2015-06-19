@@ -11,7 +11,7 @@
 'use strict';
 
 describe('Controller: DashboardActivityListController', function ():void {
-    var scopeMock:Mocks.ScopeMock;
+    var scopeMock:any;
     var routeParams:any;
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var notificationServiceMock:Mocks.NotificationServiceMock;
