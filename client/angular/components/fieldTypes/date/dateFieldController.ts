@@ -24,16 +24,11 @@ module Components.FieldTypes {
         public LocalDate:any;
 
         //Bound methods
-        /* tslint:disable:no-unused-variable */
         public ToggleOpen($event:any):void {
-            if ($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-            }
+            this.StopEventPropagation($event);
             this.Opened = !this.Opened;
         }
 
-        /* tslint:disable:no-unused-variable */
         public IsDisabled(date:Date, mode:string):boolean {
             var minDate:number = this.FieldMetadata.MinDate;
             var maxDate:number = this.FieldMetadata.MaxDate;
@@ -67,7 +62,6 @@ module Components.FieldTypes {
             return invalidDate;
         }
 
-        /* tslint:disable:no-unused-variable */
         public UIValueChanged():void {
             var utcTime:number = this.ConvertToUtcTime(this.LocalDate);
             var currentUtcTime:number = this.GetBoundFieldValue();

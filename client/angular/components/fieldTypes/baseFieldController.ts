@@ -74,5 +74,18 @@ module Components.FieldTypes {
                 fieldMetadata.ValueChanged(value, valid);
             }
         }
+
+        protected StopEventPropagation($event:any):void {
+            if ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+            }
+        }
+
+        protected ApplyChanges():void {
+            this.Scope.$apply(function ():void {
+                //Nothing to apply, just run digest to detect opened dropdown
+            });
+        }
     }
 }

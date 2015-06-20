@@ -18,44 +18,33 @@ module Components.FieldTypes {
         constructor(Scope:any,
                     private Document:any) {
             super(Scope);
-            this.Watch();
+            this.EntityValueChangedEvent = this.SetInitialData.bind(this);
         }
 
-        private Opened:boolean;
+        public Opened:boolean;
 
-        /* tslint:disable:no-unused-variable */
-        private ToggleOpen($event:any):void {
-            $event.preventDefault();
-            $event.stopPropagation();
+        public ToggleOpen($event:any):void {
+            this.StopEventPropagation($event);
             this.Opened = !this.Opened;
             this.UpdateDocumentClickHandler();
         }
 
-        /* tslint:disable:no-unused-variable */
-        private SelectOption($event:any, option:string):void {
-            this.Entity.Data[this.FieldMetadata.FieldSystemName] = option;
+        public SelectOption($event:any, option:string):void {
+            //Event propagation is intentionally not stopped to close dialog
+            this.SetBoundFieldValue(option);
             this.Opened = false;
             this.UpdateDocumentClickHandler();
         }
 
-        private Watch():void {
-            var _this:SelectFieldController = this;
-            this.SetInitialData();
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
-                _this.SetInitialData();
-            });
-        }
-
         private SetInitialData():void {
             //Assert initialized model data
-            var fieldSystemName:string = this.FieldMetadata.FieldSystemName;
-            if (this.Entity.Data[fieldSystemName]) {
+            if (this.GetBoundFieldValue()) {
                 return;
             }
-            this.Entity.Data[fieldSystemName] =
-                this.Entity.Data[fieldSystemName] ||
+
+            this.SetBoundFieldValue(this.GetBoundFieldValue() ||
                 this.FieldMetadata.DefaultValue ||
-                new Models.SelectFieldOptionMetadata('', '');
+                new Models.SelectFieldOptionMetadata('', ''));
         }
 
         private UpdateDocumentClickHandler():void {
@@ -70,10 +59,7 @@ module Components.FieldTypes {
 
             this.Opened = false;
             this.UpdateDocumentClickHandler();
-
-            this.Scope.$apply(function ():void {
-                //Nothing to apply, just run digest to detect opened dropdown
-            });
+            this.ApplyChanges();
         }
     }
 }

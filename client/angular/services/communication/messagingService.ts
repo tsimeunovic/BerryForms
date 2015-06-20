@@ -95,16 +95,16 @@ module Services {
 
             //Create implementations
             messageReference.subscribe = function (subscriber:(m:any) => void):() => void {
-                return _this.addSubscriber(messageName, subscriber);
+                return _this.AddSubscriber(messageName, subscriber);
             };
             messageReference.unsubscribe = function (subscriber:(m:any) => void):void {
-                _this.removeSubscriber(messageName, subscriber);
+                _this.RemoveSubscriber(messageName, subscriber);
             };
             messageReference.publish = function (a1:any, a2:any, a3:any, a4:any, a5:any):void {
                 var model:any = transformFn ?
                     transformFn(a1, a2, a3, a4, a5) :
                     (a1 || null);
-                _this.notifySubscribers(messageName, model, requiresRootApply);
+                _this.NotifySubscribers(messageName, model, requiresRootApply);
             };
         }
     }

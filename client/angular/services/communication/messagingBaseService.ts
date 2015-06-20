@@ -9,20 +9,20 @@ module Services {
         }
 
         //Subscribers list
-        private _subscriberList:any[][] = [];
+        private SubscriberList:any[][] = [];
 
         //General implementation for subscribers manipulation and messaging
-        public getSubscribers(messageName:string):any[] {
-            var subscribersQueue:any[] = this._subscriberList[messageName];
+        public GetSubscribers(messageName:string):any[] {
+            var subscribersQueue:any[] = this.SubscriberList[messageName];
             if (typeof subscribersQueue === 'undefined') {
                 subscribersQueue = [];
-                this._subscriberList[messageName] = subscribersQueue;
+                this.SubscriberList[messageName] = subscribersQueue;
             }
             return subscribersQueue;
         }
 
-        public addSubscriber(messageName:string, callbackFunction:(message:any) => void):() => void {
-            var subscribers:any = this.getSubscribers(messageName);
+        public AddSubscriber(messageName:string, callbackFunction:(message:any) => void):() => void {
+            var subscribers:any = this.GetSubscribers(messageName);
             var elementIndex:number = subscribers.indexOf(callbackFunction);
             if (elementIndex === -1) {
                 subscribers.push(callbackFunction);
@@ -31,27 +31,27 @@ module Services {
             //Return unsubscribe function
             var _this:MessagingBaseService = this;
             return function ():void {
-                _this.removeSubscriber(messageName, callbackFunction);
+                _this.RemoveSubscriber(messageName, callbackFunction);
             };
         }
 
-        public addOneTimeSubscriber(messageName:string, callbackFunction:(message:any) => void):() => void {
+        public AddOneTimeSubscriber(messageName:string, callbackFunction:(message:any) => void):() => void {
             var _this:MessagingBaseService = this;
 
             var wrapperFunction:(m:any) => void = function (message:any):void {
                 callbackFunction(message);
-                _this.removeSubscriber(messageName, wrapperFunction);
+                _this.RemoveSubscriber(messageName, wrapperFunction);
             };
 
-            this.addSubscriber(messageName, wrapperFunction);
+            this.AddSubscriber(messageName, wrapperFunction);
 
             return function ():void {
-                _this.removeSubscriber(messageName, wrapperFunction);
+                _this.RemoveSubscriber(messageName, wrapperFunction);
             };
         }
 
-        public removeSubscriber(messageName:string, callbackFunction:(message:any) => void):void {
-            var subscribers:any[] = this.getSubscribers(messageName);
+        public RemoveSubscriber(messageName:string, callbackFunction:(message:any) => void):void {
+            var subscribers:any[] = this.GetSubscribers(messageName);
 
             if (typeof callbackFunction === 'undefined') {
                 subscribers.splice(0);
@@ -63,15 +63,15 @@ module Services {
             }
         }
 
-        public notifySubscribers(messageName:string, message:any, withRootApply:boolean = false):void {
-            var subscribersCopy:any[] = this.getSubscribers(messageName).createCopy();
+        public NotifySubscribers(messageName:string, message:any, withRootApply:boolean = false):void {
+            var subscribersCopy:any[] = this.GetSubscribers(messageName).createCopy();
             for (var i:number = 0; i < subscribersCopy.length; i++) {
                 var subscriberCallback:(message:any) => void = subscribersCopy[i];
-                this.invokeSubscriberCallback(subscriberCallback, message, withRootApply);
+                this.InvokeSubscriberCallback(subscriberCallback, message, withRootApply);
             }
         }
 
-        private invokeSubscriberCallback(subscriberCallback:(message:any) => void, message:any, withRootApply:boolean):void {
+        private InvokeSubscriberCallback(subscriberCallback:(message:any) => void, message:any, withRootApply:boolean):void {
             withRootApply ?
                 this.RootScope.$apply(function ():void {
                     subscriberCallback(message);

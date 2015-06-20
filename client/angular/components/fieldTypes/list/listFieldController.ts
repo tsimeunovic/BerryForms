@@ -18,35 +18,28 @@ module Components.FieldTypes {
             super(Scope);
         }
 
-        private CurrentValue:string;
+        public CurrentValue:string;
 
-        /* tslint:disable:no-unused-variable */
-        private Add($event:any):void {
-            $event.preventDefault();
-            $event.stopPropagation();
+        public Add($event:any):void {
+            this.StopEventPropagation($event);
 
             //Initialize entity object if value is missing
-            var fieldSystemName:string = this.FieldMetadata.FieldSystemName;
-            this.Entity.Data[fieldSystemName] = this.Entity.Data[fieldSystemName] || [];
+            this.SetBoundFieldValue(this.GetBoundFieldValue() || []);
 
-            var existingValues:any = this.Entity.Data[this.FieldMetadata.FieldSystemName];
+            var existingValues:any = this.GetBoundFieldValue();
             var currentValue:string = this.CurrentValue;
             if (currentValue) {
                 existingValues.add(currentValue);
-                this.Scope.ValueChanged();
+                this.ValueChanged();
                 this.CurrentValue = null;
             }
         }
 
-        /* tslint:disable:no-unused-variable */
-        private Remove($event:any, value:string):void {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            var existingValues:any = this.Entity.Data[this.FieldMetadata.FieldSystemName];
+        public Remove($event:any, value:string):void {
+            this.StopEventPropagation($event);
+            var existingValues:any = this.GetBoundFieldValue();
             existingValues.remove(value);
-            this.Scope.ValueChanged();
-            this.CurrentValue = null;
+            this.ValueChanged();
         }
     }
 }

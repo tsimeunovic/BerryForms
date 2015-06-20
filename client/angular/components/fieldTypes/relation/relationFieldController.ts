@@ -26,12 +26,11 @@ module Components.FieldTypes {
             super(Scope);
         }
 
-        private SearchExpression:string;
-        private SearchTimer:number;
-        private SearchResults:any;
+        public SearchExpression:string;
+        public SearchTimer:number;
+        public SearchResults:any;
 
-        /* tslint:disable:no-unused-variable */
-        private ScheduleSearch():void {
+        public ScheduleSearch():void {
             var _this:RelationFieldController = this;
 
             //Invalidate old results
@@ -51,6 +50,20 @@ module Components.FieldTypes {
                     _this.SearchForEntity(_this.SearchExpression);
                 }, Config.Client.SearchTypingWaitTimeMs);
             }
+        }
+
+        public SelectItem(item:Models.SelectFieldOptionMetadata):void {
+            this.SetBoundFieldValue(item);
+            this.SearchExpression = null;
+            this.SearchResults = null;
+        }
+
+        public GetFollowItemUrl(item:Models.SelectFieldOptionMetadata):string {
+            if (!item) {
+                return null;
+            }
+            var entityId:number = parseInt(item.Value, 10);
+            return this.RedirectService.GetEditEntityUrl(this.Entity.EntitySystemName, entityId);
         }
 
         private SearchForEntity(searchExpression:string):void {
@@ -76,22 +89,6 @@ module Components.FieldTypes {
             this.SearchResults = searchResults;
             this.SearchResults.HasError = errorsModel != null;
             this.SearchResults.MoreResults = totalResultsCount - searchResults.length;
-        }
-
-        /* tslint:disable:no-unused-variable */
-        private SelectItem(item:Models.SelectFieldOptionMetadata):void {
-            this.Entity.Data[this.FieldMetadata.FieldSystemName] = item;
-            this.SearchExpression = null;
-            this.SearchResults = null;
-        }
-
-        /* tslint:disable:no-unused-variable */
-        private GetFollowItemUrl(item:Models.SelectFieldOptionMetadata):string {
-            if (!item) {
-                return null;
-            }
-            var entityId:number = parseInt(item.Value, 10);
-            return this.RedirectService.GetEditEntityUrl(this.Entity.EntitySystemName, entityId);
         }
     }
 }

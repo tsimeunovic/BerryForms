@@ -16,42 +16,24 @@ module Components.FieldTypes {
 
         constructor(Scope:any) {
             super(Scope);
-
+            this.EntityValueChangedEvent = this.EntityValueChanged.bind(this);
             this.EntityValueChanged();
-            this.Watch();
         }
 
-        private Value:string;
+        public Value:string;
 
-        private Watch():void {
-            var _this:NumberFieldController = this;
-
-            //Underlying model changed
-            this.Scope.$watch('Entity.Data[field.FieldSystemName]', function ():void {
-                _this.EntityValueChanged();
-            });
-
-            //User changed value
-            this.Scope.$watch(
-                function ():any {
-                    return _this.Value;
-                }, function ():void {
-                    _this.UIValueChanged();
-                });
+        public UIValueChanged():void {
+            var uiValueStr:string = this.Value;
+            var parsed:number = parseFloat(this.Value);
+            this.SetBoundFieldValue(parsed || uiValueStr || null);
         }
 
         private EntityValueChanged():void {
             var parsed:number = parseFloat(this.Value);
-            var currentValue:number = this.Entity.Data[this.FieldMetadata.FieldSystemName];
+            var currentValue:number = this.GetBoundFieldValue();
             if (parsed !== currentValue) {
                 this.Value = currentValue && currentValue.toString();
             }
-        }
-
-        private UIValueChanged():void {
-            var uiValueStr:string = this.Value;
-            var parsed:number = parseFloat(uiValueStr);
-            this.Entity.Data[this.FieldMetadata.FieldSystemName] = parsed || uiValueStr || null;
         }
     }
 }
