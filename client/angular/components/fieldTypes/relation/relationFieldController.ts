@@ -63,9 +63,10 @@ module Components.FieldTypes {
                 return null;
             }
             var entityId:number = parseInt(item.Value, 10);
-            return this.RedirectService.GetEditEntityUrl(this.Entity.EntitySystemName, entityId);
+            return this.RedirectService.GetEditEntityUrl(this.FieldMetadata.RelatedEntity.Value, entityId);
         }
 
+        //Helper methods
         private SearchForEntity(searchExpression:string):void {
             var _this:RelationFieldController = this;
 

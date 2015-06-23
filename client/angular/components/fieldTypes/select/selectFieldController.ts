@@ -19,6 +19,7 @@ module Components.FieldTypes {
                     private Document:any) {
             super(Scope);
             this.EntityValueChangedEvent = this.SetInitialData.bind(this);
+            this.SetInitialData();
         }
 
         public Opened:boolean;
@@ -29,7 +30,7 @@ module Components.FieldTypes {
             this.UpdateDocumentClickHandler();
         }
 
-        public SelectOption($event:any, option:string):void {
+        public SelectOption($event:any, option:Models.SelectFieldOptionMetadata):void {
             //Event propagation is intentionally not stopped to close dialog
             this.SetBoundFieldValue(option);
             this.Opened = false;
