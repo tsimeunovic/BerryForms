@@ -30,6 +30,13 @@ module Services {
         public ExecuteAllPluginsFor(pluginContext:Models.PluginContext<any>, callback:(pluginContext:Models.PluginContext<any>) => void):void {
             var _this:PluginsExecutorService = this;
 
+            //Assert callback object
+            if (!callback) {
+                callback = function (pc:Models.PluginContext<any>):void {
+                    //Empty callback
+                };
+            }
+
             //Check registered plugins existence
             if (!this.RegisteredPlugins || !this.RegisteredPlugins.length) {
                 callback(pluginContext);

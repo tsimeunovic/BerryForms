@@ -29,7 +29,7 @@ describe('Service: PluginsExecutorService', function ():void {
     it('should execute all registered plugins and return correct cancellation status', function ():void {
         //Arrange
         var pluginData:any = {};
-        var pluginContext:Models.PluginContext<any> = new Models.PluginContext(pluginData, 'MockData', 'MockOperation');
+        var pluginContext:Models.PluginContext<any> = new Models.PluginContext(pluginData, 'MockData', 'MockOperation', true);
         var callback:any = new Mocks.CallbackMock();
 
         //Act

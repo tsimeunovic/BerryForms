@@ -5,5 +5,6 @@ module Static {
     export class PluginDataType {
         public static Entity:string = 'Entity';
         public static Metadata:string = 'Metadata';
+        public static UserSession:string = 'UserSession';
     }
 }

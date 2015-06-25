@@ -5,6 +5,7 @@
 /// <reference path="../../../mocks/redirectServiceMock.ts" />
 /// <reference path="../../../mocks/localizationServiceMock.ts" />
 /// <reference path="../../../mocks/persistentStorageServiceMock.ts" />
+/// <reference path="../../../mocks/pluginsExecutorServiceMock.ts" />
 /// <reference path="../../../../../client/angular/services/state/stateService.ts" />
 
 'use strict';
@@ -16,6 +17,7 @@ describe('Service: EntityListCacheService', function ():void {
     var redirectServiceMock:Mocks.RedirectServiceMock;
     var localizationServiceMock:Mocks.LocalizationServiceMock;
     var persistentStorageServiceMock:Mocks.PersistentStorageServiceMock;
+    var pluginsExecutorServiceMock:Mocks.PluginsExecutorServiceMock;
     var systemUnderTest:Services.StateService;
 
     beforeEach(function ():void {
@@ -25,9 +27,10 @@ describe('Service: EntityListCacheService', function ():void {
         redirectServiceMock = new Mocks.RedirectServiceMock();
         localizationServiceMock = new Mocks.LocalizationServiceMock();
         persistentStorageServiceMock = new Mocks.PersistentStorageServiceMock();
+        pluginsExecutorServiceMock = new Mocks.PluginsExecutorServiceMock(false);
 
         systemUnderTest = new Services.StateService(messagingServiceMock, dialogServiceMock,
-            redirectServiceMock, localizationServiceMock, persistentStorageServiceMock);
+            redirectServiceMock, localizationServiceMock, persistentStorageServiceMock, pluginsExecutorServiceMock);
     });
 
     it('should be able to persist edited entity', function ():void {
@@ -117,7 +120,7 @@ describe('Service: EntityListCacheService', function ():void {
 
         //Act
         systemUnderTest = new Services.StateService(messagingServiceMock, dialogServiceMock,
-            redirectServiceMock, localizationServiceMock, persistentStorageServiceMock);
+            redirectServiceMock, localizationServiceMock, persistentStorageServiceMock, pluginsExecutorServiceMock);
 
         //Assert
         expect(userLoggedInMessageSpy.calls.any()).toEqual(true);
@@ -159,5 +162,34 @@ describe('Service: EntityListCacheService', function ():void {
         //Assert
         expect(persistentSaveSessionSpy.calls.any()).toEqual(true);
         expect(persistentSaveSessionSpy.calls.mostRecent().args[0]).toEqual(null);
+    });
+
+    it('should execute user session plugin for \'Create\' when new session is set', function ():void {
+        //Arrange
+        var session:Models.UserSession = new Models.UserSession();
+        var executeAllPluginsForSpy:any = pluginsExecutorServiceMock.ExecuteAllPluginsFor;
+
+        //Act
+        systemUnderTest.SetCurrentUserSession(session);
+
+        //Assert
+        expect(executeAllPluginsForSpy.calls.any()).toEqual(true);
+        expect(executeAllPluginsForSpy.calls.first().args[0].DataType).toEqual(Static.PluginDataType.UserSession);
+        expect(executeAllPluginsForSpy.calls.first().args[0].OperationType).toEqual(Static.PluginOperation.Create);
+    });
+
+    it('should execute user session plugin for \'Delete\' when session expires', function ():void {
+        //Arrange
+        var session:Models.UserSession = new Models.UserSession();
+        var executeAllPluginsForSpy:any = pluginsExecutorServiceMock.ExecuteAllPluginsFor;
+
+        //Act
+        systemUnderTest.SetCurrentUserSession(session);
+        systemUnderTest.SetCurrentUserSession(null);
+
+        //Assert
+        expect(executeAllPluginsForSpy.calls.any()).toEqual(true);
+        expect(executeAllPluginsForSpy.calls.mostRecent().args[0].DataType).toEqual(Static.PluginDataType.UserSession);
+        expect(executeAllPluginsForSpy.calls.mostRecent().args[0].OperationType).toEqual(Static.PluginOperation.Delete);
     });
 });

@@ -4,8 +4,10 @@
 /// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../interfaces/services/localization/ILocalizationService.ts" />
+/// <reference path="../../interfaces/services/plugins/IPluginsExecutorService.ts" />
 /// <reference path="../../models/core/entityModel.ts" />
 /// <reference path="../../../extensions/arrayExtensions.ts" />
+/// <reference path="../../../static/pluginOperations.ts" />
 
 //Stores the state of application for scenarios when it should be preserved after context switching (for example page switch while editing)
 module Services {
@@ -20,6 +22,7 @@ module Services {
                 'RedirectService',
                 'LocalizationService',
                 'PersistentStorageService',
+                'PluginsExecutorService',
                 StateService
             ];
         }
@@ -28,7 +31,8 @@ module Services {
                     private DialogService:Services.IDialogService,
                     private RedirectService:Services.IRedirectService,
                     private LocalizationService:Services.ILocalizationService,
-                    private PersistentStorageService:Services.IPersistentStorageService) {
+                    private PersistentStorageService:Services.IPersistentStorageService,
+                    private PluginsExecutorService:Services.IPluginsExecutorService) {
             this.EditedEntity = null;
             this.CurrentUserSession = null;
             this.PostLoginActions = [];
@@ -54,16 +58,26 @@ module Services {
 
         public SetCurrentUserSession(userSession:Models.UserSession):void {
             var previousSession:Models.UserSession = this.CurrentUserSession;
+            var pluginSession:Models.UserSession = null;
+            var pluginOperation:string = null;
             this.CurrentUserSession = userSession;
             this.UpdateSavedUserSession(userSession);
             if (!userSession) {
                 //Invalidation
+                pluginSession = previousSession;
+                pluginOperation = Static.PluginOperation.Delete;
                 this.MessagingService.Messages.User.LoggedOut.publish(previousSession);
             } else {
                 //New login
+                pluginSession = userSession;
+                pluginOperation = Static.PluginOperation.Create;
                 this.MessagingService.Messages.User.LoggedIn.publish(userSession);
                 this.PostLoginHandler();
             }
+
+            //Execute session associated plugins
+            var pluginContextInitial:Models.PluginContext<Models.UserSession> = Models.PluginContext.CreateForSession(pluginSession, pluginOperation);
+            this.PluginsExecutorService.ExecuteAllPluginsFor(pluginContextInitial, null);
         }
 
         public GetCurrentUserSession():Models.UserSession {
@@ -77,6 +91,11 @@ module Services {
                 currentSession.Token = token;
             }
             this.UpdateSavedUserSession(currentSession);
+
+            //Execute session associated plugins
+            var pluginContextInitial:Models.PluginContext<Models.UserSession> =
+                Models.PluginContext.CreateForSession(currentSession, Static.PluginOperation.Update);
+            this.PluginsExecutorService.ExecuteAllPluginsFor(pluginContextInitial, null);
         }
 
         public RegisterPostLoginAction(actionName:string, canCancel:boolean, action:() => void, cancel:() => void):void {

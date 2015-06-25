@@ -23,7 +23,10 @@ module Mocks {
                 pluginContext.SetCancellation(pluginMock, 'CancelledByPluginsExecutorServiceMock');
                 pluginContext.CancellationPluginErrorModel = 'CancellationErrorModelMock';
             }
-            callback(pluginContext);
+
+            if (callback) {
+                callback(pluginContext);
+            }
         }
 
         private Setup():void {
