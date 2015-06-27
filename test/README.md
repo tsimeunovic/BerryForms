@@ -78,7 +78,7 @@ export class ScopeMock {
 describe('Component with $watch', function ():void {
     //Initialization code
 
-    it('should do something with dependency', function ():void {
+    it('should do something when watched value changes', function ():void {
         //Arrange
         var watchSpy:any = scopeMock.$watch;
         var firstWatchExpression:string = watchSpy.calls.first().args[0];
@@ -95,3 +95,57 @@ describe('Component with $watch', function ():void {
 ```
 
 Same principle can be applied to `$on`, `$broadcast`, `$apply`, etc. and also to any other angular dependency like `$document`, `$timeout`, etc. For directives all logic is isolated into separate controller which is then tested same way so there is no need for `var element = $compile("<directive></directive>")($rootScope);` type of tests. Thanks to Typescript and explicit objects creation we have very good control over all dependencies so all tests are testing single unit instead of cross components integration. Once new dependency is added to component, Typescript compiler will make sure that its supplied in every test where component is create so we don't accidentally miss it. Thanks to that it never happens that change in xxx.ts file breaks unrelated yyyTests.ts tests.
+
+### E2E tests
+E2E tests aims to test overall application integration from interaction with browser all the way to the database. Before execution custom node script `/test/e2e/before-scenarios/setupDatabase.js` is invoked which makes sure database is prepared for tests execution. After that tests are executed in specific order as some of the actions creates data that other tests rely on. Testing framework **ng-scenario** is used for browser interactions. All specific DOM selectors are grouped by component in page objects to make tests easy to maintain and read.
+
+```javascript
+//Page object
+export class Dialog {
+    constructor() {
+        this.DialogSelector = '.dialog';
+        this.DialogScopeName = 'Dialog';
+    }
+
+    private DialogSelector:string;
+    private DialogScopeName:string;
+
+    public static Current():Dialog {
+        return new Dialog();
+    }
+
+    public static NavigateTo():void {
+        browser().navigateTo('/dialog');
+    }
+
+    public EnterValueAndSubmit(value:string):void {
+        using(this.DialogSelector, this.DialogScopeName).input('.input').enter(value);
+        using(this.DialogSelector, this.DialogScopeName).element('.btn').click();
+    }
+
+    public VisibleDialogsCount():any {
+        return element(this.DialogSelector + ':visible').count();
+    }
+
+    //More helper functions
+}
+
+//Test
+describe('Dialog', function ():void {
+    beforeEach(function ():void {
+        //Navigate to page with dialog
+        Dialog.NavigateTo();
+    });
+
+    it('should close after entering value', function ():void {
+        //Arrange
+        var dialog:Dialog = Dialog.Current();
+
+        //Act
+        dialog.EnterValueAndSubmit('value');
+
+        //Assert
+        expect(dialog.VisibleDialogsCount()).toEqual(0);
+    });
+});
+```
