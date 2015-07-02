@@ -6,9 +6,10 @@
 //Improvements:
 
 //Technical depths:
+Optimize watches (cache entity 'DisplayName')
+Try to replace 'injection' by 'grunt-ng-anotate'
 Get rid of scope by using controller as (and make it private in FieldControllers)
 Replace hard-coded dependencies with angular constants (http://twofuckingdevelopers.com/2014/06/angularjs-best-practices-001-constants/)
-Cache entity 'DisplayName'
 
 //Future feature:
 Roles and permissions
