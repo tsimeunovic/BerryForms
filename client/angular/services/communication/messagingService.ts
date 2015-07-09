@@ -10,16 +10,9 @@ module Services {
     'use strict';
 
     export class MessagingService extends MessagingBaseService implements Services.IMessagingService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$rootScope',
-                MessagingService
-            ];
-        }
-
-        constructor(RootScope:any) {
-            super(RootScope);
+        //@ngInject
+        constructor($rootScope:any) {
+            super($rootScope);
             this.CreateMessageDefinitions();
             this.Setup();
         }

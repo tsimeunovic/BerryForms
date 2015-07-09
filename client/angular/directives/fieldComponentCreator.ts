@@ -7,22 +7,17 @@ module Directives {
     'use strict';
 
     export class FieldComponentCreator implements Directives.IDirective {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$compile',
-                'FieldTypesRegistry',
-                FieldComponentCreator.DirectiveOptions
-            ];
-        }
-
         private static Compile:any;
         private static FieldTypesRegistry:Components.FieldTypes.IFieldTypesRegistry;
 
+        private Scope:any;
+        private Element:any;
+
+        //@ngInject
         public static DirectiveOptions($compile:any,
-                                       fieldTypesRegistry:Components.FieldTypes.IFieldTypesRegistry):any {
+                                       FieldTypesRegistry:Components.FieldTypes.IFieldTypesRegistry):any {
             FieldComponentCreator.Compile = $compile;
-            FieldComponentCreator.FieldTypesRegistry = fieldTypesRegistry;
+            FieldComponentCreator.FieldTypesRegistry = FieldTypesRegistry;
 
             return {
                 restrict: 'A',
@@ -34,9 +29,6 @@ module Directives {
                 }
             };
         }
-
-        private Scope:any;
-        private Element:any;
 
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             this.Scope = $scope;

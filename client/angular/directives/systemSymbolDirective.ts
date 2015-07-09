@@ -10,13 +10,14 @@ module Directives {
     'use strict';
 
     export class SystemSymbol implements Directives.IDirective {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                SystemSymbol.DirectiveOptions
-            ];
-        }
+        public Scope:any;
 
+        private Types:any[] = [
+            {Name: 'Icon', SystemName: Config.Client.SystemIconIdentifier},
+            {Name: 'Color', SystemName: Config.Client.SystemColorIdentifier}
+        ];
+
+        //@ngInject
         public static DirectiveOptions():any {
             return {
                 restrict: 'A',
@@ -29,13 +30,6 @@ module Directives {
                 }
             };
         }
-
-        public Scope:any;
-
-        private Types:any[] = [
-            {Name: 'Icon', SystemName: Config.Client.SystemIconIdentifier},
-            {Name: 'Color', SystemName: Config.Client.SystemColorIdentifier}
-        ];
 
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             var argument:string = $linkAttributes.systemSymbol;

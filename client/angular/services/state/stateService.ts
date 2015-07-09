@@ -14,19 +14,7 @@ module Services {
     'use strict';
 
     export class StateService implements Services.IStateService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                'MessagingService',
-                'DialogService',
-                'RedirectService',
-                'LocalizationService',
-                'PersistentStorageService',
-                'PluginsExecutorService',
-                StateService
-            ];
-        }
-
+        //@ngInject
         constructor(private MessagingService:Services.IMessagingService,
                     private DialogService:Services.IDialogService,
                     private RedirectService:Services.IRedirectService,

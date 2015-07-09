@@ -8,16 +8,10 @@ module Services {
     'use strict';
 
     export class LocalizationService implements Services.ILocalizationService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                LocalizationService
-            ];
-        }
-
         //Static entry point for resources (for data classes and models where testability is not required)
         public static Resources:Localization.IResources;
 
+        //@ngInject
         constructor() {
             this.Resources = _global.Localization.Resources;
             LocalizationService.Resources = _global.Localization.Resources;

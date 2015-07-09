@@ -10,32 +10,17 @@ module Controllers {
     'use strict';
 
     export class DashboardActivityListController extends BaseViewController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$routeParams',
-                'MessagingService',
-                'NotificationService',
-                'QueueService',
-                'StateService',
-                'LocalizationService',
-                'DashboardRepositoryService',
-                DashboardActivityListController
-            ];
-        }
-
-        constructor(Scope:any,
-                    RouteParams:any,
+        //@ngInject
+        constructor($scope:any,
+                    $routeParams:any,
                     MessagingService:Services.IMessagingService,
                     NotificationService:Services.INotificationService,
                     QueueService:Services.IQueueService,
                     StateService:Services.IStateService,
                     private LocalizationService:Services.ILocalizationService,
                     private DashboardRepositoryService:Services.IDashboardRepositoryService) {
-            super(Scope, Static.ControllerArea.Dashboard, MessagingService, NotificationService, QueueService, StateService);
-
-            this.EntityName = RouteParams[Static.RouteParams.EntityName];
+            super($scope, Static.ControllerArea.Dashboard, MessagingService, NotificationService, QueueService, StateService);
+            this.EntityName = $routeParams[Static.RouteParams.EntityName];
             this.InitializeScope();
         }
 

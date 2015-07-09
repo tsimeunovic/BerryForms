@@ -20,17 +20,7 @@ module Services {
     'use strict';
 
     export class EntityModelMapperService extends Services.ObjectMapperBaseService implements Services.IEntityModelMapperService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                'NamingConventionsService',
-                'FieldTypesRegistry',
-                'NotificationService',
-                'LocalizationService',
-                EntityModelMapperService
-            ];
-        }
-
+        //@ngInject
         constructor(private NamingConventionsService:Services.INamingConventionsService,
                     private FieldTypesRegistry:Components.FieldTypes.IFieldTypesRegistry,
                     private NotificationService:Services.INotificationService,

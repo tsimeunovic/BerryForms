@@ -6,18 +6,10 @@ module Controllers {
     'use strict';
 
     export class DialogController extends BaseController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                DialogController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     private MessagingService:Services.IMessagingService) {
-            super(Scope);
+            super($scope);
             this.Initialize();
             this.RegisterListeners();
         }

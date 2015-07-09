@@ -12,22 +12,18 @@ module Directives {
     'use strict';
 
     export class DashboardActivityItemChart implements Directives.IDirective {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                'LocalizationService',
-                'EntityMetadataListCacheService',
-                DashboardActivityItemChart.DirectiveOptions
-            ];
-        }
-
         private static LocalizationService:Services.ILocalizationService;
         private static EntityMetadataListCacheService:Services.IEntityMetadataListCacheService;
 
-        public static DirectiveOptions(localizationService:Services.ILocalizationService,
-                                       entityMetadataListCacheService:Services.IEntityMetadataListCacheService):any {
-            DashboardActivityItemChart.EntityMetadataListCacheService = entityMetadataListCacheService;
-            DashboardActivityItemChart.LocalizationService = localizationService;
+        public Scope:any;
+        private Element:any;
+        private ChartElement:any;
+
+        //@ngInject
+        public static DirectiveOptions(LocalizationService:Services.ILocalizationService,
+                                       EntityMetadataListCacheService:Services.IEntityMetadataListCacheService):any {
+            DashboardActivityItemChart.EntityMetadataListCacheService = EntityMetadataListCacheService;
+            DashboardActivityItemChart.LocalizationService = LocalizationService;
             return {
                 restrict: 'A',
                 scope: '=',
@@ -39,10 +35,6 @@ module Directives {
                 }
             };
         }
-
-        public Scope:any;
-        private Element:any;
-        private ChartElement:any;
 
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             this.Scope = $scope;

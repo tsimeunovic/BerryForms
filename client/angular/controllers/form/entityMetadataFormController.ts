@@ -15,22 +15,8 @@ module Controllers {
     'use strict';
 
     export class EntityMetadataFormController extends BaseViewController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                'NotificationService',
-                'QueueService',
-                'StateService',
-                'EntityRepositoryService',
-                'LocalizationService',
-                'EntityModelMapperService',
-                'RedirectService',
-                EntityMetadataFormController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     MessagingService:Services.IMessagingService,
                     NotificationService:Services.INotificationService,
                     QueueService:Services.IQueueService,
@@ -39,7 +25,7 @@ module Controllers {
                     private LocalizationService:Services.ILocalizationService,
                     private EntityModelMapperService:Services.IEntityModelMapperService,
                     private RedirectService:Services.IRedirectService) {
-            super(Scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
+            super($scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
             this.InitializeScope();
         }
 

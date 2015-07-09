@@ -9,27 +9,16 @@ module Controllers {
     'use strict';
 
     export class MenuController extends BaseController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                'EntityMetadataListCacheService',
-                'LocalizationService',
-                'NotificationService',
-                MenuController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     private MessagingService:Services.IMessagingService,
                     private EntityMetadataListCacheService:Services.IEntityMetadataListCacheService,
-                    private LocalizationService:Services.ILocalizationService,
-                    private NotificationService:Services.INotificationService) {
-            super(Scope);
+                    private LocalizationService:Services.ILocalizationService) {
+            super($scope);
             this.InitializeScope();
         }
 
-        private InitializeScope():void {
+        public InitializeScope():void {
             this.Scope.CreateNewEntityTitle = this.LocalizationService.Resources.CreateNewEntity;
 
             this.RetrieveDataFromEntityMetadataCache();

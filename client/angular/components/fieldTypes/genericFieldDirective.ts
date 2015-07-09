@@ -4,7 +4,7 @@ module Directives {
     'use strict';
 
     export class GenericField extends Directives.BaseField {
-        public static injectionFor(fieldName:string):any[] {
+        public static InjectionFor(fieldName:string):any[] {
             return [
                 GenericField.DirectiveOptionsFor(fieldName)
             ];

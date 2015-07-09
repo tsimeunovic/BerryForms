@@ -7,14 +7,7 @@ module Services {
     'use strict';
 
     export class NotificationService implements Services.INotificationService {
-        public static injection():any[] {
-            return [
-                'LocalizationService',
-                'MessagingService',
-                NotificationService
-            ];
-        }
-
+        //@ngInject
         constructor(private LocalizationService:Services.ILocalizationService,
                     private MessagingService:Services.IMessagingService) {
         }

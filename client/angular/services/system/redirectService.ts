@@ -7,16 +7,12 @@ module Services {
     'use strict';
 
     export class RedirectService implements Services.IRedirectService {
-        public static injection():any[] {
-            return [
-                '$location',
-                'MessagingService',
-                RedirectService
-            ];
-        }
+        private LocationService:any;
 
-        constructor(private LocationService:any,
+        //@ngInject
+        constructor($location:any,
                     private MessagingService:Services.IMessagingService) {
+            this.LocationService = $location;
         }
 
         //Redirects

@@ -31,11 +31,11 @@ describe('Controller: EntityListWithFilterController', function ():void {
     var createEntityListWithFilterController:() => void = function ():void {
         systemUnderTest = new Controllers.EntityListWithFilterController(
             scopeMock,
+            routeParams,
             messagingServiceMock,
             notificationServiceMock,
             queueServiceMock,
             stateServiceMock,
-            routeParams,
             entityListCacheServiceMock,
             entityMetadataListCacheServiceMock,
             redirectServiceMock,

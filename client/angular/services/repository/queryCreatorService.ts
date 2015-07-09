@@ -5,10 +5,9 @@ module Services {
     'use strict';
 
     export class QueryCreatorService implements Services.IQueryCreatorService {
-        public static injection():any[] {
-            return [
-                QueryCreatorService
-            ];
+        //@ngInject
+        constructor() {
+            //Nothing to do here
         }
 
         public CreateRelationSearchQuery(entityMetadata:Models.EntityMetadata, searchExpression:string):any {

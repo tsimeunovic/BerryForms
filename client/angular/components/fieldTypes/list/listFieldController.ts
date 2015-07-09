@@ -6,16 +6,9 @@ module Components.FieldTypes {
     'use strict';
 
     export class ListFieldController extends BaseFieldController<Models.ListFieldMetadata> {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                ListFieldController
-            ];
-        }
-
-        constructor(Scope:any) {
-            super(Scope);
+        //@ngInject
+        constructor($scope:any) {
+            super($scope);
         }
 
         public CurrentValue:string;

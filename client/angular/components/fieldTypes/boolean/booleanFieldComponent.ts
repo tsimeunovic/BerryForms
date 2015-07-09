@@ -17,11 +17,11 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'BooleanFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.GenericField.injectionFor(this.FieldName);
+            return Directives.GenericField.InjectionFor(this.FieldName);
         }
 
-        public DirectiveControllerOptions():any[] {
-            return Components.FieldTypes.BooleanFieldController.injection();
+        public DirectiveControllerOptions():any {
+            return Components.FieldTypes.BooleanFieldController;
         }
 
         //Metadata model

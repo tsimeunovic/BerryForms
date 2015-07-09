@@ -18,11 +18,11 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'DateFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.GenericField.injectionFor(this.FieldName);
+            return Directives.GenericField.InjectionFor(this.FieldName);
         }
 
-        public DirectiveControllerOptions():any[] {
-            return Components.FieldTypes.DateFieldController.injection();
+        public DirectiveControllerOptions():any {
+            return Components.FieldTypes.DateFieldController;
         }
 
         //Metadata model

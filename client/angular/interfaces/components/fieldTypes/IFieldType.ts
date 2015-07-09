@@ -14,7 +14,7 @@ module Components.FieldTypes {
         DirectiveName:string;
         DirectiveControllerName:string;
         DirectiveOptions():any[];
-        DirectiveControllerOptions():any[];
+        DirectiveControllerOptions():any;
 
         //Metadata model
         CreateMetadata():Models.FieldMetadata;

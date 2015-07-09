@@ -8,9 +8,6 @@
 /// <reference path="../../interfaces/services/system/IRedirectService.ts" />
 /// <reference path="../../interfaces/services/communication/IMessagingService.ts" />
 /// <reference path="../../interfaces/services/state/IEntityMetadataListCacheService.ts" />
-/// <reference path="../../interfaces/services/state/IEntityListCacheService.ts" />
-/// <reference path="../../interfaces/services/interaction/IDialogService.ts" />
-/// <reference path="../../interfaces/services/interaction/IDomManipulationService.ts" />
 /// <reference path="../../../static/controllerArea.ts" />
 /// <reference path="../../../static/routeParams.ts" />
 /// <reference path="../../../static/notificationSeverity.ts" />
@@ -20,29 +17,9 @@ module Controllers {
     'use strict';
 
     export class EntityFormController extends BaseViewController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$routeParams',
-                'MessagingService',
-                'NotificationService',
-                'QueueService',
-                'StateService',
-                'EntityRepositoryService',
-                'EntityMetadataListCacheService',
-                'EntityModelMapperService',
-                'EntityListCacheService',
-                'LocalizationService',
-                'RedirectService',
-                'DialogService',
-                'DomManipulationService',
-                EntityFormController
-            ];
-        }
-
-        constructor(Scope:any,
-                    RouteParams:any,
+        //@ngInject
+        constructor($scope:any,
+                    $routeParams:any,
                     MessagingService:Services.IMessagingService,
                     NotificationService:Services.INotificationService,
                     QueueService:Services.IQueueService,
@@ -50,15 +27,12 @@ module Controllers {
                     private EntityRepositoryService:Services.IEntityRepositoryService,
                     private EntityMetadataListCacheService:Services.IEntityMetadataListCacheService,
                     private EntityModelMapperService:Services.IEntityModelMapperService,
-                    private EntityListCacheService:Services.IEntityListCacheService,
                     private LocalizationService:Services.ILocalizationService,
-                    private RedirectService:Services.IRedirectService,
-                    private DialogService:Services.IDialogService,
-                    private DomManipulationService:Services.IDomManipulationService) {
-            super(Scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
-            var entityName:string = RouteParams[Static.RouteParams.EntityName];
-            var entityId:number = RouteParams[Static.RouteParams.EntityId];
-            var pageNumber:number = RouteParams[Static.RouteParams.PageNumber] || 1;
+                    private RedirectService:Services.IRedirectService) {
+            super($scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
+            var entityName:string = $routeParams[Static.RouteParams.EntityName];
+            var entityId:number = $routeParams[Static.RouteParams.EntityId];
+            var pageNumber:number = $routeParams[Static.RouteParams.PageNumber] || 1;
             var pageIndex:number = pageNumber - 1;
 
             this.EntityName = entityName;

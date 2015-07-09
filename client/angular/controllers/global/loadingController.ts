@@ -10,20 +10,11 @@ module Controllers {
     'use strict';
 
     export class LoadingController extends BaseController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                'StateService',
-                LoadingController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     private MessagingService:Services.IMessagingService,
                     private StateService:Services.IStateService) {
-            super(Scope);
+            super($scope);
             this.Initialize();
         }
 

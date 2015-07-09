@@ -244,7 +244,10 @@ module.exports = function (grunt) {
                 html: ['<%= yeoman.dist %>/*.html']
             }
         },
-        ngmin: {
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
             dist: {
                 files: [
                     {
@@ -367,8 +370,8 @@ module.exports = function (grunt) {
         'copy:dist', //Copy remaining files to 'dist' folder (localization, server part, fonts, ...)
         'concurrent:purify', //Do concurrently: Purify app css and external css (remove unused selectors)
         'ngtemplates', //Convert angular templates from html files into app-templates.js
+        'ngAnnotate:dist', //Prepare angular components for minification
         'cdnify', //Modify static resource urls
-        'ngmin', //Prepare angular components for minification
         'cssmin',
         'uglify', //Minify javascript files
         'rev', //Add rev hash to files

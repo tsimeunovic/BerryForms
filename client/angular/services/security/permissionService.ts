@@ -6,13 +6,7 @@ module Services {
     'use strict';
 
     export class PermissionService implements Services.IPermissionService {
-        public static injection():any[] {
-            return [
-                'StateService',
-                PermissionService
-            ];
-        }
-
+        //@ngInject
         constructor(private StateService:Services.IStateService) {
         }
 

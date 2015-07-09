@@ -8,14 +8,7 @@ module Services {
     'use strict';
 
     export class UserRepositoryService implements Services.IUserRepositoryService {
-        public static injection():any[] {
-            return [
-                'HttpWrapperService',
-                'UrlLocatorService',
-                UserRepositoryService
-            ];
-        }
-
+        //@ngInject
         constructor(private HttpWrapperService:Services.IHttpWrapperService,
                     private UrlLocatorService:Services.IUrlLocatorService) {
         }

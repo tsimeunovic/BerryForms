@@ -19,28 +19,9 @@ module Controllers {
     'use strict';
 
     export class FieldMetadataFormController extends BaseViewController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$routeParams',
-                'MessagingService',
-                'NotificationService',
-                'QueueService',
-                'StateService',
-                'EntityRepositoryService',
-                'EntityMetadataListCacheService',
-                'LocalizationService',
-                'EntityModelMapperService',
-                'RedirectService',
-                'DialogService',
-                'DomManipulationService',
-                FieldMetadataFormController
-            ];
-        }
-
-        constructor(Scope:any,
-                    RouteParams:any,
+        //@ngInject
+        constructor($scope:any,
+                    $routeParams:any,
                     MessagingService:Services.IMessagingService,
                     NotificationService:Services.INotificationService,
                     QueueService:Services.IQueueService,
@@ -52,8 +33,8 @@ module Controllers {
                     private RedirectService:Services.IRedirectService,
                     private DialogService:Services.IDialogService,
                     private DomManipulationService:Services.IDomManipulationService) {
-            super(Scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
-            this.EntityName = RouteParams[Static.RouteParams.EntityName];
+            super($scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
+            this.EntityName = $routeParams[Static.RouteParams.EntityName];
             this.InitializeScope();
         }
 

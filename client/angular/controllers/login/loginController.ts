@@ -10,27 +10,15 @@ module Controllers {
     'use strict';
 
     export class LoginController extends BaseController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                'StateService',
-                'DialogService',
-                'LocalizationService',
-                'UserRepositoryService',
-                'NotificationService',
-                LoginController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     private MessagingService:Services.IMessagingService,
                     private StateService:Services.IStateService,
                     private DialogService:Services.IDialogService,
                     private LocalizationService:Services.ILocalizationService,
                     private UserRepositoryService:Services.IUserRepositoryService,
                     private NotificationService:Services.INotificationService) {
-            super(Scope);
+            super($scope);
             this.MessagingService.Messages.User.LoggedIn.subscribe(this.LoggedInUserChanged.bind(this));
             this.MessagingService.Messages.User.LoggedOut.subscribe(this.LoggedInUserChanged.bind(this));
             this.LoggedInUserChanged(null);

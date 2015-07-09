@@ -8,18 +8,15 @@ module Services {
     'use strict';
 
     export class HttpWrapperService implements IHttpWrapperService {
-        public static injection():any[] {
-            return [
-                '$q',
-                '$http',
-                'StateService',
-                HttpWrapperService
-            ];
-        }
+        private Q:any;
+        private Http:any;
 
-        constructor(private Q:any,
-                    private Http:any,
+        //@ngInject
+        constructor($q:any,
+                    $http:any,
                     private StateService:Services.IStateService) {
+            this.Q = $q;
+            this.Http = $http;
         }
 
         public AnonymousGet(url:string, actionName:string):any {

@@ -10,20 +10,13 @@ module Interceptors {
     'use strict';
 
     export class ExceptionHandler {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$log',
-                ExceptionHandler.FactoryRegistration
-            ];
-        }
+        private static Log:any;
 
-        public static FactoryRegistration(log:any):(exception:any) => void {
-            ExceptionHandler.Log = log;
+        //@ngInject
+        public static FactoryRegistration($log:any):(exception:any) => void {
+            ExceptionHandler.Log = $log;
             return ExceptionHandler.HandleUncaughtError;
         }
-
-        private static Log:any;
 
         private static HandleUncaughtError(exception:any):void {
             //Log error to console

@@ -6,16 +6,9 @@ module Components.FieldTypes {
     'use strict';
 
     export class NumberFieldController extends BaseFieldController<Models.NumberFieldMetadata> {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                NumberFieldController
-            ];
-        }
-
-        constructor(Scope:any) {
-            super(Scope);
+        //@ngInject
+        constructor($scope:any) {
+            super($scope);
             this.EntityValueChangedEvent = this.EntityValueChanged.bind(this);
             this.EntityValueChanged();
         }

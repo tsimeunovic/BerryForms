@@ -7,18 +7,12 @@ module Services {
     'use strict';
 
     export class UrlLocatorService implements Services.IUrlLocatorService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                UrlLocatorService
-            ];
+        //@ngInject
+        constructor() {
+            //Nothing to do here
         }
 
         private ApiBaseUrl:string = Config.Client.ApiBaseUrl;
-
-        private AddPreventCacheParameter(url:string):string {
-            return url + '?t=' + new Date().getTime();
-        }
 
         //Server routes
         public GetUrlForEntityMetadataListRetrieve():string {
@@ -94,6 +88,10 @@ module Services {
                 url = (this.ApiBaseUrl + 'dashboard/activity/{0}/all').format([entityName]);
             }
             return this.AddPreventCacheParameter(url);
+        }
+
+        private AddPreventCacheParameter(url:string):string {
+            return url + '?t=' + new Date().getTime();
         }
     }
 }

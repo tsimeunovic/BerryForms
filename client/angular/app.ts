@@ -57,60 +57,60 @@ module AngularApplication {
         public static Start():void {
             var app:any = angular.module('BerryFormsApp', ['ngRoute', 'ui.bootstrap.datepicker', 'ui.sortable', 'toaster']);
             //Routing & Configuration
-            app.config(Config.Router.injection());
+            app.config(Config.Router.InitializeRoutes);
 
             //Interceptors
-            app.factory('$exceptionHandler', Interceptors.ExceptionHandler.injection());
+            app.factory('$exceptionHandler', Interceptors.ExceptionHandler.FactoryRegistration);
 
             //Directives
-            app.directive('leftMenuAutosize', Directives.LeftMenuAutosize.injection());
-            app.directive('systemSymbol', Directives.SystemSymbol.injection());
-            app.directive('fieldComponentCreator', Directives.FieldComponentCreator.injection());
-            app.directive('dashboardActivityItemChart', Directives.DashboardActivityItemChart.injection());
+            app.directive('leftMenuAutosize', Directives.LeftMenuAutosize.DirectiveOptions);
+            app.directive('systemSymbol', Directives.SystemSymbol.DirectiveOptions);
+            app.directive('fieldComponentCreator', Directives.FieldComponentCreator.DirectiveOptions);
+            app.directive('dashboardActivityItemChart', Directives.DashboardActivityItemChart.DirectiveOptions);
 
             //Services
-            app.service('MessagingService', Services.MessagingService.injection());
-            app.service('QueueService', Services.QueueService.injection());
-            app.service('NamingConventionsService', Services.NamingConventionsService.injection());
-            app.service('EntityModelMapperService', Services.EntityModelMapperService.injection());
-            app.service('FilterConverterService', Services.FilterConverterService.injection());
-            app.service('RedirectService', Services.RedirectService.injection());
-            app.service('LocalizationService', Services.LocalizationService.injection());
-            app.service('HttpWrapperService', Services.HttpWrapperService.injection());
-            app.service('EntityRepositoryService', Services.EntityRepositoryService.injection());
-            app.service('UserRepositoryService', Services.UserRepositoryService.injection());
-            app.service('DashboardRepositoryService', Services.DashboardRepositoryService.injection());
-            app.service('UrlLocatorService', Services.UrlLocatorService.injection());
-            app.service('NotificationService', Services.NotificationService.injection());
-            app.service('EntityMetadataListCacheService', Services.EntityMetadataListCacheService.injection());
-            app.service('EntityListCacheService', Services.EntityListCacheService.injection());
-            app.service('PersistentStorageService', Services.PersistentStorageService.injection());
-            app.service('StateService', Services.StateService.injection());
-            app.service('DialogService', Services.DialogService.injection());
-            app.service('DomManipulationService', Services.DomManipulationService.injection());
-            app.service('QueryCreatorService', Services.QueryCreatorService.injection());
-            app.service('PluginsExecutorService', Services.PluginsExecutorService.injection());
-            app.service('PermissionService', Services.PermissionService.injection());
+            app.service('MessagingService', Services.MessagingService);
+            app.service('QueueService', Services.QueueService);
+            app.service('NamingConventionsService', Services.NamingConventionsService);
+            app.service('EntityModelMapperService', Services.EntityModelMapperService);
+            app.service('FilterConverterService', Services.FilterConverterService);
+            app.service('RedirectService', Services.RedirectService);
+            app.service('LocalizationService', Services.LocalizationService);
+            app.service('HttpWrapperService', Services.HttpWrapperService);
+            app.service('EntityRepositoryService', Services.EntityRepositoryService);
+            app.service('UserRepositoryService', Services.UserRepositoryService);
+            app.service('DashboardRepositoryService', Services.DashboardRepositoryService);
+            app.service('UrlLocatorService', Services.UrlLocatorService);
+            app.service('NotificationService', Services.NotificationService);
+            app.service('EntityMetadataListCacheService', Services.EntityMetadataListCacheService);
+            app.service('EntityListCacheService', Services.EntityListCacheService);
+            app.service('PersistentStorageService', Services.PersistentStorageService);
+            app.service('StateService', Services.StateService);
+            app.service('DialogService', Services.DialogService);
+            app.service('DomManipulationService', Services.DomManipulationService);
+            app.service('QueryCreatorService', Services.QueryCreatorService);
+            app.service('PluginsExecutorService', Services.PluginsExecutorService);
+            app.service('PermissionService', Services.PermissionService);
 
             //Controllers
-            app.controller('MenuController', Controllers.MenuController.injection());
-            app.controller('LoginController', Controllers.LoginController.injection());
-            app.controller('LoadingController', Controllers.LoadingController.injection());
-            app.controller('DialogController', Controllers.DialogController.injection());
-            app.controller('NotificationController', Controllers.NotificationController.injection());
-            app.controller('EntityFormWithListController', Controllers.EntityFormWithListController.injection());
-            app.controller('EntityFormController', Controllers.EntityFormController.injection());
-            app.controller('EntityMetadataFormController', Controllers.EntityMetadataFormController.injection());
-            app.controller('FieldMetadataFormController', Controllers.FieldMetadataFormController.injection());
-            app.controller('EntityListController', Controllers.EntityListController.injection());
-            app.controller('EntityListWithFilterController', Controllers.EntityListWithFilterController.injection());
-            app.controller('FieldMetadataListController', Controllers.FieldMetadataListController.injection());
-            app.controller('DashboardController', Controllers.DashboardController.injection());
-            app.controller('DashboardActivitySummaryController', Controllers.DashboardActivitySummaryController.injection());
-            app.controller('DashboardActivityListController', Controllers.DashboardActivityListController.injection());
+            app.controller('MenuController', Controllers.MenuController);
+            app.controller('LoginController', Controllers.LoginController);
+            app.controller('LoadingController', Controllers.LoadingController);
+            app.controller('DialogController', Controllers.DialogController);
+            app.controller('NotificationController', Controllers.NotificationController);
+            app.controller('EntityFormWithListController', Controllers.EntityFormWithListController);
+            app.controller('EntityFormController', Controllers.EntityFormController);
+            app.controller('EntityMetadataFormController', Controllers.EntityMetadataFormController);
+            app.controller('FieldMetadataFormController', Controllers.FieldMetadataFormController);
+            app.controller('EntityListController', Controllers.EntityListController);
+            app.controller('EntityListWithFilterController', Controllers.EntityListWithFilterController);
+            app.controller('FieldMetadataListController', Controllers.FieldMetadataListController);
+            app.controller('DashboardController', Controllers.DashboardController);
+            app.controller('DashboardActivitySummaryController', Controllers.DashboardActivitySummaryController);
+            app.controller('DashboardActivityListController', Controllers.DashboardActivityListController);
 
             //Components
-            app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry.injection());
+            app.service('FieldTypesRegistry', Components.FieldTypes.FieldTypesRegistry);
             angular.forEach(_global.Components.FieldTypes, function (value:Components.FieldTypes.IFieldType):void {
                 //Register each field type as directive
                 app.directive(value.DirectiveName, value.DirectiveOptions());

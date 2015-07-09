@@ -5,20 +5,13 @@ module Controllers {
     'use strict';
 
     export class EntityFormWithListController extends BaseController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$route',
-                EntityFormWithListController
-            ];
-        }
+        //@ngInject
+        constructor($scope:any,
+                    private $route:any) {
+            super($scope);
 
-        constructor(Scope:any,
-                    private Route:any) {
-            super(Scope);
-
-            this.Scope.Metadata = Route.current.data.metadata;
-            this.Scope.Create = Route.current.data.create;
+            this.Scope.Metadata = $route.current.data.metadata;
+            this.Scope.Create = $route.current.data.create;
         }
     }
 }

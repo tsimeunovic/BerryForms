@@ -5,17 +5,9 @@ module Controllers {
     'use strict';
 
     export class DashboardController extends BaseController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$route',
-                DashboardController
-            ];
-        }
-
-        constructor(Scope:any,
-                    Route:any) {
-            super(Scope);
+        //@ngInject
+        constructor($scope:any) {
+            super($scope);
         }
     }
 }

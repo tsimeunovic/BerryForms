@@ -13,7 +13,6 @@ describe('Controller: MenuController', function ():void {
     var messagingServiceMock:Mocks.MessagingServiceMock;
     var entityMetadataListCacheServiceMock:Mocks.EntityMetadataListCacheServiceMock;
     var localizationServiceMock:Mocks.LocalizationServiceMock;
-    var notificationServiceMock:Mocks.NotificationServiceMock;
     var systemUnderTest:Controllers.MenuController;
 
     //Helper methods
@@ -22,8 +21,7 @@ describe('Controller: MenuController', function ():void {
             scopeMock,
             messagingServiceMock,
             entityMetadataListCacheServiceMock,
-            localizationServiceMock,
-            notificationServiceMock);
+            localizationServiceMock);
     };
 
     beforeEach(function ():void {
@@ -31,7 +29,6 @@ describe('Controller: MenuController', function ():void {
         messagingServiceMock = new Mocks.MessagingServiceMock();
         entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
         localizationServiceMock = new Mocks.LocalizationServiceMock();
-        notificationServiceMock = new Mocks.NotificationServiceMock();
         createLoadingController();
     });
 

@@ -6,13 +6,7 @@ module Services {
     'use strict';
 
     export class QueueService extends QueueBaseService implements Services.IQueueService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                QueueService
-            ];
-        }
-
+        //@ngInject
         constructor() {
             super();
             this.Setup();

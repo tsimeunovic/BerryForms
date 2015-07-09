@@ -11,23 +11,19 @@ module Controllers {
     'use strict';
 
     export class NotificationController extends BaseController {
-        public static injection():any[] {
-            return [
-                '$scope',
-                'toaster',
-                'toasterConfig',
-                'MessagingService',
-                'LocalizationService',
-                NotificationController
-            ];
-        }
+        private Toaster:any;
+        private ToasterConfig:any;
 
-        constructor(Scope:any,
-                    private Toaster:any,
-                    private ToasterConfig:any,
+        //@ngInject
+        constructor($scope:any,
+                    toaster:any,
+                    toasterConfig:any,
                     private MessagingService:Services.IMessagingService,
                     private LocalizationService:Services.ILocalizationService) {
-            super(Scope);
+            super($scope);
+            this.Toaster = toaster;
+            this.ToasterConfig = toasterConfig;
+
             this.ConfigureToastr();
             this.Initialize();
         }

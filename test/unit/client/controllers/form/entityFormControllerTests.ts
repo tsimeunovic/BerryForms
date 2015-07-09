@@ -7,11 +7,8 @@
 /// <reference path="../../../mocks/entityRepositoryServiceMock.ts" />
 /// <reference path="../../../mocks/entityMetadataListCacheServiceMock.ts" />
 /// <reference path="../../../mocks/entityModelMapperServiceMock.ts" />
-/// <reference path="../../../mocks/entityListCacheServiceMock.ts" />
 /// <reference path="../../../mocks/localizationServiceMock.ts" />
 /// <reference path="../../../mocks/redirectServiceMock.ts" />
-/// <reference path="../../../mocks/dialogServiceMock.ts" />
-/// <reference path="../../../mocks/domManipulationServiceMock.ts" />
 /// <reference path="../../../../../client/angular/controllers/form/entityFormController.ts" />
 
 'use strict';
@@ -26,11 +23,8 @@ describe('Controller: EntityFormController', function ():void {
     var entityRepositoryServiceMock:Mocks.EntityRepositoryServiceMock;
     var entityMetadataListCacheServiceMock:Mocks.EntityMetadataListCacheServiceMock;
     var entityModelMapperServiceMock:Mocks.EntityModelMapperServiceMock;
-    var entityListCacheServiceMock:Mocks.EntityListCacheServiceMock;
     var localizationServiceMock:Mocks.LocalizationServiceMock;
     var redirectServiceMock:Mocks.RedirectServiceMock;
-    var dialogServiceMock:Mocks.DialogServiceMock;
-    var domManipulationServiceMock:Mocks.DomManipulationServiceMock;
     var systemUnderTest:Controllers.EntityFormController;
 
     //Helper methods
@@ -45,11 +39,8 @@ describe('Controller: EntityFormController', function ():void {
             entityRepositoryServiceMock,
             entityMetadataListCacheServiceMock,
             entityModelMapperServiceMock,
-            entityListCacheServiceMock,
             localizationServiceMock,
-            redirectServiceMock,
-            dialogServiceMock,
-            domManipulationServiceMock);
+            redirectServiceMock);
     };
 
     beforeEach(function ():void {
@@ -62,11 +53,8 @@ describe('Controller: EntityFormController', function ():void {
         entityRepositoryServiceMock = new Mocks.EntityRepositoryServiceMock();
         entityMetadataListCacheServiceMock = new Mocks.EntityMetadataListCacheServiceMock();
         entityModelMapperServiceMock = new Mocks.EntityModelMapperServiceMock();
-        entityListCacheServiceMock = new Mocks.EntityListCacheServiceMock();
         localizationServiceMock = new Mocks.LocalizationServiceMock();
         redirectServiceMock = new Mocks.RedirectServiceMock();
-        dialogServiceMock = new Mocks.DialogServiceMock();
-        domManipulationServiceMock = new Mocks.DomManipulationServiceMock();
         createEntityFormController();
     });
 

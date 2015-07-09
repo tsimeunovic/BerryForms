@@ -16,41 +16,26 @@ module Controllers {
     'use strict';
 
     export class EntityListWithFilterController extends BaseListController {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                'MessagingService',
-                'NotificationService',
-                'QueueService',
-                'StateService',
-                '$routeParams',
-                'EntityListCacheService',
-                'EntityMetadataListCacheService',
-                'RedirectService',
-                'LocalizationService',
-                'FilterConverterService',
-                EntityListWithFilterController
-            ];
-        }
+        private RouteParams:any;
 
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
+                    $routeParams:any,
                     MessagingService:Services.IMessagingService,
                     NotificationService:Services.INotificationService,
                     QueueService:Services.IQueueService,
                     StateService:Services.IStateService,
-                    private RouteParams:any,
                     private EntityListCacheService:Services.IEntityListCacheService,
                     private EntityMetadataListCacheService:Services.IEntityMetadataListCacheService,
                     private RedirectService:Services.IRedirectService,
                     private LocalizationService:Services.ILocalizationService,
                     private FilterConverterService:Services.IFilterConverterService) {
-            super(Scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
-
-            var entityName:string = RouteParams[Static.RouteParams.EntityName];
-            var pageNumber:number = RouteParams[Static.RouteParams.PageNumber];
+            super($scope, Static.ControllerArea.Entity, MessagingService, NotificationService, QueueService, StateService);
+            var entityName:string = $routeParams[Static.RouteParams.EntityName];
+            var pageNumber:number = $routeParams[Static.RouteParams.PageNumber];
             var pageIndex:number = pageNumber - 1;
 
+            this.RouteParams = $routeParams;
             this.EntityName = entityName;
             this.PageIndex = isNaN(pageIndex) ? 0 : pageIndex;
 

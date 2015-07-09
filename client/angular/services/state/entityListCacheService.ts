@@ -12,17 +12,7 @@ module Services {
     'use strict';
 
     export class EntityListCacheService extends Services.CacheBaseService<Models.Entity[]> implements Services.IEntityListCacheService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                'MessagingService',
-                'EntityRepositoryService',
-                'NotificationService',
-                'LocalizationService',
-                EntityListCacheService
-            ];
-        }
-
+        //@ngInject
         constructor(private MessagingService:Services.IMessagingService,
                     private EntityRepositoryService:Services.IEntityRepositoryService,
                     private NotificationService:Services.INotificationService,

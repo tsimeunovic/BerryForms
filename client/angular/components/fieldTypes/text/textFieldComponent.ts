@@ -19,11 +19,11 @@ module Components.FieldTypes {
         public DirectiveOptions():any[] {
             //Use hardcoded value 'Text' instead of variable to correctly
             //work with special field types which has no template
-            return Directives.GenericField.injectionFor('Text');
+            return Directives.GenericField.InjectionFor('Text');
         }
 
-        public DirectiveControllerOptions():any[] {
-            return Components.FieldTypes.TextFieldController.injection();
+        public DirectiveControllerOptions():any {
+            return Components.FieldTypes.TextFieldController;
         }
 
         //Metadata model

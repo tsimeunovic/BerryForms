@@ -10,15 +10,9 @@ module Components.FieldTypes {
     'use strict';
 
     export class FieldTypesRegistry implements IFieldTypesRegistry {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                FieldTypesRegistry
-            ];
-        }
-
         private RegisteredComponents:IFieldType[];
 
+        //@ngInject
         constructor() {
             this.RegisteredComponents = _global.Components.FieldTypes;
             _global.Instances.FieldTypesRegistry = this;

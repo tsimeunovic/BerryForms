@@ -7,14 +7,7 @@ module Services {
     'use strict';
 
     export class DialogService implements Services.IDialogService {
-        public static injection():any[] {
-            return [
-                'LocalizationService',
-                'MessagingService',
-                DialogService
-            ];
-        }
-
+        //@ngInject
         constructor(private LocalizationService:Services.ILocalizationService,
                     private MessagingService:Services.IMessagingService) {
         }

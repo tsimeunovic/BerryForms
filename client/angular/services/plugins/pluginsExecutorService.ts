@@ -13,14 +13,7 @@ module Services {
     'use strict';
 
     export class PluginsExecutorService implements Services.IPluginsExecutorService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                'LocalizationService',
-                PluginsExecutorService
-            ];
-        }
-
+        //@ngInject
         constructor(private LocalizationService:Services.ILocalizationService) {
             this.RegisteredPlugins = _global.Components.Plugins;
         }

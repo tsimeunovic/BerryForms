@@ -8,22 +8,12 @@ module Components.FieldTypes {
     'use strict';
 
     export class RelationFieldController extends BaseFieldController<Models.RelationFieldMetadata> {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                'EntityRepositoryService',
-                'EntityMetadataListCacheService',
-                'RedirectService',
-                RelationFieldController
-            ];
-        }
-
-        constructor(Scope:any,
+        //@ngInject
+        constructor($scope:any,
                     private EntityRepositoryService:Services.IEntityRepositoryService,
                     private EntityMetadataListCacheService:Services.IEntityMetadataListCacheService,
                     private RedirectService:Services.IRedirectService) {
-            super(Scope);
+            super($scope);
         }
 
         public SearchExpression:string;

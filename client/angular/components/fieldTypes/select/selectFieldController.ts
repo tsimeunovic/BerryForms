@@ -6,23 +6,17 @@ module Components.FieldTypes {
     'use strict';
 
     export class SelectFieldController extends BaseFieldController<Models.SelectFieldMetadata> {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$scope',
-                '$document',
-                SelectFieldController
-            ];
-        }
-
-        constructor(Scope:any,
-                    private Document:any) {
-            super(Scope);
+        //@ngInject
+        constructor($scope:any,
+                    $document:any) {
+            super($scope);
+            this.Document = $document;
             this.EntityValueChangedEvent = this.SetInitialData.bind(this);
             this.SetInitialData();
         }
 
         public Opened:boolean;
+        private Document:any;
 
         public ToggleOpen($event:any):void {
             this.StopEventPropagation($event);

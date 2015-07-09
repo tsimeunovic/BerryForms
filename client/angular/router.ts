@@ -3,14 +3,7 @@ module Config {
     'use strict';
 
     export class Router {
-
-        public static injection():any[] {
-            return [
-                '$routeProvider',
-                Router.InitializeRoutes
-            ];
-        }
-
+        //@ngInject
         public static InitializeRoutes($routeProvider:any):void {
             Router.InitializeDashboardRoutes($routeProvider);
             Router.InitializeMetadataRoutes($routeProvider);

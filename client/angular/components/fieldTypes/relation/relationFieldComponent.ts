@@ -18,11 +18,11 @@ module Components.FieldTypes {
         public DirectiveControllerName:string = 'RelationFieldController';
 
         public DirectiveOptions():any[] {
-            return Directives.GenericField.injectionFor(this.FieldName);
+            return Directives.GenericField.InjectionFor(this.FieldName);
         }
 
-        public DirectiveControllerOptions():any[] {
-            return Components.FieldTypes.RelationFieldController.injection();
+        public DirectiveControllerOptions():any {
+            return Components.FieldTypes.RelationFieldController;
         }
 
         //Metadata model

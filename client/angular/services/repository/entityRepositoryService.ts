@@ -17,17 +17,7 @@ module Services {
     'use strict';
 
     export class EntityRepositoryService implements Services.IEntityRepositoryService {
-        public static injection():any[] {
-            return [
-                'HttpWrapperService',
-                'UrlLocatorService',
-                'EntityModelMapperService',
-                'QueryCreatorService',
-                'PluginsExecutorService',
-                EntityRepositoryService
-            ];
-        }
-
+        //@ngInject
         constructor(private HttpWrapperService:Services.IHttpWrapperService,
                     private UrlLocatorService:Services.IUrlLocatorService,
                     private EntityModelMapperService:Services.IEntityModelMapperService,

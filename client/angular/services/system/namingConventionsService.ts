@@ -6,10 +6,9 @@ module Services {
     'use strict';
 
     export class NamingConventionsService implements Services.INamingConventionsService {
-        public static injection():any[] {
-            return [
-                NamingConventionsService
-            ];
+        //@ngInject
+        constructor() {
+            //Nothing to do here
         }
 
         public GetSystemEntityName(entityName:string):string {

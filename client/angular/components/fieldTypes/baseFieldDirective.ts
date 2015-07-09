@@ -7,7 +7,6 @@ module Directives {
     'use strict';
 
     export class BaseField implements Directives.IDirective {
-        /* tslint:disable:member-ordering */
         //Base static methods
         public static DirectiveOptions(fieldType:string, directiveConstructor:() => Directives.IDirective):any {
             var lowerFieldType:string = fieldType.toLowerCase();

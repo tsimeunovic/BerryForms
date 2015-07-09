@@ -9,16 +9,7 @@ module Services {
     'use strict';
 
     export class DashboardRepositoryService implements Services.IDashboardRepositoryService {
-        public static injection():any[] {
-            return [
-                'HttpWrapperService',
-                'UrlLocatorService',
-                'RedirectService',
-                'EntityMetadataListCacheService',
-                DashboardRepositoryService
-            ];
-        }
-
+        //@ngInject
         constructor(private HttpWrapperService:Services.IHttpWrapperService,
                     private UrlLocatorService:Services.IUrlLocatorService,
                     private RedirectService:Services.IRedirectService,

@@ -9,15 +9,17 @@ module Directives {
     'use strict';
 
     export class LeftMenuAutosize implements Directives.IDirective {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                '$timeout',
-                '$window',
-                LeftMenuAutosize.DirectiveOptions
-            ];
-        }
+        private static Timeout:any;
+        private static Window:any;
 
+        private Scope:any;
+        private Element:any;
+        private Promise:any;
+
+        private WindowDimensions:any;
+        private MenuDimensions:any;
+
+        //@ngInject
         public static DirectiveOptions($timeout:any, $window:any):any {
             LeftMenuAutosize.Timeout = $timeout;
             LeftMenuAutosize.Window = $window;
@@ -35,16 +37,6 @@ module Directives {
                 }
             };
         }
-
-        private static Timeout:any;
-        private static Window:any;
-
-        private Scope:any;
-        private Element:any;
-        private Promise:any;
-
-        private WindowDimensions:any;
-        private MenuDimensions:any;
 
         public Link($scope:any, $linkElement:any, $linkAttributes:any):void {
             this.Scope = $scope;

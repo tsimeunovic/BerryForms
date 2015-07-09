@@ -8,13 +8,7 @@ module Services {
     'use strict';
 
     export class FilterConverterService implements IFilterConverterService {
-        public static injection():any[] {
-            return [
-                'FieldTypesRegistry',
-                FilterConverterService
-            ];
-        }
-
+        //@ngInject
         constructor(private FieldTypesRegistry:Components.FieldTypes.IFieldTypesRegistry) {
         }
 

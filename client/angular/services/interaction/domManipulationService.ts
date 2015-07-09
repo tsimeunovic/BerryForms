@@ -7,10 +7,9 @@ module Services {
     'use strict';
 
     export class DomManipulationService implements Services.IDomManipulationService {
-        public static injection():any[] {
-            return [
-                DomManipulationService
-            ];
+        //@ngInject
+        constructor() {
+            //Nothing to do here
         }
 
         public ScrollToTop():void {

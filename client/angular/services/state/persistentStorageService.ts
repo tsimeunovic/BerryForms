@@ -6,11 +6,9 @@ module Services {
     'use strict';
 
     export class PersistentStorageService implements Services.IPersistentStorageService {
-        /* tslint:disable:member-ordering */
-        public static injection():any[] {
-            return [
-                PersistentStorageService
-            ];
+        //@ngInject
+        constructor() {
+            //Nothing to do here
         }
 
         //Keys
