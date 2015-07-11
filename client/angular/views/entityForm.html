@@ -11,14 +11,7 @@
 
     <div class="entityForm">
         <!-- Fields -->
-        <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
-            <span class="entityFieldLabel" title="{{::field.FieldDescription}}">
-                {{::field.FieldName}}
-            </span>
-            <span class="entityFieldInput">
-                <span data-field-component-creator></span>
-            </span>
-        </div>
+        <form-fields data-entity="Entity" data-metadata="EntityMetadata"></form-fields>
 
         <!-- Save button -->
         <div class="separator"></div>

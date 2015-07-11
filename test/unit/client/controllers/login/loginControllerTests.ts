@@ -57,7 +57,7 @@ describe('Controller: LoginController', function ():void {
         //Arrange
         //Act
         //Assert
-        expect(scopeMock.LoggedInUser).toEqual(true);
+        expect(systemUnderTest.LoggedInUser).toEqual(true);
     });
 
     it('should initialize scope with header and button text when created', function ():void {
@@ -72,12 +72,12 @@ describe('Controller: LoginController', function ():void {
         //Assert
         expect(loginMessageSpy.calls.any()).toEqual(true);
         expect(logoutMessageSpy.calls.any()).toEqual(true);
-        expect(scopeMock.LoggedInUser).toEqual(false);
-        expect(scopeMock.LoginInProgress).toEqual(false);
-        expect(scopeMock.LoginHeader).toEqual('#Login');
-        expect(scopeMock.LoginButtonText).toEqual('#Login');
-        expect(scopeMock.EntityMetadata).not.toEqual(null);
-        expect(scopeMock.EntityMetadata.Fields.length).toEqual(3);
+        expect(systemUnderTest.LoggedInUser).toEqual(false);
+        expect(systemUnderTest.LoginInProgress).toEqual(false);
+        expect(systemUnderTest.LoginHeader).toEqual('#Login');
+        expect(systemUnderTest.LoginButtonText).toEqual('#Login');
+        expect(systemUnderTest.EntityMetadata).not.toEqual(null);
+        expect(systemUnderTest.EntityMetadata.Fields.length).toEqual(3);
     });
 
     it('should fill login form user name with last logged in user name', function ():void {
@@ -95,8 +95,8 @@ describe('Controller: LoginController', function ():void {
         logoutMessageCallback(lastSession);
 
         //Assert
-        expect(scopeMock.LoggedInUser).toEqual(false);
-        expect(scopeMock.Entity.Data.UserName).toEqual('TestUser');
+        expect(systemUnderTest.LoggedInUser).toEqual(false);
+        expect(systemUnderTest.Entity.Data.UserName).toEqual('TestUser');
     });
 
     it('should reset password field after unsuccessful login', function ():void {
@@ -104,11 +104,11 @@ describe('Controller: LoginController', function ():void {
         var loginUserSpy:any = userRepositoryServiceMock.LoginUser;
         var handleErrorsSpy:any = notificationServiceMock.HandleErrorsModel;
         userRepositoryServiceMock.AddResponse('LoginUser', null, 'InvalidUserNameOrPassword');
-        scopeMock.Entity.Data.UserName = 'TestUserName';
-        scopeMock.Entity.Data.Password = 'TestPassword';
+        systemUnderTest.Entity.Data.UserName = 'TestUserName';
+        systemUnderTest.Entity.Data.Password = 'TestPassword';
 
         //Act
-        scopeMock.Login();
+        systemUnderTest.Login();
 
         //Assert
         expect(loginUserSpy.calls.any()).toEqual(true);
@@ -117,7 +117,7 @@ describe('Controller: LoginController', function ():void {
         expect(loginUserSpy.calls.first().args[2]).toEqual(false);
         expect(handleErrorsSpy.calls.any()).toEqual(true);
         expect(handleErrorsSpy.calls.first().args[0]).toEqual('InvalidUserNameOrPassword');
-        expect(scopeMock.Entity.Data.Password).toEqual(null);
+        expect(systemUnderTest.Entity.Data.Password).toEqual(null);
     });
 
     it('should set current session after successful login', function ():void {
@@ -127,7 +127,7 @@ describe('Controller: LoginController', function ():void {
         var setCurrentUserSessionSpy:any = stateServiceMock.SetCurrentUserSession;
 
         //Act
-        scopeMock.Login();
+        systemUnderTest.Login();
 
         //Assert
         expect(setCurrentUserSessionSpy.calls.any()).toEqual(true);
@@ -139,12 +139,12 @@ describe('Controller: LoginController', function ():void {
     it('should set \'keep logged in\' flag during login when user selected it', function ():void {
         //Arrange
         var loginUserSpy:any = userRepositoryServiceMock.LoginUser;
-        scopeMock.Entity.Data.UserName = 'TestUserName';
-        scopeMock.Entity.Data.Password = 'TestPassword';
-        scopeMock.Entity.Data.StayLoggedIn = true;
+        systemUnderTest.Entity.Data.UserName = 'TestUserName';
+        systemUnderTest.Entity.Data.Password = 'TestPassword';
+        systemUnderTest.Entity.Data.StayLoggedIn = true;
 
         //Act
-        scopeMock.Login();
+        systemUnderTest.Login();
 
         //Assert
         expect(loginUserSpy.calls.any()).toEqual(true);

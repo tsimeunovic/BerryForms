@@ -1,15 +1,6 @@
 <div class="entityForm" data-role="filter">
-    <div class="fields">
-        <div class="entityField" data-ng-repeat="field in FilterMetadata.Fields">
-            <span class="entityFieldLabel" title="{{::field.FieldDescription}}">
-                {{::field.FieldName}}
-            </span>
-            <span class="entityFieldInput">
-                <span data-field-component-creator></span>
-            </span>
-        </div>
-        <div class="clearFloat"></div>
-    </div>
+    <!-- Filter fields -->
+    <form-fields data-entity="Entity" data-metadata="FilterMetadata"></form-fields>
 
     <!-- Control buttons -->
     <div class="filterControls">

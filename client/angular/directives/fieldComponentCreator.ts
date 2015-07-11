@@ -40,7 +40,7 @@ module Directives {
 
             //Create template
             if ($linkAttributes.readonly) {
-                var fieldValue:any = this.Scope.listItem.Data[this.Scope.field.FieldSystemName];
+                var fieldValue:any = this.Scope.Entity.Data[this.Scope.field.FieldSystemName];
                 var formattedValue:string = fieldTypeComponent.FormatValue(fieldValue);
                 this.Element.html(formattedValue);
             } else {

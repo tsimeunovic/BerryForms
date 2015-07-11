@@ -33,8 +33,8 @@
 <div data-ng-controller="LoadingController" class="loadingOverlay" data-ng-show="LoadingInProgress"></div>
 <div class="dialogOverlay ng-hide" data-ng-include="'angular/views/dialog.html'" data-ng-controller="DialogController"
      data-ng-show="Dialog"></div>
-<div class="loginOverlay ng-hide" data-ng-include="'angular/views/login.html'" data-ng-controller="LoginController"
-     data-ng-show="!LoggedInUser"></div>
+<div class="loginOverlay ng-hide" data-ng-include="'angular/views/login.html'" data-ng-controller="LoginController as lc"
+     data-ng-show="!lc.LoggedInUser"></div>
 <div class="ng-hide" data-ng-controller="NotificationController"></div>
 <div data-toaster-container="true"></div>
 
@@ -113,6 +113,7 @@
 <script src="angular/directives/leftMenuAutosize.js"></script>
 <script src="angular/directives/systemSymbolDirective.js"></script>
 <script src="angular/directives/fieldComponentCreator.js"></script>
+<script src="angular/directives/formFieldsDirective.js"></script>
 <script src="angular/directives/dashboardActivityItemChart.js"></script>
 
 <!-- Interface types -->

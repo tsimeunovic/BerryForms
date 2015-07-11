@@ -1,5 +1,6 @@
 /// <reference path="./directives/leftMenuAutosize.ts" />
 /// <reference path="./directives/systemSymbolDirective.ts" />
+/// <reference path="./directives/formFieldsDirective.ts" />
 /// <reference path="./directives/fieldComponentCreator.ts" />
 /// <reference path="./directives/dashboardActivityItemChart.ts" />
 /// <reference path="./controllers/global/menuController.ts" />
@@ -65,6 +66,7 @@ module AngularApplication {
             //Directives
             app.directive('leftMenuAutosize', Directives.LeftMenuAutosize.DirectiveOptions);
             app.directive('systemSymbol', Directives.SystemSymbol.DirectiveOptions);
+            app.directive('formFields', Directives.FormFieldsDirective.DirectiveOptions);
             app.directive('fieldComponentCreator', Directives.FieldComponentCreator.DirectiveOptions);
             app.directive('dashboardActivityItemChart', Directives.DashboardActivityItemChart.DirectiveOptions);
 

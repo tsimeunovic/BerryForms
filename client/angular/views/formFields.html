@@ -1,0 +1,11 @@
+<div class="fields">
+    <div class="entityField" data-ng-repeat="field in EntityMetadata.Fields">
+        <span class="entityFieldLabel" title="{{::field.FieldDescription}}">
+            {{::field.FieldName}}
+        </span>
+        <span class="entityFieldInput">
+            <span data-field-component-creator data-readonly="{{::ReadOnly}}"></span>
+        </span>
+    </div>
+    <div class="clearFloat"></div>
+</div>

@@ -4,10 +4,11 @@
 //Bug fixes:
 
 //Improvements:
+Redirect to new entity page if current item is deleted
+Add additional colors and icons
 
 //Technical depths:
-Optimize watches (cache entity 'DisplayName')
-Try to replace 'injection' by 'grunt-ng-anotate'
+Optimize watches (cache entity 'DisplayName', introduce entity Timestamp or use Created and Modified date and watch it instead of Entity)
 Get rid of scope by using controller as (and make it private in FieldControllers)
 Replace hard-coded dependencies with angular constants (http://twofuckingdevelopers.com/2014/06/angularjs-best-practices-001-constants/)
 
