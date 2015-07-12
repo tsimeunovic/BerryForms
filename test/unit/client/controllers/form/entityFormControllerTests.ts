@@ -68,9 +68,9 @@ describe('Controller: EntityFormController', function ():void {
         expect(loadEntitySpy.calls.any()).toEqual(false);
         expect(getEntityMetadataSpy.calls.any()).toEqual(true);
         expect(getEntityMetadataSpy.calls.first().args[0]).toEqual('MockEntity');
-        expect(scopeMock.SubmitButtonText).toEqual('#Create');
-        expect(scopeMock.FormHeader).toEqual('#CreateNewRecord');
-        expect(scopeMock.FormHeaderIcons.length).toEqual(1);
+        expect(systemUnderTest.SubmitButtonText).toEqual('#Create');
+        expect(systemUnderTest.FormHeader).toEqual('#CreateNewRecord');
+        expect(systemUnderTest.FormHeaderIcons.length).toEqual(1);
     });
 
     it('should redirect to edit entity scheme when metadata contains no fields', function ():void {
@@ -107,10 +107,10 @@ describe('Controller: EntityFormController', function ():void {
         expect(getEntityMetadataSpy.calls.any()).toEqual(true);
         expect(getEntityMetadataSpy.calls.first().args[0]).toEqual('MockEntity');
         expect(cloneEntityMock.calls.any()).toEqual(true);
-        expect(scopeMock.SubmitButtonText).toEqual('#Update');
-        expect(scopeMock.FormHeader).toEqual('#UpdateExistingRecord');
-        expect(scopeMock.FormHeaderIcons.length).toEqual(1);
-        expect(scopeMock.OriginalEntity).toBe(entity);
+        expect(systemUnderTest.SubmitButtonText).toEqual('#Update');
+        expect(systemUnderTest.FormHeader).toEqual('#UpdateExistingRecord');
+        expect(systemUnderTest.FormHeaderIcons.length).toEqual(1);
+        expect(systemUnderTest.OriginalEntity).toBe(entity);
     });
 
     it('should notify user when entity cannot be successfully loaded', function ():void {
@@ -141,20 +141,20 @@ describe('Controller: EntityFormController', function ():void {
 
         //Assert
         expect(getEditedEntitySpy.calls.any()).toEqual(true);
-        expect(scopeMock.OriginalEntity).toBe(editedEntity);
+        expect(systemUnderTest.OriginalEntity).toBe(editedEntity);
     });
 
     it('should call entity repository and create new entity when new entity form is submitted', function ():void {
         //Arrange
         var savingEntity:Models.Entity = new Models.Entity('SavingEntity');
-        scopeMock.Entity = savingEntity;
-        scopeMock.OriginalEntity = savingEntity;
+        systemUnderTest.Entity = savingEntity;
+        systemUnderTest.OriginalEntity = savingEntity;
         var createEntityMessageSpy:any = messagingServiceMock.Messages.Entity.Created.publish;
         var notifyUserSpy:any = notificationServiceMock.NotifyMessage;
         var saveEntitySpy:any = entityRepositoryServiceMock.SaveEntity;
 
         //Act
-        scopeMock.SubmitForm();
+        systemUnderTest.SubmitForm();
 
         //Assert
         expect(saveEntitySpy.calls.any()).toEqual(true);
@@ -162,15 +162,15 @@ describe('Controller: EntityFormController', function ():void {
         expect(createEntityMessageSpy.calls.any()).toEqual(true);
         expect(notifyUserSpy.calls.any()).toEqual(true);
         expect(notifyUserSpy.calls.first().args[0]).toEqual('#EntityCreatedSuccess');
-        expect(scopeMock.OriginalEntity).not.toEqual(null);
-        expect(scopeMock.OriginalEntity.EntitySystemName).toEqual('MockEntity');
+        expect(systemUnderTest.OriginalEntity).not.toEqual(null);
+        expect(systemUnderTest.OriginalEntity.EntitySystemName).toEqual('MockEntity');
     });
 
     it('should call entity repository and redirect to create new entity form when existing entity form is submitted', function ():void {
         //Arrange
         var updatingEntity:Models.Entity = new Models.Entity('UpdatingEntity');
-        scopeMock.Entity = updatingEntity;
-        scopeMock.OriginalEntity = updatingEntity;
+        systemUnderTest.Entity = updatingEntity;
+        systemUnderTest.OriginalEntity = updatingEntity;
         var modifiedEntityMessageSpy:any = messagingServiceMock.Messages.Entity.Modified.publish;
         var queueUserNotificationSpy:any = queueServiceMock.Queues.NextPage.Notifications.add;
         routeParams = {'_entityName': 'MockEntity', '_entityId': 12, '_pageNumber': null};
@@ -182,7 +182,7 @@ describe('Controller: EntityFormController', function ():void {
         entityRepositoryServiceMock.AddResponse('SaveEntity', savedEntity, null);
 
         //Act
-        scopeMock.SubmitForm();
+        systemUnderTest.SubmitForm();
 
         //Assert
         expect(saveEntitySpy.calls.any()).toEqual(true);
@@ -203,7 +203,7 @@ describe('Controller: EntityFormController', function ():void {
         entityRepositoryServiceMock.AddResponse('SaveEntity', null, errorModel);
 
         //Act
-        scopeMock.SubmitForm();
+        systemUnderTest.SubmitForm();
 
         //Assert
         expect(handleErrorsModelSpy.calls.any()).toEqual(true);

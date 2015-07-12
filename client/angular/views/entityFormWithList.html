@@ -1,11 +1,11 @@
 <!-- Form -->
-<div data-ng-if="!Metadata" data-ng-controller="EntityFormController"
+<div data-ng-if="!Metadata" data-ng-controller="EntityFormController as fc"
      class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
 
-<div data-ng-if="Metadata && Create" data-ng-controller="EntityMetadataFormController"
+<div data-ng-if="Metadata && Create" data-ng-controller="EntityMetadataFormController as fc"
      class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
 
-<div data-ng-if="Metadata && !Create" data-ng-controller="FieldMetadataFormController"
+<div data-ng-if="Metadata && !Create" data-ng-controller="FieldMetadataFormController as fc"
      class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
 
 <!-- List -->

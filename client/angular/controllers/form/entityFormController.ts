@@ -39,19 +39,31 @@ module Controllers {
             this.EntityId = entityId;
             this.PageIndex = isNaN(pageIndex) ? 0 : pageIndex;
 
-            this.InitializeScope();
+            this.Initialize();
         }
+
+        public Entity:Models.Entity;
+        public OriginalEntity:Models.Entity;
+        public EntityMetadata:Models.EntityMetadata;
+        public SubmitButtonText:string;
+        public FormHeaderIcons:any[];
+        public FormHeader:string;
 
         private EntityName:string;
         private EntityId:number;
         private PageIndex:number;
 
-        private InitializeScope():void {
-            this.Scope.SubmitButtonText = this.EntityId ?
+        public SubmitForm():void {
+            var entity:Models.Entity = this.Entity;
+            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySubmit);
+            this.EntityRepositoryService.SaveEntity(entity, this.SaveEntityCompleted.bind(this));
+        }
+
+        private Initialize():void {
+            this.SubmitButtonText = this.EntityId ?
                 this.LocalizationService.Resources.Update :
                 this.LocalizationService.Resources.Create;
-            this.Scope.SubmitForm = this.SubmitForm.bind(this);
-            this.Scope.FormHeaderIcons = [
+            this.FormHeaderIcons = [
                 {
                     Icon: 'pencil',
                     Action: this.EditEntitySchema.bind(this),
@@ -83,9 +95,9 @@ module Controllers {
                 if (!metadata.Fields || !metadata.Fields.length) {
                     this.EditEntitySchema();
                 }
-                this.Scope.EntityMetadata = metadata;
+                this.EntityMetadata = metadata;
 
-                this.Scope.FormHeader = this.EntityId ?
+                this.FormHeader = this.EntityId ?
                     this.LocalizationService.Resources.UpdateExistingRecord.format([metadata.EntityName]) :
                     this.LocalizationService.Resources.CreateNewRecord.format([metadata.EntityName]);
 
@@ -106,14 +118,14 @@ module Controllers {
             //Create new or load existing
             if (this.EntityId) {
                 this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.Entity);
-                this.Scope.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
+                this.Entity = new Models.Entity(this.EntityMetadata.EntitySystemName);
                 this.EntityRepositoryService.LoadEntity(this.EntityName, this.EntityId, this.LoadEntityCompleted.bind(this));
             } else {
-                var newEntity:Models.Entity = new Models.Entity(this.Scope.EntityMetadata.EntitySystemName);
-                this.Scope.OriginalEntity = newEntity;
-                this.Scope.Entity = this.EntityModelMapperService.CloneEntityModel(newEntity);
+                var newEntity:Models.Entity = new Models.Entity(this.EntityMetadata.EntitySystemName);
+                this.OriginalEntity = newEntity;
+                this.Entity = this.EntityModelMapperService.CloneEntityModel(newEntity);
 
-                this.StateService.SetEditedEntity(this.Scope.Entity);
+                this.StateService.SetEditedEntity(this.Entity);
             }
         }
 
@@ -121,19 +133,13 @@ module Controllers {
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.Entity);
 
             if (errorsModel === null) {
-                this.Scope.OriginalEntity = entity;
-                this.Scope.Entity = this.EntityModelMapperService.CloneEntityModel(entity);
-                this.StateService.SetEditedEntity(this.Scope.Entity);
-                this.Scope.Entity.ValidateAllFields(this.Scope.EntityMetadata);
+                this.OriginalEntity = entity;
+                this.Entity = this.EntityModelMapperService.CloneEntityModel(entity);
+                this.StateService.SetEditedEntity(this.Entity);
+                this.Entity.ValidateAllFields(this.EntityMetadata);
             } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
-        }
-
-        private SubmitForm():void {
-            var entity:Models.Entity = this.Scope.Entity;
-            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySubmit);
-            this.EntityRepositoryService.SaveEntity(entity, this.SaveEntityCompleted.bind(this));
         }
 
         private SaveEntityCompleted(savedEntity:Models.Entity, errorsModel:any):void {

@@ -1,8 +1,8 @@
 <div data-role="form">
     <!-- Title -->
     <h1>
-        {{::FormHeader}}
-        <span data-ng-repeat="icon in FormHeaderIcons"
+        {{::fc.FormHeader}}
+        <span data-ng-repeat="icon in fc.FormHeaderIcons"
               class="glyphicon glyphicon-{{::icon.Icon}}"
               data-ng-click="icon.Action()"
               title="{{::icon.Tooltip}}"></span>
@@ -11,7 +11,7 @@
 
     <div class="entityForm">
         <!-- Fields -->
-        <form-fields data-entity="Entity" data-metadata="EntityMetadata"></form-fields>
+        <form-fields data-entity="fc.Entity" data-metadata="fc.EntityMetadata"></form-fields>
 
         <!-- Save button -->
         <div class="separator"></div>
@@ -19,9 +19,9 @@
             <span class="entityFieldLabel"></span>
             <span class="entityFieldInput">
                 <button class="btn btn-default btn-sm form-control btn-submit"
-                        data-ng-disabled="!Entity || Entity.ErrorFields.length"
-                        data-ng-click="SubmitForm()">
-                    {{::SubmitButtonText}}
+                        data-ng-disabled="!fc.Entity || fc.Entity.ErrorFields.length"
+                        data-ng-click="fc.SubmitForm()">
+                    {{::fc.SubmitButtonText}}
                 </button>
             </span>
         </div>

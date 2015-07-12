@@ -26,11 +26,23 @@ module Controllers {
                     private EntityModelMapperService:Services.IEntityModelMapperService,
                     private RedirectService:Services.IRedirectService) {
             super($scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
-            this.InitializeScope();
+            this.Initialize();
         }
 
-        private InitializeScope():void {
-            this.Scope.FormHeaderIcons = [];
+        public Entity:Models.Entity;
+        public EntityMetadata:Models.EntityMetadata;
+        public SubmitButtonText:string;
+        public FormHeaderIcons:any[];
+        public FormHeader:string;
+
+        public SubmitForm():void {
+            var entityMetadata:Models.EntityMetadata = this.EntityModelMapperService.MapEntityToEntityMetadataModel(this.Entity);
+            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySchemaSubmit);
+            this.EntityRepositoryService.SaveEntityMetadata(entityMetadata, this.SaveEntityMetadataCompleted.bind(this));
+        }
+
+        private Initialize():void {
+            this.FormHeaderIcons = [];
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySchemaData);
             this.CreateEntityMetadata();
         }
@@ -42,20 +54,12 @@ module Controllers {
         }
 
         private CreateEntityMetadataCompleted(entityCreateData:Models.Entity, entityCreateMetadata:Models.EntityMetadata):void {
-            this.Scope.Entity = entityCreateData;
-            this.Scope.EntityMetadata = entityCreateMetadata;
-            this.Scope.Entity.ValidateAllFields(entityCreateMetadata);
-            this.Scope.FormHeader = this.LocalizationService.Resources.CreateNewEntity;
-            this.Scope.SubmitButtonText = this.LocalizationService.Resources.Create;
-            this.Scope.SubmitForm = this.SubmitForm.bind(this);
+            this.Entity = entityCreateData;
+            this.EntityMetadata = entityCreateMetadata;
+            this.Entity.ValidateAllFields(entityCreateMetadata);
+            this.FormHeader = this.LocalizationService.Resources.CreateNewEntity;
+            this.SubmitButtonText = this.LocalizationService.Resources.Create;
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.EntitySchemaData);
-        }
-
-        private SubmitForm():void {
-            var entity:Models.Entity = this.Scope.Entity;
-            var entityMetadata:Models.EntityMetadata = this.EntityModelMapperService.MapEntityToEntityMetadataModel(entity);
-            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntitySchemaSubmit);
-            this.EntityRepositoryService.SaveEntityMetadata(entityMetadata, this.SaveEntityMetadataCompleted.bind(this));
         }
 
         private SaveEntityMetadataCompleted(savedMetadata:Models.EntityMetadata, errorsModel:any):void {

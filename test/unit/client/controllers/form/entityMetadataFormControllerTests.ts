@@ -65,14 +65,14 @@ describe('Controller: EntityMetadataFormController', function ():void {
         //Arrange
         //Act
         //Assert
-        expect(scopeMock.FormHeaderIcons.length).toEqual(0);
-        expect(scopeMock.Entity).not.toEqual(null);
-        expect(scopeMock.Entity.EntitySystemName).toEqual(null);
-        expect(scopeMock.Entity.Data).toEqual({});
-        expect(scopeMock.EntityMetadata).not.toEqual(null);
-        expect(scopeMock.EntityMetadata.Fields.length).toEqual(4);
-        expect(scopeMock.FormHeader).toEqual('#CreateNewEntity');
-        expect(scopeMock.SubmitButtonText).toEqual('#Create');
+        expect(systemUnderTest.FormHeaderIcons.length).toEqual(0);
+        expect(systemUnderTest.Entity).not.toEqual(null);
+        expect(systemUnderTest.Entity.EntitySystemName).toEqual(null);
+        expect(systemUnderTest.Entity.Data).toEqual({});
+        expect(systemUnderTest.EntityMetadata).not.toEqual(null);
+        expect(systemUnderTest.EntityMetadata.Fields.length).toEqual(4);
+        expect(systemUnderTest.FormHeader).toEqual('#CreateNewEntity');
+        expect(systemUnderTest.SubmitButtonText).toEqual('#Create');
     });
 
     it('should map entity model to metadata model and save it via repository when form is submitted', function ():void {
@@ -80,7 +80,7 @@ describe('Controller: EntityMetadataFormController', function ():void {
         var entity:Models.Entity = new Models.Entity(null);
         var savedMetadata:Models.EntityMetadata = new Models.EntityMetadata();
         savedMetadata.EntitySystemName = 'SavedEntitySystemName';
-        scopeMock.Entity = entity;
+        systemUnderTest.Entity = entity;
         var mapEntityToMetadataSpy:any = entityModelMapperServiceMock.MapEntityToEntityMetadataModel;
         var saveEntityMetadataSpy:any = entityRepositoryServiceMock.SaveEntityMetadata;
         entityRepositoryServiceMock.AddResponse('SaveEntityMetadata', savedMetadata, null);
@@ -89,7 +89,7 @@ describe('Controller: EntityMetadataFormController', function ():void {
         var redirectToEditEntitySchemaSpy:any = redirectServiceMock.RedirectToEditEntitySchema;
 
         //Act
-        scopeMock.SubmitForm();
+        systemUnderTest.SubmitForm();
 
         //Assert
         expect(mapEntityToMetadataSpy.calls.any()).toEqual(true);
@@ -105,13 +105,13 @@ describe('Controller: EntityMetadataFormController', function ():void {
 
     it('should notify user when metadata was not successfully saved', function ():void {
         //Arrange
-        scopeMock.Entity = new Models.Entity(null);
+        systemUnderTest.Entity = new Models.Entity(null);
         var errorModel:any = {Type: 'Client'};
         entityRepositoryServiceMock.AddResponse('SaveEntityMetadata', null, errorModel);
         var handleErrorsModelSpy:any = notificationServiceMock.HandleErrorsModel;
 
         //Act
-        scopeMock.SubmitForm();
+        systemUnderTest.SubmitForm();
 
         //Assert
         expect(handleErrorsModelSpy.calls.any()).toEqual(true);
