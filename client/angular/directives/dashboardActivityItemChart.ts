@@ -77,20 +77,20 @@ module Directives {
             //Insert data
             if (activitySummary.CreatedCount) {
                 this.Scope.SummaryItem.ChartData.series.push({
-                    data: activitySummary.CreatedCount,
-                    className: 'ct-series-a createdSeries'
+                    value: activitySummary.CreatedCount,
+                    className: 'createdSeries'
                 });
             }
             if (activitySummary.UpdatedCount) {
                 this.Scope.SummaryItem.ChartData.series.push({
-                    data: activitySummary.UpdatedCount,
-                    className: 'ct-series-b updatedSeries'
+                    value: activitySummary.UpdatedCount,
+                    className: 'updatedSeries'
                 });
             }
             if (activitySummary.DeletedCount) {
                 this.Scope.SummaryItem.ChartData.series.push({
-                    data: activitySummary.DeletedCount,
-                    className: 'ct-series-c deletedSeries'
+                    value: activitySummary.DeletedCount,
+                    className: 'deletedSeries'
                 });
             }
 
