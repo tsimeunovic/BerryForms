@@ -9,10 +9,10 @@
      class="verticalHalf" data-ng-include="'angular/views/entityForm.html'"></div>
 
 <!-- List -->
-<div data-ng-if="!Metadata" data-ng-controller="EntityListController"
+<div data-ng-if="!Metadata" data-ng-controller="EntityListController as lc"
     class="verticalHalf" data-ng-include="'angular/views/entityList.html'"></div>
 
-<div data-ng-if="Metadata" data-ng-controller="FieldMetadataListController"
+<div data-ng-if="Metadata" data-ng-controller="FieldMetadataListController as lc"
      class="verticalHalf" data-ng-include="'angular/views/entityList.html'"></div>
 
 <div class="clearFloat"></div>

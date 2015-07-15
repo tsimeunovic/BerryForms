@@ -20,19 +20,25 @@ module Controllers {
             this.SetupBaseListController();
         }
 
+        public OriginalMetadata:Models.EntityMetadata;
+        public SaveChangesHandler:(entityMetadata:Models.EntityMetadata) => void;
+        public SortListener:any;
+
         private SetupBaseListController():void {
-            this.Scope.SortListeners = {};
-            this.Scope.SortListeners.orderChanged = this.ListItemOrderChanged.bind(this);
+            this.SortListener = {};
+            this.SortListener.orderChanged = this.ListItemOrderChanged.bind(this);
         }
 
         private ListItemOrderChanged(event:any):void {
             var newIndex:number = event.dest.index;
             var oldIndex:number = event.source.index;
 
-            //Update on server
-            if (this.Scope.OriginalMetadata) {
-                this.Scope.OriginalMetadata.Fields.move(oldIndex, newIndex);
-                this.Scope.SaveEntityMetadata(this.Scope.OriginalMetadata);
+            //Change items and save changes
+            if (this.OriginalMetadata) {
+                this.OriginalMetadata.Fields.move(oldIndex, newIndex);
+                if (this.SaveChangesHandler) {
+                    this.SaveChangesHandler(this.OriginalMetadata);
+                }
             }
         }
     }

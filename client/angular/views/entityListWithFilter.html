@@ -2,8 +2,8 @@
     <div data-role="full-list">
         <!-- Title -->
         <h1>
-            {{::ListHeader}}
-        <span data-ng-repeat="icon in ListHeaderIcons"
+            {{::lc.ListHeader}}
+        <span data-ng-repeat="icon in lc.ListHeaderIcons"
               class="glyphicon glyphicon-{{::icon.Icon}}"
               data-ng-click="icon.Action()"
               title="{{::icon.Tooltip}}"></span>
@@ -12,24 +12,24 @@
 
         <!-- Filter expressions -->
         <div data-ng-include="'angular/views/entityFilter.html'" class="filter"
-             data-ng-class="{collapsed:IsFilterCollapsed}"></div>
+             data-ng-class="{collapsed:lc.IsFilterCollapsed}"></div>
 
         <!-- Items list -->
         <div class="entityDetailedList">
             <!-- List item -->
-            <div class="entityRecord" data-ng-repeat="listItem in EntityList">
-                <form-fields data-entity="listItem" data-metadata="EntityMetadata" data-readonly="true"></form-fields>
+            <div class="entityRecord" data-ng-repeat="listItem in lc.EntityList">
+                <form-fields data-entity="listItem" data-metadata="lc.EntityMetadata" data-readonly="true"></form-fields>
                 <div class="clearFloat"></div>
             </div>
         </div>
 
         <!-- Empty list message -->
-        <span class="emptyListMessage" data-ng-hide="EntityList.length">
-            {{::EmptyListMessage}}
+        <span class="emptyListMessage" data-ng-hide="lc.EntityList.length">
+            {{::lc.EmptyListMessage}}
         </span>
 
         <!-- List paging -->
         <div data-ng-include="'angular/views/listPaging.html'" class="listPaging"
-             data-ng-show="Paging.ShowPaging"></div>
+             data-ng-show="lc.Paging.ShowPaging"></div>
     </div>
 </div>

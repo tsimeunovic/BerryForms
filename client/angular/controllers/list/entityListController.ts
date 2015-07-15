@@ -42,18 +42,47 @@ module Controllers {
             this.EntityId = entityId;
             this.PageIndex = isNaN(pageIndex) ? 0 : pageIndex;
 
-            this.InitializeScope();
+            this.Initialize();
         }
+
+        public EntityList:Models.Entity[];
+        public ListItemMetadata:Models.EntityMetadata;
+        public EmptyListMessage:string;
+        public ListHeader:string;
+        public ListHeaderIcons:any[];
+        public Paging:any;
 
         private EntityName:string;
         private PageIndex:number;
         private EntityId:number;
 
-        private InitializeScope():void {
-            this.Scope.EntityList = [];
-            this.Scope.ListRecordEdit = this.ListRecordEdit.bind(this);
-            this.Scope.ListRecordDelete = this.ListRecordDelete.bind(this);
+        public ListRecordEdit(entity:Models.Entity):void {
+            this.DomManipulationService.ScrollToTop();
+            this.MessagingService.Messages.Entity.Modify.publish(entity);
+            this.RedirectService.RedirectToEntityPage(this.EntityName, entity.Id, this.PageIndex + 1);
+        }
 
+        public ListRecordCreate():void {
+            this.RedirectService.RedirectToEntityPage(this.EntityName, null, this.PageIndex + 1);
+        }
+
+        public ListRecordDelete(entity:Models.Entity):void {
+            var _this:EntityListController = this;
+            this.DialogService.CreateConfirmationDialog(
+                [this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity],
+                function (confirmationResult:boolean):void {
+                    if (!confirmationResult) {
+                        return;
+                    }
+
+                    _this.MessagingService.Messages.Entity.Delete.publish(entity);
+                    _this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityDelete);
+                    _this.EntityRepositoryService.DeleteEntity(entity, _this.ListRecordDeleted.bind(_this));
+                });
+        }
+
+        private Initialize():void {
+            this.EntityList = [];
             this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityListMetadata);
             this.LoadEntityMetadata();
         }
@@ -71,10 +100,10 @@ module Controllers {
                     return;
                 }
 
-                this.Scope.ListItemMetadata = metadata;
-                this.Scope.EmptyListMessage = this.LocalizationService.Resources.NoRecordsOfEntity.format([metadata.EntityName]);
-                this.Scope.ListHeader = this.LocalizationService.Resources.ListOfRecords.format([metadata.EntityName]);
-                this.Scope.ListHeaderIcons = [
+                this.ListItemMetadata = metadata;
+                this.EmptyListMessage = this.LocalizationService.Resources.NoRecordsOfEntity.format([metadata.EntityName]);
+                this.ListHeader = this.LocalizationService.Resources.ListOfRecords.format([metadata.EntityName]);
+                this.ListHeaderIcons = [
                     {
                         Icon: 'asterisk',
                         Action: this.ListRecordCreate.bind(this),
@@ -105,36 +134,11 @@ module Controllers {
 
             if (errorsModel === null) {
                 this.SetPaging(pageIndex, totalPages);
-                this.Scope.EntityList = entities;
+                this.EntityList = entities;
             } else {
                 this.SetPaging(pageIndex, 0);
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
-        }
-
-        private ListRecordEdit(entity:Models.Entity):void {
-            this.DomManipulationService.ScrollToTop();
-            this.MessagingService.Messages.Entity.Modify.publish(entity);
-            this.RedirectService.RedirectToEntityPage(this.EntityName, entity.Id, this.PageIndex + 1);
-        }
-
-        private ListRecordCreate():void {
-            this.RedirectService.RedirectToEntityPage(this.EntityName, null, this.PageIndex + 1);
-        }
-
-        private ListRecordDelete(entity:Models.Entity):void {
-            var _this:EntityListController = this;
-            this.DialogService.CreateConfirmationDialog(
-                [this.LocalizationService.Resources.DoYouReallyWantToDeleteEntity],
-                function (confirmationResult:boolean):void {
-                    if (!confirmationResult) {
-                        return;
-                    }
-
-                    _this.MessagingService.Messages.Entity.Delete.publish(entity);
-                    _this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.EntityDelete);
-                    _this.EntityRepositoryService.DeleteEntity(entity, _this.ListRecordDeleted.bind(_this));
-                });
         }
 
         private ListRecordDeleted(deletedEntity:Models.Entity, errorsModel:any):void {
@@ -155,7 +159,7 @@ module Controllers {
         private SetPaging(pageIndex:number, totalPages:number):void {
             var _this:EntityListController = this;
             var pageNumber:number = pageIndex + 1;
-            this.Scope.Paging = {
+            this.Paging = {
                 //State
                 ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber !== 1) || pageNumber < 0,
                 CanGoFirst: pageNumber !== 1,
@@ -168,7 +172,7 @@ module Controllers {
 
                 //Actions
                 GoSelected: function ():void {
-                    _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, _this.Scope.Paging.SelectedPage);
+                    _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, _this.Paging.SelectedPage);
                 },
                 GoFirst: function ():void {
                     _this.RedirectService.RedirectToEntityPage(_this.EntityName, _this.EntityId, 1);

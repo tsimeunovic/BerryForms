@@ -84,8 +84,8 @@ describe('Controller: FieldMetadataListController', function ():void {
         createFieldMetadataListController();
 
         //Assert
-        expect(scopeMock.EmptyListMessage).toEqual('#NoFieldsInNewEntity');
-        expect(scopeMock.ListHeader).toEqual('#ListOfEntityFields');
+        expect(systemUnderTest.EmptyListMessage).toEqual('#NoFieldsInNewEntity');
+        expect(systemUnderTest.ListHeader).toEqual('#ListOfEntityFields');
     });
 
     it('should retrieve metadata from cache', function ():void {
@@ -109,9 +109,9 @@ describe('Controller: FieldMetadataListController', function ():void {
         expect(loadMetadataFromCacheSpy.calls.any()).toEqual(true);
         expect(loadMetadataFromCacheSpy.calls.first().args[0]).toEqual('MockEntity');
         expect(mapFieldsToEntitySpy.calls.any()).toEqual(true);
-        expect(scopeMock.EntityList.length).toEqual(3);
-        expect(scopeMock.ListHeader).toEqual('#ListOfEntityFields');
-        expect(scopeMock.ListHeaderIcons.length).toEqual(2);
+        expect(systemUnderTest.EntityList.length).toEqual(3);
+        expect(systemUnderTest.ListHeader).toEqual('#ListOfEntityFields');
+        expect(systemUnderTest.ListHeaderIcons.length).toEqual(2);
     });
 
     it('should notify user when metadata is saved', function ():void {
@@ -121,7 +121,7 @@ describe('Controller: FieldMetadataListController', function ():void {
         var notificationSpy:any = notificationServiceMock.NotifyMessage;
 
         //Act
-        scopeMock.SaveEntityMetadata(metadata);
+        systemUnderTest.SaveEntityMetadata(metadata);
 
         //Assert
         expect(saveMetadataSpy.calls.any()).toEqual(true);
@@ -143,7 +143,7 @@ describe('Controller: FieldMetadataListController', function ():void {
 
         //Act
         createFieldMetadataListController();
-        scopeMock.ListHeaderIcons[1].Action();
+        systemUnderTest.ListHeaderIcons[1].Action();
 
         //Assert
         expect(redirectSpy.calls.any()).toEqual(true);
@@ -158,7 +158,7 @@ describe('Controller: FieldMetadataListController', function ():void {
         editFieldEntity.Data = {'FieldTypeName': {'Value': 'Boolean'}};
 
         //Act
-        scopeMock.ListRecordEdit(editFieldEntity);
+        systemUnderTest.ListRecordEdit(editFieldEntity);
 
         //Assert
         expect(scrollTopSpy.calls.any()).toEqual(true);
@@ -172,7 +172,7 @@ describe('Controller: FieldMetadataListController', function ():void {
         var displayItemMessageSpy:any = messagingServiceMock.Messages.Form.DisplayItem.publish;
 
         //Act
-        scopeMock.ListHeaderIcons[0].Action();
+        systemUnderTest.ListHeaderIcons[0].Action();
 
         //Assert
         expect(displayItemMessageSpy.calls.any()).toEqual(true);
@@ -200,7 +200,7 @@ describe('Controller: FieldMetadataListController', function ():void {
 
         //Act
         createFieldMetadataListController();
-        scopeMock.ListRecordDelete(deleteFieldEntity);
+        systemUnderTest.ListRecordDelete(deleteFieldEntity);
 
         //Assert
         expect(createDialogSpy.calls.any()).toEqual(true);

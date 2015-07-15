@@ -2,6 +2,7 @@
 //Features:
 
 //Bug fixes:
+Upgrade angular-ui when datepicker issue is fixed (https://github.com/angular-ui/bootstrap/issues/3617)
 
 //Improvements:
 Redirect to new entity page if current item is deleted

@@ -16,8 +16,6 @@ module Controllers {
     'use strict';
 
     export class EntityListWithFilterController extends BaseListController {
-        private RouteParams:any;
-
         //@ngInject
         constructor($scope:any,
                     $routeParams:any,
@@ -39,19 +37,32 @@ module Controllers {
             this.EntityName = entityName;
             this.PageIndex = isNaN(pageIndex) ? 0 : pageIndex;
 
-            this.InitializeScope();
+            this.Initialize();
         }
 
+        public Entity:Models.Entity;
+        public EntityList:Models.Entity[];
+        public EntityMetadata:Models.EntityMetadata;
+        public FilterMetadata:Models.EntityMetadata;
+        public IsFilterEmpty:boolean;
+        public IsFilterCollapsed:boolean;
+        public EmptyListMessage:string;
+        public ListHeader:string;
+        public Paging:any;
+
+        private RouteParams:any;
         private EntityName:string;
         private PageIndex:number;
-        private EntityMetadata:Models.EntityMetadata;
         private FilterEntity:Models.Entity;
-        private FilterMetadata:Models.EntityMetadata;
         private DatabaseQuery:any;
         private FilterQueryString:string;
 
-        private InitializeScope():void {
-            this.Scope.Search = this.DoFilteredSearch.bind(this);
+        public DoFilteredSearch():void {
+            var filterQueryString:string = this.FilterConverterService.CreateFilterQueryString(this.EntityMetadata, this.FilterEntity);
+            this.RedirectService.RedirectToFilteredList(this.EntityName, filterQueryString, 1);
+        }
+
+        private Initialize():void {
             this.LoadEntityMetadata();
         }
 
@@ -75,23 +86,16 @@ module Controllers {
                 this.DatabaseQuery = this.FilterConverterService.CreateDatabaseQueryFromFilter(metadata, this.FilterEntity);
                 this.FilterQueryString = this.FilterConverterService.CreateFilterQueryString(metadata, this.FilterEntity);
 
-                this.Scope.Entity = this.FilterEntity;
-                this.Scope.IsFilterEmpty = Object.isEmpty(this.FilterEntity.Data);
-                this.Scope.IsFilterCollapsed = this.Scope.IsFilterEmpty;
-                this.Scope.EntityMetadata = this.EntityMetadata;
-                this.Scope.FilterMetadata = this.FilterMetadata;
-                this.Scope.EmptyListMessage = this.LocalizationService.Resources.NoRecordsOfFilteredEntity.format([metadata.EntityName]);
-                this.Scope.ListHeader = this.LocalizationService.Resources.ListOfRecords.format([metadata.EntityName]);
+                this.Entity = this.FilterEntity;
+                this.IsFilterEmpty = Object.isEmpty(this.FilterEntity.Data);
+                this.IsFilterCollapsed = this.IsFilterEmpty;
+                this.EmptyListMessage = this.LocalizationService.Resources.NoRecordsOfFilteredEntity.format([metadata.EntityName]);
+                this.ListHeader = this.LocalizationService.Resources.ListOfRecords.format([metadata.EntityName]);
 
                 this.LoadEntityList();
             } else {
                 this.NotificationService.HandleErrorsModel(errorsModel);
             }
-        }
-
-        private DoFilteredSearch():void {
-            var filterQueryString:string = this.FilterConverterService.CreateFilterQueryString(this.EntityMetadata, this.FilterEntity);
-            this.RedirectService.RedirectToFilteredList(this.EntityName, filterQueryString, 1);
         }
 
         private LoadEntityList():void {
@@ -107,7 +111,7 @@ module Controllers {
 
             if (errorsModel == null) {
                 this.SetPaging(pageIndex, totalPages);
-                this.Scope.EntityList = entities;
+                this.EntityList = entities;
             } else {
                 this.SetPaging(pageIndex, 0);
                 this.NotificationService.HandleErrorsModel(errorsModel);
@@ -117,7 +121,7 @@ module Controllers {
         private SetPaging(pageIndex:number, totalPages:number):void {
             var _this:EntityListWithFilterController = this;
             var pageNumber:number = pageIndex + 1;
-            this.Scope.Paging = {
+            this.Paging = {
                 //State
                 ShowPaging: totalPages > 1 || (pageNumber > totalPages && pageNumber !== 1) || pageNumber < 0,
                 CanGoFirst: pageNumber !== 1,
@@ -130,7 +134,7 @@ module Controllers {
 
                 //Actions
                 GoSelected: function ():void {
-                    _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, _this.Scope.Paging.SelectedPage);
+                    _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, _this.Paging.SelectedPage);
                 },
                 GoFirst: function ():void {
                     _this.RedirectService.RedirectToFilteredList(_this.EntityName, _this.FilterQueryString, 1);

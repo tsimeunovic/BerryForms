@@ -1,20 +1,20 @@
 <div class="entityForm" data-role="filter">
     <!-- Filter fields -->
-    <form-fields data-entity="Entity" data-metadata="FilterMetadata"></form-fields>
+    <form-fields data-entity="lc.Entity" data-metadata="lc.FilterMetadata"></form-fields>
 
     <!-- Control buttons -->
     <div class="filterControls">
         <div class="control">
             <span class="input-group-btn">
                 <button class="btn btn-default btn-sm"
-                        data-ng-click="IsFilterCollapsed = !IsFilterCollapsed">
-                    <span class="glyphicon glyphicon-chevron-down" data-ng-show="IsFilterCollapsed"></span>
-                    <span class="glyphicon glyphicon-chevron-up" data-ng-hide="IsFilterCollapsed"></span>
+                        data-ng-click="lc.IsFilterCollapsed = !lc.IsFilterCollapsed">
+                    <span class="glyphicon glyphicon-chevron-down" data-ng-show="lc.IsFilterCollapsed"></span>
+                    <span class="glyphicon glyphicon-chevron-up" data-ng-hide="lc.IsFilterCollapsed"></span>
                     <span class="glyphicon glyphicon-filter"
-                          data-ng-class="{active:!IsFilterEmpty && IsFilterCollapsed}"></span>
+                          data-ng-class="{active:!lc.IsFilterEmpty && lc.IsFilterCollapsed}"></span>
                 </button>
-                <button class="btn btn-default btn-sm btn-submit" data-ng-click="Search()"
-                        data-ng-disabled="IsFilterCollapsed">
+                <button class="btn btn-default btn-sm btn-submit" data-ng-click="lc.DoFilteredSearch()"
+                        data-ng-disabled="lc.IsFilterCollapsed">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </span>

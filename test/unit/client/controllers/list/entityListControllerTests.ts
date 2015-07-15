@@ -79,8 +79,8 @@ describe('Controller: EntityListController', function ():void {
         expect(loadEntityListPageSpy.calls.any()).toEqual(true);
         expect(loadEntityListPageSpy.calls.first().args[0]).toEqual('MockEntity');
         expect(loadEntityListPageSpy.calls.first().args[2]).toEqual(2);
-        expect(scopeMock.ListItemMetadata).not.toEqual(null);
-        expect(scopeMock.EntityList.length).toEqual(6);
+        expect(systemUnderTest.ListItemMetadata).not.toEqual(null);
+        expect(systemUnderTest.EntityList.length).toEqual(6);
     });
 
     it('should refresh entity list when cache changes', function ():void {
@@ -103,9 +103,9 @@ describe('Controller: EntityListController', function ():void {
         //Arrange
         //Act
         //Assert
-        expect(scopeMock.EmptyListMessage).toEqual('#NoRecordsOfEntity');
-        expect(scopeMock.ListHeader).toEqual('#ListOfRecords');
-        expect(scopeMock.ListHeaderIcons.length).toEqual(2);
+        expect(systemUnderTest.EmptyListMessage).toEqual('#NoRecordsOfEntity');
+        expect(systemUnderTest.ListHeader).toEqual('#ListOfRecords');
+        expect(systemUnderTest.ListHeaderIcons.length).toEqual(2);
     });
 
     it('should set paging according to retrieved list results', function ():void {
@@ -113,17 +113,17 @@ describe('Controller: EntityListController', function ():void {
         var redirectToPageMock:any = redirectServiceMock.RedirectToEntityPage;
 
         //Act
-        scopeMock.Paging.GoNext();
-        scopeMock.Paging.GoFirst();
+        systemUnderTest.Paging.GoNext();
+        systemUnderTest.Paging.GoFirst();
 
         //Assert
-        expect(scopeMock.Paging.ShowPaging).toEqual(true);
-        expect(scopeMock.Paging.CanGoFirst).toEqual(true);
-        expect(scopeMock.Paging.CanGoPrevious).toEqual(true);
-        expect(scopeMock.Paging.CanGoNext).toEqual(true);
-        expect(scopeMock.Paging.CurrentPage).toEqual(3);
-        expect(scopeMock.Paging.SelectedPage).toEqual(3);
-        expect(scopeMock.Paging.TotalPages).toEqual(10);
+        expect(systemUnderTest.Paging.ShowPaging).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoFirst).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoPrevious).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoNext).toEqual(true);
+        expect(systemUnderTest.Paging.CurrentPage).toEqual(3);
+        expect(systemUnderTest.Paging.SelectedPage).toEqual(3);
+        expect(systemUnderTest.Paging.TotalPages).toEqual(10);
 
         expect(redirectToPageMock.calls.count()).toEqual(2);
         expect(redirectToPageMock.calls.first().args[0]).toEqual('MockEntity');
@@ -133,7 +133,7 @@ describe('Controller: EntityListController', function ():void {
 
     it('should redirect to create page when create method is called', function ():void {
         //Arrange
-        var createIcon:any = scopeMock.ListHeaderIcons[0];
+        var createIcon:any = systemUnderTest.ListHeaderIcons[0];
         var redirectToPageMock:any = redirectServiceMock.RedirectToEntityPage;
 
         //Act
@@ -155,7 +155,7 @@ describe('Controller: EntityListController', function ():void {
         editEntity.Id = 12;
 
         //Act
-        scopeMock.ListRecordEdit(editEntity);
+        systemUnderTest.ListRecordEdit(editEntity);
 
         //Assert
         expect(redirectToPageMock.calls.any()).toEqual(true);
@@ -178,9 +178,9 @@ describe('Controller: EntityListController', function ():void {
         doNotDeleteEntity.Id = 22;
 
         //Act
-        scopeMock.ListRecordDelete(deleteEntity);
+        systemUnderTest.ListRecordDelete(deleteEntity);
         dialogServiceMock.CancelNextDialog();
-        scopeMock.ListRecordDelete(doNotDeleteEntity);
+        systemUnderTest.ListRecordDelete(doNotDeleteEntity);
 
         //Assert
         expect(createDialogSpy.calls.count()).toEqual(2);

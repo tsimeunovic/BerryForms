@@ -33,29 +33,72 @@ module Controllers {
                     private EntityRepositoryService:Services.IEntityRepositoryService) {
             super($scope, Static.ControllerArea.Metadata, MessagingService, NotificationService, QueueService, StateService);
             this.EntityName = $routeParams[Static.RouteParams.EntityName];
-            this.InitializeScope();
+            this.Initialize();
         }
+
+        public FieldType:string;
+        public EntityList:Models.Entity[];
+        public ListItemMetadata:Models.EntityMetadata;
+        public ListHeaderIcons:any[];
+        public EmptyListMessage:string;
+        public ListHeader:string;
 
         private EntityName:string;
 
-        private InitializeScope():void {
-            this.Scope.EntityList = [];
-            this.Scope.ListHeaderIcons = [];
+        public SaveEntityMetadata(entityMetadata:Models.EntityMetadata):void {
+            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.FieldSchemaSubmit);
+            this.EntityRepositoryService.SaveEntityMetadata(entityMetadata, this.SaveEntityMetadataCompleted.bind(this));
+        }
+
+        public ListRecordEdit(fieldEntity:Models.Entity):void {
+            this.DomManipulationService.ScrollToTop();
+            this.FieldType = fieldEntity.Data.FieldTypeName.Value;
+            var fieldEditMetadata:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(this.FieldType, true);
+            this.MessagingService.Messages.Form.DisplayItem.publish(fieldEntity, fieldEditMetadata);
+        }
+
+        public ListRecordCreate():void {
+            var fieldCreateData:Models.Entity = new Models.Entity(null);
+            var fieldCreateMetadata:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
+            this.MessagingService.Messages.Form.DisplayItem.publish(fieldCreateData, fieldCreateMetadata);
+        }
+
+        public ListRecordDelete(fieldEntity:Models.Entity):void {
+            var _this:FieldMetadataListController = this;
+            this.DialogService.CreateConfirmationDialog(
+                [this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField],
+                function (confirmationResult:boolean):void {
+                    if (!confirmationResult) {
+                        return;
+                    }
+
+                    var entityMetadata:Models.EntityMetadata = _this.OriginalMetadata;
+                    var fieldMetadataPredicate:(fm:Models.FieldMetadata) => boolean = function (fm:Models.FieldMetadata):boolean {
+                        return fm.FieldSystemName === fieldEntity.EntitySystemName;
+                    };
+                    var fieldMetadata:Models.FieldMetadata = entityMetadata.Fields.single(fieldMetadataPredicate);
+                    if (fieldMetadata) {
+                        entityMetadata.Fields.remove(fieldMetadata);
+                        _this.SaveEntityMetadata(entityMetadata);
+                    }
+                });
+        }
+
+        private Initialize():void {
+            this.EntityList = [];
+            this.ListHeaderIcons = [];
+            this.SaveChangesHandler = this.SaveEntityMetadata.bind(this);
 
             if (this.EntityName) {
                 //Existing schema
-                this.Scope.ListRecordEdit = this.ListRecordEdit.bind(this);
-                this.Scope.ListRecordDelete = this.ListRecordDelete.bind(this);
-                this.Scope.SaveEntityMetadata = this.SaveEntityMetadata.bind(this);
-                this.Scope.ListItemMetadata = Data.CreateFieldFormFields.GetData(null);
-
+                this.ListItemMetadata = Data.CreateFieldFormFields.GetData(null);
                 this.AddSubscription(this.MessagingService.Messages.Metadata.Modified.subscribe(this.LoadEntityMetadata.bind(this)));
                 this.AddSubscription(this.MessagingService.Messages.Metadata.Modified.subscribe(this.MetadataChangedHandler.bind(this)));
                 this.LoadEntityMetadata();
             } else {
                 //Creation of new schema
-                this.Scope.EmptyListMessage = this.LocalizationService.Resources.NoFieldsInNewEntity;
-                this.Scope.ListHeader = this.LocalizationService.Resources.ListOfEntityFields;
+                this.EmptyListMessage = this.LocalizationService.Resources.NoFieldsInNewEntity;
+                this.ListHeader = this.LocalizationService.Resources.ListOfEntityFields;
             }
         }
 
@@ -71,11 +114,11 @@ module Controllers {
                 return;
             }
 
-            this.Scope.OriginalMetadata = metadata;
-            this.Scope.EntityList = this.EntityModelMapperService.MapFieldsMetadataToEntityModels(metadata.Fields);
-            this.Scope.EmptyListMessage = this.LocalizationService.Resources.NoFieldsInEntity.format([metadata.EntityName]);
-            this.Scope.ListHeader = this.LocalizationService.Resources.ListOfEntityFields;
-            this.Scope.ListHeaderIcons = [
+            this.OriginalMetadata = metadata;
+            this.EntityList = this.EntityModelMapperService.MapFieldsMetadataToEntityModels(metadata.Fields);
+            this.EmptyListMessage = this.LocalizationService.Resources.NoFieldsInEntity.format([metadata.EntityName]);
+            this.ListHeader = this.LocalizationService.Resources.ListOfEntityFields;
+            this.ListHeaderIcons = [
                 {
                     Icon: 'asterisk',
                     Action: this.ListRecordCreate.bind(this),
@@ -83,7 +126,7 @@ module Controllers {
                 }
             ];
             if (metadata.Fields.length) {
-                this.Scope.ListHeaderIcons.push({
+                this.ListHeaderIcons.push({
                     Icon: 'th-list',
                     Action: this.RedirectToEntityList.bind(this),
                     Tooltip: this.LocalizationService.Resources.ShowListOf.format([metadata.EntityName])
@@ -91,45 +134,6 @@ module Controllers {
             }
 
             this.MessagingService.Messages.Loading.Finished.publish(Static.LoadingType.FieldListMetadata);
-        }
-
-        private ListRecordEdit(fieldEntity:Models.Entity):void {
-            this.DomManipulationService.ScrollToTop();
-            this.Scope.FieldType = fieldEntity.Data.FieldTypeName.Value;
-            var fieldEditMetadata:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(this.Scope.FieldType, true);
-            this.MessagingService.Messages.Form.DisplayItem.publish(fieldEntity, fieldEditMetadata);
-        }
-
-        private ListRecordCreate():void {
-            var fieldCreateData:Models.Entity = new Models.Entity(null);
-            var fieldCreateMetadata:Models.EntityMetadata = Data.CreateFieldFormFields.GetData(null);
-            this.MessagingService.Messages.Form.DisplayItem.publish(fieldCreateData, fieldCreateMetadata);
-        }
-
-        private ListRecordDelete(fieldEntity:Models.Entity):void {
-            var _this:FieldMetadataListController = this;
-            this.DialogService.CreateConfirmationDialog(
-                [this.LocalizationService.Resources.DoYouReallyWantToDeleteMetadataField],
-                function (confirmationResult:boolean):void {
-                    if (!confirmationResult) {
-                        return;
-                    }
-
-                    var entityMetadata:Models.EntityMetadata = _this.Scope.OriginalMetadata;
-                    var fieldMetadataPredicate:(fm:Models.FieldMetadata) => boolean = function (fm:Models.FieldMetadata):boolean {
-                        return fm.FieldSystemName === fieldEntity.EntitySystemName;
-                    };
-                    var fieldMetadata:Models.FieldMetadata = entityMetadata.Fields.single(fieldMetadataPredicate);
-                    if (fieldMetadata) {
-                        entityMetadata.Fields.remove(fieldMetadata);
-                        _this.SaveEntityMetadata(entityMetadata);
-                    }
-                });
-        }
-
-        private SaveEntityMetadata(entityMetadata:Models.EntityMetadata):void {
-            this.MessagingService.Messages.Loading.Started.publish(Static.LoadingType.FieldSchemaSubmit);
-            this.EntityRepositoryService.SaveEntityMetadata(entityMetadata, this.SaveEntityMetadataCompleted.bind(this));
         }
 
         private SaveEntityMetadataCompleted(savedMetadata:Models.EntityMetadata, errorsModel:any):void {
@@ -145,14 +149,14 @@ module Controllers {
         }
 
         private MetadataChangedHandler(savedMetadata:Models.EntityMetadata):void {
-            if (this.Scope.OriginalMetadata.EntitySystemName !== savedMetadata.EntitySystemName) {
+            if (this.OriginalMetadata.EntitySystemName !== savedMetadata.EntitySystemName) {
                 return;
             }
             this.LoadEntityMetadataCompleted(savedMetadata);
         }
 
         private RedirectToEntityList():void {
-            this.RedirectService.RedirectToCreateEntity(this.Scope.OriginalMetadata.EntitySystemName);
+            this.RedirectService.RedirectToCreateEntity(this.OriginalMetadata.EntitySystemName);
         }
     }
 }

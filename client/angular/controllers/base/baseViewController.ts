@@ -20,6 +20,8 @@ module Controllers {
             this.SetupBaseViewController();
         }
 
+        public Configuration:any;
+
         private SetupBaseViewController():void {
             this.DeleteInvalidState();
             this.RemovePendingDialog();
@@ -50,7 +52,7 @@ module Controllers {
         }
 
         private SetConfiguration():void {
-            this.Scope.Configuration = {
+            this.Configuration = {
                 List: {
                     MoveEnabled: this.ControllerArea === Static.ControllerArea.Metadata,
                     EditEnabled: true,

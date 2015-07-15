@@ -72,8 +72,8 @@ describe('Controller: EntityListWithFilterController', function ():void {
         expect(loadEntityListPageSpy.calls.first().args[0]).toEqual('MockEntity');
         expect(loadEntityListPageSpy.calls.first().args[1]).toEqual({'MockField': 'MockFilterValue'});
         expect(loadEntityListPageSpy.calls.first().args[2]).toEqual(4);
-        expect(scopeMock.ListItemMetadata).not.toEqual(null);
-        expect(scopeMock.EntityList.length).toEqual(6);
+        expect(systemUnderTest.EntityMetadata).toBeTruthy();
+        expect(systemUnderTest.EntityList.length).toEqual(6);
     });
 
     it('should create filled filter form from query string', function ():void {
@@ -91,13 +91,13 @@ describe('Controller: EntityListWithFilterController', function ():void {
         expect(createDatabaseQuerySpy.calls.any()).toEqual(true);
         expect(createFilterQueryStringSpy.calls.any()).toEqual(true);
 
-        expect(scopeMock.Entity.EntitySystemName).toEqual('MockFilterEntity');
-        expect(scopeMock.IsFilterEmpty).toEqual(true);
-        expect(scopeMock.IsFilterCollapsed).toEqual(true);
-        expect(scopeMock.FilterMetadata).not.toEqual(null);
-        expect(scopeMock.FilterMetadata.Fields.length).toEqual(4);
-        expect(scopeMock.EmptyListMessage).toEqual('#NoRecordsOfFilteredEntity');
-        expect(scopeMock.ListHeader).toEqual('#ListOfRecords');
+        expect(systemUnderTest.Entity.EntitySystemName).toEqual('MockFilterEntity');
+        expect(systemUnderTest.IsFilterEmpty).toEqual(true);
+        expect(systemUnderTest.IsFilterCollapsed).toEqual(true);
+        expect(systemUnderTest.FilterMetadata).not.toEqual(null);
+        expect(systemUnderTest.FilterMetadata.Fields.length).toEqual(4);
+        expect(systemUnderTest.EmptyListMessage).toEqual('#NoRecordsOfFilteredEntity');
+        expect(systemUnderTest.ListHeader).toEqual('#ListOfRecords');
     });
 
     it('should set paging according to retrieved filtered results', function ():void {
@@ -105,17 +105,17 @@ describe('Controller: EntityListWithFilterController', function ():void {
         var redirectToFilteredPageMock:any = redirectServiceMock.RedirectToFilteredList;
 
         //Act
-        scopeMock.Paging.GoNext();
-        scopeMock.Paging.GoFirst();
+        systemUnderTest.Paging.GoNext();
+        systemUnderTest.Paging.GoFirst();
 
         //Assert
-        expect(scopeMock.Paging.ShowPaging).toEqual(true);
-        expect(scopeMock.Paging.CanGoFirst).toEqual(true);
-        expect(scopeMock.Paging.CanGoPrevious).toEqual(true);
-        expect(scopeMock.Paging.CanGoNext).toEqual(true);
-        expect(scopeMock.Paging.CurrentPage).toEqual(5);
-        expect(scopeMock.Paging.SelectedPage).toEqual(5);
-        expect(scopeMock.Paging.TotalPages).toEqual(10);
+        expect(systemUnderTest.Paging.ShowPaging).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoFirst).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoPrevious).toEqual(true);
+        expect(systemUnderTest.Paging.CanGoNext).toEqual(true);
+        expect(systemUnderTest.Paging.CurrentPage).toEqual(5);
+        expect(systemUnderTest.Paging.SelectedPage).toEqual(5);
+        expect(systemUnderTest.Paging.TotalPages).toEqual(10);
 
         expect(redirectToFilteredPageMock.calls.count()).toEqual(2);
         expect(redirectToFilteredPageMock.calls.first().args[0]).toEqual('MockEntity');
@@ -129,7 +129,7 @@ describe('Controller: EntityListWithFilterController', function ():void {
         var redirectToFilteredPageMock:any = redirectServiceMock.RedirectToFilteredList;
 
         //Act
-        scopeMock.Search();
+        systemUnderTest.DoFilteredSearch();
 
         //Assert
         expect(createFilterQueryStringSpy.calls.any()).toEqual(true);

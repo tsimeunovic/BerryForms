@@ -28,6 +28,7 @@ module Config {
                 .when('/schema/entity/:_entityName', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: true,
                         create: false
@@ -36,6 +37,7 @@ module Config {
                 .when('/schema/entity', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: true,
                         create: true
@@ -48,6 +50,7 @@ module Config {
                 .when('/entity/:_entityName/filteredlist/page/:_pageNumber', {
                     templateUrl: 'angular/views/entityListWithFilter.html',
                     controller: 'EntityListWithFilterController',
+                    controllerAs: 'lc',
                     data: {
                         metadata: false,
                         create: false
@@ -56,6 +59,7 @@ module Config {
                 .when('/entity/:_entityName/filteredlist', {
                     templateUrl: 'angular/views/entityListWithFilter.html',
                     controller: 'EntityListWithFilterController',
+                    controllerAs: 'lc',
                     data: {
                         metadata: false,
                         create: false
@@ -64,6 +68,7 @@ module Config {
                 .when('/entity/:_entityName/page/:_pageNumber/id/:_entityId', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: false,
                         create: false
@@ -72,6 +77,7 @@ module Config {
                 .when('/entity/:_entityName/page/:_pageNumber', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: false,
                         create: true
@@ -80,6 +86,7 @@ module Config {
                 .when('/entity/:_entityName/id/:_entityId', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: false,
                         create: false
@@ -88,6 +95,7 @@ module Config {
                 .when('/entity/:_entityName', {
                     templateUrl: 'angular/views/entityFormWithList.html',
                     controller: 'EntityFormWithListController',
+                    controllerAs: 'flc',
                     data: {
                         metadata: false,
                         create: true
