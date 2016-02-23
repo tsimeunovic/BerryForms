@@ -2,8 +2,7 @@
 /// <reference path="../../config/config.ts" />
 /// <reference path="../interfaces/directives/IDirective.ts" />
 
-declare
-var angular:any;
+declare var angular:any;
 
 //Directive that creates special types of UI symbols (icons, color boxes)
 module Directives {

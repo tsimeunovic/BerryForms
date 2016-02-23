@@ -12,8 +12,7 @@
 /// <reference path="../../../extensions/objectExtensions.ts" />
 /// <reference path="../../../config/config.ts" />
 
-declare
-var angular:any;
+declare var angular:any;
 
 //Service used to map and deserialize Entity/EntityMetadata/FieldMetadata
 module Services {

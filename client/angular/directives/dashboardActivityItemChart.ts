@@ -4,8 +4,7 @@
 /// <reference path="../interfaces/services/localization/ILocalizationService.ts" />
 /// <reference path="../interfaces/services/state/IEntityMetadataListCacheService.ts" />
 
-declare
-var Chartist:any;
+declare var Chartist:any;
 
 //Directive that creates chart and description for entity activity summary
 module Directives {
